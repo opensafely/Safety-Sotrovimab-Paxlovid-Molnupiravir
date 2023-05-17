@@ -1,12 +1,78 @@
 version: '3.0'
 
 expectations:
-  population_size: 1000
+  population_size: 50000
 
 actions:
 
   generate_study_population:
-    run: cohortextractor:latest generate_cohort --output-format csv.gz --study-definition study_definition
+    run: cohortextractor:latest generate_cohort --study-definition study_definition
     outputs:
       highly_sensitive:
-        cohort: output/input.csv.gz
+        cohort: output/input.csv
+
+
+  define_covariates:
+    run: stata-mp:latest analysis/000_define_covariates.do
+    needs: [generate_study_population]
+    outputs:
+      moderately_sensitive:
+        log: logs/cleaning_dataset.log 
+      highly_sensitive:
+        data: output/main.dta
+
+  baseline_characteristic:
+    run: stata-mp:latest analysis/100_baseline_characteristics.do
+    needs: [define_covariates]
+    outputs:
+      moderately_sensitive:
+        log: logs/baseline_characterisitcs.log 
+
+
+  cox_model:
+    run: stata-mp:latest analysis/200_cox_model.do
+    needs: [define_covariates]
+    outputs:
+      moderately_sensitive:
+        log: logs/cox_models.log 
+        data: output/tables/cox_model_summary.dta
+        survrisk_ae_diverticulitis_snomed: output/figures/survrisk_ae_diverticulitis_snomed.svg
+        survrisk_new_ae_ra_snomed: output/figures/survrisk_new_ae_ra_snomed.svg        
+        survrisk_ae_anaphylaxis_icd: output/figures/survrisk_ae_anaphylaxis_icd.svg
+        survrisk_ae_all: output/figures/survrisk_ae_all.svg
+        survrisk_covid_hosp: output/figures/survrisk_covid_hosp.svg        
+        survrisk_all_hosp: output/figures/survrisk_all_hosp.svg
+        survrisk_died: output/figures/survrisk_died.svg        
+        survhaz_ae_diverticulitis_snomed: output/figures/survhaz_ae_diverticulitis_snomed.svg
+        survhaz_new_ae_ra_snomed: output/figures/survhaz_new_ae_ra_snomed.svg
+        survhaz_ae_anaphylaxis_icd: output/figures/survhaz_ae_anaphylaxis_icd.svg
+        survhaz_ae_all: output/figures/survhaz_ae_all.svg
+        survhaz_covid_hosp: output/figures/survhaz_covid_hosp.svg
+        survhaz_all_hosp: output/figures/survhaz_all_hosp.svg
+        survhaz_died: output/figures/survhaz_died.svg       
+        survcur_ae_diverticulitis_snomed: output/figures/survcur_ae_diverticulitis_snomed.svg
+        survcur_new_ae_ra_snomed: output/figures/survcur_new_ae_ra_snomed.svg
+        survcur_ae_anaphylaxis_icd: output/figures/survcur_ae_anaphylaxis_icd.svg
+        survcur_ae_all: output/figures/survcur_ae_all.svg
+        survcur_covid_hosp: output/figures/survcur_covid_hosp.svg
+        survcur_all_hosp: output/figures/survcur_all_hosp.svg
+        survcur_died: output/figures/survcur_died.svg
+
+  PS_model:
+    run: stata-mp:latest analysis/300_ps_model.do
+    needs: [define_covariates]
+    outputs:
+      moderately_sensitive:
+        log: logs/ps_model.log
+        data: output/tables/cox_model_propensity.dta
+        hist_ae_diverticulitis_snomed: output/figures/hist_ae_diverticulitis_snomed.svg
+        hist_new_ae_ra_snomed: output/figures/histogramsp_new_ae_ra_snomed.svg
+        hist_ae_anaphylaxis_icd: output/figures/histogramsp_ae_anaphylaxis_icd.svg
+        hist_ae_all: output/figures/histogramsp_ae_all.svg
+        hist_covid_hosp: output/figures/histogramsp_covid_hosp.svg
+        hist_all_hosp: output/figures/histogramsp_all_hosp.svg
+        hist_died: output/figures/histogramsp_died.svg
+        match_agesex: output/figures/match_agesex.svg
+        match_adj: output/figures/match_adj.svg
+        match_fulladj1: output/figures/match_fulladj1.svg
+        match_fulladj2: output/figures/match_fulladj2.svg  
