@@ -19,7 +19,7 @@ actions:
       moderately_sensitive:
         log: logs/cleaning_dataset.log 
       highly_sensitive:
-        data: output/main.dta
+        data: output/data/main.dta
 
   baseline_characteristic:
     run: stata-mp:latest analysis/100_baseline_characteristics.do

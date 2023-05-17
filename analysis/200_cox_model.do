@@ -12,8 +12,8 @@
 
 ****************************************************************************************************************
 **Set filepaths
-global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
-//global projectdir `c(pwd)'
+//global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+global projectdir `c(pwd)'
 di "$projectdir"
 capture mkdir "$projectdir/output/data"
 capture mkdir "$projectdir/output/figures"
@@ -25,7 +25,7 @@ cap log close
 log using "$logdir/cox_model.log", replace
 
 *Set Ado file path
-adopath + "$projectdir/analysis/extra_ados"
+adopath + "$projectdir/analysis/ado"
 
 * SET Index date 
 global indexdate 			= "01/03/2020"
@@ -166,12 +166,11 @@ foreach fail in ae_all {
 }
 
 // d/w Sam - left and right boundary regions overlap; specify a smaller bandwidth in width() -> due to no events. Unsure which width to use
+// ask best format to export figures
 
 log close
 			
-			
-log close
-// ask best format to export figures
+
 	   
 	   
 	   

@@ -12,9 +12,8 @@
 
 ****************************************************************************************************************
 **Set filepaths
-global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
-
-//global projectdir `c(pwd)'
+//global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+global projectdir `c(pwd)'
 di "$projectdir"
 capture mkdir "$projectdir/output/data"
 capture mkdir "$projectdir/output/figures"
@@ -26,7 +25,7 @@ cap log close
 log using "$logdir/ps_model.log", replace
 
 *Set Ado file path
-adopath + "$projectdir/analysis/extra_ados"
+adopath + "$projectdir/analysis/ado"
 
 * SET Index date 
 global indexdate 			= "01/03/2020"
@@ -112,9 +111,10 @@ bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertens
 wt(iptw_fulladj2) graph
 graph export "$projectdir/output/figures/match_fulladj2.svg", as(svg) replace
 
+log close
 
 /*Estimate probability of drug used as four groups with mlogit = balancing poor
-foreach model in agesex adj fulladj1 fulladj2{
+foreach model in adj fulladj1 fulladj2{
 	mlogit drug $`model'
 	predict p_`model'
 	histogram p_`model' if drug==0, name(control_`model', replace) nodraw xtitle("Probability of no drug")
@@ -143,7 +143,6 @@ postclose `coxoutput_propensity'
 pbalchk no_drug age sex region_nhs
 pbalchk no_drug age sex region_nhs, wt(iptw_agesex) graph
 */
-
 
 
 

@@ -12,8 +12,8 @@
 
 ****************************************************************************************************************
 **Set filepaths
-global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
-//global projectdir `c(pwd)'
+//global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+global projectdir `c(pwd)'
 di "$projectdir"
 capture mkdir "$projectdir/output/data"
 capture mkdir "$projectdir/output/figures"
@@ -28,7 +28,7 @@ log using "$logdir/cleaning_dataset.log", replace
 import delimited "$projectdir/output/input.csv", clear
 
 *Set Ado file path
-adopath + "$projectdir/analysis/extra_ados"
+adopath + "$projectdir/analysis/ado"
 
 //describe
 //codebook
