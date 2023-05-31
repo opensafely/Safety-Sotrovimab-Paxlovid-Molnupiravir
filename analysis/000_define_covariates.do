@@ -13,7 +13,7 @@
 ****************************************************************************************************************
 **Set filepaths
 global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
-global projectdir `c(pwd)'
+//global projectdir `c(pwd)'
 di "$projectdir"
 capture mkdir "$projectdir/output/data"
 capture mkdir "$projectdir/output/figures"
@@ -33,7 +33,9 @@ adopath + "$projectdir/analysis/ado"
 //describe
 //codebook
 
-*  Convert strings to dates  *
+*********************************
+*	Convert strings to dates     *
+********************************* 
 foreach var of varlist 	 covid_test_positive_date				///
 						 covid_test_positive_date2 				///
 						 covid_test_positive_date3 				///
@@ -112,9 +114,6 @@ foreach var of varlist 	 covid_test_positive_date				///
  }
 }
 
-*check hosp/death event date range*
-codebook covid_test_positive_date date_treated 
-
 ****************************
 *	EXPOSURE		*
 ****************************
@@ -136,51 +135,98 @@ replace drug=6 if molnupiravir==date_treated & molnupiravir_start==0
 replace drug=7 if remdesivir==date_treated&remdesivir!=.&date_treated!=.
 replace drug=8 if casirivimab==date_treated&casirivimab!=.&date_treated!=.
 replace drug=0 if drug==.
-tab drug, m
-drop if drug>3
 label define drug 0 "control" 1 "sotrovimab" 2 "paxlovid" 3"molnupiravir", replace
 label values drug drug
-** gen start date for control group - just take from covid test date
-bys drug: count if date_treated==.
-bys drug: count if covid_test_positive_date==. //should be 0 - if is not 0, then mistake with study def
-replace date_treated = covid_test_positive_date if drug==0
+tab drug, m
+drop if drug>3
+** start date is date treatment for treatment arms and date of covid test for control arm 
+count if start_date==. //should be 0
+count if start_date!=covid_test_positive_date & drug==0
+count if start_date!=date_treated & drug>0
+replace start_date=covid_test_positive_date if drug==0 
+replace start_date=date_treated if drug>0
+** check number of positive covid tests prior to drug in treatment arms
+bys drug:count if covid_test_positive_date==. // should be 0 in control arm
+bys drug:count if covid_test_positive_date!=. 
+bys drug:count if covid_test_positive_date!=.&date_treated!=.& date_treated>covid_test_positive_date //test prior to treatment
+bys drug:count if covid_test_positive_date!=.&date_treated!=.& (date_treated-covid_test_positive_date>0)&(date_treated-covid_test_positive_date<=5) //test <5d
+bys drug:count if covid_test_positive_date2!=.&date_treated!=.& date_treated<covid_test_positive_date2 //2nd covid episode prior to treatment 
+bys drug:count if covid_test_positive_date2!=.&date_treated!=.& (date_treated-covid_test_positive_date2>0)&(date_treated-covid_test_positive_date2<=5) //test <5d
+bys drug:count if covid_test_positive_date3!=.&date_treated!=.& date_treated<covid_test_positive_date3 //3rd covid episode prior to treatment 
+bys drug:count if covid_test_positive_date3!=.&date_treated!=.& (date_treated-covid_test_positive_date3>0)&(date_treated-covid_test_positive_date3<=5) //test <5d
+** check in control group that covid positive, and not repeat covid test after an infection within 30 days prior
+tab covid_test_positive covid_positive_previous_30_days if drug==0
+drop if drug==0 & covid_test_positive==1 & covid_positive_previous_30_days==1
 ** gen study start and study end date
 gen campaign_start=mdy(12,16,2021)
 gen study_end_date=mdy(06,01,2023)
 gen start_date_29=date_treated+28
 format campaign_start study_end_date start_date_29 %td
-** check 
-gen second_drug = 1 if drug==0   
-*check number moving from control to treatment arms (ie having a coivd therapeutic after 2nd or 3rd covid test)*
-	// ie: bys drug: count if 2nd_covid_test_positive_date or 3rd_covid_test_positive_date=sotrovimab molnupiravir paxlovid remdesivir casirivima
-* data on type test 
-* prior_covid - need to generate variable, make sure doesnt equal the actuakl covid date
-	// ie: count if priorcovid_date==covid
 
 ****************************
 *	INCLUSION		*
 ****************************
-***Inclusion criteria*
+** inclusion criteria*
 keep if age>=18 & age<110
 keep if sex=="F"|sex=="M"
 keep if has_died==0
-*check covid positive, and not repeat covid test after an infection within 30 days prior
-tab covid_test_positive covid_positive_previous_30_days, m
-keep if covid_test_positive==1 & covid_positive_previous_30_days==0
+** exclusion criteria*
+count if start_date>dereg_date & start_date!=.
+count if start_date>death_date & start_date!=.
+drop if start_date>death_date | start_date>dereg_date
 
-***Exclusion criteria*
-*capture and exclude if death or deregistration is on the start date 
-count if start_date>=dereg_date & start_date!=.
-count if start_date>=death_date & start_date!=.
-drop if start_date>=death_date | start_date>=dereg_date
+** high risk cohort from blueteq therapeutics datafor drug arms
+tab high_risk_cohort_therapeutics drug,m //should be 0 in control group
+gen downs_syndrome_therap= 1 if strpos(high_risk_cohort_therapeutics, "Downs syndrome")
+gen solid_cancer_therap=1 if strpos(high_risk_cohort_therapeutics, "solid cancer")
+gen haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "haematological malignancies")
+replace haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "sickle cell disease")
+replace haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "haematological diseases")
+replace haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "stem cell transplant")
+gen renal_disease_therap= 1 if strpos(high_risk_cohort_therapeutics, "renal disease")
+gen liver_disease_therap= 1 if strpos(high_risk_cohort_therapeutics, "liver disease")
+gen imid_on_drug_therap= 1 if strpos(high_risk_cohort_therapeutics, "IMID")
+gen immunosupression_therap= 1 if strpos(high_risk_cohort_therapeutics, "primary immune deficiencies")
+gen hiv_aids_therap= 1 if strpos(high_risk_cohort_therapeutics, "HIV or AIDS")
+gen organ_transplant_therap= 1 if strpos(high_risk_cohort_therapeutics, "solid organ recipients")
+replace organ_transplant_therap= 1 if strpos(high_risk_cohort_therapeutics, "solid organ transplant")
+gen rare_neuro_therap= 1 if strpos(high_risk_cohort_therapeutics, "rare neurological conditions")
+bys drug: count if high_risk_cohort_therapeutics!=""&high_risk_cohort_therapeutics!="other"& min(downs_syndrome_therap,solid_cancer_therap,haem_disease_therap,renal_disease_therap,liver_disease_therap,imid_on_drug_therap,immunosupression_therap,hiv_aids_therap,organ_transplant_therap,rare_neuro_therap)==. //check if all diseases have been captured
+tab drug high_risk_cohort_therapeutics if high_risk_cohort_therapeutics!=""&high_risk_cohort_therapeutics!="other"& min(downs_syndrome_therap,solid_cancer_therap,haem_disease_therap,renal_disease_therap,liver_disease_therap,imid_on_drug_therap,immunosupression_therap,hiv_aids_therap,organ_transplant_therap,rare_neuro_therap)==.
+foreach var of varlist downs_syndrome_therap solid_cancer_therap haem_disease_therap renal_disease_therap liver_disease_therap imid_on_drug_therap immunosupression_therap hiv_aids_therap organ_transplant_therap rare_neuro_therap{
+	replace `var'=0 if `var'==. 
+}
 
+** high risk cohort from open codelist from control group
+tab high_risk_cohort_nhsd drug,m //should be no 0s in control group
+count if imid_on_drug==1 & imid_nhsd==1 & imid_drug==0 //should be 0
+count if imid_on_drug==1 & imid_nhsd==1 & imid_drug==0 & downs_syndrome==0 &solid_cancer==0 &haem_disease==0 &renal_disease==0 &liver_disease==0 &immunosupression==0 &hiv_aids==0 &organ_transplant==0 &rare_neuro==0
+count if imid_on_drug==1 & imid_nhsd==0 & imid_drug==1 //should be 0
+count if imid_on_drug==1 & imid_nhsd==0 & imid_drug==1 & downs_syndrome==0 &solid_cancer==0 &haem_disease==0 &renal_disease==0 &liver_disease==0 &immunosupression==0 &hiv_aids==0 &organ_transplant==0 &rare_neuro==0
+count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1
+count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 
+count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_on_drug==1
+count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_on_drug==1 &downs_syndrome==0 &solid_cancer==0 &haem_disease==0 &renal_disease==0 &liver_disease==0 &immunosupression==0 &hiv_aids==0 &organ_transplant==0 &rare_neuro==0
+replace imid_on_drug=0 if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_on_drug==1 //ignore if steriods<4 scripts in 6m & not coded other imid drug 
+replace oral_steroid_drugs_nhsd=0 if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 //ignore if steriods<4 scripts in 6m
+count if imid_on_drug==1 & imid_nhsd==1 & imid_drug==0 //should be same number as those dropped above 
+replace imid_on_drug=0 if imid_nhsd==1 & imid_drug==0 
+replace imid_on_drug=0 if imid_nhsd==0 & imid_drug==1 
+gen high_risk_cohort_codelist=((downs_syndrome + solid_cancer + haem_disease + renal_disease + liver_disease + imid_on_drug + immunosupression + hiv_aids + organ_transplant + rare_neuro )>0)
+tab high_risk_cohort_nhsd high_risk_cohort_codelist
+
+** combine two high risk cohorts into one 
+foreach var of varlist downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro {
+	gen `var'_comb = `var'
+	replace `var'_comb = 1 if `var'_therap==1 
+	tab `var' `var'_therap 
+	tab `var'_comb
+}
 
 ****************************
 *	OUTCOME		*
 ****************************
-
 *** Primary outcome - AESI
-bys drug: count if ae_rheumatoid_arthritis_icd!=. & (rheumatoid_arthritis_nhsd_snomed==1 | rheumatoid_arthritis_nhsd_icd10==1)
 gen new_ae_ra_icd = ae_rheumatoid_arthritis_icd if rheumatoid_arthritis_nhsd_snomed==0 & rheumatoid_arthritis_nhsd_icd10==0  
 gen new_ae_ra_snomed = ae_rheumatoid_arthritis_snomed if rheumatoid_arthritis_nhsd_snomed==0 & rheumatoid_arthritis_nhsd_icd10==0  
 gen new_ae_sle_icd = ae_sle_icd if sle_nhsd_ctv==0 & sle_nhsd_icd10==0
@@ -207,7 +253,9 @@ global ae_imae_icd		new_ae_ra_icd 					///
 *remove event if occurred before start (including new start date for control)
 foreach x in $ae_spc $ae_spc_icd $ae_drug $ae_drug_icd $ae_imae $ae_imae_icd{
 				display "`x'"
-				bys drug: count if (`x' < start_date | `x' > start_date + 28) & `x'!=.
+				count if (`x' > start_date | `x' < start_date + 28) & `x'!=. 
+				count if (`x' < start_date | `x' > start_date + 28) & `x'!=. & drug==0
+				count if (`x' < start_date | `x' > start_date + 28) & `x'!=. & drug>0
 				replace `x'=. if (`x' < start_date | `x' > start_date + 28) & `x'!=.
 }
 egen ae_spc_gp = rmin($ae_spc)
@@ -225,7 +273,7 @@ by drug, sort: count if ae_spc_all!=.
 by drug, sort: count if ae_drug_all!=.
 by drug, sort: count if ae_imae_all!=.
 by drug, sort: count if ae_all!=.
-
+**# Bookmark #1
 
 *** Secondary outcome - SAEs hospitalisation or death including COVID-19 
 *correcting COVID hosp events: admitted on day 0 or day 1 after treatment - to ignore sotro initiators with mab procedure codes*
@@ -297,51 +345,6 @@ foreach var of varlist covid_hosp_date all_hosp_date died_date_ons{
 ****************************
 *	COVARIATES		*
 ****************************
-by drug,sort: tab high_risk_cohort_covid_therapeut,m
-gen downs_syndrome_therapeutics= 1 if strpos(high_risk_cohort_covid_therapeut, "Downs syndrome")
-gen solid_cancer_therapeutics=1 if strpos(high_risk_cohort_covid_therapeut, "solid cancer")
-gen haem_disease_therapeutics=1 if strpos(high_risk_cohort_covid_therapeut, "haematological malignancies")
-replace haem_disease_therapeutics=1 if strpos(high_risk_cohort_covid_therapeut, "sickle cell disease")
-replace haem_disease_therapeutics=1 if strpos(high_risk_cohort_covid_therapeut, "haematological diseases")
-replace haem_disease_therapeutics=1 if strpos(high_risk_cohort_covid_therapeut, "stem cell transplant")
-gen renal_disease_therapeutics= 1 if strpos(high_risk_cohort_covid_therapeut, "renal disease")
-gen liver_disease_therapeutics= 1 if strpos(high_risk_cohort_covid_therapeut, "liver disease")
-gen imid_on_drug_therapeutics= 1 if strpos(high_risk_cohort_covid_therapeut, "IMID")
-gen immunosupression_therapeutics= 1 if strpos(high_risk_cohort_covid_therapeut, "primary immune deficiencies")
-gen hiv_aids_therapeutics= 1 if strpos(high_risk_cohort_covid_therapeut, "HIV or AIDS")
-gen solid_organ_therapeutics= 1 if strpos(high_risk_cohort_covid_therapeut, "solid organ recipients")
-replace solid_organ_therapeutics= 1 if strpos(high_risk_cohort_covid_therapeut, "solid organ transplant")
-gen rare_neuro_therapeutics= 1 if strpos(high_risk_cohort_covid_therapeut, "rare neurological conditions")
-*check if all diseases have been captured*
-by drug,sort: count if high_risk_cohort_covid_therapeut!=""&high_risk_cohort_covid_therapeut!="other"& min(downs_syndrome_therapeutics,solid_cancer_therapeutics,haem_disease_therapeutics,renal_disease_therapeutics,liver_disease_therapeutics,imid_on_drug_therapeutics,immunosupression_therapeutics,hiv_aids_therapeutics,solid_organ_therapeutics,rare_neuro_therapeutics)==.
-tab high_risk_cohort_covid_therapeut if high_risk_cohort_covid_therapeut!=""&high_risk_cohort_covid_therapeut!="other"& min(downs_syndrome_therapeutics,solid_cancer_therapeutics,haem_disease_therapeutics,renal_disease_therapeutics,liver_disease_therapeutics,imid_on_drug_therapeutics,immunosupression_therapeutics,hiv_aids_therapeutics,solid_organ_therapeutics,rare_neuro_therapeutics)==.
-
-*clean high_risk_cohort
-count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1
-count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_drug_hcd==0
-count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_drug_hcd==0 &imid_on_drug==1
-count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_drug_hcd==0 &imid_on_drug==1 &downs_syndrome==0 &solid_cancer==0 &haem_disease==0 &renal_disease==0 &liver_disease==0 &immunosupression==0 &hiv_aids==0 &solid_organ_transplant==0 &rare_neuro==0
-count if imid_on_drug==1 & imid_nhsd==1 & imid_drug==0 & imid_drug_hcd==0 
-// REPLACE - ignore eligible steriods<4 scripts in last 6m
-replace oral_steroid_drugs_nhsd=0 if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1
-replace imid_drug_all=0 if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_drug_hcd==0
-// REPLACE - ignore eligible if not coded for imid AND (imid_drug or drug_HCD) & if <4 scripts steriod
-replace imid_on_drug=0 if imid_on_drug==1 & imid_nhsd==1 & imid_drug==0 & imid_drug_hcd==0 
-gen high_risk_cohort=((downs_syndrome + solid_cancer + haem_disease + renal_disease + liver_disease + imid_on_drug + immunosupression + hiv_aids + solid_organ_transplant + rare_neuro )>0)
-rename solid_organ_transplant solid_organ
-tab high_risk_cohort
-count if high_risk_cohort_covid_therapeut=="" & high_risk_cohort==1
-count if high_risk_cohort_covid_therapeut!="" & high_risk_cohort==0
-// describe two cohorts 
-count if high_risk_cohort==1 & & high_risk_cohort==1
-
-foreach var of varlist downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids solid_organ rare_neuro {
-	replace `var'_therapeutics=0 if `var'_therapeutics==.
-	display `var'
-	tab `var'_therapeutics `var'
-	gen `var'_all = 1 if `var'==1 | `var'_therapeutics==1
-}
-// decision to use primary care variable for identification of high risk rather than CMU as not present for ocontrol group
 
 *Time between positive test and treatment*
 gen postest_treat=start_date-covid_test_positive_date

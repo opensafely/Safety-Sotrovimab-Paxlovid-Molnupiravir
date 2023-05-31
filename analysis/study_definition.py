@@ -178,7 +178,7 @@ study = StudyDefinition(
     AND (
         registered_eligible
         AND
-        high_risk_cohort_covid_nhsd
+        high_risk_cohort_nhsd
         AND
         covid_test_positive
         ) 
@@ -186,7 +186,7 @@ study = StudyDefinition(
         (  
         registered_treated 
         AND
-        high_risk_cohort_covid_therapeutics
+        high_risk_cohort_therapeutics
         )
     AND NOT 
         (
@@ -199,9 +199,11 @@ study = StudyDefinition(
     registered_eligible = patients.registered_as_of("covid_test_positive_date"),
     registered_treated = patients.registered_as_of("date_treated"),  
   ),
+  
+  
           
   ## COVID TEST POSITIVE
-  ## First positive SARS-CoV-2 test. [patients are eligible for treatment if diagnosed <=5d ago. Restricted to first positive covid test after index date]
+  ## First positive SARS-CoV-2 test. 
   covid_test_positive = patients.with_test_result_in_sgss(
     pathogen = "SARS-CoV-2", test_result = "positive", returning = "binary_flag", on_or_after = "index_date - 5 days", find_first_match_in_period = True, 
     restrict_to_earliest_specimen_date = True,  return_expectations = {"incidence": 0.9 },
@@ -271,8 +273,17 @@ study = StudyDefinition(
   date_treated = patients.minimum_of(
     "sotrovimab","paxlovid", "molnupiravir", "remdesivir", "casirivimab"
   ),
-  # Start date
-  start_date = patients.minimum_of("covid_test_positive_date","date_treated"),
+  # Start date 
+  # # start_date = patients.minimum_of("date_treated") 
+  # # if patients.satisfying(
+  # #   """
+  # #   registered_treated 
+  # #   AND
+  # #   high_risk_cohort_therapeutics
+  # #   """,
+  # # ),
+  # # else start_date = patients.minimum_of("covid_test_positive_date") 
+  start_date = patients.minimum_of("date_treated","covid_test_positive_date"), 
   
   # Eligable based on comorbidities for control population
   
@@ -325,13 +336,12 @@ study = StudyDefinition(
   Ankylosing_Spondylitis_nhsd=comorbidity_snomed(Ankylosing_Spondylitis_ctv3),  
   IBD_ctv=comorbidity_snomed(IBD_ctv3),
   
-  ## Immunosuppression - Treatment steriods (4x prescriptions steroids in 6m or high dose) / CYC / MMF/ TAC / CIC
+  ## Immunosuppression - Cannot use high cost drugs. Ritux in code. Steriods (4x prescrip in 6m or high dose) / CYC / MMF/ TAC / CIC
   immunosuppresant_drugs_nhsd=drug_6m(combine_codelists(immunosuppresant_drugs_dmd_codes, immunosuppresant_drugs_snomed_codes)),
-  oral_steroid_drugs_nhsd=drug_6m(combine_codelists(oral_steroid_drugs_dmd_codes, oral_steroid_drugs_snomed_codes)),
   methotrexate_drugs_nhsd=drug_6m(combine_codelists(oral_methotrexate_drugs_snomed_codes, inj_methotrexate_drugs_snomed_codes)),
   ciclosporin_drugs_nhsd=drug_6m(oral_ciclosporin_snomed_codes),
   mycophenolate_drugs_nhsd=drug_6m(oral_mycophenolate_drugs_snomed_codes),
-
+  oral_steroid_drugs_nhsd=drug_6m(combine_codelists(oral_steroid_drugs_dmd_codes, oral_steroid_drugs_snomed_codes)),
   oral_steroid_drug_nhsd_6m_count = patients.with_these_medications(
     codelist = combine_codelists(oral_steroid_drugs_dmd_codes, oral_steroid_drugs_snomed_codes),
     returning = "number_of_matches_in_period",
@@ -340,7 +350,7 @@ study = StudyDefinition(
       "int": {"distribution": "normal", "mean": 2, "stddev": 1},
     },
   ),
-  ## imid to include vasculitis / CTD ?
+  ## imid (currently does not include CTD/vasculitis)
   imid_nhsd = patients.maximum_of("rheumatoid_arthritis_nhsd_snomed", "rheumatoid_arthritis_nhsd_icd10", "SLE_nhsd_ctv", "SLE_nhsd_icd10", "Psoriasis_nhsd", 
                                    "Psoriatic_arthritis_nhsd", "Ankylosing_Spondylitis_nhsd", "IBD_ctv"), 
   imid_drug = patients.maximum_of("immunosuppresant_drugs_nhsd", "oral_steroid_drugs_nhsd", "methotrexate_drugs_nhsd", "ciclosporin_drugs_nhsd", "mycophenolate_drugs_nhsd"),
@@ -376,7 +386,7 @@ study = StudyDefinition(
   kidney_transplant_nhsd_opcs4=comorbidity_ops(kidney_tx_opcs4_codelist),
   kidney_transplant_snomed_icd10=comorbidity_icd(kidney_tx_icd10_codelist),
 
-  solid_organ_transplant = patients.maximum_of("solid_organ_transplant_nhsd_snomed", "solid_organ_transplant_nhsd_snomed_new", 
+  organ_transplant = patients.maximum_of("solid_organ_transplant_nhsd_snomed", "solid_organ_transplant_nhsd_snomed_new", 
                                                     "solid_organ_transplant_nhsd_opcs4","solid_organ_replacement_nhsd_opcs4", "transplant_conjunctiva_y_code_opcs4", 
                                                     "transplant_ileum_1_Y_codes_opcs4","transplant_ileum_2_Y_codes_opcs4", "kidney_transplant_snomed", "kidney_transplant_nhsd_opcs4"),
  
@@ -396,7 +406,7 @@ study = StudyDefinition(
                                                   "huntingtons_disease_nhsd_snomed", "huntingtons_disease_nhsd_icd10"),
 
   ## Eligible // need to reduce eligibility of imids to those withh imid on drug/HCD
-  high_risk_cohort_covid_nhsd = patients.maximum_of("downs_syndrome", 
+  high_risk_cohort_nhsd = patients.maximum_of("downs_syndrome", 
                                 "solid_cancer", 
                                 "haem_disease",
                                 "renal_disease",
@@ -404,11 +414,11 @@ study = StudyDefinition(
                                 "immunosupression",
                                 "imid_on_drug", 
                                 "hiv_aids",
-                                "solid_organ_transplant",
+                                "organ_transplant",
                                 "rare_neuro"),
   
   ## Eligbilities from blueteq ‘high risk’ cohort for treatment arms
-  high_risk_cohort_covid_therapeutics = patients.with_covid_therapeutics(
+  high_risk_cohort_therapeutics = patients.with_covid_therapeutics(
     with_these_therapeutics = ["Sotrovimab", "Paxlovid", "Molnupiravir"],
     with_these_indications = "non_hospitalised",
     on_or_after = "index_date",
@@ -419,11 +429,11 @@ study = StudyDefinition(
       "category": {
         "ratios": {
           "Downs syndrome": 0.1,
-          "sickle cell disease": 0.1,
+          "sickle cell disease, rare neurological conditions": 0.1,
           "solid cancer": 0.1,
           "haematological diseases": 0.05,
           "stem cell transplant recipients": 0.05,
-          "renal disease": 0.1,
+          "solid organ transplant, renal disease": 0.1,
           "liver disease": 0.05,
           "IMID": 0.1,
           "IMID,solid cancer": 0.1,
