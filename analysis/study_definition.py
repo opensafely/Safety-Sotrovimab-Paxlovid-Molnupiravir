@@ -253,7 +253,7 @@ study = StudyDefinition(
   # positive test history
   prior_covid = patients.with_test_result_in_sgss(
     pathogen = "SARS-CoV-2", test_result = "positive", returning = "binary_flag", on_or_before = "covid_test_positive_date - 30 days", find_last_match_in_period = True, 
-    restrict_to_earliest_specimen_date = True,  return_expectations = {"incidence": 0.9 },
+    restrict_to_earliest_specimen_date = True,  return_expectations = {"incidence": 0.3 },
   ),
   prior_covid_date = patients.with_test_result_in_sgss(
     pathogen = "SARS-CoV-2", test_result = "positive", returning = "date", date_format = "YYYY-MM-DD", on_or_before = "covid_test_positive_date -30 days", find_last_match_in_period = True, 
@@ -458,11 +458,11 @@ study = StudyDefinition(
     },
   ),
   
-  drugs_do_not_use = patients.with_these_medications(
-    codelist = drugs_do_not_use_codes, returning = "date", on_or_before = "start_date", find_last_match_in_period = True, date_format = "YYYY-MM-DD",
+  drugs_paxlovid_interaction = patients.with_these_medications(
+    codelist = drugs_interaction_paxlovid_codes, returning = "date", on_or_before = "start_date", find_last_match_in_period = True, date_format = "YYYY-MM-DD",
   ),
-  drugs_consider_risk = patients.with_these_medications(
-    codelist = drugs_consider_risk_codes, returning = "date",  on_or_before = "start_date", find_last_match_in_period = True, date_format = "YYYY-MM-DD",
+  drugs_nirmatrelvir_interaction = patients.with_these_medications(
+    codelist = drugs_interaction_nirmatrelvir_codes, returning = "date",  on_or_before = "start_date", find_last_match_in_period = True, date_format = "YYYY-MM-DD",
   ),  
     
   # DEMOGRAPHIC COVARIATES & COMORBIDITY  
@@ -716,21 +716,30 @@ study = StudyDefinition(
   ## Adverse outcome in year 3-4 prior to start date for comparative rate by person years  
   pre_diverticulitis_icd=adverse_outcome_icd_pre(diverticulitis_icd_codes),
   pre_diverticulitis_snomed=adverse_outcome_snomed_pre(diverticulitis_snomed_codes),
+  pre_diverticulitis_AE=adverse_outcome_AE_pre(codelist(["397881000"], system="snomed")),
   pre_diarrhoea_snomed=adverse_outcome_snomed_pre(diarrhoea_snomed_codes), 
   pre_taste_snomed=adverse_outcome_snomed_pre(taste_snomed_codes),
   pre_taste_icd=adverse_outcome_icd_pre(taste_icd_codes),
   pre_rash_snomed=adverse_outcome_snomed_pre(rash_snomed_codes),
   pre_anaphylaxis_icd=adverse_outcome_icd_pre(anaphylaxis_icd_codes),
-  pre_anaphylaxis_snomed=adverse_outcome_snomed_pre(anaphylaxis_snomed_codes),  
+  pre_anaphylaxis_snomed=adverse_outcome_snomed_pre(anaphylaxis_snomed_codes),
+  pre_anaphlaxis_AE=adverse_outcome_AE_pre(codelist(["39579001"], system="snomed")),
   pre_drugreact_AE=adverse_outcome_AE_pre(codelist(["62014003"], system="snomed")),
   pre_allergic_AE=adverse_outcome_AE_pre(codelist(["609328004"], system="snomed")),
-  pre_anaphlaxis_AE=adverse_outcome_AE_pre(codelist(["39579001"], system="snomed")),
+  pre_rheumatoid_arthritis_snomed=adverse_outcome_snomed_pre(rheumatoid_arthritis_snowmed),
+  pre_rheumatoid_arthritis_icd=adverse_outcome_icd_pre(rheumatoid_arthritis_icd10),
   pre_rheumatoid_arthritis_AE=adverse_outcome_AE_pre(codelist(["69896004"], system="snomed")),
-  pre_Ankylosing_Spondylitis_AE=adverse_outcome_AE_pre(codelist(["9631008"], system="snomed")),
-  pre_psoriasis_AE=adverse_outcome_AE_pre(codelist(["9014002"], system="snomed")),
-  pre_Psoriatic_arthritis_AE=adverse_outcome_AE_pre(codelist(["156370009"], system="snomed")),
+  pre_SLE_ctv=adverse_outcome_snomed_pre(SLE_ctv),
+  pre_SLE_icd=adverse_outcome_icd_pre(SLE_icd10), 
   pre_SLE_AE=adverse_outcome_AE_pre(codelist(["55464009"], system="snomed")),
-  pre_IBD_AE=adverse_outcome_AE_pre(codelist(["34000006", "64766004"], system="snomed")),
+  pre_Psoriasis_snomed=adverse_outcome_snomed_pre(Psoriasis_ctv3),
+  pre_Psoriasis_AE=adverse_outcome_AE_pre(codelist(["9014002"], system="snomed")),
+  pre_Psoriatic_arthritis_snomed=adverse_outcome_snomed_pre(Psoriatic_arthritis_snomed),
+  pre_Psoriatic_arthritis_AE=adverse_outcome_AE_pre(codelist(["156370009"], system="snomed")),
+  pre_Ankylosing_Spondylitis_ctv=adverse_outcome_snomed_pre(Ankylosing_Spondylitis_ctv3),  
+  pre_Ankylosing_Spondylitis_AE=adverse_outcome_AE_pre(codelist(["9631008"], system="snomed")),
+  pre_IBD_snomed=adverse_outcome_snomed_pre(IBD_ctv3),  
+  pre__IBD_AE=adverse_outcome_AE_pre(codelist(["34000006", "64766004"], system="snomed")),
   
   ## 2) ALL SAE INCLUDING COVID [Note need to consider patients admitted for MAB infusion]
   allcause_emerg_aande = patients.attended_emergency_care(

@@ -38,22 +38,42 @@ use "$projectdir/output/data/main", clear
 * Models
 global crude 	i.drug 
 global agesex 	i.drug age i.sex
-global adj 		i.drug age i.sex i.region_nhs drugs_consider_risk_contra ///
-			    downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids solid_organ rare_neuro  
-global fulladj1 i.drug age i.sex i.region_nhs drugs_consider_risk_contra ///
-			    downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids solid_organ rare_neuro  ///
-				vaccination_status imd White 
-global fulladj2 i.drug age i.sex i.region_nhs drugs_consider_risk_contra ///
-			    downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids solid_organ rare_neuro  ///
-				vaccination_status imd White 1b.bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension
-/* Alternative models
-1. age = age Vs 5y band V spline			
-2. missing values as a seperate category for ethnicity, IMD, BMI: global fulladj_miss 	i.drug age i.sex i.region_nhs drugs_consider_risk_contra downs_syndrome ///
-																						solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression ///
-																						hiv_aids solid_organ rare_neuro  vaccination_status imd_with_missing White_with_missing ///
-																						1b.bmi_group_with_missing diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension
-3. Strata via NHS region: stcox i.drug age i.sex, strata(region_nhs)
-*/
+global adj 		i.drug age i.sex i.region_nhs paxlovid_contraindicated ///
+			    downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro  
+global fulladj1 i.drug age i.sex i.region_nhs paxlovid_contraindicated ///
+			    downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro  ///
+				vaccination_status imdq5 White 
+global fulladj2 i.drug age i.sex i.region_nhs paxlovid_contraindicated ///
+			    downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro  ///
+				vaccination_status imdq5 White 1b.bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension
+* Outcome
+global ae_spc_all		ae_spc_all
+global ae_drug_all 		ae_drug_all			
+global ae_imae			ae_imae_all 				
+global ae_imae			ae_imae_all 				
+global ae_all 			ae_all
+global emerg_hosp 		allcause_emerg_aande
+global covid_hosp 		covid_hosp_date
+global all_hosp 		all_hosp_date
+global died				died_date_ons
+global ae_spc			ae_diverticulitis_snomed ae_diarrhoea_snomed ae_taste_snomed						
+global ae_spc_icd		ae_diverticulitis_icd ae_taste_icd					
+global ae_spc_emerg		ae_diverticulitis_ae									
+global ae_drug 			ae_anaphylaxis_snomed ae_rash_snomed	
+global ae_drug_emerg	ae_anaphlaxis_ae ae_drugreact_ae ae_allergic_ae											    
+global ae_drug_icd		ae_anaphylaxis_icd
+global ae_imae			new_ae_ra_snomed new_ae_sle_ctv new_ae_psoriasis_snomed new_ae_psa_snomed new_ae_ankspon_ctv new_ae_ibd_snomed	
+global ae_imae_icd		new_ae_ra_icd new_ae_sle_icd		
+global ae_imae_emerg	new_ae_ra_ae new_ae_sle_ae new_ae_psoriasis_ae new_ae_psa_ae new_ae_ankspon_ae new_ae_ibd_ae
+
+* Comparator rate
+global pre_ae 			 pre_diverticulitis_icd	 pre_diverticulitis_snomed pre_diverticulitis_ae pre_divertic_all pre_diarrhoea_snomed pre_taste_snomed ///
+						 pre_taste_icd pre_rash_snomed pre_anaphylaxis_icd	pre_anaphylaxis_snomed	pre_anaphlaxis_ae pre_anaphylaxis_all pre_drugreact_ae	///
+						 pre_allergic_ae pre_rheumatoid_arthritis_ae pre_rheumatoid_arthritis_snomed pre_rheumatoid_arthritis_icd /// 		
+						 pre_ankylosing_spondylitis_ctv pre_ankylosing_spondylitis_ae pre_psoriasis_snomed pre_psoriasis_ae ///
+						 pre_psoriatic_arthritis_ae pre_psoriatic_arthritis_snomed pre_sle_ctv pre_sle_icd pre_sle_ae pre_ibd_snomed							
+						 
+						
 	   
 tempname coxoutput
 postfile `coxoutput' str20(model) str20(failure) ///
@@ -64,8 +84,11 @@ postfile `coxoutput' str20(model) str20(failure) ///
 	ptime_mol events_mol rate_mol ///
 	hr_sot lc_sot uc_sot hr_pax lc_pax uc_pax hr_mol lc_mol uc_mol ///
 	using "$projectdir/output/tables/cox_model_summary", replace	
-						
-foreach fail in ae_diverticulitis_snomed new_ae_ra_snomed ae_anaphylaxis_icd ae_all covid_hosp all_hosp died {
+						 
+foreach fail in $ae_spc $ae_spc_icd $ae_spc_emerg $ae_spc_all ///
+				$ae_drug $ae_drug_icd $ae_drug_emerg $ae_drug_all ///
+				$ae_imae $ae_imae_icd $ae_imae_emerg $ae_imae_all ///
+				$ae_all $ae_all_serious $emerg_hosp $covid_hosp $all_hosp $died {
 
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 						
@@ -125,7 +148,7 @@ foreach fail in ae_diverticulitis_snomed new_ae_ra_snomed ae_anaphylaxis_icd ae_
 
 postclose `coxoutput'
    
-foreach fail in ae_diverticulitis_snomed new_ae_ra_snomed ae_all covid_hosp all_hosp died {
+foreach fail in $ae_all $ae_all_serious $emerg_hosp $covid_hosp $all_hosp $died {
 
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 								
@@ -149,8 +172,6 @@ foreach fail in ae_diverticulitis_snomed new_ae_ra_snomed ae_all covid_hosp all_
 }
 
 
-
-
 foreach fail in ae_all {
 
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
@@ -165,8 +186,7 @@ foreach fail in ae_all {
 			
 }
 
-// d/w Sam - left and right boundary regions overlap; specify a smaller bandwidth in width() -> due to no events. Unsure which width to use
-// ask best format to export figures
+
 
 log close
 			

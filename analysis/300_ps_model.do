@@ -37,26 +37,27 @@ use "$projectdir/output/data/main", clear
 gen no_drug=1 if drug==0
 replace no_drug=0 if drug >0
 
-*Models
-global agesex	  	age i.sex i.region_nhs
-global adj 			age i.sex i.region_nhs drugs_consider_risk_contra ///
-					downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids solid_organ rare_neuro  
-global fulladj1 	age i.sex i.region_nhs drugs_consider_risk_contra ///
-					downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids solid_organ rare_neuro  ///
-					vaccination_status imd White 
-global fulladj2 	age i.sex i.region_nhs drugs_consider_risk_contra ///
-					downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids solid_organ rare_neuro  ///
-					vaccination_status imd White 1b.bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension		
-					
+* Models
+global crude 	i.drug 
+global agesex 	i.drug age i.sex
+global adj 		i.drug age i.sex i.region_nhs paxlovid_contraindicated ///
+			    downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro  
+global fulladj1 i.drug age i.sex i.region_nhs paxlovid_contraindicated ///
+			    downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro  ///
+				vaccination_status imdq5 White 
+global fulladj2 i.drug age i.sex i.region_nhs paxlovid_contraindicated ///
+			    downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro  ///
+				vaccination_status imdq5 White 1b.bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension
+* Outcome				
 					
 tabstat age sex region_nhs, by(no_drug) statistics(n mean sd) column(statistics) nototal long
-tabstat age sex region_nhs drugs_consider_risk_contra downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids solid_organ rare_neuro, ///
+tabstat age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro, ///
 		by(no_drug) statistics(n mean sd) column(statistics) nototal long
-tabstat age sex region_nhs drugs_consider_risk_contra downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids solid_organ rare_neuro ///
-		vaccination_status imd White, ///
+tabstat age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro ///
+		vaccination_status imdq5 White, ///
 		by(no_drug) statistics(n mean sd) column(statistics) nototal long
-tabstat age sex region_nhs drugs_consider_risk_contra downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids solid_organ rare_neuro ///
-		vaccination_status imd White bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension, ///
+tabstat age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro ///
+		vaccination_status imdq5 White bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension, ///
 		by(no_drug) statistics(n mean sd) column(statistics) nototal long
 
 
@@ -94,19 +95,19 @@ pbalchk no_drug age sex region_nhs
 pbalchk no_drug age sex region_nhs, wt(iptw_agesex) graph
 graph export "$projectdir/output/figures/match_agesex.svg", as(svg) replace
 
-pbalchk no_drug age sex region_nhs drugs_consider_risk_contra downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids solid_organ rare_neuro
-pbalchk no_drug age sex region_nhs drugs_consider_risk_contra downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids solid_organ rare_neuro, ///
+pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro
+pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro, ///
 wt(iptw_adj) graph
 graph export "$projectdir/output/figures/match_adj.svg", as(svg) replace 
 
-pbalchk no_drug age sex region_nhs drugs_consider_risk_contra downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids solid_organ rare_neuro vaccination_status imd White
-pbalchk no_drug age sex region_nhs drugs_consider_risk_contra downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids solid_organ rare_neuro vaccination_status imd White, ///
+pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 White
+pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 White, ///
 wt(iptw_fulladj1) graph
 graph export "$projectdir/output/figures/match_fulladj1.svg", as(svg) replace
 
-pbalchk no_drug age sex region_nhs drugs_consider_risk_contra downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids solid_organ rare_neuro vaccination_status imd White ///
+pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 White ///
 bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension	
-pbalchk no_drug age sex region_nhs drugs_consider_risk_contra downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids solid_organ rare_neuro vaccination_status imd White ///
+pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 White ///
 bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension, ///
 wt(iptw_fulladj2) graph
 graph export "$projectdir/output/figures/match_fulladj2.svg", as(svg) replace
