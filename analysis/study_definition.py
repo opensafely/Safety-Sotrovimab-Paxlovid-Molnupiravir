@@ -180,7 +180,7 @@ def adverse_outcome_AE_pre(codelist):
       find_first_match_in_period=True,
       date_format="YYYY-MM-DD",
       return_expectations={
-          "incidence": 0.2,
+          "incidence": 0.05,
           "date": {"earliest": "2022-02-18"},
       },
   )
@@ -503,15 +503,15 @@ study = StudyDefinition(
                 },
             ),
     ),
-  imd = patients.categorised_as(
-    {     "0": "DEFAULT",
-          "1": "index_of_multiple_deprivation >= 0 AND index_of_multiple_deprivation < 32800*1/5",
-          "2": "index_of_multiple_deprivation >= 32800*1/5 AND index_of_multiple_deprivation < 32800*2/5",
-          "3": "index_of_multiple_deprivation >= 32800*2/5 AND index_of_multiple_deprivation < 32800*3/5",
-          "4": "index_of_multiple_deprivation >= 32800*3/5 AND index_of_multiple_deprivation < 32800*4/5",
-          "5": "index_of_multiple_deprivation >= 32800*4/5 AND index_of_multiple_deprivation <= 32800",
+  imdQ5 = patients.categorised_as(
+    {     "Unknown": "DEFAULT",
+          "1 (most deprived)": "imd >= 0 AND imd < 32844*1/5",
+          "2": "imd >= 32844*1/5 AND imd < 32844*2/5",
+          "3": "imd >= 32844*2/5 AND imd < 32844*3/5",
+          "4": "imd >= 32844*3/5 AND imd < 32844*4/5",
+          "5 (least deprived)": "imd >= 32844*4/5 AND imd <= 32844",
     },
-    index_of_multiple_deprivation = patients.address_as_of(
+    imd = patients.address_as_of(
       "start_date",
       returning = "index_of_multiple_deprivation",
       round_to_nearest = 100,
@@ -519,7 +519,7 @@ study = StudyDefinition(
     return_expectations = {
       "rate": "universal",
       "category": {
-        "ratios": {"0": 0.01,"1": 0.20,"2": 0.20, "3": 0.20, "4": 0.20,"5": 0.19,}
+        "ratios": {"Unknown": 0.01,"1 (most deprived)": 0.20,"2": 0.20, "3": 0.20, "4": 0.20,"5 (least deprived)": 0.19,}
       },
     },
   ),
@@ -727,13 +727,13 @@ study = StudyDefinition(
   pre_anaphlaxis_AE=adverse_outcome_AE_pre(codelist(["39579001"], system="snomed")),
   pre_rheumatoid_arthritis_AE=adverse_outcome_AE_pre(codelist(["69896004"], system="snomed")),
   pre_Ankylosing_Spondylitis_AE=adverse_outcome_AE_pre(codelist(["9631008"], system="snomed")),
-  pre_psoriasis=adverse_outcome_AE_pre(codelist(["9014002"], system="snomed")),
+  pre_psoriasis_AE=adverse_outcome_AE_pre(codelist(["9014002"], system="snomed")),
   pre_Psoriatic_arthritis_AE=adverse_outcome_AE_pre(codelist(["156370009"], system="snomed")),
   pre_SLE_AE=adverse_outcome_AE_pre(codelist(["55464009"], system="snomed")),
   pre_IBD_AE=adverse_outcome_AE_pre(codelist(["34000006", "64766004"], system="snomed")),
   
   ## 2) ALL SAE INCLUDING COVID [Note need to consider patients admitted for MAB infusion]
-  AE_allcause = patients.attended_emergency_care(
+  allcause_emerg_aande = patients.attended_emergency_care(
           returning="date_arrived", between = ["start_date", "start_date + 28 days"], date_format="YYYY-MM-DD",  find_first_match_in_period = True,
           return_expectations={ "date": {"earliest": "2022-02-18"}, "rate": "uniform", "incidence": 0.05, },
   ), 

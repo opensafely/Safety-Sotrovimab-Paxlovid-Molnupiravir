@@ -61,12 +61,15 @@ foreach var of varlist 	 covid_test_positive_date				///
 						 creatinine_short_snomed_date			///
 						 ae_diverticulitis_icd					///
 						 ae_diverticulitis_snomed				///
-					     ae_diarrhoea_snomed					///
+						 ae_diarrhoea_snomed					///
 						 ae_taste_snomed						///
 						 ae_taste_icd							///
 						 ae_rash_snomed							///
 						 ae_anaphylaxis_icd						///
-  						 ae_anaphylaxis_snomed					///
+						 ae_anaphylaxis_snomed					///
+						 ae_anaphlaxis_ae						///
+						 ae_drugreact_ae						///
+						ae_allergic_ae							///
 						 ae_rheumatoid_arthritis_snomed			///
 						 ae_rheumatoid_arthritis_icd			///
 						 ae_sle_ctv								///
@@ -75,6 +78,30 @@ foreach var of varlist 	 covid_test_positive_date				///
 						 ae_psoriatic_arthritis_snomed			///
 						 ae_ankylosing_spondylitis_ctv			///
 						 ae_ibd_snomed							///
+						 ae_diverticulitis_ae					///
+						 ae_rheumatoid_arthritis_ae				///
+						 ae_sle_ae								///
+						 ae_psoriasis_ae						///
+						 ae_psoriatic_arthritis_ae				///
+						 ae_ankylosing_spondylitis_ae			///
+						 ae_ibd_ae								///
+						 pre_diverticulitis_icd				    ///
+						 pre_diverticulitis_snomed				///
+						 pre_diarrhoea_snomed 					///
+						 pre_taste_snomed						///
+						 pre_taste_icd							///
+						 pre_rash_snomed						///
+						 pre_anaphylaxis_icd					///
+						 pre_anaphylaxis_snomed					///
+						 pre_drugreact_ae						///
+						 pre_allergic_ae						///
+						 pre_anaphlaxis_ae						///
+						 pre_rheumatoid_arthritis_ae			///
+						 pre_ankylosing_spondylitis_ae			///
+						 pre_psoriasis_ae						///
+						 pre_psoriatic_arthritis_ae				///
+						 pre_sle_ae								///
+						 pre_ibd_ae								///			 
 						 rheumatoid_arthritis_nhsd_snomed		///
 						 rheumatoid_arthritis_nhsd_icd10		///
 						 sle_nhsd_ctv							///
@@ -83,6 +110,7 @@ foreach var of varlist 	 covid_test_positive_date				///
 						 psoriatic_arthritis_nhsd				///
 						 ankylosing_spondylitis_nhsd			///
 						 ibd_ctv								///
+						 allcause_emerg_aande					///
 						 all_hosp_date 							///
 						 all_hosp_date0 						///
 						 all_hosp_date1 						///
@@ -95,6 +123,7 @@ foreach var of varlist 	 covid_test_positive_date				///
 						 covid_hosp_date0 						///
 						 covid_hosp_date1 						///
 						 covid_hosp_date2  						///						
+						 covid_discharge_date					///
 						 covid_discharge_date0				  	///  						
 						 covid_discharge_date1					/// 
 						 covid_discharge_date2					/// 
@@ -238,8 +267,12 @@ global ae_spc			ae_diverticulitis_snomed		///
 						ae_taste_snomed						
 global ae_spc_icd		ae_diverticulitis_icd			///
 						ae_taste_icd					
+global ae_spc_emerg		ae_diverticulitis_ae									
 global ae_drug 			ae_anaphylaxis_snomed			///	
 						ae_rash_snomed	
+global ae_drug_emerg	ae_anaphlaxis_ae				///
+						ae_drugreact_ae					///
+						ae_allergic_ae											    
 global ae_drug_icd		ae_anaphylaxis_icd
 global ae_imae			new_ae_ra_snomed 				///
 						new_ae_sle_ctv 					///
@@ -248,9 +281,16 @@ global ae_imae			new_ae_ra_snomed 				///
 						new_ae_ankspon_ctv				///
 						new_ae_ibd	
 global ae_imae_icd		new_ae_ra_icd 					///
-						new_ae_sle_icd							
+						new_ae_sle_icd		
+global ae_imae_emerg	ae_rheumatoid_arthritis_ae		///
+						ae_sle_ae						///
+						ae_psoriasis_ae					///
+						ae_psoriatic_arthritis_ae		///
+						ae_ankylosing_spondylitis_ae	///
+						ae_ibd_ae				
+									
 *remove event if occurred before start (including new start date for control)
-foreach x in $ae_spc $ae_spc_icd $ae_drug $ae_drug_icd $ae_imae $ae_imae_icd{
+foreach x in $ae_spc $ae_spc_icd $ae_spc_emerg $ae_drug $ae_drug_icd $ae_drug_emerg $ae_imae $ae_imae_icd $ae_drug_emerg{
 				display "`x'"
 				count if (`x' > start_date | `x' < start_date + 28) & `x'!=. 
 				count if (`x' < start_date | `x' > start_date + 28) & `x'!=. & drug==0
@@ -259,78 +299,102 @@ foreach x in $ae_spc $ae_spc_icd $ae_drug $ae_drug_icd $ae_imae $ae_imae_icd{
 }
 egen ae_spc_gp = rmin($ae_spc)
 egen ae_spc_serious = rmin($ae_spc_icd)
-egen ae_spc_all = rmin($ae_spc $ae_spc_icd)
+egen ae_spc_emerg = rmin($ae_spc_emerg)
+egen ae_spc_all = rmin($ae_spc $ae_spc_icd $ae_spc_emerg)
 egen ae_drug_gp = rmin($ae_drug)
 egen ae_drug_serious = rmin($ae_drug_icd)
-egen ae_drug_all = rmin($ae_drug $ae_drug_icd)
-egen ae_imae_gp = rmin($ae_imae)	
+egen ae_drug_emerg = rmin($ae_drug_emerg)
+egen ae_drug_all = rmin($ae_drug $ae_drug_icd $ae_drug_emerg)
+egen ae_imae_gp = rmin($ae_imae)
 egen ae_imae_serious = rmin($ae_imae_icd)
-egen ae_imae_all = rmin($ae_imae $ae_imae_icd)	
-egen ae_all = rmin($ae_spc $ae_spc_icd $ae_drug $ae_drug_icd $ae_imae $ae_imae_icd)
-egen ae_all_serious = rmin($ae_spc_icd $ae_drug_icd $ae_imae_icd)
+egen ae_imae_emerg = rmin($ae_imae_emerg)
+egen ae_imae_all = rmin($ae_imae $ae_imae_icd $ae_imae_emerg)	
+egen ae_all = rmin($ae_spc $ae_spc_icd $ae_spc_emerg $ae_drug $ae_drug_icd $ae_drug_emerg $ae_imae $ae_imae_icd $ae_imae_emerg)
+egen ae_all_serious = rmin($ae_spc_icd $ae_spc_emerg $ae_drug_icd $ae_drug_emerg $ae_imae_icd $ae_imae_emerg)
 by drug, sort: count if ae_spc_all!=.
 by drug, sort: count if ae_drug_all!=.
 by drug, sort: count if ae_imae_all!=.
 by drug, sort: count if ae_all!=.
 
+*generate rate for adverse outcome in year 3-4 prior to start date for comparative rate by person years  
+global pre_ae 			 pre_diverticulitis_icd				    ///
+						 pre_diverticulitis_snomed				///
+						 pre_diarrhoea_snomed 					///
+						 pre_taste_snomed						///
+						 pre_taste_icd							///
+						 pre_rash_snomed						///
+						 pre_anaphylaxis_icd					///
+						 pre_anaphylaxis_snomed					///
+						 pre_drugreact_ae						///
+						 pre_allergic_ae						///
+						 pre_anaphlaxis_ae						///
+						 pre_rheumatoid_arthritis_ae			///
+						 pre_ankylosing_spondylitis_ae			///
+						 pre_psoriasis_ae						///
+						 pre_psoriatic_arthritis_ae				///
+						 pre_sle_ae								///
+						 pre_ibd_ae				
+
 *** Secondary outcome - SAEs hospitalisation or death including COVID-19 
 *correcting COVID hosp events: admitted on day 0 or day 1 after treatment - to ignore sotro initiators with mab procedure codes*
-bys drug: count if covid_hosp_date!=. // all hospitalisation
-bys drug: count if covid_hosp_date0!=. // *nb: control group will not have covid_hosp_date0 - as do not have date_treated
+bys drug: count if covid_hosp_date!=. // all covid hospitalisation
+bys drug: count if covid_hosp_date0!=. // hospitalisation after treatment date (control group will not have covid_hosp_date0)
 // covid admission is the same date as date treated 
 bys drug: count if covid_hosp_date0!=date_treated&covid_hosp_date0!=.&date_treated!=.
 bys drug: count if covid_hosp_date1!=(date_treated+1) &covid_hosp_date1!=.&date_treated!=.
 // covid admission is the same date as date treated and is a daycase
-bys drug:count if covid_hosp_date0==covid_discharge_date0&covid_hosp_date0!=.
+bys drug: count if covid_hosp_date0==covid_discharge_date0&covid_hosp_date0!=.
 bys drug: count if covid_hosp_date1==covid_discharge_date1&covid_hosp_date1!=.
 // covid admission is the same date as mab
 bys drug: count if covid_hosp_date0==covid_hosp_date_mabs&covid_hosp_date_mabs!=.
 bys drug: count if covid_hosp_date1==covid_hosp_date_mabs&covid_hosp_date_mabs!=.
-// covid admission is the same date as mab and is a daycase, 1 day admission
+// covid admission is the same date as mab and is a daycase or 24 hour admission
 bys drug: count if covid_hosp_date0==covid_hosp_date_mabs&covid_hosp_date0!=.&covid_hosp_date0==covid_discharge_date0
 bys drug: count if covid_hosp_date1==covid_hosp_date_mabs&covid_hosp_date1!=.&covid_hosp_date1==covid_discharge_date1
 bys drug: count if covid_hosp_date0==covid_hosp_date_mabs&covid_hosp_date0!=.&(covid_discharge_date0 - covid_hosp_date0)==1
 bys drug: count if covid_hosp_date1==covid_hosp_date_mabs&covid_hosp_date1!=.&(covid_discharge_date1 - covid_hosp_date1)==1
-// covid admission is PM but discharged in AM 
-count if covid_hosp_date!=.&covid_discharge_date_primary==.
-count if covid_hosp_date==.&covid_discharge_date_primary!=.
-count if covid_hosp_date!=.&covid_discharge_date_primary!=.&covid_hosp_date==covid_discharge_date_primary
-count if covid_hosp_date!=.&covid_discharge_date_primary!=.&covid_hosp_date<covid_discharge_date_primary
-count if covid_hosp_date!=.&covid_discharge_date_primary!=.&covid_hosp_date>covid_discharge_date_primary
+// checking admission and discharge date; missing admission, missing dischagre, or dischagre preceed admission 
+count if covid_hosp_date!=.&covid_discharge_date==.
+count if covid_hosp_date==.&covid_discharge_date!=.
+count if covid_hosp_date!=.&covid_discharge_date!=.&covid_hosp_date==covid_discharge_date
+count if covid_hosp_date!=.&covid_discharge_date!=.&covid_hosp_date<covid_discharge_date
+count if covid_hosp_date!=.&covid_discharge_date!=.&covid_hosp_date>covid_discharge_date
 // REPLACE - ignore covid admission if admission is the day 0 or day 1 after treatment date treated AND a day case
 replace covid_hosp_date=. if covid_hosp_date0==covid_discharge_date0&covid_hosp_date0!=.
-replace covid_hosp_date=. if covid_hosp_date1==covid_discharge_date1&covid_hosp_date1!=.  // [? Bang is your code for this correct~line 135]
+replace covid_hosp_date=. if covid_hosp_date1==covid_discharge_date1&covid_hosp_date1!=.  
 // REPLACE - ignore covid admission if admission is the day 0 or day 1 after treatment date AND a mab procedures for sotro 
 replace covid_hosp_date=. if covid_hosp_date0==covid_hosp_date_mabs&covid_hosp_date_mabs!=.&drug==1
 replace covid_hosp_date=. if covid_hosp_date1==covid_hosp_date_mabs&covid_hosp_date_mabs!=.&drug==1 
 
-*correcting all hosp admission: admitted on day 0 or day 1 after treatment - to ignore sotro initiators with mab procedure codes*
-by drug, sort: count if all_hosp_date!=.
-by drug, sort: count if all_hosp_date0!=. // *nb: control group will not have covid_hosp_date0 - as do not have date_treated
+*correcting ALL hosp events: admitted on day 0 or day 1 after treatment - to ignore sotro initiators with mab procedure codes*
+bys drug: count if all_hosp_date!=. // all hospitalisation
+bys drug: count if all_hosp_date0!=. // hospitalisation after treatment date (control group will not have all_hosp_date0)
 // admission is the same date as date treated 
-by drug, sort: count if all_hosp_date0!=date_treated&all_hosp_date0!=.&date_treated!=.
-by drug, sort: count if all_hosp_date1!=(date_treated+1) &all_hosp_date1!=.&date_treated!=.
+bys drug: count if all_hosp_date0!=date_treated&all_hosp_date0!=.&date_treated!=.
+bys drug: count if all_hosp_date1!=(date_treated+1) &all_hosp_date1!=.&date_treated!=.
 // admission is the same date as date treated and is a daycase
-by drug, sort: count if all_hosp_date0==hosp_discharge_date0&all_hosp_date0!=.
-by drug, sort: count if all_hosp_date1==hosp_discharge_date1&all_hosp_date1!=.
+bys drug: count if all_hosp_date0==hosp_discharge_date0&all_hosp_date0!=.
+bys drug: count if all_hosp_date1==hosp_discharge_date1&all_hosp_date1!=.
 //  admission is the same date as mab
-by drug, sort: count if all_hosp_date0==covid_hosp_date_mabs&covid_hosp_date_mabs!=.
-by drug, sort: count if all_hosp_date1==covid_hosp_date_mabs&covid_hosp_date_mabs!=.
+bys drug: count if all_hosp_date0==covid_hosp_date_mabs&covid_hosp_date_mabs!=.
+bys drug: count if all_hosp_date1==covid_hosp_date_mabs&covid_hosp_date_mabs!=.
 //  admission is the same date as mab and is a daycase, 1 day admission
-by drug, sort: count if all_hosp_date0==covid_hosp_date_mabs&all_hosp_date0!=.&all_hosp_date0==hosp_discharge_date0
-by drug, sort: count if all_hosp_date1==covid_hosp_date_mabs&all_hosp_date1!=.&all_hosp_date1==hosp_discharge_date1
-by drug, sort: count if all_hosp_date0==covid_hosp_date_mabs&all_hosp_date0!=.&(hosp_discharge_date0-all_hosp_date0)==1
-by drug, sort: count if all_hosp_date1==covid_hosp_date_mabs&all_hosp_date1!=.&(hosp_discharge_date1-all_hosp_date1)==1
-//  admission is PM but discharged in AM 
+bys drug: count if all_hosp_date0==covid_hosp_date_mabs&all_hosp_date0!=.&all_hosp_date0==hosp_discharge_date0
+bys drug: count if all_hosp_date1==covid_hosp_date_mabs&all_hosp_date1!=.&all_hosp_date1==hosp_discharge_date1
+bys drug: count if all_hosp_date0==covid_hosp_date_mabs&all_hosp_date0!=.&(hosp_discharge_date0-all_hosp_date0)==1
+bys drug: count if all_hosp_date1==covid_hosp_date_mabs&all_hosp_date1!=.&(hosp_discharge_date1-all_hosp_date1)==1
+// checking admission and discharge date; missing admission, missing dischagre, or dischagre preceed admission 
 count if all_hosp_date!=.&hosp_discharge_date==.
 count if all_hosp_date==.&hosp_discharge_date!=.
 count if all_hosp_date!=.&hosp_discharge_date!=.&all_hosp_date==hosp_discharge_date
 count if all_hosp_date!=.&hosp_discharge_date!=.&all_hosp_date<hosp_discharge_date
 count if all_hosp_date!=.&hosp_discharge_date!=.&all_hosp_date>hosp_discharge_date
-// REPLACE - ignore admission if admission it is the day 0 or day 1 after treatment date AND a mab procedures for sotro 
-replace all_hosp_date=. if all_hosp_date0==covid_hosp_date_mabs&covid_hosp_date_mabs!=.&drug==1
-replace all_hosp_date=. if all_hosp_date1==covid_hosp_date_mabs&covid_hosp_date_mabs!=.&drug==1 
-// Decision not to REPLACE admission if admission is the day 0 or day 1 after treatment date treated AND a day case
+// REPLACE - ignore covid admission if admission is for covid AND day 0 or day 1 after treatment AND daycase
+replace all_hosp_date=. if all_hosp_date0==covid_hosp_date0 & all_hosp_date0==hosp_discharge_date0&all_hosp_date0!=.
+replace all_hosp_date=. if all_hosp_date1==covid_hosp_date1 & all_hosp_date1==hosp_discharge_date1&all_hosp_date1!=.
+// REPLACE - ignore admission if admission is for covid AND day 0 or day 1 after treatment AND a mab procedures for sotro 
+replace all_hosp_date=. if all_hosp_date0==covid_hosp_date0 & all_hosp_date0==covid_hosp_date_mabs & covid_hosp_date_mabs!=.&drug==1
+replace all_hosp_date=. if all_hosp_date1==covid_hosp_date1 & all_hosp_date1==covid_hosp_date_mabs & covid_hosp_date_mabs!=.&drug==1 
 
 foreach var of varlist covid_hosp_date all_hosp_date died_date_ons{
 				display "`var'"
@@ -351,7 +415,8 @@ replace pre_drug_test=1 if drug>0 & covid_test_positive_date!=. &(date_treated-c
 replace pre_drug_test=0 if drug>0 & covid_test_positive_date!=. &(date_treated-covid_test_positive_date>0)&(date_treated-covid_test_positive_date<=3)
 label define pre_drug_test 0 "<3 days" 1 "3-5 days"  2 "5-7 days" 9 "more than 7 days" 99"treatment proceeds test", replace 
 label values pre_drug_test pre_drug_test
-tab pre_drug_test drug,mlavel
+tab pre_drug_test drug,m
+
 
 * Demographics*
 * Age
@@ -382,14 +447,17 @@ replace White=0 if ethnicity!=5&ethnicity!=.
 gen White_with_missing=White
 replace White_with_missing=9 if White==.
 * IMD
-tab imd,m
-replace imd=. if imd=="DEFAULT" //changed to DEFAULT not 0 - may need to destring no
-recode imd 5 = 1 4 = 2 3 = 3 2 = 4 1 = 5 // Reverse the order (so high is more deprived)
-label define imd 1 "1 least deprived" 2 "2" 3 "3" 4 "4" 5 "5 most deprived", replace
-label values imd imd
-gen imd_with_missing=imd
-replace imd_with_missing=9 if imd==.
-tab imd
+tab imdq5,m
+replace imdq5="." if imdq5=="Unknown" 
+replace imdq5="1" if imdq5=="1 (most deprived)" 
+replace imdq5="5" if imdq5=="5 (least deprived)" 
+destring imdq5, replace
+recode imdq5 5 = 1 4 = 2 3 = 3 2 = 4 1 = 5 // Reverse the order (so 5 is more deprived)
+label define imdq5 1 "1 least deprived" 2 "2" 3 "3" 4 "4" 5 "5 most deprived", replace
+label values imdq5 imdq5
+gen imd_with_missing=imdq5
+replace imd_with_missing=9 if imdq5==.
+tab imdq5,m
 * Region
 tab region_nhs,m
 rename region_nhs region_nhs_str 
@@ -459,7 +527,7 @@ tab prior_covid, m
 gen prior_covid_index=1 if prior_covid==1 & prior_covid_date<campaign_start
 tab prior_covid_index,m
 *Contraindications for Pax*
-tab drug if solid_organ==1
+tab drug if organ_transplant==1
 tab drug if liver_disease_nhsd_icd10==1
 tab drug if renal_disease==1
 * Calculating egfr: adapted from https://github.com/opensafely/COVID-19-vaccine-breakthrough/blob/updates-feb/analysis/data_process.R*
@@ -519,7 +587,7 @@ gen drugs_consider_risk_contra=(drugs_consider_risk<=start_date&drugs_consider_r
 * Drug contraindicated 
 gen paxlovid_contra = 1 if egfr_30==1 | dialysis==1
 replace paxlovid_contra = 1 if liver_disease==1 
-replace paxlovid_contra = 1 if solid_organ==1 
+replace paxlovid_contra = 1 if organ_transplant==1 
 replace paxlovid_contra = 1 if drugs_do_not_use<=start_date&drugs_do_not_use>=(start_date-180)
 recode paxlovid_contra . = 0
 by drug, sort: count if paxlovid_contra==1
