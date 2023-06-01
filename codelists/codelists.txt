@@ -97,3 +97,4 @@ opensafely/sps-paxlovid-interactions-do-not-use/58f87823
 opensafely/nirmatrelvir-drug-interactions/3d3644f8
 user/katiebechman/anaphylaxis/3ea7fc86/
 user/katiebechman/anaphylaxis-snomed/25988951/
+opensafely/symptoms-rashes/6bd2da47/

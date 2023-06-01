@@ -59,13 +59,12 @@ foreach var of varlist 	 covid_test_positive_date				///
 						 creatinine_ctv3_date 					///
 						 creatinine_snomed_date					///
 						 creatinine_short_snomed_date			///
-						 covid_discharge_date_primary			///
-						 any_covid_hosp_discharge				///			
 						 ae_diverticulitis_icd					///
 						 ae_diverticulitis_snomed				///
 					     ae_diarrhoea_snomed					///
 						 ae_taste_snomed						///
 						 ae_taste_icd							///
+						 ae_rash_snomed							///
 						 ae_anaphylaxis_icd						///
   						 ae_anaphylaxis_snomed					///
 						 ae_rheumatoid_arthritis_snomed			///
@@ -93,16 +92,15 @@ foreach var of varlist 	 covid_test_positive_date				///
 						 hosp_discharge_date1 					///
 						 hosp_discharge_date2					///
 						 covid_hosp_date						///
-						 covid_hosp_date_primary				///
 						 covid_hosp_date0 						///
 						 covid_hosp_date1 						///
 						 covid_hosp_date2  						///						
 						 covid_discharge_date0				  	///  						
 						 covid_discharge_date1					/// 
 						 covid_discharge_date2					/// 
+						 any_covid_hosp_discharge				///			
 						 covid_hosp_date_mabs					/// 
 						 covid_hosp_date_mabs_not_primary		/// 
-						 covid_hosp_date_mabs_day				///
 						 died_date_ons							///
 						 died_ons_covid	{					 
 	capture confirm string variable `var'
@@ -240,7 +238,8 @@ global ae_spc			ae_diverticulitis_snomed		///
 						ae_taste_snomed						
 global ae_spc_icd		ae_diverticulitis_icd			///
 						ae_taste_icd					
-global ae_drug 			ae_anaphylaxis_snomed			
+global ae_drug 			ae_anaphylaxis_snomed			///	
+						ae_rash_snomed	
 global ae_drug_icd		ae_anaphylaxis_icd
 global ae_imae			new_ae_ra_snomed 				///
 						new_ae_sle_ctv 					///
@@ -273,26 +272,25 @@ by drug, sort: count if ae_spc_all!=.
 by drug, sort: count if ae_drug_all!=.
 by drug, sort: count if ae_imae_all!=.
 by drug, sort: count if ae_all!=.
-**# Bookmark #1
 
 *** Secondary outcome - SAEs hospitalisation or death including COVID-19 
 *correcting COVID hosp events: admitted on day 0 or day 1 after treatment - to ignore sotro initiators with mab procedure codes*
-by drug, sort: count if covid_hosp_date!=.
-by drug, sort: count if covid_hosp_date0!=. // *nb: control group will not have covid_hosp_date0 - as do not have date_treated
+bys drug: count if covid_hosp_date!=. // all hospitalisation
+bys drug: count if covid_hosp_date0!=. // *nb: control group will not have covid_hosp_date0 - as do not have date_treated
 // covid admission is the same date as date treated 
-by drug, sort: count if covid_hosp_date0!=date_treated&covid_hosp_date0!=.&date_treated!=.
-by drug, sort: count if covid_hosp_date1!=(date_treated+1) &covid_hosp_date1!=.&date_treated!=.
+bys drug: count if covid_hosp_date0!=date_treated&covid_hosp_date0!=.&date_treated!=.
+bys drug: count if covid_hosp_date1!=(date_treated+1) &covid_hosp_date1!=.&date_treated!=.
 // covid admission is the same date as date treated and is a daycase
-by drug, sort: count if covid_hosp_date0==covid_discharge_date0&covid_hosp_date0!=.
-by drug, sort: count if covid_hosp_date1==covid_discharge_date1&covid_hosp_date1!=.
+bys drug:count if covid_hosp_date0==covid_discharge_date0&covid_hosp_date0!=.
+bys drug: count if covid_hosp_date1==covid_discharge_date1&covid_hosp_date1!=.
 // covid admission is the same date as mab
-by drug, sort: count if covid_hosp_date0==covid_hosp_date_mabs&covid_hosp_date_mabs!=.
-by drug, sort: count if covid_hosp_date1==covid_hosp_date_mabs&covid_hosp_date_mabs!=.
+bys drug: count if covid_hosp_date0==covid_hosp_date_mabs&covid_hosp_date_mabs!=.
+bys drug: count if covid_hosp_date1==covid_hosp_date_mabs&covid_hosp_date_mabs!=.
 // covid admission is the same date as mab and is a daycase, 1 day admission
-by drug, sort: count if covid_hosp_date0==covid_hosp_date_mabs&covid_hosp_date0!=.&covid_hosp_date0==covid_discharge_date0
-by drug, sort: count if covid_hosp_date1==covid_hosp_date_mabs&covid_hosp_date1!=.&covid_hosp_date1==covid_discharge_date1
-by drug, sort: count if covid_hosp_date0==covid_hosp_date_mabs&covid_hosp_date0!=.&(covid_discharge_date0 - covid_hosp_date0)==1
-by drug, sort: count if covid_hosp_date1==covid_hosp_date_mabs&covid_hosp_date1!=.&(covid_discharge_date1 - covid_hosp_date1)==1
+bys drug: count if covid_hosp_date0==covid_hosp_date_mabs&covid_hosp_date0!=.&covid_hosp_date0==covid_discharge_date0
+bys drug: count if covid_hosp_date1==covid_hosp_date_mabs&covid_hosp_date1!=.&covid_hosp_date1==covid_discharge_date1
+bys drug: count if covid_hosp_date0==covid_hosp_date_mabs&covid_hosp_date0!=.&(covid_discharge_date0 - covid_hosp_date0)==1
+bys drug: count if covid_hosp_date1==covid_hosp_date_mabs&covid_hosp_date1!=.&(covid_discharge_date1 - covid_hosp_date1)==1
 // covid admission is PM but discharged in AM 
 count if covid_hosp_date!=.&covid_discharge_date_primary==.
 count if covid_hosp_date==.&covid_discharge_date_primary!=.
@@ -345,15 +343,15 @@ foreach var of varlist covid_hosp_date all_hosp_date died_date_ons{
 ****************************
 *	COVARIATES		*
 ****************************
-
 *Time between positive test and treatment*
-gen postest_treat=start_date-covid_test_positive_date
-tab postest_treat,m
-by drug, sort: tab postest_treat 
-replace postest_treat=. if postest_treat<0|postest_treat>7
-gen postest_treat_cat=(postest_treat>=3) if postest_treat<=5
-replace postest_treat_cat=9 if postest_treat_cat==. 
-label define postest_treat_cat 0 "<3 days" 1 "3-5 days"  9 "missing", replace 
+gen pre_drug_test=9 if drug>0 & covid_test_positive_date==. 
+replace pre_drug_test=99 if drug>0 & (date_treated-covid_test_positive_date<0)
+replace pre_drug_test=2 if drug>0 & covid_test_positive_date!=. &(date_treated-covid_test_positive_date>0)&(date_treated-covid_test_positive_date<=7)
+replace pre_drug_test=1 if drug>0 & covid_test_positive_date!=. &(date_treated-covid_test_positive_date>0)&(date_treated-covid_test_positive_date<=5)
+replace pre_drug_test=0 if drug>0 & covid_test_positive_date!=. &(date_treated-covid_test_positive_date>0)&(date_treated-covid_test_positive_date<=3)
+label define pre_drug_test 0 "<3 days" 1 "3-5 days"  2 "5-7 days" 9 "more than 7 days" 99"treatment proceeds test", replace 
+label values pre_drug_test pre_drug_test
+tab pre_drug_test drug,mlavel
 
 * Demographics*
 * Age

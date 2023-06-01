@@ -415,3 +415,6 @@ anaphylaxis_snomed_codes = codelist_from_csv(
 anaphylaxis_icd_codes = codelist_from_csv( 
   "codelists/user-katiebechman-anaphylaxis.csv", system = "icd10",  column = "code",
 ) 
+rash_snomed_codes = codelist_from_csv( 
+  "codelists/opensafely-symptoms-rashes.csv", system = "snomed",  column = "code",
+) 

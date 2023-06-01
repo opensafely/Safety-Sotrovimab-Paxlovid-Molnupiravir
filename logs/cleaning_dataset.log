@@ -1,8 +1,8 @@
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
        log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/logs/cleaning_dataset.log
   log type:  text
- opened on:  31 May 2023, 16:27:40
+ opened on:   1 Jun 2023, 12:40:45
 
 . 
 . * import dataset
@@ -51,13 +51,12 @@
 >                                                  creatinine_ctv3_date                                   ///
 >                                                  creatinine_snomed_date                                 ///
 >                                                  creatinine_short_snomed_date                   ///
->                                                  covid_discharge_date_primary                   ///
->                                                  any_covid_hosp_discharge                               ///                     
 >                                                  ae_diverticulitis_icd                                  ///
 >                                                  ae_diverticulitis_snomed                               ///
 >                                              ae_diarrhoea_snomed                                        ///
 >                                                  ae_taste_snomed                                                ///
 >                                                  ae_taste_icd                                                   ///
+>                                                  ae_rash_snomed                                                 ///
 >                                                  ae_anaphylaxis_icd                                             ///
 >                                                  ae_anaphylaxis_snomed                                  ///
 >                                                  ae_rheumatoid_arthritis_snomed                 ///
@@ -85,16 +84,15 @@
 >                                                  hosp_discharge_date1                                   ///
 >                                                  hosp_discharge_date2                                   ///
 >                                                  covid_hosp_date                                                ///
->                                                  covid_hosp_date_primary                                ///
 >                                                  covid_hosp_date0                                               ///
 >                                                  covid_hosp_date1                                               ///
 >                                                  covid_hosp_date2                                               ///                                             
 >                                                  covid_discharge_date0                                  ///                                             
 >                                                  covid_discharge_date1                                  /// 
 >                                                  covid_discharge_date2                                  /// 
+>                                                  any_covid_hosp_discharge                               ///                     
 >                                                  covid_hosp_date_mabs                                   /// 
 >                                                  covid_hosp_date_mabs_not_primary               /// 
->                                                  covid_hosp_date_mabs_day                               ///
 >                                                  died_date_ons                                                  ///
 >                                                  died_ons_covid {                                        
   2.         capture confirm string variable `var'
@@ -117,7 +115,7 @@
 (49,500 missing values generated)
 (49,500 missing values generated)
 (49,500 missing values generated)
-(29,577 missing values generated)
+(29,607 missing values generated)
 (47,500 missing values generated)
 (47,500 missing values generated)
 (2,500 missing values generated)
@@ -126,46 +124,48 @@
 (2,500 missing values generated)
 (25,000 missing values generated)
 (25,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
 (45,000 missing values generated)
+(49,500 missing values generated)
+(49,500 missing values generated)
+(49,500 missing values generated)
+(45,000 missing values generated)
+(49,500 missing values generated)
+(49,500 missing values generated)
+(49,500 missing values generated)
+(45,000 missing values generated)
+(49,500 missing values generated)
+(49,500 missing values generated)
+(49,500 missing values generated)
+(49,500 missing values generated)
+(49,500 missing values generated)
+(49,500 missing values generated)
 (47,500 missing values generated)
-(40,000 missing values generated)
-(40,000 missing values generated)
-(40,000 missing values generated)
-(40,000 missing values generated)
-(40,000 missing values generated)
-(40,000 missing values generated)
-(40,000 missing values generated)
-(40,000 missing values generated)
-(40,000 missing values generated)
-(40,000 missing values generated)
-(40,000 missing values generated)
-(40,000 missing values generated)
-(40,000 missing values generated)
-(40,000 missing values generated)
-(40,000 missing values generated)
-(45,000 missing values generated)
-(45,000 missing values generated)
-(45,000 missing values generated)
-(45,000 missing values generated)
-(45,000 missing values generated)
-(45,000 missing values generated)
-(45,000 missing values generated)
-(45,000 missing values generated)
-(45,000 missing values generated)
-(45,000 missing values generated)
-(45,000 missing values generated)
-(45,000 missing values generated)
-(45,000 missing values generated)
-(45,000 missing values generated)
-(45,000 missing values generated)
-(45,000 missing values generated)
-(45,000 missing values generated)
 (45,000 missing values generated)
 (45,000 missing values generated)
 (20,000 missing values generated)
 (20,000 missing values generated)
 
 . 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
 . ****************************
 . *       EXPOSURE                *
 . ****************************
@@ -180,73 +180,73 @@
   8. }
 sotrovimab
   5,000
-  4,072
-(45,985 missing values generated)
-(57 real changes made)
+  4,111
+(45,934 missing values generated)
+(45 real changes made)
 
 sotrovimab_ |
       start |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 |         57        0.11        0.11
-          1 |      4,015        8.03        8.14
-          . |     45,928       91.86      100.00
+          0 |         45        0.09        0.09
+          1 |      4,066        8.13        8.22
+          . |     45,889       91.78      100.00
 ------------+-----------------------------------
       Total |     50,000      100.00
 molnupiravir
   5,000
-  4,085
-(45,956 missing values generated)
-(41 real changes made)
+  4,092
+(45,942 missing values generated)
+(34 real changes made)
 
 molnupiravi |
     r_start |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 |         41        0.08        0.08
-          1 |      4,044        8.09        8.17
-          . |     45,915       91.83      100.00
+          0 |         34        0.07        0.07
+          1 |      4,058        8.12        8.18
+          . |     45,908       91.82      100.00
 ------------+-----------------------------------
       Total |     50,000      100.00
 paxlovid
   5,000
-  4,069
-(45,978 missing values generated)
-(47 real changes made)
+  4,055
+(45,974 missing values generated)
+(29 real changes made)
 
 paxlovid_st |
         art |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 |         47        0.09        0.09
-          1 |      4,022        8.04        8.14
-          . |     45,931       91.86      100.00
+          0 |         29        0.06        0.06
+          1 |      4,026        8.05        8.11
+          . |     45,945       91.89      100.00
 ------------+-----------------------------------
       Total |     50,000      100.00
 
 . gen drug=1 if sotrovimab==date_treated & sotrovimab_start==1 
-(45,985 missing values generated)
+(45,934 missing values generated)
 
 . replace drug=2 if paxlovid==date_treated & paxlovid_start==1
-(4,022 real changes made)
+(4,026 real changes made)
 
 . replace drug=3 if molnupiravir==date_treated & molnupiravir_start==1
-(4,044 real changes made)
+(4,058 real changes made)
 
 . replace drug=4 if sotrovimab==date_treated & sotrovimab_start==0 
-(57 real changes made)
+(45 real changes made)
 
 . replace drug=5 if paxlovid==date_treated & paxlovid_start==0 
-(47 real changes made)
+(29 real changes made)
 
 . replace drug=6 if molnupiravir==date_treated & molnupiravir_start==0 
-(41 real changes made)
+(34 real changes made)
 
 . replace drug=7 if remdesivir==date_treated&remdesivir!=.&date_treated!=.
-(4,092 real changes made)
+(4,025 real changes made)
 
 . replace drug=8 if casirivimab==date_treated&casirivimab!=.&date_treated!=.
-(4,112 real changes made)
+(4,120 real changes made)
 
 . replace drug=0 if drug==.
-(29,577 real changes made)
+(29,607 real changes made)
 
 . label define drug 0 "control" 1 "sotrovimab" 2 "paxlovid" 3"molnupiravir", replace
 
@@ -256,155 +256,155 @@ paxlovid_st |
 
         drug |      Freq.     Percent        Cum.
 -------------+-----------------------------------
-     control |     29,577       59.15       59.15
-  sotrovimab |      4,011        8.02       67.18
-    paxlovid |      4,020        8.04       75.22
-molnupiravir |      4,043        8.09       83.30
-           4 |         57        0.11       83.42
-           5 |         47        0.09       83.51
-           6 |         41        0.08       83.59
-           7 |      4,092        8.18       91.78
-           8 |      4,112        8.22      100.00
+     control |     29,607       59.21       59.21
+  sotrovimab |      4,062        8.12       67.34
+    paxlovid |      4,024        8.05       75.39
+molnupiravir |      4,055        8.11       83.50
+           4 |         45        0.09       83.59
+           5 |         29        0.06       83.64
+           6 |         34        0.07       83.71
+           7 |      4,024        8.05       91.76
+           8 |      4,120        8.24      100.00
 -------------+-----------------------------------
        Total |     50,000      100.00
 
 . drop if drug>3
-(8,349 observations deleted)
+(8,252 observations deleted)
 
 . ** start date is date treatment for treatment arms and date of covid test for control arm 
 . count if start_date==. //should be 0
-  3,003
+  2,963
 
 . count if start_date!=covid_test_positive_date & drug==0
-  26,574
+  26,644
 
 . count if start_date!=date_treated & drug>0
-  12,074
+  12,141
 
 . replace start_date=covid_test_positive_date if drug==0 
-(26,574 real changes made)
+(26,644 real changes made)
 
 . replace start_date=date_treated if drug>0
-(12,074 real changes made)
+(12,141 real changes made)
 
 . ** check number of positive covid tests prior to drug in treatment arms
 . bys drug:count if covid_test_positive_date==. // should be 0 in control arm
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = control
-  3,003
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  2,963
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = sotrovimab
-  389
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  423
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = paxlovid
-  403
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  400
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = molnupiravir
-  404
+  412
 
 . bys drug:count if covid_test_positive_date!=. 
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = control
-  26,574
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  26,644
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = sotrovimab
-  3,622
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
--> drug = paxlovid
-  3,617
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
--> drug = molnupiravir
   3,639
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  3,624
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  3,643
 
 . bys drug:count if covid_test_positive_date!=.&date_treated!=.& date_treated>covid_test_positive_date //test prior to treatment
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = control
   0
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = sotrovimab
-  1,729
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  1,670
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = paxlovid
-  1,695
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  1,693
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = molnupiravir
-  1,740
+  1,715
 
 . bys drug:count if covid_test_positive_date!=.&date_treated!=.& (date_treated-covid_test_positive_date>0)&(date_treated-covid_test_positive_date<=5) //test <5d
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = control
   0
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = sotrovimab
-  29
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
--> drug = paxlovid
   30
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  41
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = molnupiravir
-  31
+  32
 
 . bys drug:count if covid_test_positive_date2!=.&date_treated!=.& date_treated<covid_test_positive_date2 //2nd covid episode prior to treatment 
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = control
   0
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = sotrovimab
-  185
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  225
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = paxlovid
-  209
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  225
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = molnupiravir
-  209
+  206
 
 . bys drug:count if covid_test_positive_date2!=.&date_treated!=.& (date_treated-covid_test_positive_date2>0)&(date_treated-covid_test_positive_date2<=5) //test <5d
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = control
   0
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = sotrovimab
-  3
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
--> drug = paxlovid
-  3
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
--> drug = molnupiravir
   2
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  7
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  5
 
 . bys drug:count if covid_test_positive_date3!=.&date_treated!=.& date_treated<covid_test_positive_date3 //3rd covid episode prior to treatment 
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = control
   0
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = sotrovimab
-  221
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  245
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = paxlovid
-  229
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  237
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = molnupiravir
-  228
+  215
 
 . bys drug:count if covid_test_positive_date3!=.&date_treated!=.& (date_treated-covid_test_positive_date3>0)&(date_treated-covid_test_positive_date3<=5) //test <5d
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = control
   0
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = sotrovimab
-  4
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  2
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = paxlovid
-  1
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  7
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = molnupiravir
   2
 
@@ -415,13 +415,13 @@ molnupiravir |      4,043        8.09       83.30
 covid_test |      us_30_days
  _positive |         0          1 |     Total
 -----------+----------------------+----------
-         0 |     2,757        160 |     2,917 
-         1 |    25,316      1,344 |    26,660 
+         0 |     2,840        158 |     2,998 
+         1 |    25,300      1,309 |    26,609 
 -----------+----------------------+----------
-     Total |    28,073      1,504 |    29,577 
+     Total |    28,140      1,467 |    29,607 
 
 . drop if drug==0 & covid_test_positive==1 & covid_positive_previous_30_days==1
-(1,344 observations deleted)
+(1,309 observations deleted)
 
 . ** gen study start and study end date
 . gen campaign_start=mdy(12,16,2021)
@@ -429,7 +429,7 @@ covid_test |      us_30_days
 . gen study_end_date=mdy(06,01,2023)
 
 . gen start_date_29=date_treated+28
-(28,233 missing values generated)
+(28,298 missing values generated)
 
 . format campaign_start study_end_date start_date_29 %td
 
@@ -439,23 +439,23 @@ covid_test |      us_30_days
 . ****************************
 . ** inclusion criteria*
 . keep if age>=18 & age<110
-(8,522 observations deleted)
+(8,638 observations deleted)
 
 . keep if sex=="F"|sex=="M"
 (0 observations deleted)
 
 . keep if has_died==0
-(1,608 observations deleted)
+(1,598 observations deleted)
 
 . ** exclusion criteria*
 . count if start_date>dereg_date & start_date!=.
-  2,761
+  2,784
 
 . count if start_date>death_date & start_date!=.
-  2,752
+  2,766
 
 . drop if start_date>death_date | start_date>dereg_date
-(5,675 observations deleted)
+(5,682 observations deleted)
 
 . 
 . ** high risk cohort from blueteq therapeutics datafor drug arms
@@ -464,109 +464,108 @@ covid_test |      us_30_days
 high_risk_cohort_ther |                    drug
              apeutics |   control  sotrovima   paxlovid  molnupira |     Total
 ----------------------+--------------------------------------------+----------
-       Downs syndrome |     1,729        220        232        224 |     2,405 
-          HIV or AIDS |       845        146        118        125 |     1,234 
-                 IMID |     1,741        260        283        279 |     2,563 
-    IMID,solid cancer |     1,762        219        235        240 |     2,456 
-                   NA |       861        117        114        114 |     1,206 
-haematological dise.. |       854        115        112        114 |     1,195 
-haematological mali.. |       893         95        115        106 |     1,209 
-        liver disease |       902        119        123        126 |     1,270 
-primary immune defi.. |     1,616        230        259        239 |     2,344 
-sickle cell disease.. |     1,695        290        251        249 |     2,485 
-         solid cancer |     1,742        212        245        243 |     2,442 
-solid organ transpl.. |     1,725        230        218        244 |     2,417 
-stem cell transplan.. |       875        134        134        133 |     1,276 
+       Downs syndrome |     1,672        247        245        256 |     2,420 
+          HIV or AIDS |       872        113         98         95 |     1,178 
+                 IMID |     1,663        259        252        218 |     2,392 
+    IMID,solid cancer |     1,729        221        239        276 |     2,465 
+                   NA |       843        119        109        134 |     1,205 
+haematological dise.. |       882        136        126        109 |     1,253 
+haematological mali.. |       871        111        103        124 |     1,209 
+        liver disease |       824        122        127        133 |     1,206 
+primary immune defi.. |     1,754        257        232        242 |     2,485 
+sickle cell disease.. |     1,665        244        267        210 |     2,386 
+         solid cancer |     1,782        256        251        256 |     2,545 
+solid organ transpl.. |     1,764        251        263        243 |     2,521 
+stem cell transplan.. |       847        146        127        136 |     1,256 
 ----------------------+--------------------------------------------+----------
-                Total |    17,240      2,387      2,439      2,436 |    24,502 
+                Total |    17,168      2,482      2,439      2,432 |    24,521 
 
 . gen downs_syndrome_therap= 1 if strpos(high_risk_cohort_therapeutics, "Downs syndrome")
-(22,097 missing values generated)
+(22,101 missing values generated)
 
 . gen solid_cancer_therap=1 if strpos(high_risk_cohort_therapeutics, "solid cancer")
-(19,604 missing values generated)
+(19,511 missing values generated)
 
 . gen haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "haematological malignancies")
-(23,293 missing values generated)
+(23,312 missing values generated)
 
 . replace haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "sickle cell disease")
-(2,485 real changes made)
+(2,386 real changes made)
 
 . replace haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "haematological diseases")
-(1,195 real changes made)
+(1,253 real changes made)
 
 . replace haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "stem cell transplant")
-(1,276 real changes made)
+(1,256 real changes made)
 
 . gen renal_disease_therap= 1 if strpos(high_risk_cohort_therapeutics, "renal disease")
-(22,085 missing values generated)
+(22,000 missing values generated)
 
 . gen liver_disease_therap= 1 if strpos(high_risk_cohort_therapeutics, "liver disease")
-(23,232 missing values generated)
+(23,315 missing values generated)
 
 . gen imid_on_drug_therap= 1 if strpos(high_risk_cohort_therapeutics, "IMID")
-(19,483 missing values generated)
+(19,664 missing values generated)
 
 . gen immunosupression_therap= 1 if strpos(high_risk_cohort_therapeutics, "primary immune deficiencies")
-(22,158 missing values generated)
+(22,036 missing values generated)
 
 . gen hiv_aids_therap= 1 if strpos(high_risk_cohort_therapeutics, "HIV or AIDS")
-(23,268 missing values generated)
+(23,343 missing values generated)
 
 . gen organ_transplant_therap= 1 if strpos(high_risk_cohort_therapeutics, "solid organ recipients")
-(24,502 missing values generated)
+(24,521 missing values generated)
 
 . replace organ_transplant_therap= 1 if strpos(high_risk_cohort_therapeutics, "solid organ transplant")
-(2,417 real changes made)
+(2,521 real changes made)
 
 . gen rare_neuro_therap= 1 if strpos(high_risk_cohort_therapeutics, "rare neurological conditions")
-(22,017 missing values generated)
+(22,135 missing values generated)
 
-. bys drug: count if high_risk_cohort_therapeutics!=""&high_risk_cohort_therapeutics!="other"& min(downs_syndrome_therap,solid_cancer_therap,haem_disease_therap,renal_disease_therap,
-> liver_disease_therap,imid_on_drug_therap,immunosupression_therap,hiv_aids_therap,organ_transplant_therap,rare_neuro_therap)==. //check if all diseases have been captured
+. bys drug: count if high_risk_cohort_therapeutics!=""&high_risk_cohort_therapeutics!="other"& min(downs_syndrome_therap,solid_cancer_therap,haem_disease_therap,renal_disease_therap,liver_disease_therap,imid_on_drug_therap,immunosupression_therap,hiv_
+> aids_therap,organ_transplant_therap,rare_neuro_therap)==. //check if all diseases have been captured
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = control
-  861
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  843
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = sotrovimab
-  117
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  119
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = paxlovid
-  114
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  109
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = molnupiravir
-  114
+  134
 
-. tab drug high_risk_cohort_therapeutics if high_risk_cohort_therapeutics!=""&high_risk_cohort_therapeutics!="other"& min(downs_syndrome_therap,solid_cancer_therap,haem_disease_thera
-> p,renal_disease_therap,liver_disease_therap,imid_on_drug_therap,immunosupression_therap,hiv_aids_therap,organ_transplant_therap,rare_neuro_therap)==.
+. tab drug high_risk_cohort_therapeutics if high_risk_cohort_therapeutics!=""&high_risk_cohort_therapeutics!="other"& min(downs_syndrome_therap,solid_cancer_therap,haem_disease_therap,renal_disease_therap,liver_disease_therap,imid_on_drug_therap,immun
+> osupression_therap,hiv_aids_therap,organ_transplant_therap,rare_neuro_therap)==.
 
              | high_risk_
              | cohort_the
              | rapeutics
         drug |        NA |     Total
 -------------+-----------+----------
-     control |       861 |       861 
-  sotrovimab |       117 |       117 
-    paxlovid |       114 |       114 
-molnupiravir |       114 |       114 
+     control |       843 |       843 
+  sotrovimab |       119 |       119 
+    paxlovid |       109 |       109 
+molnupiravir |       134 |       134 
 -------------+-----------+----------
-       Total |     1,206 |     1,206 
+       Total |     1,205 |     1,205 
 
-. foreach var of varlist downs_syndrome_therap solid_cancer_therap haem_disease_therap renal_disease_therap liver_disease_therap imid_on_drug_therap immunosupression_therap hiv_aids_
-> therap organ_transplant_therap rare_neuro_therap{
+. foreach var of varlist downs_syndrome_therap solid_cancer_therap haem_disease_therap renal_disease_therap liver_disease_therap imid_on_drug_therap immunosupression_therap hiv_aids_therap organ_transplant_therap rare_neuro_therap{
   2.         replace `var'=0 if `var'==. 
   3. }
-(22,097 real changes made)
-(19,604 real changes made)
-(18,337 real changes made)
-(22,085 real changes made)
-(23,232 real changes made)
-(19,483 real changes made)
-(22,158 real changes made)
-(23,268 real changes made)
-(22,085 real changes made)
-(22,017 real changes made)
+(22,101 real changes made)
+(19,511 real changes made)
+(18,417 real changes made)
+(22,000 real changes made)
+(23,315 real changes made)
+(19,664 real changes made)
+(22,036 real changes made)
+(23,343 real changes made)
+(22,000 real changes made)
+(22,135 real changes made)
 
 . 
 . ** high risk cohort from open codelist from control group
@@ -576,56 +575,52 @@ high_risk_ |
 cohort_nhs |                    drug
          d |   control  sotrovima   paxlovid  molnupira |     Total
 -----------+--------------------------------------------+----------
-         0 |       344         51         56         66 |       517 
-         1 |    16,896      2,336      2,383      2,370 |    23,985 
+         0 |       400         53         53         45 |       551 
+         1 |    16,768      2,429      2,386      2,387 |    23,970 
 -----------+--------------------------------------------+----------
-     Total |    17,240      2,387      2,439      2,436 |    24,502 
+     Total |    17,168      2,482      2,439      2,432 |    24,521 
 
 . count if imid_on_drug==1 & imid_nhsd==1 & imid_drug==0 //should be 0
-  6,645
+  6,667
 
-. count if imid_on_drug==1 & imid_nhsd==1 & imid_drug==0 & downs_syndrome==0 &solid_cancer==0 &haem_disease==0 &renal_disease==0 &liver_disease==0 &immunosupression==0 &hiv_aids==0 &
-> organ_transplant==0 &rare_neuro==0
-  330
+. count if imid_on_drug==1 & imid_nhsd==1 & imid_drug==0 & downs_syndrome==0 &solid_cancer==0 &haem_disease==0 &renal_disease==0 &liver_disease==0 &immunosupression==0 &hiv_aids==0 &organ_transplant==0 &rare_neuro==0
+  297
 
 . count if imid_on_drug==1 & imid_nhsd==0 & imid_drug==1 //should be 0
-  253
+  229
 
-. count if imid_on_drug==1 & imid_nhsd==0 & imid_drug==1 & downs_syndrome==0 &solid_cancer==0 &haem_disease==0 &renal_disease==0 &liver_disease==0 &immunosupression==0 &hiv_aids==0 &
-> organ_transplant==0 &rare_neuro==0
-  14
+. count if imid_on_drug==1 & imid_nhsd==0 & imid_drug==1 & downs_syndrome==0 &solid_cancer==0 &haem_disease==0 &renal_disease==0 &liver_disease==0 &immunosupression==0 &hiv_aids==0 &organ_transplant==0 &rare_neuro==0
+  15
 
 . count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1
-  253
+  246
 
 . count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 
-  242
+  234
 
 . count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_on_drug==1
-  117
+  116
 
-. count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_on_drug==1 &downs_syndrome==0 &
-> solid_cancer==0 &haem_disease==0 &renal_disease==0 &liver_disease==0 &immunosupression==0 &hiv_aids==0 &organ_transplant==0 &rare_neuro==0
-  6
+. count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_on_drug==1 &downs_syndrome==0 &solid_cancer==0 &haem_disease==0 &renal_disease==0 &liver_disease==0 
+> &immunosupression==0 &hiv_aids==0 &organ_transplant==0 &rare_neuro==0
+  5
 
-. replace imid_on_drug=0 if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_on_drug==1 //i
-> gnore if steriods<4 scripts in 6m & not coded other imid drug 
-(117 real changes made)
+. replace imid_on_drug=0 if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_on_drug==1 //ignore if steriods<4 scripts in 6m & not coded other imid drug 
+(116 real changes made)
 
 . replace oral_steroid_drugs_nhsd=0 if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 //ignore if steriods<4 scripts in 6m
-(253 real changes made)
+(246 real changes made)
 
 . count if imid_on_drug==1 & imid_nhsd==1 & imid_drug==0 //should be same number as those dropped above 
-  6,645
+  6,667
 
 . replace imid_on_drug=0 if imid_nhsd==1 & imid_drug==0 
-(6,645 real changes made)
+(6,667 real changes made)
 
 . replace imid_on_drug=0 if imid_nhsd==0 & imid_drug==1 
-(200 real changes made)
+(177 real changes made)
 
-. gen high_risk_cohort_codelist=((downs_syndrome + solid_cancer + haem_disease + renal_disease + liver_disease + imid_on_drug + immunosupression + hiv_aids + organ_transplant + rare_
-> neuro )>0)
+. gen high_risk_cohort_codelist=((downs_syndrome + solid_cancer + haem_disease + renal_disease + liver_disease + imid_on_drug + immunosupression + hiv_aids + organ_transplant + rare_neuro )>0)
 
 . tab high_risk_cohort_nhsd high_risk_cohort_codelist
 
@@ -633,10 +628,10 @@ high_risk_ | high_risk_cohort_code
 cohort_nhs |         list
          d |         0          1 |     Total
 -----------+----------------------+----------
-         0 |       517          0 |       517 
-         1 |       347     23,638 |    23,985 
+         0 |       551          0 |       551 
+         1 |       315     23,655 |    23,970 
 -----------+----------------------+----------
-     Total |       864     23,638 |    24,502 
+     Total |       866     23,655 |    24,521 
 
 . 
 . ** combine two high risk cohorts into one 
@@ -646,207 +641,211 @@ cohort_nhs |         list
   4.         tab `var' `var'_therap 
   5.         tab `var'_comb
   6. }
-(1,947 real changes made)
+(1,971 real changes made)
 
 downs_synd | downs_syndrome_therap
       rome |         0          1 |     Total
 -----------+----------------------+----------
-         0 |    17,873      1,947 |    19,820 
-         1 |     4,224        458 |     4,682 
+         0 |    17,863      1,971 |    19,834 
+         1 |     4,238        449 |     4,687 
 -----------+----------------------+----------
-     Total |    22,097      2,405 |    24,502 
+     Total |    22,101      2,420 |    24,521 
 
 downs_syndr |
    ome_comb |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 |     17,873       72.95       72.95
-          1 |      6,629       27.05      100.00
+          0 |     17,863       72.85       72.85
+          1 |      6,658       27.15      100.00
 ------------+-----------------------------------
-      Total |     24,502      100.00
-(4,399 real changes made)
+      Total |     24,521      100.00
+(4,502 real changes made)
 
 solid_canc |  solid_cancer_therap
         er |         0          1 |     Total
 -----------+----------------------+----------
-         0 |    17,620      4,399 |    22,019 
-         1 |     1,984        499 |     2,483 
+         0 |    17,611      4,502 |    22,113 
+         1 |     1,900        508 |     2,408 
 -----------+----------------------+----------
-     Total |    19,604      4,898 |    24,502 
+     Total |    19,511      5,010 |    24,521 
 
 solid_cance |
      r_comb |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 |     17,620       71.91       71.91
-          1 |      6,882       28.09      100.00
+          0 |     17,611       71.82       71.82
+          1 |      6,910       28.18      100.00
 ------------+-----------------------------------
-      Total |     24,502      100.00
-(3,281 real changes made)
+      Total |     24,521      100.00
+(3,196 real changes made)
 
 haem_disea |  haem_disease_therap
         se |         0          1 |     Total
 -----------+----------------------+----------
-         0 |     9,674      3,281 |    12,955 
-         1 |     8,663      2,884 |    11,547 
+         0 |     9,734      3,196 |    12,930 
+         1 |     8,683      2,908 |    11,591 
 -----------+----------------------+----------
-     Total |    18,337      6,165 |    24,502 
+     Total |    18,417      6,104 |    24,521 
 
 haem_diseas |
      e_comb |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 |      9,674       39.48       39.48
-          1 |     14,828       60.52      100.00
+          0 |      9,734       39.70       39.70
+          1 |     14,787       60.30      100.00
 ------------+-----------------------------------
-      Total |     24,502      100.00
-(1,568 real changes made)
+      Total |     24,521      100.00
+(1,622 real changes made)
 
 renal_dise | renal_disease_therap
        ase |         0          1 |     Total
 -----------+----------------------+----------
-         0 |    14,533      1,568 |    16,101 
-         1 |     7,552        849 |     8,401 
+         0 |    14,424      1,622 |    16,046 
+         1 |     7,576        899 |     8,475 
 -----------+----------------------+----------
-     Total |    22,085      2,417 |    24,502 
+     Total |    22,000      2,521 |    24,521 
 
 renal_disea |
     se_comb |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 |     14,533       59.31       59.31
-          1 |      9,969       40.69      100.00
+          0 |     14,424       58.82       58.82
+          1 |     10,097       41.18      100.00
 ------------+-----------------------------------
-      Total |     24,502      100.00
-(1,049 real changes made)
+      Total |     24,521      100.00
+(987 real changes made)
 
 liver_dise | liver_disease_therap
        ase |         0          1 |     Total
 -----------+----------------------+----------
-         0 |    18,761      1,049 |    19,810 
-         1 |     4,471        221 |     4,692 
+         0 |    18,839        987 |    19,826 
+         1 |     4,476        219 |     4,695 
 -----------+----------------------+----------
-     Total |    23,232      1,270 |    24,502 
+     Total |    23,315      1,206 |    24,521 
 
 liver_disea |
     se_comb |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 |     18,761       76.57       76.57
-          1 |      5,741       23.43      100.00
+          0 |     18,839       76.83       76.83
+          1 |      5,682       23.17      100.00
 ------------+-----------------------------------
-      Total |     24,502      100.00
-(3,919 real changes made)
+      Total |     24,521      100.00
+(3,824 real changes made)
 
 imid_on_dr |  imid_on_drug_therap
         ug |         0          1 |     Total
 -----------+----------------------+----------
-         0 |    15,334      3,919 |    19,253 
-         1 |     4,149      1,100 |     5,249 
+         0 |    15,380      3,824 |    19,204 
+         1 |     4,284      1,033 |     5,317 
 -----------+----------------------+----------
-     Total |    19,483      5,019 |    24,502 
+     Total |    19,664      4,857 |    24,521 
 
 imid_on_dru |
      g_comb |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 |     15,334       62.58       62.58
-          1 |      9,168       37.42      100.00
+          0 |     15,380       62.72       62.72
+          1 |      9,141       37.28      100.00
 ------------+-----------------------------------
-      Total |     24,502      100.00
-(2,105 real changes made)
+      Total |     24,521      100.00
+(2,244 real changes made)
 
            | immunosupression_ther
 immunosupr |          ap
     ession |         0          1 |     Total
 -----------+----------------------+----------
-         0 |    19,952      2,105 |    22,057 
-         1 |     2,206        239 |     2,445 
+         0 |    19,780      2,244 |    22,024 
+         1 |     2,256        241 |     2,497 
 -----------+----------------------+----------
-     Total |    22,158      2,344 |    24,502 
+     Total |    22,036      2,485 |    24,521 
 
 immunosupre |
  ssion_comb |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 |     19,952       81.43       81.43
-          1 |      4,550       18.57      100.00
+          0 |     19,780       80.67       80.67
+          1 |      4,741       19.33      100.00
 ------------+-----------------------------------
-      Total |     24,502      100.00
-(1,016 real changes made)
+      Total |     24,521      100.00
+(951 real changes made)
 
            |    hiv_aids_therap
   hiv_aids |         0          1 |     Total
 -----------+----------------------+----------
-         0 |    18,894      1,016 |    19,910 
-         1 |     4,374        218 |     4,592 
+         0 |    18,929        951 |    19,880 
+         1 |     4,414        227 |     4,641 
 -----------+----------------------+----------
-     Total |    23,268      1,234 |    24,502 
+     Total |    23,343      1,178 |    24,521 
 
 hiv_aids_co |
          mb |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 |     18,894       77.11       77.11
-          1 |      5,608       22.89      100.00
+          0 |     18,929       77.20       77.20
+          1 |      5,592       22.80      100.00
 ------------+-----------------------------------
-      Total |     24,502      100.00
-(1,661 real changes made)
+      Total |     24,521      100.00
+(1,692 real changes made)
 
            | organ_transplant_ther
 organ_tran |          ap
     splant |         0          1 |     Total
 -----------+----------------------+----------
-         0 |    15,168      1,661 |    16,829 
-         1 |     6,917        756 |     7,673 
+         0 |    15,140      1,692 |    16,832 
+         1 |     6,860        829 |     7,689 
 -----------+----------------------+----------
-     Total |    22,085      2,417 |    24,502 
+     Total |    22,000      2,521 |    24,521 
 
 organ_trans |
  plant_comb |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 |     15,168       61.91       61.91
-          1 |      9,334       38.09      100.00
+          0 |     15,140       61.74       61.74
+          1 |      9,381       38.26      100.00
 ------------+-----------------------------------
-      Total |     24,502      100.00
-(1,027 real changes made)
+      Total |     24,521      100.00
+(1,026 real changes made)
 
            |   rare_neuro_therap
 rare_neuro |         0          1 |     Total
 -----------+----------------------+----------
-         0 |     9,526      1,027 |    10,553 
-         1 |    12,491      1,458 |    13,949 
+         0 |     9,628      1,026 |    10,654 
+         1 |    12,507      1,360 |    13,867 
 -----------+----------------------+----------
-     Total |    22,017      2,485 |    24,502 
+     Total |    22,135      2,386 |    24,521 
 
 rare_neuro_ |
        comb |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 |      9,526       38.88       38.88
-          1 |     14,976       61.12      100.00
+          0 |      9,628       39.26       39.26
+          1 |     14,893       60.74      100.00
 ------------+-----------------------------------
-      Total |     24,502      100.00
+      Total |     24,521      100.00
 
 . 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
 . ****************************
 . *       OUTCOME         *
 . ****************************
 . *** Primary outcome - AESI
 . gen new_ae_ra_icd = ae_rheumatoid_arthritis_icd if rheumatoid_arthritis_nhsd_snomed==0 & rheumatoid_arthritis_nhsd_icd10==0  
-(20,572 missing values generated)
+(20,587 missing values generated)
 
 . gen new_ae_ra_snomed = ae_rheumatoid_arthritis_snomed if rheumatoid_arthritis_nhsd_snomed==0 & rheumatoid_arthritis_nhsd_icd10==0  
-(20,553 missing values generated)
+(20,497 missing values generated)
 
 . gen new_ae_sle_icd = ae_sle_icd if sle_nhsd_ctv==0 & sle_nhsd_icd10==0
-(20,579 missing values generated)
+(20,539 missing values generated)
 
 . gen new_ae_sle_ctv = ae_sle_ctv if sle_nhsd_ctv==0 & sle_nhsd_icd10==0
-(20,530 missing values generated)
+(20,549 missing values generated)
 
 . gen new_ae_psoriasis_snomed = ae_psoriasis_snomed if psoriasis_nhsd==0
-(20,184 missing values generated)
+(20,064 missing values generated)
 
 . gen new_ae_psa_snomed = ae_psoriatic_arthritis_snomed if psoriatic_arthritis_nhsd==0
-(20,129 missing values generated)
+(20,036 missing values generated)
 
 . gen new_ae_ankspon_ctv = ae_ankylosing_spondylitis_ctv if ankylosing_spondylitis_nhsd==0
-(20,104 missing values generated)
+(20,080 missing values generated)
 
 . gen new_ae_ibd_snomed = ae_ibd_snomed if ibd_ctv==0
-(20,018 missing values generated)
+(20,115 missing values generated)
 
 . global ae_spc                   ae_diverticulitis_snomed                ///
 >                                                 ae_diarrhoea_snomed                             ///
@@ -855,7 +854,1298 @@ rare_neuro_ |
 . global ae_spc_icd               ae_diverticulitis_icd                   ///
 >                                                 ae_taste_icd                                    
 
-. global ae_drug                  ae_anaphylaxis_snomed                   
+. global ae_drug                  ae_anaphylaxis_snomed                   ///     
+>                                                 ae_rash_snomed  
+
+. global ae_drug_icd              ae_anaphylaxis_icd
+
+. global ae_imae                  new_ae_ra_snomed                                ///
+>                                                 new_ae_sle_ctv                                  ///
+>                                                 new_ae_psoriasis_snomed                 ///
+>                                                 new_ae_psa_snomed                               ///
+>                                                 new_ae_ankspon_ctv                              ///
+>                                                 new_ae_ibd      
+
+. global ae_imae_icd              new_ae_ra_icd                                   ///
+>                                                 new_ae_sle_icd                                                  
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. *remove event if occurred before start (including new start date for control)
+. foreach x in $ae_spc $ae_spc_icd $ae_drug $ae_drug_icd $ae_imae $ae_imae_icd{
+  2.                                 display "`x'"
+  3.                                 count if (`x' > start_date | `x' < start_date + 28) & `x'!=. 
+  4.                                 count if (`x' < start_date | `x' > start_date + 28) & `x'!=. & drug==0
+  5.                                 count if (`x' < start_date | `x' > start_date + 28) & `x'!=. & drug>0
+  6.                                 replace `x'=. if (`x' < start_date | `x' > start_date + 28) & `x'!=.
+  7. }
+ae_diverticulitis_snomed
+  4,930
+  3,258
+  1,410
+(4,668 real changes made, 4,668 to missing)
+ae_diarrhoea_snomed
+  4,857
+  3,256
+  1,349
+(4,605 real changes made, 4,605 to missing)
+ae_taste_snomed
+  4,875
+  3,253
+  1,372
+(4,625 real changes made, 4,625 to missing)
+ae_diverticulitis_icd
+  4,963
+  3,320
+  1,398
+(4,718 real changes made, 4,718 to missing)
+ae_taste_icd
+  4,912
+  3,291
+  1,385
+(4,676 real changes made, 4,676 to missing)
+ae_anaphylaxis_snomed
+  4,929
+  3,296
+  1,387
+(4,683 real changes made, 4,683 to missing)
+ae_rash_snomed
+  4,845
+  3,203
+  1,396
+(4,599 real changes made, 4,599 to missing)
+ae_anaphylaxis_icd
+  4,806
+  3,202
+  1,345
+(4,547 real changes made, 4,547 to missing)
+new_ae_ra_snomed
+  4,024
+  2,708
+  1,127
+(3,835 real changes made, 3,835 to missing)
+new_ae_sle_ctv
+  3,972
+  2,672
+  1,102
+(3,774 real changes made, 3,774 to missing)
+new_ae_psoriasis_snomed
+  4,457
+  2,989
+  1,249
+(4,238 real changes made, 4,238 to missing)
+new_ae_psa_snomed
+  4,485
+  2,966
+  1,312
+(4,278 real changes made, 4,278 to missing)
+new_ae_ankspon_ctv
+  4,441
+  2,998
+  1,224
+(4,222 real changes made, 4,222 to missing)
+new_ae_ibd
+  4,406
+  2,978
+  1,209
+(4,187 real changes made, 4,187 to missing)
+new_ae_ra_icd
+  3,934
+  2,668
+  1,103
+(3,771 real changes made, 3,771 to missing)
+new_ae_sle_icd
+  3,982
+  2,695
+  1,089
+(3,784 real changes made, 3,784 to missing)
+
+. egen ae_spc_gp = rmin($ae_spc)
+(23,766 missing values generated)
+
+. egen ae_spc_serious = rmin($ae_spc_icd)
+(24,047 missing values generated)
+
+. egen ae_spc_all = rmin($ae_spc $ae_spc_icd)
+(23,310 missing values generated)
+
+. egen ae_drug_gp = rmin($ae_drug)
+(24,030 missing values generated)
+
+. egen ae_drug_serious = rmin($ae_drug_icd)
+(24,262 missing values generated)
+
+. egen ae_drug_all = rmin($ae_drug $ae_drug_icd)
+(23,776 missing values generated)
+
+. egen ae_imae_gp = rmin($ae_imae)        
+(23,308 missing values generated)
+
+. egen ae_imae_serious = rmin($ae_imae_icd)
+(24,161 missing values generated)
+
+. egen ae_imae_all = rmin($ae_imae $ae_imae_icd)  
+(22,967 missing values generated)
+
+. egen ae_all = rmin($ae_spc $ae_spc_icd $ae_drug $ae_drug_icd $ae_imae $ae_imae_icd)
+(21,214 missing values generated)
+
+. egen ae_all_serious = rmin($ae_spc_icd $ae_drug_icd $ae_imae_icd)
+(23,442 missing values generated)
+
+. by drug, sort: count if ae_spc_all!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  810
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  130
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  125
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  146
+
+. by drug, sort: count if ae_drug_all!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  498
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  86
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  72
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  89
+
+. by drug, sort: count if ae_imae_all!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  1,065
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  150
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  155
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  184
+
+. by drug, sort: count if ae_all!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  2,230
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  351
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  336
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  390
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. bys drug: count if covid_hosp_date!=. // all hospitalisation
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  1,724
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  224
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  250
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  233
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. bys drug: count if covid_hosp_date0!=. // *nb: control group will not have covid_hosp_date0 - as do not have date_treated
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  151
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  27
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  25
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  33
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. // covid admission is the same date as date treated 
+. bys drug: count if covid_hosp_date0!=date_treated&covid_hosp_date0!=.&date_treated!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  27
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  25
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  33
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. bys drug: count if covid_hosp_date1!=(date_treated+1) &covid_hosp_date1!=.&date_treated!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  24
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  20
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  22
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. bys drug: count if covid_hosp_date0==covid_discharge_date0&covid_hosp_date0!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  0
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. bys drug: count if covid_hosp_date1==covid_discharge_date1&covid_hosp_date1!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  0
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. bys drug: count if covid_hosp_date0==covid_hosp_date_mabs&covid_hosp_date_mabs!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  0
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. bys drug: count if covid_hosp_date1==covid_hosp_date_mabs&covid_hosp_date_mabs!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  0
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. bys drug: count if covid_hosp_date0==covid_hosp_date_mabs&covid_hosp_date0!=.&covid_hosp_date0==covid_discharge_date0
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  0
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. bys drug: count if covid_hosp_date0==covid_hosp_date_mabs&covid_hosp_date0!=.&(covid_discharge_date0 - covid_hosp_date0)==1
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  0
+
+. bys drug: count if covid_hosp_date1==covid_hosp_date_mabs&covid_hosp_date1!=.&(covid_discharge_date1 - covid_hosp_date1)==1
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  0
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. count if covid_hosp_date!=.&covid_discharge_date==.
+type mismatch
+r(109);
+
+end of do-file
+
+r(109);
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. count if covid_hosp_date!=.&covid_discharge_date==.
+type mismatch
+r(109);
+
+end of do-file
+
+r(109);
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. * import dataset
+. import delimited "$projectdir/output/input.csv", clear
+(encoding automatically selected: ISO-8859-1)
+(165 vars, 50,000 obs)
+
+. 
+. *Set Ado file path
+. adopath + "$projectdir/analysis/ado"
+  [1]  (BASE)      "C:\Program Files\Stata17\ado\base/"
+  [2]  (SITE)      "C:\Program Files\Stata17\ado\site/"
+  [3]              "."
+  [4]  (PERSONAL)  "C:\users\PUBLIC\documents/"
+  [5]  (PLUS)      "C:\users\PUBLIC\documents/"
+  [6]  (OLDPLACE)  "c:\ado/"
+  [7]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/analysis/ado"
+
+. 
+. //describe
+. //codebook
+. 
+. *********************************
+. *       Convert strings to dates     *
+. ********************************* 
+. foreach var of varlist   covid_test_positive_date                               ///
+>                                                  covid_test_positive_date2                              ///
+>                                                  covid_test_positive_date3                              ///
+>                                                  prior_covid_date                                       ///
+>                                                  sotrovimab                                                             ///
+>                                                  molnupiravir                                                   /// 
+>                                                  paxlovid                                                               ///
+>                                                  remdesivir                                                             ///
+>                                                  casirivimab                                                    ///
+>                                                  sotrovimab_not_start                                   ///
+>                                                  molnupiravir_not_start                                 ///
+>                                                  paxlovid_not_start                                             ///
+>                                                  date_treated                                                   ///
+>                                                  start_date                                                             ///
+>                                                  drugs_do_not_use                                               ///
+>                                                  drugs_consider_risk                                    ///
+>                                                  last_vaccination_date                                  ///
+>                                                  death_date                                                             ///
+>                                                  dereg_date                                                     ///
+>                                                  bmi_date_measured                                              ///
+>                                                  creatinine_ctv3_date                                   ///
+>                                                  creatinine_snomed_date                                 ///
+>                                                  creatinine_short_snomed_date                   ///
+>                                                  ae_diverticulitis_icd                                  ///
+>                                                  ae_diverticulitis_snomed                               ///
+>                                              ae_diarrhoea_snomed                                        ///
+>                                                  ae_taste_snomed                                                ///
+>                                                  ae_taste_icd                                                   ///
+>                                                  ae_rash_snomed                                                 ///
+>                                                  ae_anaphylaxis_icd                                             ///
+>                                                  ae_anaphylaxis_snomed                                  ///
+>                                                  ae_rheumatoid_arthritis_snomed                 ///
+>                                                  ae_rheumatoid_arthritis_icd                    ///
+>                                                  ae_sle_ctv                                                             ///
+>                                                  ae_sle_icd                                                             ///
+>                                                  ae_psoriasis_snomed                                    ///
+>                                                  ae_psoriatic_arthritis_snomed                  ///
+>                                                  ae_ankylosing_spondylitis_ctv                  ///
+>                                                  ae_ibd_snomed                                                  ///
+>                                                  rheumatoid_arthritis_nhsd_snomed               ///
+>                                                  rheumatoid_arthritis_nhsd_icd10                ///
+>                                                  sle_nhsd_ctv                                                   ///
+>                                                  sle_nhsd_icd10                                                 ///
+>                                                  psoriasis_nhsd                                                 ///
+>                                                  psoriatic_arthritis_nhsd                               ///
+>                                                  ankylosing_spondylitis_nhsd                    ///
+>                                                  ibd_ctv                                                                ///
+>                                                  all_hosp_date                                                  ///
+>                                                  all_hosp_date0                                                 ///
+>                                                  all_hosp_date1                                                 ///
+>                                                  all_hosp_date2                                                 ///
+>                                                  hosp_discharge_date                                    ///
+>                                                  hosp_discharge_date0                                   ///
+>                                                  hosp_discharge_date1                                   ///
+>                                                  hosp_discharge_date2                                   ///
+>                                                  covid_hosp_date                                                ///
+>                                                  covid_hosp_date0                                               ///
+>                                                  covid_hosp_date1                                               ///
+>                                                  covid_hosp_date2                                               ///                                             
+>                                                  covid_discharge_date                                   ///
+>                                                  covid_discharge_date0                                  ///                                             
+>                                                  covid_discharge_date1                                  /// 
+>                                                  covid_discharge_date2                                  /// 
+>                                                  any_covid_hosp_discharge                               ///                     
+>                                                  covid_hosp_date_mabs                                   /// 
+>                                                  covid_hosp_date_mabs_not_primary               /// 
+>                                                  died_date_ons                                                  ///
+>                                                  died_ons_covid {                                        
+  2.         capture confirm string variable `var'
+  3.         if _rc==0 {
+  4.         rename `var' a
+  5.         gen `var' = date(a, "YMD")
+  6.         drop a
+  7.         format %td `var'
+  8.  }
+  9. }
+(4,999 missing values generated)
+(45,000 missing values generated)
+(45,000 missing values generated)
+(4,999 missing values generated)
+(45,000 missing values generated)
+(45,000 missing values generated)
+(45,000 missing values generated)
+(45,000 missing values generated)
+(45,000 missing values generated)
+(49,500 missing values generated)
+(49,500 missing values generated)
+(49,500 missing values generated)
+(29,607 missing values generated)
+(47,500 missing values generated)
+(47,500 missing values generated)
+(2,500 missing values generated)
+(45,000 missing values generated)
+(45,000 missing values generated)
+(2,500 missing values generated)
+(25,000 missing values generated)
+(25,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(40,000 missing values generated)
+(45,000 missing values generated)
+(49,500 missing values generated)
+(49,500 missing values generated)
+(49,500 missing values generated)
+(45,000 missing values generated)
+(49,500 missing values generated)
+(49,500 missing values generated)
+(49,500 missing values generated)
+(45,000 missing values generated)
+(49,500 missing values generated)
+(49,500 missing values generated)
+(49,500 missing values generated)
+(49,500 missing values generated)
+(49,500 missing values generated)
+(49,500 missing values generated)
+(49,500 missing values generated)
+(47,500 missing values generated)
+(45,000 missing values generated)
+(45,000 missing values generated)
+(20,000 missing values generated)
+(20,000 missing values generated)
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. ****************************
+. *       EXPOSURE                *
+. ****************************
+. ** removing individuals who did not start therapy
+. foreach var of varlist sotrovimab molnupiravir paxlovid {
+  2.     display "`var'"
+  3.         count if `var'!=.
+  4.         count if `var'==date_treated & `var'!=. & date_treated!=.
+  5.         gen `var'_start = 1 if `var'==date_treated & `var'!=. & date_treated!=. & `var'_not_start==.
+  6.         replace `var'_start = 0 if `var'==date_treated & `var'!=. & date_treated!=. & `var'_not_start!=.
+  7.         tab `var'_start, m  //number on treatment, first drug given, and drug was started
+  8. }
+sotrovimab
+  5,000
+  4,111
+(45,934 missing values generated)
+(45 real changes made)
+
+sotrovimab_ |
+      start |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |         45        0.09        0.09
+          1 |      4,066        8.13        8.22
+          . |     45,889       91.78      100.00
+------------+-----------------------------------
+      Total |     50,000      100.00
+molnupiravir
+  5,000
+  4,092
+(45,942 missing values generated)
+(34 real changes made)
+
+molnupiravi |
+    r_start |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |         34        0.07        0.07
+          1 |      4,058        8.12        8.18
+          . |     45,908       91.82      100.00
+------------+-----------------------------------
+      Total |     50,000      100.00
+paxlovid
+  5,000
+  4,055
+(45,974 missing values generated)
+(29 real changes made)
+
+paxlovid_st |
+        art |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |         29        0.06        0.06
+          1 |      4,026        8.05        8.11
+          . |     45,945       91.89      100.00
+------------+-----------------------------------
+      Total |     50,000      100.00
+
+. gen drug=1 if sotrovimab==date_treated & sotrovimab_start==1 
+(45,934 missing values generated)
+
+. replace drug=2 if paxlovid==date_treated & paxlovid_start==1
+(4,026 real changes made)
+
+. replace drug=3 if molnupiravir==date_treated & molnupiravir_start==1
+(4,058 real changes made)
+
+. replace drug=4 if sotrovimab==date_treated & sotrovimab_start==0 
+(45 real changes made)
+
+. replace drug=5 if paxlovid==date_treated & paxlovid_start==0 
+(29 real changes made)
+
+. replace drug=6 if molnupiravir==date_treated & molnupiravir_start==0 
+(34 real changes made)
+
+. replace drug=7 if remdesivir==date_treated&remdesivir!=.&date_treated!=.
+(4,025 real changes made)
+
+. replace drug=8 if casirivimab==date_treated&casirivimab!=.&date_treated!=.
+(4,120 real changes made)
+
+. replace drug=0 if drug==.
+(29,607 real changes made)
+
+. label define drug 0 "control" 1 "sotrovimab" 2 "paxlovid" 3"molnupiravir", replace
+
+. label values drug drug
+
+. tab drug, m
+
+        drug |      Freq.     Percent        Cum.
+-------------+-----------------------------------
+     control |     29,607       59.21       59.21
+  sotrovimab |      4,062        8.12       67.34
+    paxlovid |      4,024        8.05       75.39
+molnupiravir |      4,055        8.11       83.50
+           4 |         45        0.09       83.59
+           5 |         29        0.06       83.64
+           6 |         34        0.07       83.71
+           7 |      4,024        8.05       91.76
+           8 |      4,120        8.24      100.00
+-------------+-----------------------------------
+       Total |     50,000      100.00
+
+. drop if drug>3
+(8,252 observations deleted)
+
+. ** start date is date treatment for treatment arms and date of covid test for control arm 
+. count if start_date==. //should be 0
+  2,963
+
+. count if start_date!=covid_test_positive_date & drug==0
+  26,644
+
+. count if start_date!=date_treated & drug>0
+  12,141
+
+. replace start_date=covid_test_positive_date if drug==0 
+(26,644 real changes made)
+
+. replace start_date=date_treated if drug>0
+(12,141 real changes made)
+
+. ** check number of positive covid tests prior to drug in treatment arms
+. bys drug:count if covid_test_positive_date==. // should be 0 in control arm
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  2,963
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  423
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  400
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  412
+
+. bys drug:count if covid_test_positive_date!=. 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  26,644
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  3,639
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  3,624
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  3,643
+
+. bys drug:count if covid_test_positive_date!=.&date_treated!=.& date_treated>covid_test_positive_date //test prior to treatment
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  1,670
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  1,693
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  1,715
+
+. bys drug:count if covid_test_positive_date!=.&date_treated!=.& (date_treated-covid_test_positive_date>0)&(date_treated-covid_test_positive_date<=5) //test <5d
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  30
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  41
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  32
+
+. bys drug:count if covid_test_positive_date2!=.&date_treated!=.& date_treated<covid_test_positive_date2 //2nd covid episode prior to treatment 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  225
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  225
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  206
+
+. bys drug:count if covid_test_positive_date2!=.&date_treated!=.& (date_treated-covid_test_positive_date2>0)&(date_treated-covid_test_positive_date2<=5) //test <5d
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  2
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  7
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  5
+
+. bys drug:count if covid_test_positive_date3!=.&date_treated!=.& date_treated<covid_test_positive_date3 //3rd covid episode prior to treatment 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  245
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  237
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  215
+
+. bys drug:count if covid_test_positive_date3!=.&date_treated!=.& (date_treated-covid_test_positive_date3>0)&(date_treated-covid_test_positive_date3<=5) //test <5d
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  2
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  7
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  2
+
+. ** check in control group that covid positive, and not repeat covid test after an infection within 30 days prior
+. tab covid_test_positive covid_positive_previous_30_days if drug==0
+
+           | covid_positive_previo
+covid_test |      us_30_days
+ _positive |         0          1 |     Total
+-----------+----------------------+----------
+         0 |     2,840        158 |     2,998 
+         1 |    25,300      1,309 |    26,609 
+-----------+----------------------+----------
+     Total |    28,140      1,467 |    29,607 
+
+. drop if drug==0 & covid_test_positive==1 & covid_positive_previous_30_days==1
+(1,309 observations deleted)
+
+. ** gen study start and study end date
+. gen campaign_start=mdy(12,16,2021)
+
+. gen study_end_date=mdy(06,01,2023)
+
+. gen start_date_29=date_treated+28
+(28,298 missing values generated)
+
+. format campaign_start study_end_date start_date_29 %td
+
+. 
+. ****************************
+. *       INCLUSION               *
+. ****************************
+. ** inclusion criteria*
+. keep if age>=18 & age<110
+(8,638 observations deleted)
+
+. keep if sex=="F"|sex=="M"
+(0 observations deleted)
+
+. keep if has_died==0
+(1,598 observations deleted)
+
+. ** exclusion criteria*
+. count if start_date>dereg_date & start_date!=.
+  2,784
+
+. count if start_date>death_date & start_date!=.
+  2,766
+
+. drop if start_date>death_date | start_date>dereg_date
+(5,682 observations deleted)
+
+. 
+. ** high risk cohort from blueteq therapeutics datafor drug arms
+. tab high_risk_cohort_therapeutics drug,m //should be 0 in control group
+
+high_risk_cohort_ther |                    drug
+             apeutics |   control  sotrovima   paxlovid  molnupira |     Total
+----------------------+--------------------------------------------+----------
+       Downs syndrome |     1,672        247        245        256 |     2,420 
+          HIV or AIDS |       872        113         98         95 |     1,178 
+                 IMID |     1,663        259        252        218 |     2,392 
+    IMID,solid cancer |     1,729        221        239        276 |     2,465 
+                   NA |       843        119        109        134 |     1,205 
+haematological dise.. |       882        136        126        109 |     1,253 
+haematological mali.. |       871        111        103        124 |     1,209 
+        liver disease |       824        122        127        133 |     1,206 
+primary immune defi.. |     1,754        257        232        242 |     2,485 
+sickle cell disease.. |     1,665        244        267        210 |     2,386 
+         solid cancer |     1,782        256        251        256 |     2,545 
+solid organ transpl.. |     1,764        251        263        243 |     2,521 
+stem cell transplan.. |       847        146        127        136 |     1,256 
+----------------------+--------------------------------------------+----------
+                Total |    17,168      2,482      2,439      2,432 |    24,521 
+
+. gen downs_syndrome_therap= 1 if strpos(high_risk_cohort_therapeutics, "Downs syndrome")
+(22,101 missing values generated)
+
+. gen solid_cancer_therap=1 if strpos(high_risk_cohort_therapeutics, "solid cancer")
+(19,511 missing values generated)
+
+. gen haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "haematological malignancies")
+(23,312 missing values generated)
+
+. replace haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "sickle cell disease")
+(2,386 real changes made)
+
+. replace haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "haematological diseases")
+(1,253 real changes made)
+
+. replace haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "stem cell transplant")
+(1,256 real changes made)
+
+. gen renal_disease_therap= 1 if strpos(high_risk_cohort_therapeutics, "renal disease")
+(22,000 missing values generated)
+
+. gen liver_disease_therap= 1 if strpos(high_risk_cohort_therapeutics, "liver disease")
+(23,315 missing values generated)
+
+. gen imid_on_drug_therap= 1 if strpos(high_risk_cohort_therapeutics, "IMID")
+(19,664 missing values generated)
+
+. gen immunosupression_therap= 1 if strpos(high_risk_cohort_therapeutics, "primary immune deficiencies")
+(22,036 missing values generated)
+
+. gen hiv_aids_therap= 1 if strpos(high_risk_cohort_therapeutics, "HIV or AIDS")
+(23,343 missing values generated)
+
+. gen organ_transplant_therap= 1 if strpos(high_risk_cohort_therapeutics, "solid organ recipients")
+(24,521 missing values generated)
+
+. replace organ_transplant_therap= 1 if strpos(high_risk_cohort_therapeutics, "solid organ transplant")
+(2,521 real changes made)
+
+. gen rare_neuro_therap= 1 if strpos(high_risk_cohort_therapeutics, "rare neurological conditions")
+(22,135 missing values generated)
+
+. bys drug: count if high_risk_cohort_therapeutics!=""&high_risk_cohort_therapeutics!="other"& min(downs_syndrome_therap,solid_cancer_therap,haem_disease_therap,renal_disease_therap,liver_disease_therap,imid_on_drug_therap,immunosupression_therap,hiv_
+> aids_therap,organ_transplant_therap,rare_neuro_therap)==. //check if all diseases have been captured
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  843
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  119
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  109
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  134
+
+. tab drug high_risk_cohort_therapeutics if high_risk_cohort_therapeutics!=""&high_risk_cohort_therapeutics!="other"& min(downs_syndrome_therap,solid_cancer_therap,haem_disease_therap,renal_disease_therap,liver_disease_therap,imid_on_drug_therap,immun
+> osupression_therap,hiv_aids_therap,organ_transplant_therap,rare_neuro_therap)==.
+
+             | high_risk_
+             | cohort_the
+             | rapeutics
+        drug |        NA |     Total
+-------------+-----------+----------
+     control |       843 |       843 
+  sotrovimab |       119 |       119 
+    paxlovid |       109 |       109 
+molnupiravir |       134 |       134 
+-------------+-----------+----------
+       Total |     1,205 |     1,205 
+
+. foreach var of varlist downs_syndrome_therap solid_cancer_therap haem_disease_therap renal_disease_therap liver_disease_therap imid_on_drug_therap immunosupression_therap hiv_aids_therap organ_transplant_therap rare_neuro_therap{
+  2.         replace `var'=0 if `var'==. 
+  3. }
+(22,101 real changes made)
+(19,511 real changes made)
+(18,417 real changes made)
+(22,000 real changes made)
+(23,315 real changes made)
+(19,664 real changes made)
+(22,036 real changes made)
+(23,343 real changes made)
+(22,000 real changes made)
+(22,135 real changes made)
+
+. 
+. ** high risk cohort from open codelist from control group
+. tab high_risk_cohort_nhsd drug,m //should be no 0s in control group
+
+high_risk_ |
+cohort_nhs |                    drug
+         d |   control  sotrovima   paxlovid  molnupira |     Total
+-----------+--------------------------------------------+----------
+         0 |       400         53         53         45 |       551 
+         1 |    16,768      2,429      2,386      2,387 |    23,970 
+-----------+--------------------------------------------+----------
+     Total |    17,168      2,482      2,439      2,432 |    24,521 
+
+. count if imid_on_drug==1 & imid_nhsd==1 & imid_drug==0 //should be 0
+  6,667
+
+. count if imid_on_drug==1 & imid_nhsd==1 & imid_drug==0 & downs_syndrome==0 &solid_cancer==0 &haem_disease==0 &renal_disease==0 &liver_disease==0 &immunosupression==0 &hiv_aids==0 &organ_transplant==0 &rare_neuro==0
+  297
+
+. count if imid_on_drug==1 & imid_nhsd==0 & imid_drug==1 //should be 0
+  229
+
+. count if imid_on_drug==1 & imid_nhsd==0 & imid_drug==1 & downs_syndrome==0 &solid_cancer==0 &haem_disease==0 &renal_disease==0 &liver_disease==0 &immunosupression==0 &hiv_aids==0 &organ_transplant==0 &rare_neuro==0
+  15
+
+. count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1
+  246
+
+. count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 
+  234
+
+. count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_on_drug==1
+  116
+
+. count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_on_drug==1 &downs_syndrome==0 &solid_cancer==0 &haem_disease==0 &renal_disease==0 &liver_disease==0 
+> &immunosupression==0 &hiv_aids==0 &organ_transplant==0 &rare_neuro==0
+  5
+
+. replace imid_on_drug=0 if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_on_drug==1 //ignore if steriods<4 scripts in 6m & not coded other imid drug 
+(116 real changes made)
+
+. replace oral_steroid_drugs_nhsd=0 if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 //ignore if steriods<4 scripts in 6m
+(246 real changes made)
+
+. count if imid_on_drug==1 & imid_nhsd==1 & imid_drug==0 //should be same number as those dropped above 
+  6,667
+
+. replace imid_on_drug=0 if imid_nhsd==1 & imid_drug==0 
+(6,667 real changes made)
+
+. replace imid_on_drug=0 if imid_nhsd==0 & imid_drug==1 
+(177 real changes made)
+
+. gen high_risk_cohort_codelist=((downs_syndrome + solid_cancer + haem_disease + renal_disease + liver_disease + imid_on_drug + immunosupression + hiv_aids + organ_transplant + rare_neuro )>0)
+
+. tab high_risk_cohort_nhsd high_risk_cohort_codelist
+
+high_risk_ | high_risk_cohort_code
+cohort_nhs |         list
+         d |         0          1 |     Total
+-----------+----------------------+----------
+         0 |       551          0 |       551 
+         1 |       315     23,655 |    23,970 
+-----------+----------------------+----------
+     Total |       866     23,655 |    24,521 
+
+. 
+. ** combine two high risk cohorts into one 
+. foreach var of varlist downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro {
+  2.         gen `var'_comb = `var'
+  3.         replace `var'_comb = 1 if `var'_therap==1 
+  4.         tab `var' `var'_therap 
+  5.         tab `var'_comb
+  6. }
+(1,971 real changes made)
+
+downs_synd | downs_syndrome_therap
+      rome |         0          1 |     Total
+-----------+----------------------+----------
+         0 |    17,863      1,971 |    19,834 
+         1 |     4,238        449 |     4,687 
+-----------+----------------------+----------
+     Total |    22,101      2,420 |    24,521 
+
+downs_syndr |
+   ome_comb |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |     17,863       72.85       72.85
+          1 |      6,658       27.15      100.00
+------------+-----------------------------------
+      Total |     24,521      100.00
+(4,502 real changes made)
+
+solid_canc |  solid_cancer_therap
+        er |         0          1 |     Total
+-----------+----------------------+----------
+         0 |    17,611      4,502 |    22,113 
+         1 |     1,900        508 |     2,408 
+-----------+----------------------+----------
+     Total |    19,511      5,010 |    24,521 
+
+solid_cance |
+     r_comb |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |     17,611       71.82       71.82
+          1 |      6,910       28.18      100.00
+------------+-----------------------------------
+      Total |     24,521      100.00
+(3,196 real changes made)
+
+haem_disea |  haem_disease_therap
+        se |         0          1 |     Total
+-----------+----------------------+----------
+         0 |     9,734      3,196 |    12,930 
+         1 |     8,683      2,908 |    11,591 
+-----------+----------------------+----------
+     Total |    18,417      6,104 |    24,521 
+
+haem_diseas |
+     e_comb |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |      9,734       39.70       39.70
+          1 |     14,787       60.30      100.00
+------------+-----------------------------------
+      Total |     24,521      100.00
+(1,622 real changes made)
+
+renal_dise | renal_disease_therap
+       ase |         0          1 |     Total
+-----------+----------------------+----------
+         0 |    14,424      1,622 |    16,046 
+         1 |     7,576        899 |     8,475 
+-----------+----------------------+----------
+     Total |    22,000      2,521 |    24,521 
+
+renal_disea |
+    se_comb |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |     14,424       58.82       58.82
+          1 |     10,097       41.18      100.00
+------------+-----------------------------------
+      Total |     24,521      100.00
+(987 real changes made)
+
+liver_dise | liver_disease_therap
+       ase |         0          1 |     Total
+-----------+----------------------+----------
+         0 |    18,839        987 |    19,826 
+         1 |     4,476        219 |     4,695 
+-----------+----------------------+----------
+     Total |    23,315      1,206 |    24,521 
+
+liver_disea |
+    se_comb |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |     18,839       76.83       76.83
+          1 |      5,682       23.17      100.00
+------------+-----------------------------------
+      Total |     24,521      100.00
+(3,824 real changes made)
+
+imid_on_dr |  imid_on_drug_therap
+        ug |         0          1 |     Total
+-----------+----------------------+----------
+         0 |    15,380      3,824 |    19,204 
+         1 |     4,284      1,033 |     5,317 
+-----------+----------------------+----------
+     Total |    19,664      4,857 |    24,521 
+
+imid_on_dru |
+     g_comb |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |     15,380       62.72       62.72
+          1 |      9,141       37.28      100.00
+------------+-----------------------------------
+      Total |     24,521      100.00
+(2,244 real changes made)
+
+           | immunosupression_ther
+immunosupr |          ap
+    ession |         0          1 |     Total
+-----------+----------------------+----------
+         0 |    19,780      2,244 |    22,024 
+         1 |     2,256        241 |     2,497 
+-----------+----------------------+----------
+     Total |    22,036      2,485 |    24,521 
+
+immunosupre |
+ ssion_comb |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |     19,780       80.67       80.67
+          1 |      4,741       19.33      100.00
+------------+-----------------------------------
+      Total |     24,521      100.00
+(951 real changes made)
+
+           |    hiv_aids_therap
+  hiv_aids |         0          1 |     Total
+-----------+----------------------+----------
+         0 |    18,929        951 |    19,880 
+         1 |     4,414        227 |     4,641 
+-----------+----------------------+----------
+     Total |    23,343      1,178 |    24,521 
+
+hiv_aids_co |
+         mb |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |     18,929       77.20       77.20
+          1 |      5,592       22.80      100.00
+------------+-----------------------------------
+      Total |     24,521      100.00
+(1,692 real changes made)
+
+           | organ_transplant_ther
+organ_tran |          ap
+    splant |         0          1 |     Total
+-----------+----------------------+----------
+         0 |    15,140      1,692 |    16,832 
+         1 |     6,860        829 |     7,689 
+-----------+----------------------+----------
+     Total |    22,000      2,521 |    24,521 
+
+organ_trans |
+ plant_comb |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |     15,140       61.74       61.74
+          1 |      9,381       38.26      100.00
+------------+-----------------------------------
+      Total |     24,521      100.00
+(1,026 real changes made)
+
+           |   rare_neuro_therap
+rare_neuro |         0          1 |     Total
+-----------+----------------------+----------
+         0 |     9,628      1,026 |    10,654 
+         1 |    12,507      1,360 |    13,867 
+-----------+----------------------+----------
+     Total |    22,135      2,386 |    24,521 
+
+rare_neuro_ |
+       comb |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |      9,628       39.26       39.26
+          1 |     14,893       60.74      100.00
+------------+-----------------------------------
+      Total |     24,521      100.00
+
+. 
+. ****************************
+. *       OUTCOME         *
+. ****************************
+. *** Primary outcome - AESI
+. gen new_ae_ra_icd = ae_rheumatoid_arthritis_icd if rheumatoid_arthritis_nhsd_snomed==0 & rheumatoid_arthritis_nhsd_icd10==0  
+(20,587 missing values generated)
+
+. gen new_ae_ra_snomed = ae_rheumatoid_arthritis_snomed if rheumatoid_arthritis_nhsd_snomed==0 & rheumatoid_arthritis_nhsd_icd10==0  
+(20,497 missing values generated)
+
+. gen new_ae_sle_icd = ae_sle_icd if sle_nhsd_ctv==0 & sle_nhsd_icd10==0
+(20,539 missing values generated)
+
+. gen new_ae_sle_ctv = ae_sle_ctv if sle_nhsd_ctv==0 & sle_nhsd_icd10==0
+(20,549 missing values generated)
+
+. gen new_ae_psoriasis_snomed = ae_psoriasis_snomed if psoriasis_nhsd==0
+(20,064 missing values generated)
+
+. gen new_ae_psa_snomed = ae_psoriatic_arthritis_snomed if psoriatic_arthritis_nhsd==0
+(20,036 missing values generated)
+
+. gen new_ae_ankspon_ctv = ae_ankylosing_spondylitis_ctv if ankylosing_spondylitis_nhsd==0
+(20,080 missing values generated)
+
+. gen new_ae_ibd_snomed = ae_ibd_snomed if ibd_ctv==0
+(20,115 missing values generated)
+
+. global ae_spc                   ae_diverticulitis_snomed                ///
+>                                                 ae_diarrhoea_snomed                             ///
+>                                                 ae_taste_snomed                                         
+
+. global ae_spc_icd               ae_diverticulitis_icd                   ///
+>                                                 ae_taste_icd                                    
+
+. global ae_drug                  ae_anaphylaxis_snomed                   ///     
+>                                                 ae_rash_snomed  
 
 . global ae_drug_icd              ae_anaphylaxis_icd
 
@@ -872,272 +2162,683 @@ rare_neuro_ |
 . *remove event if occurred before start (including new start date for control)
 . foreach x in $ae_spc $ae_spc_icd $ae_drug $ae_drug_icd $ae_imae $ae_imae_icd{
   2.                                 display "`x'"
-  3.                                 count if (`x' > start_date | `x' < start_date + 28) & `x'!=. & drug==0
-  4.                                 count if (`x' < start_date | `x' > start_date + 28) & `x'!=. & drug==0
-  5.                                 count if (`x' < start_date | `x' > start_date + 28) & `x'!=. & drug>0
-  6.                                 replace `x'=. if (`x' < start_date | `x' > start_date + 28) & `x'!=.
-  7. }
-ae_diverticulitis_snomed
-  3,472
-  3,312
-  1,371
-(4,683 real changes made, 4,683 to missing)
-ae_diarrhoea_snomed
-  3,506
-  3,330
-  1,405
-(4,735 real changes made, 4,735 to missing)
-ae_taste_snomed
-  3,425
-  3,276
-  1,360
-(4,636 real changes made, 4,636 to missing)
-ae_diverticulitis_icd
-  3,414
-  3,266
-  1,328
-(4,594 real changes made, 4,594 to missing)
-ae_taste_icd
-  3,446
-  3,260
-  1,362
-(4,622 real changes made, 4,622 to missing)
-ae_anaphylaxis_snomed
-  3,425
-  3,271
-  1,397
-(4,668 real changes made, 4,668 to missing)
-ae_anaphylaxis_icd
-  3,433
-  3,279
-  1,398
-(4,677 real changes made, 4,677 to missing)
-new_ae_ra_snomed
-  2,807
-  2,667
-  1,075
-(3,742 real changes made, 3,742 to missing)
-new_ae_sle_ctv
-  2,770
-  2,631
-  1,143
-(3,774 real changes made, 3,774 to missing)
-new_ae_psoriasis_snomed
-  3,037
-  2,895
-  1,225
-(4,120 real changes made, 4,120 to missing)
-new_ae_psa_snomed
-  3,106
-  2,964
-  1,211
-(4,175 real changes made, 4,175 to missing)
-new_ae_ankspon_ctv
-  3,097
-  2,959
-  1,232
-(4,191 real changes made, 4,191 to missing)
-new_ae_ibd
-  3,150
-  2,998
-  1,268
-(4,266 real changes made, 4,266 to missing)
-new_ae_ra_icd
-  2,712
-  2,573
-  1,147
-(3,720 real changes made, 3,720 to missing)
-new_ae_sle_icd
-  2,781
-  2,654
-  1,080
-(3,734 real changes made, 3,734 to missing)
-
-. 
-end of do-file
-
-. do "C:\Users\k1635179\AppData\Local\Temp\STD33a8_000000.tmp"
-
-. foreach x in $ae_spc $ae_spc_icd $ae_drug $ae_drug_icd $ae_imae $ae_imae_icd{
-  2.                                 display "`x'"
   3.                                 count if (`x' > start_date | `x' < start_date + 28) & `x'!=. 
   4.                                 count if (`x' < start_date | `x' > start_date + 28) & `x'!=. & drug==0
   5.                                 count if (`x' < start_date | `x' > start_date + 28) & `x'!=. & drug>0
   6.                                 replace `x'=. if (`x' < start_date | `x' > start_date + 28) & `x'!=.
   7. }
 ae_diverticulitis_snomed
-  236
-  0
-  0
-(0 real changes made)
+  4,930
+  3,258
+  1,410
+(4,668 real changes made, 4,668 to missing)
 ae_diarrhoea_snomed
-  255
-  0
-  0
-(0 real changes made)
+  4,857
+  3,256
+  1,349
+(4,605 real changes made, 4,605 to missing)
 ae_taste_snomed
-  231
-  0
-  0
-(0 real changes made)
+  4,875
+  3,253
+  1,372
+(4,625 real changes made, 4,625 to missing)
 ae_diverticulitis_icd
-  238
-  0
-  0
-(0 real changes made)
+  4,963
+  3,320
+  1,398
+(4,718 real changes made, 4,718 to missing)
 ae_taste_icd
-  249
-  0
-  0
-(0 real changes made)
+  4,912
+  3,291
+  1,385
+(4,676 real changes made, 4,676 to missing)
 ae_anaphylaxis_snomed
-  227
-  0
-  0
-(0 real changes made)
+  4,929
+  3,296
+  1,387
+(4,683 real changes made, 4,683 to missing)
+ae_rash_snomed
+  4,845
+  3,203
+  1,396
+(4,599 real changes made, 4,599 to missing)
 ae_anaphylaxis_icd
-  228
-  0
-  0
-(0 real changes made)
+  4,806
+  3,202
+  1,345
+(4,547 real changes made, 4,547 to missing)
 new_ae_ra_snomed
-  207
-  0
-  0
-(0 real changes made)
+  4,024
+  2,708
+  1,127
+(3,835 real changes made, 3,835 to missing)
 new_ae_sle_ctv
-  198
-  0
-  0
-(0 real changes made)
+  3,972
+  2,672
+  1,102
+(3,774 real changes made, 3,774 to missing)
 new_ae_psoriasis_snomed
-  198
-  0
-  0
-(0 real changes made)
+  4,457
+  2,989
+  1,249
+(4,238 real changes made, 4,238 to missing)
 new_ae_psa_snomed
-  198
-  0
-  0
-(0 real changes made)
+  4,485
+  2,966
+  1,312
+(4,278 real changes made, 4,278 to missing)
 new_ae_ankspon_ctv
-  207
-  0
-  0
-(0 real changes made)
+  4,441
+  2,998
+  1,224
+(4,222 real changes made, 4,222 to missing)
 new_ae_ibd
-  218
-  0
-  0
-(0 real changes made)
+  4,406
+  2,978
+  1,209
+(4,187 real changes made, 4,187 to missing)
 new_ae_ra_icd
-  210
-  0
-  0
-(0 real changes made)
+  3,934
+  2,668
+  1,103
+(3,771 real changes made, 3,771 to missing)
 new_ae_sle_icd
-  189
+  3,982
+  2,695
+  1,089
+(3,784 real changes made, 3,784 to missing)
+
+. egen ae_spc_gp = rmin($ae_spc)
+(23,766 missing values generated)
+
+. egen ae_spc_serious = rmin($ae_spc_icd)
+(24,047 missing values generated)
+
+. egen ae_spc_all = rmin($ae_spc $ae_spc_icd)
+(23,310 missing values generated)
+
+. egen ae_drug_gp = rmin($ae_drug)
+(24,030 missing values generated)
+
+. egen ae_drug_serious = rmin($ae_drug_icd)
+(24,262 missing values generated)
+
+. egen ae_drug_all = rmin($ae_drug $ae_drug_icd)
+(23,776 missing values generated)
+
+. egen ae_imae_gp = rmin($ae_imae)        
+(23,308 missing values generated)
+
+. egen ae_imae_serious = rmin($ae_imae_icd)
+(24,161 missing values generated)
+
+. egen ae_imae_all = rmin($ae_imae $ae_imae_icd)  
+(22,967 missing values generated)
+
+. egen ae_all = rmin($ae_spc $ae_spc_icd $ae_drug $ae_drug_icd $ae_imae $ae_imae_icd)
+(21,214 missing values generated)
+
+. egen ae_all_serious = rmin($ae_spc_icd $ae_drug_icd $ae_imae_icd)
+(23,442 missing values generated)
+
+. by drug, sort: count if ae_spc_all!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  810
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  130
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  125
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  146
+
+. by drug, sort: count if ae_drug_all!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  498
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  86
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  72
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  89
+
+. by drug, sort: count if ae_imae_all!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  1,065
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  150
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  155
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  184
+
+. by drug, sort: count if ae_all!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  2,230
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  351
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  336
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  390
+
+. 
+. *** Secondary outcome - SAEs hospitalisation or death including COVID-19 
+. *correcting COVID hosp events: admitted on day 0 or day 1 after treatment - to ignore sotro initiators with mab procedure codes*
+. bys drug: count if covid_hosp_date!=. // all hospitalisation
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  1,724
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  224
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  250
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  233
+
+. bys drug: count if covid_hosp_date0!=. // hospitalisation after treatment date (control group will not have covid_hosp_date0)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  151
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  27
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  25
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  33
+
+. // covid admission is the same date as date treated 
+. bys drug: count if covid_hosp_date0!=date_treated&covid_hosp_date0!=.&date_treated!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
   0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  27
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  25
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  33
+
+. bys drug: count if covid_hosp_date1!=(date_treated+1) &covid_hosp_date1!=.&date_treated!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
   0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  24
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  20
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  22
+
+. // covid admission is the same date as date treated and is a daycase
+. bys drug: count if covid_hosp_date0==covid_discharge_date0&covid_hosp_date0!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  0
+
+. bys drug: count if covid_hosp_date1==covid_discharge_date1&covid_hosp_date1!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  0
+
+. // covid admission is the same date as mab
+. bys drug: count if covid_hosp_date0==covid_hosp_date_mabs&covid_hosp_date_mabs!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  0
+
+. bys drug: count if covid_hosp_date1==covid_hosp_date_mabs&covid_hosp_date_mabs!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  0
+
+. // covid admission is the same date as mab and is a daycase or 24 hour admission
+. bys drug: count if covid_hosp_date0==covid_hosp_date_mabs&covid_hosp_date0!=.&covid_hosp_date0==covid_discharge_date0
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  0
+
+. bys drug: count if covid_hosp_date1==covid_hosp_date_mabs&covid_hosp_date1!=.&covid_hosp_date1==covid_discharge_date1
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  0
+
+. bys drug: count if covid_hosp_date0==covid_hosp_date_mabs&covid_hosp_date0!=.&(covid_discharge_date0 - covid_hosp_date0)==1
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  0
+
+. bys drug: count if covid_hosp_date1==covid_hosp_date_mabs&covid_hosp_date1!=.&(covid_discharge_date1 - covid_hosp_date1)==1
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  0
+
+. // covid admission is PM but discharged in AM 
+. count if covid_hosp_date!=.&covid_discharge_date==.
+  2,408
+
+. count if covid_hosp_date==.&covid_discharge_date!=.
+  215
+
+. count if covid_hosp_date!=.&covid_discharge_date!=.&covid_hosp_date==covid_discharge_date
+  0
+
+. count if covid_hosp_date!=.&covid_discharge_date!=.&covid_hosp_date<covid_discharge_date
+  14
+
+. count if covid_hosp_date!=.&covid_discharge_date!=.&covid_hosp_date>covid_discharge_date
+  9
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. count if covid_hosp_date0!=.&covid_discharge_date0!=.&covid_hosp_date0==covid_discharge_date0
+  0
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. count if covid_hosp_date0!=.&covid_discharge_date0!=.&covid_hosp_date0==covid_discharge_date0
+  0
+
+. count if covid_hosp_date1!=.&covid_discharge_date1!=.&covid_hosp_date1==covid_discharge_date1
+  0
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. replace covid_hosp_date=. if covid_hosp_date0==covid_discharge_date0&covid_hosp_date0!=.
 (0 real changes made)
 
 . 
 end of do-file
 
-. do "C:\Users\k1635179\AppData\Local\Temp\STD33a8_000000.tmp"
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
 
-. egen ae_spc_gp = rmin($ae_spc)
-(23,787 missing values generated)
+. replace covid_hosp_date=. if covid_hosp_date1==covid_discharge_date1&covid_hosp_date1!=.  // [? Bang is your code for this correct~line 135]
+(0 real changes made)
 
-. egen ae_spc_serious = rmin($ae_spc_icd)
-(24,016 missing values generated)
+. 
+end of do-file
 
-. egen ae_spc_all = rmin($ae_spc $ae_spc_icd)
-(23,321 missing values generated)
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
 
-. egen ae_drug_gp = rmin($ae_drug)
-(24,275 missing values generated)
+. replace covid_hosp_date=. if covid_hosp_date0==covid_hosp_date_mabs&covid_hosp_date_mabs!=.&drug==1
+(0 real changes made)
 
-. egen ae_drug_serious = rmin($ae_drug_icd)
-(24,274 missing values generated)
+. replace covid_hosp_date=. if covid_hosp_date1==covid_hosp_date_mabs&covid_hosp_date_mabs!=.&drug==1 
+(0 real changes made)
 
-. egen ae_drug_all = rmin($ae_drug $ae_drug_icd)
-(24,050 missing values generated)
+. 
+end of do-file
 
-. egen ae_imae_gp = rmin($ae_imae)        
-(23,302 missing values generated)
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
 
-. egen ae_imae_serious = rmin($ae_imae_icd)
-(24,106 missing values generated)
+. by drug, sort: count if all_hosp_date!=. // all hospitalisation
 
-. egen ae_imae_all = rmin($ae_imae $ae_imae_icd)  
-(22,927 missing values generated)
-
-. egen ae_all = rmin($ae_spc $ae_spc_icd $ae_drug $ae_drug_icd $ae_imae $ae_imae_icd)
-(21,421 missing values generated)
-
-. egen ae_all_serious = rmin($ae_spc_icd $ae_drug_icd $ae_imae_icd)
-(23,408 missing values generated)
-
-. by drug, sort: count if ae_spc_all!=.
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = control
-  803
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  1,715
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = sotrovimab
-  111
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  238
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = paxlovid
-  127
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  244
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = molnupiravir
-  140
+  214
 
-. by drug, sort: count if ae_drug_all!=.
+. 
+end of do-file
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. bys drug: count if all_hosp_date0!=date_treated&all_hosp_date0!=.&date_treated!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = control
-  306
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = sotrovimab
-  49
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  28
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = paxlovid
-  46
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  31
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = molnupiravir
-  51
+  21
 
-. by drug, sort: count if ae_imae_all!=.
+. bys drug: count if all_hosp_date1!=(date_treated+1) &all_hosp_date1!=.&date_treated!=.
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = control
-  1,088
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = sotrovimab
-  157
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  25
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = paxlovid
-  158
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  31
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = molnupiravir
-  172
+  28
 
-. by drug, sort: count if ae_all!=.
+. 
+end of do-file
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. bys drug: count if all_hosp_date0==hosp_discharge_date0&all_hosp_date0!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = control
-  2,109
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = sotrovimab
-  308
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = paxlovid
-  319
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -> drug = molnupiravir
-  345
+  0
+
+. bys drug: count if all_hosp_date1==hosp_discharge_date1&all_hosp_date1!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  0
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. bys drug: count if all_hosp_date0==covid_hosp_date_mabs&covid_hosp_date_mabs!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  0
+
+. bys drug: count if all_hosp_date1==covid_hosp_date_mabs&covid_hosp_date_mabs!=.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  0
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. bys drug: count if all_hosp_date0==covid_hosp_date_mabs&all_hosp_date0!=.&all_hosp_date0==hosp_discharge_date0
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  0
+
+. bys drug: count if all_hosp_date1==covid_hosp_date_mabs&all_hosp_date1!=.&all_hosp_date1==hosp_discharge_date1
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  0
+
+. bys drug: count if all_hosp_date0==covid_hosp_date_mabs&all_hosp_date0!=.&(hosp_discharge_date0-all_hosp_date0)==1
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  0
+
+. bys drug: count if all_hosp_date1==covid_hosp_date_mabs&all_hosp_date1!=.&(hosp_discharge_date1-all_hosp_date1)==1
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = control
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = sotrovimab
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = paxlovid
+  0
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> drug = molnupiravir
+  0
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. count if all_hosp_date!=.&hosp_discharge_date==.
+  2,166
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. count if all_hosp_date==.&hosp_discharge_date!=.
+  2,268
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. count if all_hosp_date!=.&hosp_discharge_date!=.&all_hosp_date==hosp_discharge_date
+  0
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. count if all_hosp_date!=.&hosp_discharge_date!=.&all_hosp_date<hosp_discharge_date
+  132
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. count if all_hosp_date!=.&hosp_discharge_date!=.&all_hosp_date>hosp_discharge_date
+  113
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD171c_000000.tmp"
+
+. count if all_hosp_date!=.&hosp_discharge_date==.
+  2,166
+
+. count if all_hosp_date==.&hosp_discharge_date!=.
+  2,268
+
+. count if all_hosp_date!=.&hosp_discharge_date!=.&all_hosp_date==hosp_discharge_date
+  0
+
+. count if all_hosp_date!=.&hosp_discharge_date!=.&all_hosp_date<hosp_discharge_date
+  132
+
+. count if all_hosp_date!=.&hosp_discharge_date!=.&all_hosp_date>hosp_discharge_date
+  113
 
 . 
 end of do-file

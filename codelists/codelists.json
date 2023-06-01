@@ -593,6 +593,12 @@
       "url": "https://codelists.opensafely.org/codelist/user/katiebechman/anaphylaxis-snomed/25988951/",
       "downloaded_at": "2023-05-11 08:48:29.315970Z",
       "sha": "a7d0ddbdb758bd43ca3c54a5e4adba9eae5412a1"
+    },
+    "opensafely-symptoms-rashes.csv": {
+      "id": "opensafely/symptoms-rashes/6bd2da47",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/symptoms-rashes/6bd2da47/",
+      "downloaded_at": "2023-06-01 11:35:34.324471Z",
+      "sha": "b4f30abf8d6f7763f06a27d2aefa49a2d019c793"
     }
   }
 }
