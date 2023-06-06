@@ -120,7 +120,7 @@ def adverse_outcome_icd(dx_codelist):
       find_first_match_in_period=True,
       date_format="YYYY-MM-DD",
       return_expectations={
-          "incidence": 0.2,
+          "incidence": 0.4,
           "date": {"earliest": "2021-12-16"},
       },
   )
@@ -132,7 +132,7 @@ def adverse_outcome_snomed(dx_codelist):
       find_first_match_in_period=True,
       date_format="YYYY-MM-DD",
       return_expectations={
-          "incidence": 0.2,
+          "incidence": 0.4,
           "date": {"earliest": "2021-12-16"},
       },
   )
@@ -144,7 +144,7 @@ def adverse_outcome_AE(codelist):
       find_first_match_in_period=True,
       date_format="YYYY-MM-DD",
       return_expectations={
-          "incidence": 0.2,
+          "incidence": 0.4,
           "date": {"earliest": "2021-12-16"},
       },
   )
@@ -156,7 +156,7 @@ def adverse_outcome_icd_pre(dx_codelist):
       find_first_match_in_period=True,
       date_format="YYYY-MM-DD",
       return_expectations={
-          "incidence": 0.05,
+          "incidence": 0.1,
           "date": {"earliest": "2022-02-18"},
       },
   )
@@ -168,7 +168,7 @@ def adverse_outcome_snomed_pre(dx_codelist):
       find_first_match_in_period=True,
       date_format="YYYY-MM-DD",
       return_expectations={
-          "incidence": 0.05,
+          "incidence": 0.1,
           "date": {"earliest": "2022-02-18"},
       },
   )
@@ -180,7 +180,7 @@ def adverse_outcome_AE_pre(codelist):
       find_first_match_in_period=True,
       date_format="YYYY-MM-DD",
       return_expectations={
-          "incidence": 0.05,
+          "incidence": 0.1,
           "date": {"earliest": "2022-02-18"},
       },
   )

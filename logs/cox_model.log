@@ -4,7 +4,7 @@
 > y\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/logs/cox_
 > model.log
   log type:  text
- opened on:   2 Jun 2023, 00:05:48
+ opened on:   6 Jun 2023, 22:04:14
 
 . 
 . *Set Ado file path
@@ -55,696 +55,76 @@
 > iabetes chronic_cardiac_disease chronic_respiratory_disease hypertension
 
 . * Outcome
-. global ae_spc_all               ae_spc_all
-
-. global ae_drug_all              ae_drug_all                     
-
-. global ae_imae                  ae_imae_all                             
-
-. global ae_imae                  ae_imae_all                             
-
-. global ae_all                   ae_all
-
-. global emerg_hosp               allcause_emerg_aande
-
-. global covid_hosp               covid_hosp_date
-
-. global all_hosp                 all_hosp_date
-
-. global died                             died_date_ons
-
-. global ae_spc                   ae_diverticulitis_snomed ae_diarrhoea_snomed 
-> ae_taste_snomed                                            
-
-. global ae_spc_icd               ae_diverticulitis_icd ae_taste_icd           
->                            
-
-. global ae_spc_emerg             ae_diverticulitis_ae                         
->                                            
-
-. global ae_drug                  ae_anaphylaxis_snomed ae_rash_snomed    
-
-. global ae_drug_emerg    ae_anaphlaxis_ae ae_drugreact_ae ae_allergic_ae      
->                                                                              
->   
-
-. global ae_drug_icd              ae_anaphylaxis_icd
-
-. global ae_imae                  new_ae_ra_snomed new_ae_sle_ctv new_ae_psoria
-> sis_snomed new_ae_psa_snomed new_ae_ankspon_ctv new_ae_ibd_snomed  
-
-. global ae_imae_icd              new_ae_ra_icd new_ae_sle_icd            
-
-. global ae_imae_emerg    new_ae_ra_ae new_ae_sle_ae new_ae_psoriasis_ae new_ae
-> _psa_ae new_ae_ankspon_ae new_ae_ibd_ae
-
-. 
-. * Comparator rate
-. global pre_ae                    pre_diverticulitis_icd  pre_diverticulitis_s
-> nomed pre_diverticulitis_ae pre_divertic_all pre_diarrhoea_snomed pre_taste_s
-> nomed ///
->                                                  pre_taste_icd pre_rash_snome
-> d pre_anaphylaxis_icd      pre_anaphylaxis_snomed  pre_anaphlaxis_ae pre_anap
-> hylaxis_all pre_drugreact_ae  ///
->                                                  pre_allergic_ae pre_rheumato
-> id_arthritis_ae pre_rheumatoid_arthritis_snomed pre_rheumatoid_arthritis_icd 
-> ///           
->                                                  pre_ankylosing_spondylitis_c
-> tv pre_ankylosing_spondylitis_ae pre_psoriasis_snomed pre_psoriasis_ae ///
->                                                  pre_psoriatic_arthritis_ae p
-> re_psoriatic_arthritis_snomed pre_sle_ctv pre_sle_icd pre_sle_ae pre_ibd_snom
-> ed                                                    
-
-.                                                  
-.                                                 
-.            
-. tempname coxoutput
-
-. postfile `coxoutput' str20(model) str20(failure) ///
->         ptime_all events_all rate_all /// 
->         ptime_control events_control rate_control /// 
->         ptime_sot events_sot rate_sot ///
->         ptime_pax events_pax rate_pax ///
->         ptime_mol events_mol rate_mol ///
->         hr_sot lc_sot uc_sot hr_pax lc_pax uc_pax hr_mol lc_mol uc_mol ///
->         using "$projectdir/output/tables/cox_model_summary", replace    
-
-.                                                  
-. foreach fail in $ae_spc $ae_spc_icd $ae_spc_emerg $ae_spc_all ///
->                                 $ae_drug $ae_drug_icd $ae_drug_emerg $ae_drug
-> _all ///
->                                 $ae_imae $ae_imae_icd $ae_imae_emerg $ae_imae
-> _all ///
->                                 $ae_all $ae_all_serious $emerg_hosp $covid_ho
-> sp $all_hosp $died {
-  2. 
-.         stset stop_`fail', id(patient_id) origin(time start_date) enter(time 
-> start_date) failure(fail_`fail'==1) 
-  3.                                                 
-.         foreach model in crude agesex adj fulladj1 fulladj2{
-  4.                                 
-.                 stcox $`model', vce(robust)
-  5.                                         matrix b = r(table)
-  6.                                         local hr_sot = b[1,2]
-  7.                                         local lc_sot = b[5,2]
-  8.                                         local uc_sot = b[6,2]
-  9.                                         local hr_pax = b[1,3]
- 10.                                         local lc_pax = b[5,3]
- 11.                                         local uc_pax = b[6,3]
- 12.                                         local hr_mol = b[1,4]
- 13.                                         local lc_mol = b[5,4]
- 14.                                         local uc_mol = b[6,4]
- 15.                 // estat phtest,de
-.                 stptime 
- 16.                                         local rate_all = `r(rate)'
- 17.                                         local ptime_all = `r(ptime)'
- 18.                                         local events_all .
- 19.                                                 if `r(failures)' == 0 | `r
-> (failures)' > 5 local events_all `r(failures)'
- 20.                 
-.                 stptime if drug == 0
- 21.                                         local rate_control = `r(rate)'
- 22.                                         local ptime_control = `r(ptime)'
- 23.                                         local events_control .
- 24.                                                 if `r(failures)' == 0 | `r
-> (failures)' > 5 local events_control `r(failures)'
- 25.                 
-.                 stptime if drug == 1
- 26.                                         local rate_sot = `r(rate)'
- 27.                                         local ptime_sot = `r(ptime)'
- 28.                                         local events_sot .
- 29.                                                 if `r(failures)' == 0 | `r
-> (failures)' > 5 local events_sot `r(failures)'
- 30.                 
-.                 stptime if drug == 2
- 31.                                         local rate_pax = `r(rate)'
- 32.                                         local ptime_pax = `r(ptime)'
- 33.                                         local events_pax .
- 34.                                                 if `r(failures)' == 0 | `r
-> (failures)' > 5 local events_pax `r(failures)'
- 35.                 
-.                 stptime if drug == 3
- 36.                                         local rate_mol = `r(rate)'
- 37.                                         local ptime_mol = `r(ptime)'
- 38.                                         local events_mol .
- 39.                                                 if `r(failures)' == 0 | `r
-> (failures)' > 5 local events_mol `r(failures)'
- 40.                                                 
-.                 post `coxoutput' ("`model'") ("`fail'") (`ptime_all') (`event
-> s_all') (`rate_all') ///
->                                         (`ptime_control') (`events_control') 
-> (`rate_control') ///
->                                         (`ptime_sot') (`events_sot') (`rate_s
-> ot') ///
->                                         (`ptime_pax') (`events_pax') (`rate_p
-> ax') ///
->                                         (`ptime_mol') (`events_mol') (`rate_m
-> ol') ///
->                                         (`hr_sot') (`lc_sot') (`uc_sot') (`hr
-> _pax') (`lc_pax') (`uc_pax') (`hr_mol') (`lc_mol') (`uc_mol')
- 41.                                         
-. }
- 42. }
-
-Survival-time data settings
-
-           ID variable: patient_id
-         Failure event: fail_ae_diverticulitis_snomed==1
-Observed time interval: (stop_ae_diverticulitis_snomed[_n-1], stop_ae_diverticu
-> litis_snomed]
-     Enter on or after: time start_date
-     Exit on or before: failure
-     Time for analysis: (time-origin)
-                Origin: time start_date
-
---------------------------------------------------------------------------
-     24,455  total observations
-      1,702  ignored because never entered
-         54  observations end on or before enter()
---------------------------------------------------------------------------
-     22,699  observations remaining, representing
-     22,699  subjects
-        261  failures in single-failure-per-subject data
-  4,283,024  total analysis time at risk and under observation
-                                                At risk from t =         0
-                                     Earliest observed entry t =         0
-                                          Last observed exit t =       536
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Iteration 0:   log pseudolikelihood = -2609.7101
-Iteration 1:   log pseudolikelihood = -2608.3173
-Iteration 2:   log pseudolikelihood = -2608.3012
-Iteration 3:   log pseudolikelihood = -2608.3012
-Refining estimates:
-Iteration 0:   log pseudolikelihood = -2608.3012
-
-Cox regression with Breslow method for ties
-
-No. of subjects =      22,699                           Number of obs = 22,699
-No. of failures =         261
-Time at risk    = 4,283,023.5
-                                                        Wald chi2(3)  =   2.99
-Log pseudolikelihood = -2608.3012                       Prob > chi2   = 0.3937
-
-                        (Std. err. adjusted for 22,699 clusters in patient_id)
-------------------------------------------------------------------------------
-             |               Robust
-          _t | Haz. ratio   std. err.      z    P>|z|     [95% conf. interval]
--------------+----------------------------------------------------------------
-        drug |
- sotrovimab  |   1.151754   .2280491     0.71   0.475      .781305    1.697849
-   paxlovid  |   1.016285   .2106093     0.08   0.938     .6770449    1.525506
-molnupira~r  |   1.353921   .2484093     1.65   0.099      .944974    1.939843
-------------------------------------------------------------------------------
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |    4283023.5        261   .00006094    .000054    .0000688
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |      4086161        168   .00004111   .0000353    .0000478
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |      64740.5         30   .00046339    .000324    .0006628
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |      66045.5         27   .00040881   .0002804    .0005961
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |      66076.5         36   .00054482    .000393    .0007553
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Iteration 0:   log pseudolikelihood = -2609.7101
-Iteration 1:   log pseudolikelihood = -2607.5823
-Iteration 2:   log pseudolikelihood = -2607.5662
-Iteration 3:   log pseudolikelihood = -2607.5662
-Refining estimates:
-Iteration 0:   log pseudolikelihood = -2607.5662
-
-Cox regression with Breslow method for ties
-
-No. of subjects =      22,699                           Number of obs = 22,699
-No. of failures =         261
-Time at risk    = 4,283,023.5
-                                                        Wald chi2(5)  =   4.54
-Log pseudolikelihood = -2607.5662                       Prob > chi2   = 0.4747
-
-                        (Std. err. adjusted for 22,699 clusters in patient_id)
-------------------------------------------------------------------------------
-             |               Robust
-          _t | Haz. ratio   std. err.      z    P>|z|     [95% conf. interval]
--------------+----------------------------------------------------------------
-        drug |
- sotrovimab  |   1.153187   .2283168     0.72   0.472     .7822985    1.699915
-   paxlovid  |   1.015902   .2107159     0.08   0.939     .6765466    1.525478
-molnupira~r  |   1.357954    .248857     1.67   0.095     .9481892    1.944801
-             |
-         age |   .9974515    .003248    -0.78   0.433     .9911058    1.003838
-             |
-         sex |
-     Female  |   .8905852   .1105008    -0.93   0.350     .6983309    1.135768
-------------------------------------------------------------------------------
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |    4283023.5        261   .00006094    .000054    .0000688
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |      4086161        168   .00004111   .0000353    .0000478
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |      64740.5         30   .00046339    .000324    .0006628
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |      66045.5         27   .00040881   .0002804    .0005961
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |      66076.5         36   .00054482    .000393    .0007553
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Iteration 0:   log pseudolikelihood = -2609.7101
-Iteration 1:   log pseudolikelihood =  -2601.683
-Iteration 2:   log pseudolikelihood = -2601.6454
-Iteration 3:   log pseudolikelihood = -2601.6454
-Refining estimates:
-Iteration 0:   log pseudolikelihood = -2601.6454
-
-Cox regression with Breslow method for ties
-
-No. of subjects =      22,699                           Number of obs = 22,699
-No. of failures =         261
-Time at risk    = 4,283,023.5
-                                                        Wald chi2(24) =  18.47
-Log pseudolikelihood = -2601.6454                       Prob > chi2   = 0.7796
-
-                        (Std. err. adjusted for 22,699 clusters in patient_id)
-------------------------------------------------------------------------------
-             |               Robust
-          _t | Haz. ratio   std. err.      z    P>|z|     [95% conf. interval]
--------------+----------------------------------------------------------------
-        drug |
- sotrovimab  |   1.162152   .2301637     0.76   0.448     .7882842    1.713338
-   paxlovid  |   1.008337    .209311     0.04   0.968     .6712947    1.514602
-molnupira~r  |   1.361716   .2501131     1.68   0.093     .9500402     1.95178
-             |
-         age |   .9975465   .0032475    -0.75   0.451     .9912017    1.003932
-             |
-         sex |
-     Female  |   .8902408   .1107384    -0.93   0.350     .6976302     1.13603
-             |
-  region_nhs |
-East Midl..  |   .8945031   .2531839    -0.39   0.694     .5136345    1.557792
-     London  |   .9919354   .2380657    -0.03   0.973     .6197178    1.587716
- North East  |   1.060469   .2883692     0.22   0.829     .6223491    1.807015
- North West  |   .9687162    .270945    -0.11   0.910      .559912    1.675997
- South East  |   1.137255    .304714     0.48   0.631     .6726491    1.922769
- South West  |   .8372251   .2426343    -0.61   0.540     .4744139    1.477498
-West Midl..  |   1.177005   .3157363     0.61   0.543     .6957286    1.991207
-Yorkshire..  |   .9117521   .2583143    -0.33   0.744     .5232598    1.588679
-             |
-paxlovid_c~d |    1.06412   .2166219     0.31   0.760     .7140232    1.585875
-downs_synd~e |   .9432422   .1521066    -0.36   0.717     .6876366     1.29386
-solid_cancer |   .7973484   .1816273    -0.99   0.320     .5102155     1.24607
-haem_disease |   1.068295   .1324804     0.53   0.594     .8377855    1.362227
-renal_dise~e |   .8233949    .114335    -1.40   0.162     .6272086    1.080947
-liver_dise~e |   1.217434   .2258799     1.06   0.289     .8462827     1.75136
-imid_on_drug |    1.01175   .1516311     0.08   0.938     .7542298    1.357197
-immunosupr~n |   .8412172   .1841453    -0.79   0.430     .5477435     1.29193
-    hiv_aids |   1.233307   .1841412     1.40   0.160     .9204097    1.652576
-organ_tran~t |   .9964178   .1832346    -0.02   0.984     .6948822    1.428801
-  rare_neuro |   1.119469   .1419875     0.89   0.374     .8730724    1.435403
-------------------------------------------------------------------------------
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |    4283023.5        261   .00006094    .000054    .0000688
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |      4086161        168   .00004111   .0000353    .0000478
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |      64740.5         30   .00046339    .000324    .0006628
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |      66045.5         27   .00040881   .0002804    .0005961
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |      66076.5         36   .00054482    .000393    .0007553
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Iteration 0:   log pseudolikelihood = -880.02059
-Iteration 1:   log pseudolikelihood = -871.45387
-Iteration 2:   log pseudolikelihood = -871.32222
-Iteration 3:   log pseudolikelihood = -871.32199
-Refining estimates:
-Iteration 0:   log pseudolikelihood = -871.32199
-
-Cox regression with Breslow method for ties
-
-No. of subjects =       8,974                           Number of obs =  8,974
-No. of failures =          97
-Time at risk    = 1,701,743.5
-                                                        Wald chi2(27) =  20.16
-Log pseudolikelihood = -871.32199                       Prob > chi2   = 0.8242
-
-                         (Std. err. adjusted for 8,974 clusters in patient_id)
-------------------------------------------------------------------------------
-             |               Robust
-          _t | Haz. ratio   std. err.      z    P>|z|     [95% conf. interval]
--------------+----------------------------------------------------------------
-        drug |
- sotrovimab  |   .8551074   .3203141    -0.42   0.676     .4103644    1.781852
-   paxlovid  |   1.088874   .3534763     0.26   0.793     .5763098    2.057308
-molnupira~r  |   1.410313    .419642     1.16   0.248     .7871151    2.526926
-             |
-         age |   .9973779   .0049876    -0.53   0.600       .98765    1.007201
-             |
-         sex |
-     Female  |   .8292865   .1694599    -0.92   0.360     .5556054    1.237778
-             |
-  region_nhs |
-East Midl..  |   .5881896   .2646238    -1.18   0.238     .2435375    1.420591
-     London  |   .7747819   .2743551    -0.72   0.471      .387047    1.550941
- North East  |   .9109339   .3662601    -0.23   0.817     .4142317    2.003228
- North West  |   .7678572   .3253733    -0.62   0.533     .3346499    1.761855
- South East  |   .8234624   .3407885    -0.47   0.639      .365911    1.853156
- South West  |   .4525524   .2222331    -1.61   0.106     .1728514    1.184854
-West Midl..  |   .9339109   .3834384    -0.17   0.868     .4176623    2.088265
-Yorkshire..  |   .4013953    .212222    -1.73   0.084     .1424075    1.131389
-             |
-paxlovid_c~d |   .9231112   .3001578    -0.25   0.806     .4880657    1.745942
-downs_synd~e |   .9926247   .2597308    -0.03   0.977     .5943732    1.657719
-solid_cancer |   .9368653    .329434    -0.19   0.853     .4702897    1.866332
-haem_disease |   .8050028   .1667821    -1.05   0.295     .5363444    1.208234
-renal_dise~e |    .970658   .2114913    -0.14   0.891     .6332901    1.487749
-liver_dise~e |   1.305307   .4121511     0.84   0.399     .7029843    2.423705
-imid_on_drug |   1.075434    .261951     0.30   0.765     .6671922    1.733473
-immunosupr~n |   .5765236   .2442696    -1.30   0.194     .2512859    1.322715
-    hiv_aids |   .8496817    .235469    -0.59   0.557     .4935897    1.462671
-organ_tran~t |   .8804243   .2661762    -0.42   0.674     .4868001    1.592331
-  rare_neuro |    1.15898   .2433115     0.70   0.482     .7680296    1.748935
-vaccinat~tus |   1.011005   .0737292     0.15   0.881     .8763511    1.166349
-       imdq5 |    .957066   .0764246    -0.55   0.583     .8184099    1.119213
-       White |   .7592538   .1541781    -1.36   0.175     .5099616    1.130411
-------------------------------------------------------------------------------
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |    4283023.5        261   .00006094    .000054    .0000688
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |      4086161        168   .00004111   .0000353    .0000478
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |      64740.5         30   .00046339    .000324    .0006628
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |      66045.5         27   .00040881   .0002804    .0005961
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |      66076.5         36   .00054482    .000393    .0007553
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Iteration 0:   log pseudolikelihood = -819.89519
-Iteration 1:   log pseudolikelihood = -807.71133
-Iteration 2:   log pseudolikelihood = -807.35176
-Iteration 3:   log pseudolikelihood = -807.34937
-Iteration 4:   log pseudolikelihood = -807.34937
-Refining estimates:
-Iteration 0:   log pseudolikelihood = -807.34937
-
-Cox regression with Breslow method for ties
-
-No. of subjects =       8,428                           Number of obs =  8,428
-No. of failures =          91
-Time at risk    = 1,595,837.5
-                                                        Wald chi2(31) =  24.66
-Log pseudolikelihood = -807.34937                       Prob > chi2   = 0.7827
-
-                         (Std. err. adjusted for 8,428 clusters in patient_id)
-------------------------------------------------------------------------------
-             |               Robust
-          _t | Haz. ratio   std. err.      z    P>|z|     [95% conf. interval]
--------------+----------------------------------------------------------------
-        drug |
- sotrovimab  |   .7998648   .3193598    -0.56   0.576     .3657292    1.749337
-   paxlovid  |   1.192077   .3911817     0.54   0.592      .626587    2.267917
-molnupira~r  |   1.540556   .4650639     1.43   0.152     .8525426    2.783804
-             |
-         age |   .9989118   .0051491    -0.21   0.833     .9888705    1.009055
-             |
-         sex |
-     Female  |   .8182846   .1721965    -0.95   0.341     .5417276    1.236027
-             |
-  region_nhs |
-East Midl..  |   .5177273   .2431127    -1.40   0.161     .2062513    1.299587
-     London  |   .7369742    .264046    -0.85   0.394     .3651577    1.487388
- North East  |   .7713491   .3257037    -0.61   0.539     .3371549    1.764707
- North West  |   .6839893   .2994328    -0.87   0.386     .2900116    1.613182
- South East  |   .8174221   .3388794    -0.49   0.627     .3627129     1.84217
- South West  |   .4448648   .2179529    -1.65   0.098     .1702936    1.162138
-West Midl..  |   .9313995    .384222    -0.17   0.863     .4149515    2.090618
-Yorkshire..  |   .3178935   .1824719    -2.00   0.046     .1032022    .9792063
-             |
-paxlovid_c~d |   .9613719   .3144083    -0.12   0.904      .506423    1.825028
-downs_synd~e |   1.005858   .2725981     0.02   0.983     .5913604    1.710887
-solid_cancer |   1.001146   .3534303     0.00   0.997     .5011884    1.999832
-haem_disease |   .8632097   .1837035    -0.69   0.489     .5688115    1.309979
-renal_dise~e |   1.082948   .2421161     0.36   0.722     .6987206    1.678464
-liver_dise~e |   1.263674   .4065097     0.73   0.467     .6726868     2.37387
-imid_on_drug |   1.129698   .2832558     0.49   0.627     .6910918    1.846669
-immunosupr~n |   .6142391   .2621685    -1.14   0.254     .2660903    1.417901
-    hiv_aids |   .8653485   .2473675    -0.51   0.613       .49416    1.515355
-organ_tran~t |   .7922056   .2427554    -0.76   0.447     .4345146    1.444347
-  rare_neuro |   1.243854   .2727449     1.00   0.320     .8093254    1.911683
-vaccinat~tus |   .9979297   .0748852    -0.03   0.978     .8614406    1.156044
-       imdq5 |   .9569931    .080013    -0.53   0.599     .8123457    1.127397
-       White |   .7972468   .1678013    -1.08   0.282     .5277585    1.204343
-             |
-    diabetes |   .6147577   .2607616    -1.15   0.251      .267701     1.41175
-chronic_ca~e |   .7551127   .2967862    -0.71   0.475     .3495097    1.631414
-chronic_re~e |   .4118752    .211908    -1.72   0.085     .1502541    1.129029
-hypertension |    1.07778   .3645689     0.22   0.825     .5553968    2.091495
-------------------------------------------------------------------------------
-
-         Failure _d: fail_ae_diverticulitis_snomed==1
-   Analysis time _t: (stop_ae_diverticulitis_snomed-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |    4283023.5        261   .00006094    .000054    .0000688
---Break--
-r(1);
+. global spc                      ae_spc_all ae_diverticulitis_snomed ae_diarrh
+> oea_snomed ae_taste_snomed ae_diverticulitis_icd ae_taste_icd ae_diverticulit
+> is_ae
+
+. global drug             ae_drug_all     ae_anaphylaxis_snomed ae_rash_snomed 
+> ae_anaphlaxis_ae ae_drugreact_ae ae_allergic_ae ae_anaphylaxis_icd         
+
+. global imae                     ae_imae_all new_ae_ra_snomed new_ae_sle_ctv n
+> ew_ae_psoriasis_snomed new_ae_psa_snomed new_ae_ankspon_ctv new_ae_ibd_snomed
+>  ///
+>                                         new_ae_ra_icd new_ae_sle_icd new_ae_r
+> a_icd new_ae_sle_icd new_ae_ra_ae new_ae_sle_ae new_ae_psoriasis_ae new_ae_ps
+> a_ae ///
+>                                         new_ae_ankspon_ae new_ae_ibd_ae      
+>                                                            
+
+. gen no_drug=1 if drug==0
+(9,017 missing values generated)
+
+. replace no_drug=0 if drug >0
+(9,017 real changes made)
+
+. foreach model in agesex adj fulladj1 fulladj2 {
+  2.                 logistic no_drug $`model'
+  3.                 predict p_`model'
+  4. }
+outcome = drug > 0 predicts data perfectly
+r(2000);
 
 end of do-file
 
---Break--
-r(1);
+r(2000);
 
-. exit, clear
+. do "C:\Users\k1635179\AppData\Local\Temp\STD2dc4_000000.tmp"
+
+. *****************************************************************************
+> ***
+. *
+. *       Do-file:                        propensity score cox model
+. *       Project:                        Sotrovimab-Paxlovid-Molnupiravir
+. *   Date:                               24/4/23
+. *       Programmed by:          Katie Bechman
+. *       Description:            create and run ps model
+. *       Data used:                      main.dta
+. *       Data created:           psoutput
+. *       Other output:           logfiles, printed to folder $Logdir
+. *       User installed ado: (place .ado file(s) in analysis folder)
+. 
+. *****************************************************************************
+> ***********************************
+. **Set filepaths
+. global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\O
+> penSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+
+. //global projectdir `c(pwd)'
+. di "$projectdir"
+C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB 
+> and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir
+
+. capture mkdir "$projectdir/output/data"
+
+. capture mkdir "$projectdir/output/figures"
+
+. capture mkdir "$projectdir/output/tables"
+
+. global logdir "$projectdir/logs"
+
+. di "$logdir"
+C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB 
+> and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/logs
+
+. * Open a log file
+. cap log close

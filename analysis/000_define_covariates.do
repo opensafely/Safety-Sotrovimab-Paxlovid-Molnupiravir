@@ -311,13 +311,13 @@ global ae_imae_emerg	new_ae_ra_ae					///
 						new_ae_ankspon_ae				///
 						new_ae_ibd_ae				
 									
-*remove event if occurred before start (including new start date for control)
+*remove event if occurred before start
 foreach x in $ae_spc $ae_spc_icd $ae_spc_emerg $ae_drug $ae_drug_icd $ae_drug_emerg $ae_imae $ae_imae_icd $ae_drug_emerg{
 				display "`x'"
 				count if (`x' > start_date | `x' < start_date + 28) & `x'!=. 
 				count if (`x' < start_date | `x' > start_date + 28) & `x'!=. & drug==0
 				count if (`x' < start_date | `x' > start_date + 28) & `x'!=. & drug>0
-				replace `x'=. if (`x' < start_date | `x' > start_date + 28) & `x'!=.
+				//replace `x'=. if (`x' < start_date | `x' > start_date + 28) & `x'!=.
 }
 egen ae_spc_gp = rmin($ae_spc)
 egen ae_spc_serious = rmin($ae_spc_icd)
@@ -337,26 +337,6 @@ by drug, sort: count if ae_spc_all!=.
 by drug, sort: count if ae_drug_all!=.
 by drug, sort: count if ae_imae_all!=.
 by drug, sort: count if ae_all!=.
-
-*generate rate for adverse outcome in year 3-4 prior to start date for comparative rate by person years 
-// need to generate establish diagnosis for condition  4 year prior
-global pre_divertic 	 pre_diverticulitis_icd		 			///
-						 pre_diverticulitis_snomed				///
-						 pre_diverticulitis_ae	
-global pre_anaphylaxis 	 pre_anaphylaxis_icd					///
-						 pre_anaphylaxis_snomed					///
-						 pre_anaphlaxis_ae	
-codebook pre_anaphlaxis_ae
-egen pre_anaphylaxis_all = rmin($pre_anaphylaxis)
-egen pre_divertic_all = rmin($pre_divertic)
-bys drug: count if pre_anaphylaxis_all!=.
-bys drug: count if pre_divertic_all!=.
-global pre_ae 			 pre_diverticulitis_icd	 pre_diverticulitis_snomed pre_diverticulitis_ae pre_divertic_all pre_diarrhoea_snomed pre_taste_snomed ///
-						 pre_taste_icd pre_rash_snomed pre_anaphylaxis_icd	pre_anaphylaxis_snomed	pre_anaphlaxis_ae pre_anaphylaxis_all pre_drugreact_ae	///
-						 pre_allergic_ae pre_rheumatoid_arthritis_ae pre_rheumatoid_arthritis_snomed pre_rheumatoid_arthritis_icd /// 		
-						 pre_ankylosing_spondylitis_ctv pre_ankylosing_spondylitis_ae pre_psoriasis_snomed pre_psoriasis_ae ///
-						 pre_psoriatic_arthritis_ae pre_psoriatic_arthritis_snomed pre_sle_ctv pre_sle_icd pre_sle_ae pre_ibd_snomed	
-
 
 *** Secondary outcome - SAEs hospitalisation or death including COVID-19 
 * a&e all admission
@@ -425,7 +405,7 @@ foreach var of varlist allcause_emerg_aande covid_hosp_date all_hosp_date died_d
 				display "`var'"
 				bys drug: count if (`var' > start_date & `var' < start_date + 28) & `var'!=.				
 				bys drug: count if (`var' < start_date | `var' > start_date + 28) & `var'!=.				
-				replace `var'=. if (`var' < start_date | `var' > start_date + 28) & `var'!=.
+				//replace `var'=. if (`var' < start_date | `var' > start_date + 28) & `var'!=.
 }
 
 ****************************
@@ -619,20 +599,19 @@ by drug, sort: count if paxlovid_contraindicated==1
 ****************************
 *	COX MODEL		*
 ****************************
-global ae_spc_all		ae_spc_all
-global ae_drug_all 		ae_drug_all			
-global ae_imae			ae_imae_all 				
-global ae_imae			ae_imae_all 				
-global ae_all 			ae_all
-global emerg_hosp 		allcause_emerg_aande
-global covid_hosp 		covid_hosp_date
-global all_hosp 		all_hosp_date
-global died				died_date_ons
+global ae		ae_spc_all 				///
+				ae_drug_all				///		
+				ae_imae_all 			///				
+				ae_all					///
+				allcause_emerg_aande 	///
+				covid_hosp_date			///
+				all_hosp_date			///
+				died_date_ons
 * Generate failure 
-foreach x in	$ae_spc $ae_spc_icd $ae_spc_emerg $ae_spc_all ///
-				$ae_drug $ae_drug_icd $ae_drug_emerg $ae_drug_all ///
-				$ae_imae $ae_imae_icd $ae_imae_emerg $ae_imae_all ///
-				$ae_all $ae_all_serious $emerg_hosp $covid_hosp $all_hosp $died {
+foreach x in	$ae $ae_spc $ae_spc_icd $ae_spc_emerg ///
+				$ae_drug $ae_drug_icd $ae_drug_emerg ///
+				$ae_imae $ae_imae_icd $ae_imae_emerg ///
+				{
 	display "`x'"
 	by drug, sort: count if `x'!=.
 	by drug, sort: count if `x'<start_date & `x' 
@@ -645,19 +624,19 @@ foreach x in	$ae_spc $ae_spc_icd $ae_spc_emerg $ae_spc_all ///
 }
 
 * Add half-day buffer if outcome on indexdate
-foreach x in	$ae_spc $ae_spc_icd $ae_spc_emerg $ae_spc_all ///
-				$ae_drug $ae_drug_icd $ae_drug_emerg $ae_drug_all ///
-				$ae_imae $ae_imae_icd $ae_imae_emerg $ae_imae_all ///
-				$ae_all $ae_all_serious $emerg_hosp $covid_hosp $all_hosp $died {
+foreach x in	$ae $ae_spc $ae_spc_icd $ae_spc_emerg ///
+				$ae_drug $ae_drug_icd $ae_drug_emerg ///
+				$ae_imae $ae_imae_icd $ae_imae_emerg ///
+				{
 	display "`x'"
 	replace `x'=`x'+0.5 if `x'==start_date
 }
 
 *Generate censor date
-foreach x in	$ae_spc $ae_spc_icd $ae_spc_emerg $ae_spc_all ///
-				$ae_drug $ae_drug_icd $ae_drug_emerg $ae_drug_all ///
-				$ae_imae $ae_imae_icd $ae_imae_emerg $ae_imae_all ///
-				$ae_all $ae_all_serious $emerg_hosp $covid_hosp $all_hosp $died {
+foreach x in	$ae $ae_spc $ae_spc_icd $ae_spc_emerg ///
+				$ae_drug $ae_drug_icd $ae_drug_emerg ///
+				$ae_imae $ae_imae_icd $ae_imae_emerg ///
+				{
 	gen stop_`x'=`x' if fail_`x'==1
 	replace stop_`x'=min(death_date,dereg_date,study_end_date,start_date_29,paxlovid,molnupiravir) if fail_`x'==0&drug==1
 	replace stop_`x'=min(death_date,dereg_date,study_end_date,start_date_29,sotrovimab,molnupiravir) if fail_`x'==0&drug==2
@@ -687,6 +666,23 @@ tab _t drug if fail_ae_all==0&_t<28&stop_ae_all==min(paxlovid,molnupiravir)&drug
 tab _t drug if fail_ae_all==0&_t<28&stop_ae_all==min(sotrovimab,molnupiravir)&drug==2,m col
 tab _t drug if fail_ae_all==0&_t<28&stop_ae_all==min(sotrovimab,paxlovid)&drug==3,m col
 tab _t drug if fail_ae_all==0&_t<28&stop_ae_all==min(sotrovimab,paxlovid,molnupiravir)&drug==0,m col
+
+/****************************
+*	COMPARATOR RATE		*
+****************************
+*generate rate for adverse outcome in year 3-4 prior to start date for comparative rate by person years 
+* 1. Need to ensure no established diagnosis for some of the condition 4 year prior [ ie: gen NEW_pre]
+* 2. Need to define start and end date
+* 3. Gen rate of failure: 	gen fail_`x' if `x'=!. &`x'<end_date
+* 4. Failures over 1 years - convert into 29 day rate
+
+global pre_ae 			 pre_diverticulitis_icd	 pre_diverticulitis_snomed pre_diverticulitis_ae pre_divertic_all pre_diarrhoea_snomed pre_taste_snomed ///
+						 pre_taste_icd pre_rash_snomed pre_anaphylaxis_icd	pre_anaphylaxis_snomed	pre_anaphlaxis_ae pre_anaphylaxis_all pre_drugreact_ae	///
+						 pre_allergic_ae pre_rheumatoid_arthritis_ae pre_rheumatoid_arthritis_snomed pre_rheumatoid_arthritis_icd /// 		
+						 pre_ankylosing_spondylitis_ctv pre_ankylosing_spondylitis_ae pre_psoriasis_snomed pre_psoriasis_ae ///
+						 pre_psoriatic_arthritis_ae pre_psoriatic_arthritis_snomed pre_sle_ctv pre_sle_icd pre_sle_ae pre_ibd_snomed	
+
+*/
 
 save "$projectdir/output/data/main.dta", replace
 
