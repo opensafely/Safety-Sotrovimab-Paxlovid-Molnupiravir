@@ -39,6 +39,7 @@ adopath + "$projectdir/analysis/ado"
 foreach var of varlist 	 covid_test_positive_date				///
 						 covid_test_positive_date2 				///
 						 covid_test_positive_date3 				///
+						 covid_test_positive_treat				///
 						 prior_covid_date				    	///
 						 sotrovimab								///
 						 molnupiravir							/// 
@@ -50,6 +51,7 @@ foreach var of varlist 	 covid_test_positive_date				///
 						 paxlovid_not_start						///
 						 date_treated							///
 						 start_date								///
+						 start_date_test						///
 						 drugs_paxlovid_interaction				///
 						 drugs_nirmatrelvir_interaction			///
 						 last_vaccination_date 					///
@@ -177,10 +179,14 @@ tab drug, m
 drop if drug>3
 ** start date is date treatment for treatment arms and date of covid test for control arm 
 count if start_date==. //should be 0
-count if start_date!=covid_test_positive_date & drug==0
-count if start_date!=date_treated & drug>0
-replace start_date=covid_test_positive_date if drug==0 
-replace start_date=date_treated if drug>0
+count if start_date!=covid_test_positive_date & drug==0  //should be 0
+count if start_date!=date_treated & start_date!=covid_test_positive_treat & drug>0 //should be 0
+count if start_date!=date_treated & drug>0  // i.e. start date is covid_test_positive_treat
+count if start_date==covid_test_positive_treat & start_date!=date_treated & drug>0  // i.e. start date is covid_test_positive_treat
+gen time_startanddrug = (date_treated-start_date) if start_date!=date_treated & drug>0
+tabstat time_startanddrug, stat(count mean p25 p50 p75 min max)  // time between start date and drug 
+//replace start_date=covid_test_positive_date if drug==0 
+//replace start_date=date_treated if drug>0
 ** check number of positive covid tests prior to drug in treatment arms
 bys drug:count if covid_test_positive_date==. // should be 0 in control arm
 bys drug:count if covid_test_positive_date!=. 
@@ -532,7 +538,6 @@ gen day_after_campaign=start_date-mdy(12,15,2021)
 sum day_after_campaign,de
 gen month_after_campaign=ceil((start_date-mdy(12,15,2021))/30)
 tab month_after_campaign,m
-mkspline calendar_day_spline = day_after_campaign, cubic nknots(4)
 * Variant
 tab sgtf,m
 tab sgtf_new, m

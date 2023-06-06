@@ -225,8 +225,30 @@ study = StudyDefinition(
   ),
   
           
+  ## TREATMENT - MAB + Antivirals. 
+  sotrovimab=covid_therapeutics("Sotrovimab"),
+  molnupiravir =covid_therapeutics("Molnupiravir"),
+  paxlovid=covid_therapeutics("Paxlovid"),
+  remdesivir=covid_therapeutics("Remdesivir"),
+  casirivimab=covid_therapeutics("Casirivimab and imdevimab"),
+  sotrovimab_not_start= patients.with_covid_therapeutics(
+    with_these_therapeutics = "Sotrovimab", with_these_statuses = ["Treatment Not Started"], with_these_indications = "non_hospitalised", on_or_after = "index_date",
+    find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.01, "date": {"earliest": "2021-12-16"},},
+  ),
+  molnupiravir_not_start= patients.with_covid_therapeutics(
+    with_these_therapeutics = "Molnupiravir", with_these_statuses = ["Treatment Not Started"], with_these_indications = "non_hospitalised", on_or_after = "index_date",
+    find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.01, "date": {"earliest": "2021-12-16"},},
+  ),
+  paxlovid_not_start= patients.with_covid_therapeutics(
+    with_these_therapeutics = "Paxlovid", with_these_statuses = ["Treatment Not Started"], with_these_indications = "non_hospitalised", on_or_after = "index_date",
+    find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.01, "date": {"earliest": "2021-12-16"},},
+  ),
+  date_treated = patients.minimum_of(
+    "sotrovimab","paxlovid", "molnupiravir", "remdesivir", "casirivimab"
+  ),
+  
   ## COVID TEST POSITIVE
-  ## First positive SARS-CoV-2 test. 
+  ## First positive SARS-CoV-2 test since index date 
   covid_test_positive = patients.with_test_result_in_sgss(
     pathogen = "SARS-CoV-2", test_result = "positive", returning = "binary_flag", on_or_after = "index_date - 5 days", find_first_match_in_period = True, 
     restrict_to_earliest_specimen_date = True,  return_expectations = {"incidence": 0.9 },
@@ -234,6 +256,11 @@ study = StudyDefinition(
   covid_test_positive_date = patients.with_test_result_in_sgss(
     pathogen = "SARS-CoV-2", test_result = "positive", returning = "date", date_format = "YYYY-MM-DD", on_or_after = "index_date - 5 days", find_first_match_in_period = True, 
     restrict_to_earliest_specimen_date = True, return_expectations = {"date": {"earliest": "2021-12-11", "latest": "today"}, "incidence": 0.9},
+  ),
+  ## Closest covid test before treatment in those treated
+  covid_test_positive_treat = patients.with_test_result_in_sgss(
+    pathogen = "SARS-CoV-2", test_result = "positive", returning = "date", date_format = "YYYY-MM-DD", on_or_before = "date_treated", find_last_match_in_period = True, 
+    restrict_to_earliest_specimen_date = True, return_expectations = {"date": {"earliest": "2021-12-11", "latest": "today"}, "incidence": 0.4},
   ),
   ## Second positive SARS-CoV-2 test
   covid_test_positive_date2 = patients.with_test_result_in_sgss(
@@ -274,31 +301,16 @@ study = StudyDefinition(
       restrict_to_earliest_specimen_date=False, returning="variant", return_expectations={"rate": "universal", "category": {"ratios": {"B.1.617.2": 0.7, "VOC-21JAN-02": 0.2, "": 0.1}},},
   ), 
   
-  ## TREATMENT - MAB + Antivirals. 
-  sotrovimab=covid_therapeutics("Sotrovimab"),
-  molnupiravir =covid_therapeutics("Molnupiravir"),
-  paxlovid=covid_therapeutics("Paxlovid"),
-  remdesivir=covid_therapeutics("Remdesivir"),
-  casirivimab=covid_therapeutics("Casirivimab and imdevimab"),
-  sotrovimab_not_start= patients.with_covid_therapeutics(
-    with_these_therapeutics = "Sotrovimab", with_these_statuses = ["Treatment Not Started"], with_these_indications = "non_hospitalised", on_or_after = "index_date",
-    find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.01, "date": {"earliest": "2021-12-16"},},
-  ),
-  molnupiravir_not_start= patients.with_covid_therapeutics(
-    with_these_therapeutics = "Molnupiravir", with_these_statuses = ["Treatment Not Started"], with_these_indications = "non_hospitalised", on_or_after = "index_date",
-    find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.01, "date": {"earliest": "2021-12-16"},},
-  ),
-  paxlovid_not_start= patients.with_covid_therapeutics(
-    with_these_therapeutics = "Paxlovid", with_these_statuses = ["Treatment Not Started"], with_these_indications = "non_hospitalised", on_or_after = "index_date",
-    find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.01, "date": {"earliest": "2021-12-16"},},
-  ),
-  ## Date treated
-  date_treated = patients.minimum_of(
-    "sotrovimab","paxlovid", "molnupiravir", "remdesivir", "casirivimab"
-  ),
-  
-  start_date = patients.minimum_of("date_treated","covid_test_positive_date"), 
-  
+  ## START DATE 
+  ## 1) most recent of 
+  #         i) covid test closest & prior to treatment (treated group) 
+  #         ii) covid test (control) 
+  ## 2) most recent of
+  #         i) treatment date (treated group)
+  #         ii) covid test (control) 
+  start_date_test = patients.maximum_of("covid_test_positive_treat","covid_test_positive_date"), 
+  start_date = patients.maximum_of("start_date_test","date_treated"), 
+
   # Eligable based on comorbidities for control population
   
   ## Down's syndrome
