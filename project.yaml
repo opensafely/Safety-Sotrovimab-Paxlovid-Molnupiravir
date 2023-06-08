@@ -44,7 +44,6 @@ actions:
         survrisk_covid_hosp_date: output/figures/survrisk_covid_hosp_date.svg
         survrisk_all_hosp_date: output/figures/survrisk_all_hosp_date.svg
         survrisk_died_date_ons: output/figures/survrisk_died_date_ons.svg
-        
         survhaz_ae_all: output/figures/survhaz_ae_all.svg
         survhaz_ae_spc_all: output/figures/survhaz_ae_spc_all.svg
         survhaz_ae_drug_all: output/figures/survhaz_drug_all.svg
@@ -53,7 +52,6 @@ actions:
         survhaz_covid_hosp_date: output/figures/survhaz_covid_hosp_date.svg
         survhaz_all_hosp_date: output/figures/survhaz_all_hosp_date.svg
         survhaz_died_date_ons: output/figures/survhaz_died_date_ons.svg 
-
         survcur_ae_all: output/figures/survcur_ae_all.svg
         survcur_ae_spc_all: output/figures/survcur_ae_spc_all.svg
         survcur_ae_drug_all: output/figures/survcur_ae_drug_all.svg
