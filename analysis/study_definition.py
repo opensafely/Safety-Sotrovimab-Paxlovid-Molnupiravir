@@ -251,26 +251,26 @@ study = StudyDefinition(
   ## First positive SARS-CoV-2 test since index date 
   covid_test_positive = patients.with_test_result_in_sgss(
     pathogen = "SARS-CoV-2", test_result = "positive", returning = "binary_flag", on_or_after = "index_date - 5 days", find_first_match_in_period = True, 
-    restrict_to_earliest_specimen_date = True,  return_expectations = {"incidence": 0.9 },
+    restrict_to_earliest_specimen_date = False,  return_expectations = {"incidence": 0.9 },
   ),
   covid_test_positive_date = patients.with_test_result_in_sgss(
     pathogen = "SARS-CoV-2", test_result = "positive", returning = "date", date_format = "YYYY-MM-DD", on_or_after = "index_date - 5 days", find_first_match_in_period = True, 
-    restrict_to_earliest_specimen_date = True, return_expectations = {"date": {"earliest": "2021-12-11", "latest": "today"}, "incidence": 0.9},
+    restrict_to_earliest_specimen_date = False, return_expectations = {"date": {"earliest": "2021-12-11", "latest": "today"}, "incidence": 0.9},
   ),
   ## Closest covid test before treatment in those treated
   covid_test_positive_treat = patients.with_test_result_in_sgss(
     pathogen = "SARS-CoV-2", test_result = "positive", returning = "date", date_format = "YYYY-MM-DD", on_or_before = "date_treated", find_last_match_in_period = True, 
-    restrict_to_earliest_specimen_date = True, return_expectations = {"date": {"earliest": "2021-12-11", "latest": "today"}, "incidence": 0.4},
+    restrict_to_earliest_specimen_date = False, return_expectations = {"date": {"earliest": "2021-12-11", "latest": "today"}, "incidence": 0.4},
   ),
   ## Second positive SARS-CoV-2 test
   covid_test_positive_date2 = patients.with_test_result_in_sgss(
     pathogen = "SARS-CoV-2", test_result = "positive", returning = "date", date_format = "YYYY-MM-DD", on_or_after = "covid_test_positive_date + 30 days", find_first_match_in_period = True,
-    restrict_to_earliest_specimen_date = True, return_expectations = {"date": {"earliest": "2021-12-20", "latest": "today"}, "incidence": 0.1 },
+    restrict_to_earliest_specimen_date = False, return_expectations = {"date": {"earliest": "2021-12-20", "latest": "today"}, "incidence": 0.1 },
   ),
   ## Third positive SARS-CoV-2 test
   covid_test_positive_date3 = patients.with_test_result_in_sgss(
     pathogen = "SARS-CoV-2", test_result = "positive", returning = "date", date_format = "YYYY-MM-DD", on_or_after = "covid_test_positive_date2 + 30 days", find_first_match_in_period = True,
-    restrict_to_earliest_specimen_date = True, return_expectations = {"date": {"earliest": "2021-12-20", "latest": "today"}, "incidence": 0.1 },
+    restrict_to_earliest_specimen_date = False, return_expectations = {"date": {"earliest": "2021-12-20", "latest": "today"}, "incidence": 0.1 },
   ),
   ## Positive covid test 30 days prior to positive test [will only apply to patients who first tested positive towards the beginning of the study period]
   covid_positive_previous_30_days = patients.with_test_result_in_sgss(
@@ -280,11 +280,11 @@ study = StudyDefinition(
   # positive test history
   prior_covid = patients.with_test_result_in_sgss(
     pathogen = "SARS-CoV-2", test_result = "positive", returning = "binary_flag", on_or_before = "covid_test_positive_date - 30 days", find_last_match_in_period = True, 
-    restrict_to_earliest_specimen_date = True,  return_expectations = {"incidence": 0.3 },
+    restrict_to_earliest_specimen_date = False,  return_expectations = {"incidence": 0.3 },
   ),
   prior_covid_date = patients.with_test_result_in_sgss(
     pathogen = "SARS-CoV-2", test_result = "positive", returning = "date", date_format = "YYYY-MM-DD", on_or_before = "covid_test_positive_date -30 days", find_last_match_in_period = True, 
-    restrict_to_earliest_specimen_date = True, return_expectations = {"date": {"earliest": "2021-12-11", "latest": "today"}, "incidence": 0.9},
+    restrict_to_earliest_specimen_date = False, return_expectations = {"date": {"earliest": "2021-12-11", "latest": "today"}, "incidence": 0.9},
   ),
   ## SGTF indicator and Variant
   sgtf=patients.with_test_result_in_sgss(

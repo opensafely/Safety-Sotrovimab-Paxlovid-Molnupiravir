@@ -52,7 +52,7 @@ global drug 		ae_drug_all	ae_anaphylaxis_snomed ae_rash_snomed ae_anaphlaxis_ae 
 global imae			ae_imae_all new_ae_ra_snomed new_ae_sle_ctv new_ae_psoriasis_snomed new_ae_psa_snomed new_ae_ankspon_ctv new_ae_ibd_snomed ///
 					new_ae_ra_icd new_ae_sle_icd new_ae_ra_icd new_ae_sle_icd new_ae_ra_ae new_ae_sle_ae new_ae_psoriasis_ae new_ae_psa_ae ///
 					new_ae_ankspon_ae new_ae_ibd_ae									
-							   
+			  
 tempname coxoutput
 postfile `coxoutput' str20(model) str20(failure) ///
 	ptime_all events_all rate_all /// 
@@ -126,7 +126,7 @@ foreach fail in $spc $drug $imae_icd ae_all allcause_emerg_aande covid_hosp_date
 
 postclose `coxoutput'
    
-foreach fail in $spc $drug $imae_icd ae_all allcause_emerg_aande covid_hosp_date all_hosp_date died_date_ons{
+foreach fail in ae_spc_all ae_drug_all	ae_imae_all	 ae_all allcause_emerg_aande covid_hosp_date all_hosp_date died_date_ons{
 
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 								
@@ -150,7 +150,7 @@ foreach fail in $spc $drug $imae_icd ae_all allcause_emerg_aande covid_hosp_date
 }
 
 
-foreach fail in ae_all {
+foreach fail in ae_spc_all ae_drug_all ae_imae_all ae_all allcause_emerg_aande covid_hosp_date all_hosp_date died_date_ons{
 
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 			stcox i.drug 	

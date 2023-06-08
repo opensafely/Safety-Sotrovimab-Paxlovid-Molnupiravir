@@ -74,8 +74,8 @@ foreach model in agesex adj fulladj1 fulladj2 {
 		twoway 	(histogram p_`model' if no_drug==1, color(green)) ///
 				(histogram p_`model' if no_drug==0, fcolor(none) lcolor(black)), ///
 				legend(order(1 "No Drug" 2 "Drug")) name(histogram_`model', replace) ///
-				saving("$projectdir/output/figures/histograms_`model'", replace)
-		graph export "$projectdir/output/figures/histogramsp_`model'.svg", as(svg) replace
+				saving("$projectdir/output/figures/histogram_`model'", replace)
+		graph export "$projectdir/output/figures/histogram_`model'.svg", as(svg) replace
 		gen iptw_`model' = 1/p_`model' if no_drug==1
 		replace iptw_`model' = 1/(1-p_`model') if no_drug==0
 		stset stop_ae_all [pw=iptw_`model'], id(patient_id) origin(time start_date) enter(time start_date) failure(fail_ae_all==1) 
