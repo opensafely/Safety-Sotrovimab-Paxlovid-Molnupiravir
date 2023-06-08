@@ -126,7 +126,7 @@ foreach fail in $spc $drug $imae_icd ae_all allcause_emerg_aande covid_hosp_date
 
 postclose `coxoutput'
    
-foreach fail in ae_spc_all ae_drug_all	ae_imae_all	 ae_all allcause_emerg_aande covid_hosp_date all_hosp_date died_date_ons{
+foreach fail in ae_spc_all ae_drug_all ae_imae_all ae_all allcause_emerg_aande covid_hosp_date all_hosp_date died_date_ons{
 
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 								
@@ -146,7 +146,7 @@ foreach fail in ae_spc_all ae_drug_all	ae_imae_all	 ae_all allcause_emerg_aande 
 			ylabel(,angle(horizontal)) plotregion(color(white)) graphregion(color(white)) ///
 			ytitle("Survival Probability" ) xtitle("Time (Days)") saving("$projectdir/output/figures/survcurve_`fail'", replace)
 	
-			graph export "$projectdir/output/figures/survcurve_`fail'.svg", as(svg) replace
+			graph export "$projectdir/output/figures/survcur_`fail'.svg", as(svg) replace
 }
 
 

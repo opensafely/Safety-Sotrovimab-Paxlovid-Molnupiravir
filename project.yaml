@@ -39,14 +39,14 @@ actions:
         survrisk_ae_all: output/figures/survrisk_ae_all.svg
         survrisk_ae_spc_all: output/figures/survrisk_ae_spc_all.svg
         survrisk_ae_drug_all: output/figures/survrisk_ae_drug_all.svg
-        survrisk_ae_imae_all: output/figures/survrisk_ae_imae.svg
+        survrisk_ae_imae_all: output/figures/survrisk_ae_imae_all.svg
         survrisk_allcause_emerg_aande: output/figures/survrisk_allcause_emerg_aande.svg
         survrisk_covid_hosp_date: output/figures/survrisk_covid_hosp_date.svg
         survrisk_all_hosp_date: output/figures/survrisk_all_hosp_date.svg
         survrisk_died_date_ons: output/figures/survrisk_died_date_ons.svg
         survhaz_ae_all: output/figures/survhaz_ae_all.svg
         survhaz_ae_spc_all: output/figures/survhaz_ae_spc_all.svg
-        survhaz_ae_drug_all: output/figures/survhaz_drug_all.svg
+        survhaz_ae_drug_all: output/figures/survhaz_ae_drug_all.svg
         survhaz_ae_imae_all: output/figures/survhaz_ae_imae_all.svg
         survhaz_allcause_emerg_aande: output/figures/survhaz_allcause_emerg_aande.svg
         survhaz_covid_hosp_date: output/figures/survhaz_covid_hosp_date.svg
