@@ -1,0 +1,1503 @@
+-------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafel
+> y\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/logs/cox_
+> model.log
+  log type:  text
+ opened on:   8 Jun 2023, 12:48:01
+
+. 
+. *Set Ado file path
+. adopath + "$projectdir/analysis/ado"
+  [1]  (BASE)      "C:\Program Files\Stata17\ado\base/"
+  [2]  (SITE)      "C:\Program Files\Stata17\ado\site/"
+  [3]              "."
+  [4]  (PERSONAL)  "C:\users\PUBLIC\documents/"
+  [5]  (PLUS)      "C:\users\PUBLIC\documents/"
+  [6]  (OLDPLACE)  "c:\ado/"
+  [7]              "C:\Users\k1635179\OneDrive - King's College London\Katie\Op
+> enSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/an
+> alysis/ado"
+
+. 
+. * SET Index date 
+. global indexdate                        = "01/03/2020"
+
+. 
+. use "$projectdir/output/data/main", clear
+
+. 
+. /* 
+> ===========================================================*/
+. 
+. * Models
+. global crude    i.drug 
+
+. global agesex   i.drug age i.sex
+
+. global adj              i.drug age i.sex i.region_nhs paxlovid_contraindicate
+> d ///
+>                             downs_syndrome solid_cancer haem_disease renal_di
+> sease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant r
+> are_neuro  
+
+. global fulladj1 i.drug age i.sex i.region_nhs paxlovid_contraindicated ///
+>                             downs_syndrome solid_cancer haem_disease renal_di
+> sease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant r
+> are_neuro  ///
+>                                 vaccination_status imdq5 White 
+
+. global fulladj2 i.drug age i.sex i.region_nhs paxlovid_contraindicated ///
+>                             downs_syndrome solid_cancer haem_disease renal_di
+> sease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant r
+> are_neuro  ///
+>                                 vaccination_status imdq5 White 1b.bmi_group d
+> iabetes chronic_cardiac_disease chronic_respiratory_disease hypertension
+
+. * Outcome
+. global spc                      ae_spc_all ae_diverticulitis_snomed ae_diarrh
+> oea_snomed ae_taste_snomed ae_diverticulitis_icd ae_taste_icd ae_diverticulit
+> is_ae
+
+. global drug             ae_drug_all     ae_anaphylaxis_snomed ae_rash_snomed 
+> ae_anaphlaxis_ae ae_drugreact_ae ae_allergic_ae ae_anaphylaxis_icd         
+
+. global imae                     ae_imae_all new_ae_ra_snomed new_ae_sle_ctv n
+> ew_ae_psoriasis_snomed new_ae_psa_snomed new_ae_ankspon_ctv new_ae_ibd_snomed
+>  ///
+>                                         new_ae_ra_icd new_ae_sle_icd new_ae_r
+> a_icd new_ae_sle_icd new_ae_ra_ae new_ae_sle_ae new_ae_psoriasis_ae new_ae_ps
+> a_ae ///
+>                                         new_ae_ankspon_ae new_ae_ibd_ae      
+>                                                            
+
+.                           
+. tempname coxoutput
+
+. postfile `coxoutput' str20(model) str20(failure) ///
+>         ptime_all events_all rate_all /// 
+>         ptime_control events_control rate_control /// 
+>         ptime_sot events_sot rate_sot ///
+>         ptime_pax events_pax rate_pax ///
+>         ptime_mol events_mol rate_mol ///
+>         hr_sot lc_sot uc_sot hr_pax lc_pax uc_pax hr_mol lc_mol uc_mol ///
+>         using "$projectdir/output/tables/cox_model_summary", replace    
+
+.                                                  
+. foreach fail in $spc $drug $imae_icd ae_all allcause_emerg_aande covid_hosp_d
+> ate all_hosp_date died_date_ons{
+  2. 
+.         stset stop_`fail', id(patient_id) origin(time start_date) enter(time 
+> start_date) failure(fail_`fail'==1) 
+  3.                                                 
+.         foreach model in crude agesex adj fulladj1 fulladj2{
+  4.                                 
+.                 stcox $`model', vce(robust)
+  5.                                         matrix b = r(table)
+  6.                                         local hr_sot = b[1,2]
+  7.                                         local lc_sot = b[5,2]
+  8.                                         local uc_sot = b[6,2]
+  9.                                         local hr_pax = b[1,3]
+ 10.                                         local lc_pax = b[5,3]
+ 11.                                         local uc_pax = b[6,3]
+ 12.                                         local hr_mol = b[1,4]
+ 13.                                         local lc_mol = b[5,4]
+ 14.                                         local uc_mol = b[6,4]
+ 15.                 stptime 
+ 16.                                         local rate_all = `r(rate)'
+ 17.                                         local ptime_all = `r(ptime)'
+ 18.                                         local events_all .
+ 19.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 5 local events_all `r(failures)'
+ 20.                 
+.                 stptime if drug == 0
+ 21.                                         local rate_control = `r(rate)'
+ 22.                                         local ptime_control = `r(ptime)'
+ 23.                                         local events_control .
+ 24.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 5 local events_control `r(failures)'
+ 25.                 display "no drug"
+ 26. 
+.                 stptime if drug == 1
+ 27.                                         local rate_sot = `r(rate)'
+ 28.                                         local ptime_sot = `r(ptime)'
+ 29.                                         local events_sot .
+ 30.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 5 local events_sot `r(failures)'
+ 31.                 display "sotrovimab"
+ 32.                 
+.                 stptime if drug == 2
+ 33.                                         local rate_pax = `r(rate)'
+ 34.                                         local ptime_pax = `r(ptime)'
+ 35.                                         local events_pax .
+ 36.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 5 local events_pax `r(failures)'
+ 37.                 display "paxlovid"
+ 38.                 
+.                 stptime if drug == 3
+ 39.                                         local rate_mol = `r(rate)'
+ 40.                                         local ptime_mol = `r(ptime)'
+ 41.                                         local events_mol .
+ 42.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 5 local events_mol `r(failures)'
+ 43.                 display "molnupavir"
+ 44.                                                 
+.                 post `coxoutput' ("`model'") ("`fail'") (`ptime_all') (`event
+> s_all') (`rate_all') ///
+>                                         (`ptime_control') (`events_control') 
+> (`rate_control') ///
+>                                         (`ptime_sot') (`events_sot') (`rate_s
+> ot') ///
+>                                         (`ptime_pax') (`events_pax') (`rate_p
+> ax') ///
+>                                         (`ptime_mol') (`events_mol') (`rate_m
+> ol') ///
+>                                         (`hr_sot') (`lc_sot') (`uc_sot') (`hr
+> _pax') (`lc_pax') (`uc_pax') (`hr_mol') (`lc_mol') (`uc_mol')
+ 45.                                         
+. }
+ 46. }
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_ae_spc_all==1
+Observed time interval: (stop_ae_spc_all[_n-1], stop_ae_spc_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+
+--------------------------------------------------------------------------
+     29,976  total observations
+      1,053  ignored because never entered
+--------------------------------------------------------------------------
+     28,923  observations remaining, representing
+     28,923  subjects
+     24,979  failures in single-failure-per-subject data
+  600839680  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =    21,141
+
+         Failure _d: fail_ae_spc_all==1
+   Analysis time _t: (stop_ae_spc_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+
+Iteration 0:   log pseudolikelihood = -233817.84
+Iteration 1:   log pseudolikelihood = -233813.62
+Iteration 2:   log pseudolikelihood = -233813.62
+Refining estimates:
+Iteration 0:   log pseudolikelihood = -233813.62
+
+Cox regression with Breslow method for ties
+
+No. of subjects =    28,923                             Number of obs = 28,923
+No. of failures =    24,979
+Time at risk    = 600839680
+                                                        Wald chi2(3)  =   8.58
+Log pseudolikelihood = -233813.62                       Prob > chi2   = 0.0354
+
+                        (Std. err. adjusted for 28,923 clusters in patient_id)
+------------------------------------------------------------------------------
+             |               Robust
+          _t | Haz. ratio   std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        drug |
+ sotrovimab  |   1.026412   .0239007     1.12   0.263     .9806207    1.074342
+   paxlovid  |   1.027549   .0245399     1.14   0.255     .9805595    1.076789
+molnupira~r  |   1.063818   .0244321     2.69   0.007     1.016993    1.112798
+------------------------------------------------------------------------------
+
+         Failure _d: fail_ae_spc_all==1
+   Analysis time _t: (stop_ae_spc_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+
+Estimated person-time and incidence rate
+
+    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+-----------+-----------------------------------------------------------
+     Total |    6.008e+08      24979   .00004157   .0000411    .0000421
+
+         Failure _d: fail_ae_spc_all==1
+   Analysis time _t: (stop_ae_spc_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+
+Estimated person-time and incidence rate
+
+    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+-----------+-----------------------------------------------------------
+     Total |    4.138e+08      18903   .00004568    .000045    .0000463
+no drug
+
+         Failure _d: fail_ae_spc_all==1
+   Analysis time _t: (stop_ae_spc_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+
+Estimated person-time and incidence rate
+
+    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+-----------+-----------------------------------------------------------
+     Total |     61594692       1993   .00003236    .000031    .0000338
+sotrovimab
+
+         Failure _d: fail_ae_spc_all==1
+   Analysis time _t: (stop_ae_spc_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+
+Estimated person-time and incidence rate
+
+    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+-----------+-----------------------------------------------------------
+     Total |     61937767       1959   .00003163   .0000303    .0000331
+paxlovid
+
+         Failure _d: fail_ae_spc_all==1
+   Analysis time _t: (stop_ae_spc_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+
+Estimated person-time and incidence rate
+
+    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+-----------+-----------------------------------------------------------
+     Total |     63459681       2124   .00003347   .0000321    .0000349
+molnupavir
+
+         Failure _d: fail_ae_spc_all==1
+   Analysis time _t: (stop_ae_spc_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+
+Iteration 0:   log pseudolikelihood = -233817.84
+Iteration 1:   log pseudolikelihood = -233813.47
+Iteration 2:   log pseudolikelihood = -233813.47
+Refining estimates:
+Iteration 0:   log pseudolikelihood = -233813.47
+--Break--
+r(1);
+
+end of do-file
+
+--Break--
+r(1);
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD46c_000000.tmp"
+
+. foreach fail in ae_spc_all ae_drug_all  ae_imae_all      ae_all allcause_emer
+> g_aande covid_hosp_date all_hosp_date died_date_ons{
+  2. 
+.         stset stop_`fail', id(patient_id) origin(time start_date) enter(time 
+> start_date) failure(fail_`fail'==1) 
+  3.                                                                 
+.                         stcox i.drug 
+  4.                         sts graph, by(drug) tmax(28) ylabel(0(0.25)1) ylab
+> el(,format(%4.3f)) xlabel(0(7)28) ///
+>                         risktable(,title(" ")order(1 "Control     " 2 "Sotrov
+> imab     " 3 "Paxlovid     " 4 "Molnupiravir     ") ///
+>                         size(small)justification(left) rowtitle(,size(small)j
+> ustification(right))) ///
+>                         legend(order(1 "Control" 2 "Sotrovimab" 3 "Paxlovid" 
+> 4 "Molnupiravir") symxsize(*0.4) size(small)) ///
+>                         xtitle("Analysis time (years)") ylabel(,angle(horizon
+> tal)) plotregion(color(white)) graphregion(color(white)) ///
+>                         ytitle("Survival Probability" ) xtitle("Time (Days)")
+>  saving("$projectdir/output/figures/survrisk_`fail'", replace)
+  5. 
+.                         graph export "$projectdir/output/figures/survrisk_`fa
+> il'.svg", as(svg) replace
+  6.                         
+.                         stcurve, survival at1(drug=0) at2(drug=1) at3(drug=2)
+>  at4(drug=3) title("") ///
+>                         range(0 28) xtitle("Analysis time (years)") ///
+>                         legend(order(1 "Control" 2 "Sotrovimab" 3 "Paxlovid" 
+> 4 "Molnupiravir") symxsize(*0.4) size(small)) ///
+>                         ylabel(,angle(horizontal)) plotregion(color(white)) g
+> raphregion(color(white)) ///
+>                         ytitle("Survival Probability" ) xtitle("Time (Days)")
+>  saving("$projectdir/output/figures/survcurve_`fail'", replace)
+  7.         
+.                         graph export "$projectdir/output/figures/survcurve_`f
+> ail'.svg", as(svg) replace
+  8. }
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_ae_spc_all==1
+Observed time interval: (stop_ae_spc_all[_n-1], stop_ae_spc_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+
+--------------------------------------------------------------------------
+     29,976  total observations
+      1,053  ignored because never entered
+--------------------------------------------------------------------------
+     28,923  observations remaining, representing
+     28,923  subjects
+     24,979  failures in single-failure-per-subject data
+  600839680  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =    21,141
+
+         Failure _d: fail_ae_spc_all==1
+   Analysis time _t: (stop_ae_spc_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+
+Iteration 0:   log likelihood = -233817.84
+Iteration 1:   log likelihood = -233813.62
+Iteration 2:   log likelihood = -233813.62
+Refining estimates:
+Iteration 0:   log likelihood = -233813.62
+
+Cox regression with Breslow method for ties
+
+No. of subjects =    28,923                             Number of obs = 28,923
+No. of failures =    24,979
+Time at risk    = 600839680
+                                                        LR chi2(3)    =   8.44
+Log likelihood = -233813.62                             Prob > chi2   = 0.0378
+
+------------------------------------------------------------------------------
+          _t | Haz. ratio   Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        drug |
+ sotrovimab  |   1.026412   .0242874     1.10   0.271     .9798968    1.075136
+   paxlovid  |   1.027549   .0244994     1.14   0.254     .9806354    1.076706
+molnupira~r  |   1.063818   .0244566     2.69   0.007     1.016947    1.112848
+------------------------------------------------------------------------------
+
+         Failure _d: fail_ae_spc_all==1
+   Analysis time _t: (stop_ae_spc_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvrisk_ae_spc_all.gph saved
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvrisk_ae_spc_all.gph saved
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survris
+    > k_ae_spc_all.svg saved as SVG format
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvcurve_ae_spc_all.gph saved
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survcur
+    > ve_ae_spc_all.svg saved as SVG format
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_ae_drug_all==1
+Observed time interval: (stop_ae_drug_all[_n-1], stop_ae_drug_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+
+--------------------------------------------------------------------------
+     29,976  total observations
+      1,053  ignored because never entered
+--------------------------------------------------------------------------
+     28,923  observations remaining, representing
+     28,923  subjects
+     24,981  failures in single-failure-per-subject data
+  600793180  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =    21,141
+
+         Failure _d: fail_ae_drug_all==1
+   Analysis time _t: (stop_ae_drug_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+
+Iteration 0:   log likelihood = -233760.09
+Iteration 1:   log likelihood = -233750.71
+Iteration 2:   log likelihood = -233750.69
+Refining estimates:
+Iteration 0:   log likelihood = -233750.69
+
+Cox regression with Breslow method for ties
+
+No. of subjects =    28,923                             Number of obs = 28,923
+No. of failures =    24,981
+Time at risk    = 600793180
+                                                        LR chi2(3)    =  18.78
+Log likelihood = -233750.69                             Prob > chi2   = 0.0003
+
+------------------------------------------------------------------------------
+          _t | Haz. ratio   Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        drug |
+ sotrovimab  |   1.042345   .0248951     1.74   0.082     .9946757    1.092298
+   paxlovid  |   1.101899   .0258697     4.13   0.000     1.052345    1.153788
+molnupira~r  |   1.027431   .0239892     1.16   0.246     .9814726    1.075541
+------------------------------------------------------------------------------
+
+         Failure _d: fail_ae_drug_all==1
+   Analysis time _t: (stop_ae_drug_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvrisk_ae_drug_all.gph saved
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvrisk_ae_drug_all.gph saved
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survris
+    > k_ae_drug_all.svg saved as SVG format
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvcurve_ae_drug_all.gph saved
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survcur
+    > ve_ae_drug_all.svg saved as SVG format
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_ae_imae_all==1
+Observed time interval: (stop_ae_imae_all[_n-1], stop_ae_imae_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+
+--------------------------------------------------------------------------
+     29,976  total observations
+      1,053  ignored because never entered
+--------------------------------------------------------------------------
+     28,923  observations remaining, representing
+     28,923  subjects
+     27,321  failures in single-failure-per-subject data
+  598881176  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =    21,141
+
+         Failure _d: fail_ae_imae_all==1
+   Analysis time _t: (stop_ae_imae_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+
+Iteration 0:   log likelihood = -253864.21
+Iteration 1:   log likelihood = -253860.39
+Iteration 2:   log likelihood = -253860.39
+Refining estimates:
+Iteration 0:   log likelihood = -253860.39
+
+Cox regression with Breslow method for ties
+
+No. of subjects =    28,923                             Number of obs = 28,923
+No. of failures =    27,321
+Time at risk    = 598881176
+                                                        LR chi2(3)    =   7.64
+Log likelihood = -253860.39                             Prob > chi2   = 0.0541
+
+------------------------------------------------------------------------------
+          _t | Haz. ratio   Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        drug |
+ sotrovimab  |   1.017373   .0218026     0.80   0.422     .9755253    1.061015
+   paxlovid  |   1.034645   .0221759     1.59   0.112     .9920816    1.079035
+molnupira~r  |   1.051882   .0220713     2.41   0.016     1.009501    1.096043
+------------------------------------------------------------------------------
+
+         Failure _d: fail_ae_imae_all==1
+   Analysis time _t: (stop_ae_imae_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+(file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survris
+    > k_ae_imae_all.gph not found)
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvrisk_ae_imae_all.gph saved
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvrisk_ae_imae_all.gph saved
+(file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survris
+    > k_ae_imae_all.svg not found)
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survris
+    > k_ae_imae_all.svg saved as SVG format
+(file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survcur
+    > ve_ae_imae_all.gph not found)
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvcurve_ae_imae_all.gph saved
+(file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survcur
+    > ve_ae_imae_all.svg not found)
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survcur
+    > ve_ae_imae_all.svg saved as SVG format
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_ae_all==1
+Observed time interval: (stop_ae_all[_n-1], stop_ae_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+
+--------------------------------------------------------------------------
+     29,976  total observations
+      1,053  ignored because never entered
+--------------------------------------------------------------------------
+     28,923  observations remaining, representing
+     28,923  subjects
+     28,271  failures in single-failure-per-subject data
+  597569772  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =    21,097
+
+         Failure _d: fail_ae_all==1
+   Analysis time _t: (stop_ae_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+
+Iteration 0:   log likelihood = -262569.16
+Iteration 1:   log likelihood = -262566.83
+Iteration 2:   log likelihood = -262566.83
+Refining estimates:
+Iteration 0:   log likelihood = -262566.83
+
+Cox regression with Breslow method for ties
+
+No. of subjects =    28,923                             Number of obs = 28,923
+No. of failures =    28,271
+Time at risk    = 597569772
+                                                        LR chi2(3)    =   4.66
+Log likelihood = -262566.83                             Prob > chi2   = 0.1983
+
+------------------------------------------------------------------------------
+          _t | Haz. ratio   Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        drug |
+ sotrovimab  |   1.014409   .0206466     0.70   0.482      .974739    1.055694
+   paxlovid  |   1.014759   .0206615     0.72   0.472     .9750606    1.056074
+molnupira~r  |   1.042472   .0208486     2.08   0.038       1.0024    1.084146
+------------------------------------------------------------------------------
+
+         Failure _d: fail_ae_all==1
+   Analysis time _t: (stop_ae_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvrisk_ae_all.gph saved
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvrisk_ae_all.gph saved
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survris
+    > k_ae_all.svg saved as SVG format
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvcurve_ae_all.gph saved
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survcur
+    > ve_ae_all.svg saved as SVG format
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_allcause_emerg_aande==1
+Observed time interval: (stop_allcause_emerg_aande[_n-1], stop_allcause_emerg_a
+> ande]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+
+--------------------------------------------------------------------------
+     29,976  total observations
+      1,053  ignored because never entered
+--------------------------------------------------------------------------
+     28,923  observations remaining, representing
+     28,923  subjects
+      1,186  failures in single-failure-per-subject data
+  606504507  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =    21,141
+
+         Failure _d: fail_allcause_emerg_aande==1
+   Analysis time _t: (stop_allcause_emerg_aande-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+
+Iteration 0:   log likelihood = -11703.612
+Iteration 1:   log likelihood = -11701.354
+Iteration 2:   log likelihood = -11701.331
+Iteration 3:   log likelihood = -11701.331
+Refining estimates:
+Iteration 0:   log likelihood = -11701.331
+
+Cox regression with Breslow method for ties
+
+No. of subjects =    28,923                             Number of obs = 28,923
+No. of failures =     1,186
+Time at risk    = 606504507
+                                                        LR chi2(3)    =   4.56
+Log likelihood = -11701.331                             Prob > chi2   = 0.2069
+
+------------------------------------------------------------------------------
+          _t | Haz. ratio   Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        drug |
+ sotrovimab  |   .9113684   .1203007    -0.70   0.482     .7036153    1.180464
+   paxlovid  |   1.022202   .1283945     0.17   0.861     .7991361    1.307533
+molnupira~r  |   1.249748   .1391282     2.00   0.045      1.00476     1.55447
+------------------------------------------------------------------------------
+
+         Failure _d: fail_allcause_emerg_aande==1
+   Analysis time _t: (stop_allcause_emerg_aande-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvrisk_allcause_emerg_aande.gph saved
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvrisk_allcause_emerg_aande.gph saved
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survris
+    > k_allcause_emerg_aande.svg saved as SVG format
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvcurve_allcause_emerg_aande.gph saved
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survcur
+    > ve_allcause_emerg_aande.svg saved as SVG format
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_covid_hosp_date==1
+Observed time interval: (stop_covid_hosp_date[_n-1], stop_covid_hosp_date]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+
+--------------------------------------------------------------------------
+     29,976  total observations
+      1,053  ignored because never entered
+--------------------------------------------------------------------------
+     28,923  observations remaining, representing
+     28,923  subjects
+      2,374  failures in single-failure-per-subject data
+  606352427  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =    21,141
+
+         Failure _d: fail_covid_hosp_date==1
+   Analysis time _t: (stop_covid_hosp_date-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+
+Iteration 0:   log likelihood = -23369.296
+Iteration 1:   log likelihood = -23368.802
+Iteration 2:   log likelihood = -23368.801
+Refining estimates:
+Iteration 0:   log likelihood = -23368.801
+
+Cox regression with Breslow method for ties
+
+No. of subjects =    28,923                             Number of obs = 28,923
+No. of failures =     2,374
+Time at risk    = 606352427
+                                                        LR chi2(3)    =   0.99
+Log likelihood = -23368.801                             Prob > chi2   = 0.8040
+
+------------------------------------------------------------------------------
+          _t | Haz. ratio   Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        drug |
+ sotrovimab  |   .9526994   .0876039    -0.53   0.598     .7955822    1.140845
+   paxlovid  |   .9532959   .0876268    -0.52   0.603     .7961327    1.141484
+molnupira~r  |   1.053004   .0894231     0.61   0.543     .8915476    1.243701
+------------------------------------------------------------------------------
+
+         Failure _d: fail_covid_hosp_date==1
+   Analysis time _t: (stop_covid_hosp_date-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvrisk_covid_hosp_date.gph saved
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvrisk_covid_hosp_date.gph saved
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survris
+    > k_covid_hosp_date.svg saved as SVG format
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvcurve_covid_hosp_date.gph saved
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survcur
+    > ve_covid_hosp_date.svg saved as SVG format
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_all_hosp_date==1
+Observed time interval: (stop_all_hosp_date[_n-1], stop_all_hosp_date]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+
+--------------------------------------------------------------------------
+     29,976  total observations
+      1,053  ignored because never entered
+--------------------------------------------------------------------------
+     28,923  observations remaining, representing
+     28,923  subjects
+      2,363  failures in single-failure-per-subject data
+  606343156  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =    21,141
+
+         Failure _d: fail_all_hosp_date==1
+   Analysis time _t: (stop_all_hosp_date-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+
+Iteration 0:   log likelihood =  -23265.08
+Iteration 1:   log likelihood = -23263.479
+Iteration 2:   log likelihood = -23263.474
+Iteration 3:   log likelihood = -23263.474
+Refining estimates:
+Iteration 0:   log likelihood = -23263.474
+
+Cox regression with Breslow method for ties
+
+No. of subjects =    28,923                             Number of obs = 28,923
+No. of failures =     2,363
+Time at risk    = 606343156
+                                                        LR chi2(3)    =   3.21
+Log likelihood = -23263.474                             Prob > chi2   = 0.3603
+
+------------------------------------------------------------------------------
+          _t | Haz. ratio   Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        drug |
+ sotrovimab  |    .856548   .0817592    -1.62   0.105     .7103998    1.032763
+   paxlovid  |   .9384724   .0859286    -0.69   0.488     .7843025    1.122947
+molnupira~r  |   .9543017    .084118    -0.53   0.596      .802889    1.134268
+------------------------------------------------------------------------------
+
+         Failure _d: fail_all_hosp_date==1
+   Analysis time _t: (stop_all_hosp_date-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvrisk_all_hosp_date.gph saved
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvrisk_all_hosp_date.gph saved
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survris
+    > k_all_hosp_date.svg saved as SVG format
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvcurve_all_hosp_date.gph saved
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survcur
+    > ve_all_hosp_date.svg saved as SVG format
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_died_date_ons==1
+Observed time interval: (stop_died_date_ons[_n-1], stop_died_date_ons]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+
+--------------------------------------------------------------------------
+     29,976  total observations
+      1,053  ignored because never entered
+--------------------------------------------------------------------------
+     28,923  observations remaining, representing
+     28,923  subjects
+     15,820  failures in single-failure-per-subject data
+  601557496  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =    21,141
+
+         Failure _d: fail_died_date_ons==1
+   Analysis time _t: (stop_died_date_ons-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+
+Iteration 0:   log likelihood = -154018.77
+Iteration 1:   log likelihood = -154018.53
+Iteration 2:   log likelihood = -154018.53
+Refining estimates:
+Iteration 0:   log likelihood = -154018.53
+
+Cox regression with Breslow method for ties
+
+No. of subjects =    28,923                             Number of obs = 28,923
+No. of failures =    15,820
+Time at risk    = 601557496
+                                                        LR chi2(3)    =   0.47
+Log likelihood = -154018.53                             Prob > chi2   = 0.9245
+
+------------------------------------------------------------------------------
+          _t | Haz. ratio   Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        drug |
+ sotrovimab  |   .9915339   .0296843    -0.28   0.776     .9350277    1.051455
+   paxlovid  |   .9978668   .0298851    -0.07   0.943      .940979    1.058194
+molnupira~r  |   .9808917   .0289767    -0.65   0.514     .9257114    1.039361
+------------------------------------------------------------------------------
+
+         Failure _d: fail_died_date_ons==1
+   Analysis time _t: (stop_died_date_ons-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvrisk_died_date_ons.gph saved
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvrisk_died_date_ons.gph saved
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survris
+    > k_died_date_ons.svg saved as SVG format
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvcurve_died_date_ons.gph saved
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survcur
+    > ve_died_date_ons.svg saved as SVG format
+
+. 
+. 
+. foreach fail in ae_spc_all ae_drug_all  ae_imae_all      ae_all allcause_emer
+> g_aande covid_hosp_date all_hosp_date died_date_ons{
+  2. 
+.         stset stop_`fail', id(patient_id) origin(time start_date) enter(time 
+> start_date) failure(fail_`fail'==1) 
+  3.                         stcox i.drug    
+  4.                         stcurve, haz kernel(epan2) at1(drug=0) at2(drug=1)
+>  at3(drug=2) at4(drug=3) ///
+>                         title("") range(0 28) xtitle("Analysis time (years)")
+>  ///
+>                         legend(order(1 "Control" 2 "Sotrovimab" 3 "Paxlovid" 
+> 4 "Molnupiravir") symxsize(*0.4) size(small)) ///
+>                         ylabel(,angle(horizontal)) plotregion(color(white)) g
+> raphregion(color(white)) ///
+>                         ytitle("Survival Probability" ) xtitle("Time (Days)")
+>  saving("$projectdir/output/figures/survhaz_`fail'", replace)
+  5.                                 
+.                         graph export "$projectdir/output/figures/survhaz_`fai
+> l'.svg", as(svg) replace
+  6.                         
+. }
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_ae_spc_all==1
+Observed time interval: (stop_ae_spc_all[_n-1], stop_ae_spc_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+
+--------------------------------------------------------------------------
+     29,976  total observations
+      1,053  ignored because never entered
+--------------------------------------------------------------------------
+     28,923  observations remaining, representing
+     28,923  subjects
+     24,979  failures in single-failure-per-subject data
+  600839680  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =    21,141
+
+         Failure _d: fail_ae_spc_all==1
+   Analysis time _t: (stop_ae_spc_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+
+Iteration 0:   log likelihood = -233817.84
+Iteration 1:   log likelihood = -233813.62
+Iteration 2:   log likelihood = -233813.62
+Refining estimates:
+Iteration 0:   log likelihood = -233813.62
+
+Cox regression with Breslow method for ties
+
+No. of subjects =    28,923                             Number of obs = 28,923
+No. of failures =    24,979
+Time at risk    = 600839680
+                                                        LR chi2(3)    =   8.44
+Log likelihood = -233813.62                             Prob > chi2   = 0.0378
+
+------------------------------------------------------------------------------
+          _t | Haz. ratio   Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        drug |
+ sotrovimab  |   1.026412   .0242874     1.10   0.271     .9798968    1.075136
+   paxlovid  |   1.027549   .0244994     1.14   0.254     .9806354    1.076706
+molnupira~r  |   1.063818   .0244566     2.69   0.007     1.016947    1.112848
+------------------------------------------------------------------------------
+(file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survhaz
+    > _ae_spc_all.gph not found)
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvhaz_ae_spc_all.gph saved
+(file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survhaz
+    > _ae_spc_all.svg not found)
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survhaz
+    > _ae_spc_all.svg saved as SVG format
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_ae_drug_all==1
+Observed time interval: (stop_ae_drug_all[_n-1], stop_ae_drug_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+
+--------------------------------------------------------------------------
+     29,976  total observations
+      1,053  ignored because never entered
+--------------------------------------------------------------------------
+     28,923  observations remaining, representing
+     28,923  subjects
+     24,981  failures in single-failure-per-subject data
+  600793180  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =    21,141
+
+         Failure _d: fail_ae_drug_all==1
+   Analysis time _t: (stop_ae_drug_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+
+Iteration 0:   log likelihood = -233760.09
+Iteration 1:   log likelihood = -233750.71
+Iteration 2:   log likelihood = -233750.69
+Refining estimates:
+Iteration 0:   log likelihood = -233750.69
+
+Cox regression with Breslow method for ties
+
+No. of subjects =    28,923                             Number of obs = 28,923
+No. of failures =    24,981
+Time at risk    = 600793180
+                                                        LR chi2(3)    =  18.78
+Log likelihood = -233750.69                             Prob > chi2   = 0.0003
+
+------------------------------------------------------------------------------
+          _t | Haz. ratio   Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        drug |
+ sotrovimab  |   1.042345   .0248951     1.74   0.082     .9946757    1.092298
+   paxlovid  |   1.101899   .0258697     4.13   0.000     1.052345    1.153788
+molnupira~r  |   1.027431   .0239892     1.16   0.246     .9814726    1.075541
+------------------------------------------------------------------------------
+(file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survhaz
+    > _ae_drug_all.gph not found)
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvhaz_ae_drug_all.gph saved
+(file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survhaz
+    > _ae_drug_all.svg not found)
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survhaz
+    > _ae_drug_all.svg saved as SVG format
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_ae_imae_all==1
+Observed time interval: (stop_ae_imae_all[_n-1], stop_ae_imae_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+
+--------------------------------------------------------------------------
+     29,976  total observations
+      1,053  ignored because never entered
+--------------------------------------------------------------------------
+     28,923  observations remaining, representing
+     28,923  subjects
+     27,321  failures in single-failure-per-subject data
+  598881176  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =    21,141
+
+         Failure _d: fail_ae_imae_all==1
+   Analysis time _t: (stop_ae_imae_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+
+Iteration 0:   log likelihood = -253864.21
+Iteration 1:   log likelihood = -253860.39
+Iteration 2:   log likelihood = -253860.39
+Refining estimates:
+Iteration 0:   log likelihood = -253860.39
+
+Cox regression with Breslow method for ties
+
+No. of subjects =    28,923                             Number of obs = 28,923
+No. of failures =    27,321
+Time at risk    = 598881176
+                                                        LR chi2(3)    =   7.64
+Log likelihood = -253860.39                             Prob > chi2   = 0.0541
+
+------------------------------------------------------------------------------
+          _t | Haz. ratio   Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        drug |
+ sotrovimab  |   1.017373   .0218026     0.80   0.422     .9755253    1.061015
+   paxlovid  |   1.034645   .0221759     1.59   0.112     .9920816    1.079035
+molnupira~r  |   1.051882   .0220713     2.41   0.016     1.009501    1.096043
+------------------------------------------------------------------------------
+(file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survhaz
+    > _ae_imae_all.gph not found)
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvhaz_ae_imae_all.gph saved
+(file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survhaz
+    > _ae_imae_all.svg not found)
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survhaz
+    > _ae_imae_all.svg saved as SVG format
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_ae_all==1
+Observed time interval: (stop_ae_all[_n-1], stop_ae_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+
+--------------------------------------------------------------------------
+     29,976  total observations
+      1,053  ignored because never entered
+--------------------------------------------------------------------------
+     28,923  observations remaining, representing
+     28,923  subjects
+     28,271  failures in single-failure-per-subject data
+  597569772  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =    21,097
+
+         Failure _d: fail_ae_all==1
+   Analysis time _t: (stop_ae_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+
+Iteration 0:   log likelihood = -262569.16
+Iteration 1:   log likelihood = -262566.83
+Iteration 2:   log likelihood = -262566.83
+Refining estimates:
+Iteration 0:   log likelihood = -262566.83
+
+Cox regression with Breslow method for ties
+
+No. of subjects =    28,923                             Number of obs = 28,923
+No. of failures =    28,271
+Time at risk    = 597569772
+                                                        LR chi2(3)    =   4.66
+Log likelihood = -262566.83                             Prob > chi2   = 0.1983
+
+------------------------------------------------------------------------------
+          _t | Haz. ratio   Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        drug |
+ sotrovimab  |   1.014409   .0206466     0.70   0.482      .974739    1.055694
+   paxlovid  |   1.014759   .0206615     0.72   0.472     .9750606    1.056074
+molnupira~r  |   1.042472   .0208486     2.08   0.038       1.0024    1.084146
+------------------------------------------------------------------------------
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvhaz_ae_all.gph saved
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survhaz
+    > _ae_all.svg saved as SVG format
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_allcause_emerg_aande==1
+Observed time interval: (stop_allcause_emerg_aande[_n-1], stop_allcause_emerg_a
+> ande]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+
+--------------------------------------------------------------------------
+     29,976  total observations
+      1,053  ignored because never entered
+--------------------------------------------------------------------------
+     28,923  observations remaining, representing
+     28,923  subjects
+      1,186  failures in single-failure-per-subject data
+  606504507  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =    21,141
+
+         Failure _d: fail_allcause_emerg_aande==1
+   Analysis time _t: (stop_allcause_emerg_aande-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+
+Iteration 0:   log likelihood = -11703.612
+Iteration 1:   log likelihood = -11701.354
+Iteration 2:   log likelihood = -11701.331
+Iteration 3:   log likelihood = -11701.331
+Refining estimates:
+Iteration 0:   log likelihood = -11701.331
+
+Cox regression with Breslow method for ties
+
+No. of subjects =    28,923                             Number of obs = 28,923
+No. of failures =     1,186
+Time at risk    = 606504507
+                                                        LR chi2(3)    =   4.56
+Log likelihood = -11701.331                             Prob > chi2   = 0.2069
+
+------------------------------------------------------------------------------
+          _t | Haz. ratio   Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        drug |
+ sotrovimab  |   .9113684   .1203007    -0.70   0.482     .7036153    1.180464
+   paxlovid  |   1.022202   .1283945     0.17   0.861     .7991361    1.307533
+molnupira~r  |   1.249748   .1391282     2.00   0.045      1.00476     1.55447
+------------------------------------------------------------------------------
+(file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survhaz
+    > _allcause_emerg_aande.gph not found)
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvhaz_allcause_emerg_aande.gph saved
+(file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survhaz
+    > _allcause_emerg_aande.svg not found)
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survhaz
+    > _allcause_emerg_aande.svg saved as SVG format
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_covid_hosp_date==1
+Observed time interval: (stop_covid_hosp_date[_n-1], stop_covid_hosp_date]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+
+--------------------------------------------------------------------------
+     29,976  total observations
+      1,053  ignored because never entered
+--------------------------------------------------------------------------
+     28,923  observations remaining, representing
+     28,923  subjects
+      2,374  failures in single-failure-per-subject data
+  606352427  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =    21,141
+
+         Failure _d: fail_covid_hosp_date==1
+   Analysis time _t: (stop_covid_hosp_date-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+
+Iteration 0:   log likelihood = -23369.296
+Iteration 1:   log likelihood = -23368.802
+Iteration 2:   log likelihood = -23368.801
+Refining estimates:
+Iteration 0:   log likelihood = -23368.801
+
+Cox regression with Breslow method for ties
+
+No. of subjects =    28,923                             Number of obs = 28,923
+No. of failures =     2,374
+Time at risk    = 606352427
+                                                        LR chi2(3)    =   0.99
+Log likelihood = -23368.801                             Prob > chi2   = 0.8040
+
+------------------------------------------------------------------------------
+          _t | Haz. ratio   Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        drug |
+ sotrovimab  |   .9526994   .0876039    -0.53   0.598     .7955822    1.140845
+   paxlovid  |   .9532959   .0876268    -0.52   0.603     .7961327    1.141484
+molnupira~r  |   1.053004   .0894231     0.61   0.543     .8915476    1.243701
+------------------------------------------------------------------------------
+(file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survhaz
+    > _covid_hosp_date.gph not found)
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvhaz_covid_hosp_date.gph saved
+(file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survhaz
+    > _covid_hosp_date.svg not found)
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survhaz
+    > _covid_hosp_date.svg saved as SVG format
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_all_hosp_date==1
+Observed time interval: (stop_all_hosp_date[_n-1], stop_all_hosp_date]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+
+--------------------------------------------------------------------------
+     29,976  total observations
+      1,053  ignored because never entered
+--------------------------------------------------------------------------
+     28,923  observations remaining, representing
+     28,923  subjects
+      2,363  failures in single-failure-per-subject data
+  606343156  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =    21,141
+
+         Failure _d: fail_all_hosp_date==1
+   Analysis time _t: (stop_all_hosp_date-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+
+Iteration 0:   log likelihood =  -23265.08
+Iteration 1:   log likelihood = -23263.479
+Iteration 2:   log likelihood = -23263.474
+Iteration 3:   log likelihood = -23263.474
+Refining estimates:
+Iteration 0:   log likelihood = -23263.474
+
+Cox regression with Breslow method for ties
+
+No. of subjects =    28,923                             Number of obs = 28,923
+No. of failures =     2,363
+Time at risk    = 606343156
+                                                        LR chi2(3)    =   3.21
+Log likelihood = -23263.474                             Prob > chi2   = 0.3603
+
+------------------------------------------------------------------------------
+          _t | Haz. ratio   Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        drug |
+ sotrovimab  |    .856548   .0817592    -1.62   0.105     .7103998    1.032763
+   paxlovid  |   .9384724   .0859286    -0.69   0.488     .7843025    1.122947
+molnupira~r  |   .9543017    .084118    -0.53   0.596      .802889    1.134268
+------------------------------------------------------------------------------
+(file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survhaz
+    > _all_hosp_date.gph not found)
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvhaz_all_hosp_date.gph saved
+(file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survhaz
+    > _all_hosp_date.svg not found)
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survhaz
+    > _all_hosp_date.svg saved as SVG format
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_died_date_ons==1
+Observed time interval: (stop_died_date_ons[_n-1], stop_died_date_ons]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+
+--------------------------------------------------------------------------
+     29,976  total observations
+      1,053  ignored because never entered
+--------------------------------------------------------------------------
+     28,923  observations remaining, representing
+     28,923  subjects
+     15,820  failures in single-failure-per-subject data
+  601557496  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =    21,141
+
+         Failure _d: fail_died_date_ons==1
+   Analysis time _t: (stop_died_date_ons-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+
+Iteration 0:   log likelihood = -154018.77
+Iteration 1:   log likelihood = -154018.53
+Iteration 2:   log likelihood = -154018.53
+Refining estimates:
+Iteration 0:   log likelihood = -154018.53
+
+Cox regression with Breslow method for ties
+
+No. of subjects =    28,923                             Number of obs = 28,923
+No. of failures =    15,820
+Time at risk    = 601557496
+                                                        LR chi2(3)    =   0.47
+Log likelihood = -154018.53                             Prob > chi2   = 0.9245
+
+------------------------------------------------------------------------------
+          _t | Haz. ratio   Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        drug |
+ sotrovimab  |   .9915339   .0296843    -0.28   0.776     .9350277    1.051455
+   paxlovid  |   .9978668   .0298851    -0.07   0.943      .940979    1.058194
+molnupira~r  |   .9808917   .0289767    -0.65   0.514     .9257114    1.039361
+------------------------------------------------------------------------------
+(file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survhaz
+    > _died_date_ons.gph not found)
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety
+>  mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/su
+> rvhaz_died_date_ons.gph saved
+(file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survhaz
+    > _died_date_ons.svg not found)
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/survhaz
+    > _died_date_ons.svg saved as SVG format
+
+. 
+. 
+. log close
+      name:  <unnamed>
+       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafel
+> y\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/logs/cox_
+> model.log
+  log type:  text
+ closed on:   8 Jun 2023, 12:50:34
+-------------------------------------------------------------------------------

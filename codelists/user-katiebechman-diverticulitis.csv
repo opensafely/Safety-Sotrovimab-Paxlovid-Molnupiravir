@@ -1,0 +1,84 @@
+code,term
+1086111000119105,Abscess of cecum co-occurrent and due to diverticulitis
+1086151000119106,Perforation of cecum due to diverticulitis
+1086191000119101,Abscess of duodenum co-occurrent and due to diverticulitis
+1086231000119105,Perforation of duodenum due to diverticulitis
+1086241000119101,Abscess of ileum co-occurrent and due to diverticulitis
+1086281000119106,Perforation of ileum due to diverticulitis
+1086291000119109,Abscess of jejunum co-occurrent and due to diverticulitis
+1086331000119103,Perforation of jejunum co-occurrent and due to diverticulitis
+1086341000119107,Abscess of sigmoid colon co-occurrent and due to diverticulitis
+1086381000119102,Perforation of sigmoid colon due to diverticulitis
+1086441000119100,Perforation of large and small intestine due to diverticulitis
+1086461000119101,Hemorrhage of small intestine due to diverticulitis
+1086481000119105,Perforation of small intestine co-occurrent with hemorrhage due to diverticulitis
+1086491000119108,Perforation of small intestine due to diverticulitis
+1086541000119104,Perforation of intestine due to diverticulitis of gastrointestinal tract
+111358007,Diverticulitis of jejunum
+111359004,Diverticulitis of colon
+1162590005,Diverticulitis of ascending colon
+1172640002,Diverticulitis of descending colon
+1197660005,Stenosis of large intestine due to diverticulitis
+1197682003,Fistula of small intestine due to diverticulitis
+1197686000,Fistula of large intestine due to diverticulitis
+1197699002,Stenosis of small intestine due to diverticulitis
+1197741006,Hemorrhage of large intestine due to diverticulitis
+155779000,Diverticulitis
+197095003,Diverticulitis (& [of intestine])
+197096002,Diverticulitis of the jejunum
+197097006,Diverticulitis of the ileum
+197098001,Diverticulitis of the small intestine unspecified
+197099009,Diverticulitis of the small intestine NOS
+197100001,Diverticulitis of the large intestine unspecified
+197101002,Diverticulitis of the large intestine NOS
+197102009,Diverticulitis unspecified
+197103004,Diverticulitis NOS
+197104005,Perforated diverticulum of intestine
+197105006,Perforated diverticulum of duodenum
+197106007,Perforated diverticulum of jejunum
+197107003,Perforated diverticulum of ileum
+197108008,Perforated diverticulum of small intestine unspecified
+197109000,Perforated diverticulum of small intestine NOS
+197110005,Perforated diverticulum of large intestine unspecified
+197111009,Perforated diverticulum of large intestine NOS
+197112002,Perforation and abscess co-occurrent and due to diverticular disease of both small and large intestine
+197113007,Perforated diverticulum unspecified
+197114001,Perforated diverticulum of intestine NOS
+271366000,Diverticulitis of gastrointestinal tract
+280991008,Diverticulitis of small intestine
+280992001,Perforated diverticulum of large intestine
+280993006,Perforated diverticulum of small intestine
+307496006,Diverticulitis
+33838003,Diverticulitis of duodenum
+427910000,Diverticulitis of sigmoid colon
+430347001,Diverticulitis of cecum
+430876009,Diverticulitis of rectosigmoid
+430877000,Diverticulitis of rectum
+445162006,Bleeding Meckel's diverticulitis
+4494009,Diverticulitis of large intestine
+48169002,Perforation co-occurrent and due to diverticular disease of colon
+48241004,Meckel's diverticulitis
+56165008,Diverticulitis of small intestine
+580021000000108,Diverticulitis of the small intestine unspecified
+588951000000102,Perforated diverticulum of small intestine unspecified
+588961000000104,Perforated diverticulum of small intestine NOS
+590211000000108,Diverticulitis NOS
+610001000000109,Perforated diverticulum of large intestine NOS
+610011000000106,Perforated diverticulum of large intestine unspecified
+645351000000108,Diverticulitis of the small intestine NOS
+645361000000106,Diverticulitis of the large intestine unspecified
+645371000000104,Diverticulitis of the large intestine NOS
+645381000000102,Diverticulitis unspecified
+660771000000104,Perforated diverticulum unspecified
+660781000000102,Perforated diverticulum of intestine NOS
+67153004,Diverticulitis of ileum
+721646008,Congenital diverticulitis of small intestine
+722845008,Diverticulitis of small intestine with complication
+722846009,Diverticulitis of small intestine without complication
+722855007,Perforation and abscess of large intestine co-occurrent and due to diverticulitis
+733150001,Perforation and abscess of small intestine co-occurrent and due to diverticulitis
+733159000,Diverticulitis of large intestine with complication
+733160005,Diverticulitis of large intestine without complication
+735593008,Diverticulitis of intestine
+735729001,Diverticulum of large intestine co-occurrent with hemorrhage of large intestine
+76953007,Diverticulitis of colon with perforation

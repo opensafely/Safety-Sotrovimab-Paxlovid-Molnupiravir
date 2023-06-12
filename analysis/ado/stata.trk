@@ -1,0 +1,492 @@
+* 00000021
+*! version 1.0.0
+* Do not erase or edit this file
+* It is used by Stata to track the ado and help
+* files you have installed.
+
+S http://fmwww.bc.edu/repec/bocode/s
+N splitvallabels.pkg
+D  6 Mar 2023
+U 1
+d 'SPLITVALLABELS': module to split up value labels for multi-line graph labelling
+d 
+d splitvallabels splits the value labels for a variable into
+d multiple chunks, and returns those chunks in a form appropriate
+d for specification as part of a graph command. When the over()
+d variable in, for example, a bar graph has long labels, these
+d labels can overlap each other in the graph.  This command breaks
+d up these long labels and packages them in a format appropriate
+d for specification as part of a relabel option. This will create
+d multi-line labels on the graph.
+d 
+d KW: graphics
+d KW: labels
+d 
+d Requires: Stata version 8.2
+d 
+d 
+d Author: Nick Winter,  University of Virginia
+d Support: email  nwinter@@virginia.edu
+d 
+d Author: Ben Jann, ETH Zurich
+d Support: email  ben.jann@@soz.gess.ethz.ch
+d 
+d Distribution-Date: 20080814
+f s\splitvallabels.ado
+f s\splitvallabels.hlp
+e
+S https://tdmize.github.io/data/cleanplots
+N cleanplots.pkg
+D  6 Mar 2023
+U 2
+d cleanplots - graphing scheme
+d Clean default plots with marginsplot and other common graphs
+d Trenton D. Mize, Purdue University
+d Distribution-Date: 20200124
+f s\scheme-cleanplots.scheme
+f c\cleanplots.sthlp
+e
+S https://raw.githubusercontent.com/benjann/palettes/master
+N palettes.pkg
+D  6 Mar 2023
+U 3
+d palettes: module providing color palettes, symbol palettes, and line pattern palettes
+d 
+d Author: Ben Jann, University of Bern, ben.jann@unibe.ch
+d 
+d Distribution-Date: 20220602
+f c\colorpalette.ado
+f c\colorcheck.ado
+f c\colorpalette.sthlp
+f c\colorcheck.sthlp
+f s\symbolpalette.hlp
+f c\colorpalette9.hlp
+f s\symbolpalette.ado
+f c\colorpalette9.ado
+f p\palettes.hlp
+f l\linepalette.ado
+f l\linepalette.hlp
+e
+S https://raw.githubusercontent.com/benjann/colrspace/master
+N colrspace.pkg
+D  6 Mar 2023
+U 4
+d colrspace: module providing a class-based color management system in Mata
+d 
+d Author: Ben Jann, University of Bern, ben.jann@unibe.ch
+d 
+d Distribution-Date: 20220530
+f c\colrspace_library_generators.sthlp
+f c\colrspace_library_namedcolors.sthlp
+f l\lcolrspace.mlib
+f c\colrspace_library_rgbmaps.sthlp
+f c\colrspace_source.sthlp
+f c\colrspace_library_lsmaps.sthlp
+f c\colrspace_library_palettes.sthlp
+f c\colrspace.sthlp
+e
+S http://fmwww.bc.edu/repec/bocode/m
+N mylabels.pkg
+D  6 Mar 2023
+U 5
+d 'MYLABELS': module for axis labels or ticks on transformed scales or for daily dates
+d 
+d  mylabels and myticks generate axis labels and ticks on
+d transformed scales. Their use is best explained by example. You
+d draw a graph and one axis is on a transformed square root scale.
+d You wish the axis labels to show untransformed values. For some
+d values this is easy; for example, ylabel(0 1 2 "4" 3 "9" 4 "16" 5
+d "25") says use "4" as label for 2, and so forth. For other values
+d and/or other transformations the conversion may be more difficult
+d to do in your head. The idea behind mylabels is that you feed it
+d the numeric labels you want shown and the transformation being
+d used. It will then place the appropriate specification in a local
+d macro which you name. You may then use that local macro as part
+d of a later graphics command. The idea behind myticks is similar.
+d  mydays displays a formatted list of specified days that lie
+d within the range of a tsset daily date variable describing a time
+d series and puts the numeric version of that list in a specified
+d local macro. The result may be useful for specifying axis label
+d or tick positions on graphs of time series. mydays requires Stata
+d 9.0.
+d 
+d KW: graphics
+d KW: transformations
+d KW: axis labels
+d KW: axis ticks
+d KW: daily dates
+d KW: time series
+d 
+d Requires: Stata version 8.0 (9.0 for mydays)
+d 
+d Distribution-Date: 20220515
+d 
+d Author: Nicholas J. Cox, Durham University
+d Support: email N.J.Cox@@durham.ac.uk
+d 
+d Author: Scott Merryman
+d Support: email scott.merryman@@gmail.com
+d 
+f m\mylabels.ado
+f m\mylabels.sthlp
+f m\myticks.ado
+f m\myticks.hlp
+f m\mydays.ado
+f m\mydays.hlp
+e
+S http://www.stata-journal.com/software/sj17-3
+N gr0070.pkg
+D  6 Mar 2023
+U 6
+d SJ17-3 gr0070. Provide graph schemes sensitive to color vision deficiency
+d Provide graph schemes sensitive to color vision
+d   deficiency
+d by Daniel Bischof, Department of Political
+d      Science, University of Zurich, Zurich,
+d      Switzerland
+d Support:  bischof@@ipz.uzh.ch
+d After installation, type help ^plotplain^,
+d   ^plotplainblind^, ^plottig^, and
+d   ^plottigblind^
+f style\color-ananas.style
+f style\color-orangebrown.style
+f style\color-plb1.style
+f style\color-plb2.style
+f style\color-plb3.style
+f style\color-plg1.style
+f style\color-plg2.style
+f style\color-plg3.style
+f style\color-pll1.style
+f style\color-pll2.style
+f style\color-pll3.style
+f style\color-plr1.style
+f style\color-plr2.style
+f style\color-ply1.style
+f style\color-ply2.style
+f style\color-ply3.style
+f style\color-reddish.style
+f style\color-sea.style
+f style\color-sky.style
+f style\color-turquoise.style
+f style\color-vermillion.style
+f s\scheme-plotplainblind.scheme
+f s\scheme_plotplainblind.sthlp
+f s\scheme-plotplain.scheme
+f s\scheme_plotplain.sthlp
+f s\scheme-plottigblind.scheme
+f s\scheme_plottigblind.sthlp
+f s\scheme-plottig.scheme
+f s\scheme_plottig.sthlp
+e
+S http://www.stata.com/users/vwiggins
+N grc1leg.pkg
+D  6 Mar 2023
+U 7
+d grc1leg.  Combine graphs into one graph with a common legend.
+d Program by Vince Wiggins, StataCorp <vwiggins@@stata.com>.
+d Statalist distribution, 16 June 2003.
+d 
+d Exactly like -graph combine- but shows a single common legend for all
+d combined graphs.
+d 
+d Distribution-Date: 02jun2010
+f g\grc1leg.ado
+f g\grc1leg.hlp
+e
+S http://www.stata-journal.com/software/sj15-1
+N gr0059_1.pkg
+D  6 Mar 2023
+U 9
+d SJ15-1 gr0059_1. Update: Plotting regression...
+d Update: Plotting regression coefficients and
+d   other estimates
+d by Ben Jann, Institute of Sociology, University
+d      of Bern, Bern, Switzerland
+d Support:  ben.jann@@soz.unibe.ch
+d After installation, type help ^coefplot^
+f c\coefplot.ado
+f c\coefplot.sthlp
+e
+S http://fmwww.bc.edu/RePEc/bocode/r
+N radar.pkg
+D  7 Mar 2023
+U 10
+d 'RADAR': module to draw radar (spider) plots
+d 
+d  radar produces a radar plot from at least two variables.
+d 
+d KW: radar plot
+d KW: spider plot
+d KW: star plot
+d KW: multivariate
+d KW: O'Reilly
+d 
+d Requires: Stata version 11.0
+d 
+d Distribution-Date: 20211206
+d 
+d Author: Adrian Mander
+d Support: email adrian.mander@@mrc-bsu.cam.ac.uk
+d 
+f r\radar.ado
+f r\radar.sthlp
+e
+S http://www.stata-journal.com/software/sj9-2
+N sbe24_3.pkg
+D 13 Mar 2023
+U 11
+d SJ9-2 sbe24_3.  Update: metan: fixed- and random-effects...
+d Update: metan: fixed- and random-effects meta-analysis
+d by Ross J. Harris, Roger M. Harbord, and Jonathan A. C. Sterne,
+d      Department of Social Medicine, University of Bristol
+d    Jonathan J. Deeks, Department of Primary Care Medicine,
+d      University of Birmingham
+d    Michael J. Bradburn, Health Services Research Centre,
+d      University of Sheffield
+d    Douglas G. Altman, Centre for Statistics in Medicine,
+d      University of Oxford
+d Support:  ross.harris@@bristol.ac.uk
+d After installation, type help ^metan^
+f m\metan.ado
+f m\metan.hlp
+f l\labbe.ado
+f l\labbe.hlp
+f m\metan_examples.ado
+e
+S http://www.stata-journal.com/software/sj15-4
+N st0411.pkg
+D 13 Mar 2023
+U 12
+d SJ15-4 st0411. Visualizing assumptions and...
+d Visualizing assumptions and results in network
+d   meta-analysis: The network graphs package
+d by Anna Chaimani, Department of Hygiene &
+d      Epidemiology, University of Ioannina
+d      School of Medicine, Ioannina, Greece
+d    Georgia Salanti, Department of Hygiene &
+d      Epidemiology, University of Ioannina
+d      School of Medicine, Ioannina, Greece
+d Support:  achaiman@@cc.uoi.gr
+d After installation, type help ^network graphs^
+f n\networkplot.ado
+f n\netweight.ado
+f i\ifplot.ado
+f n\netfunnel.ado
+f i\intervalplot.ado
+f n\netleague.ado
+f s\sucra.ado
+f m\mdsrank.ado
+f c\clusterank.ado
+f n\network_graphs.sthlp
+f n\networkplot.sthlp
+f n\netweight.sthlp
+f i\ifplot.sthlp
+f n\netfunnel.sthlp
+f i\intervalplot.sthlp
+f n\netleague.sthlp
+f s\sucra.sthlp
+f m\mdsrank.sthlp
+f c\clusterank.sthlp
+f n\networkplot.dlg
+f n\netweight.dlg
+f i\ifplot.dlg
+f n\netfunnel.dlg
+f i\intervalplot.dlg
+f n\netleague.dlg
+f s\sucra.dlg
+f m\mdsrank.dlg
+f c\clusterank.dlg
+e
+S http://www.stata-journal.com/software/sj15-4
+N st0410.pkg
+D 13 Mar 2023
+U 13
+d SJ15-4 st0410. Network meta-analysis
+d Network meta-analysis
+d by Ian R. White, MRC Biostatistics Unit,
+d      Cambridge Institute of Public Health,
+d      Cambridge, UK
+d Support:  ian.white@@mrc-bsu.cam.ac.uk
+d After installation, type help ^network^
+f m\misspattern.ado
+f m\misspattern.sthlp
+f n\network.ado
+f n\network_components.ado
+f n\network_convert.ado
+f n\network_convert.sthlp
+f n\network_forest.ado
+f n\network_forest.sthlp
+f n\network_import.ado
+f n\network_import.sthlp
+f n\network_map.ado
+f n\network_map.sthlp
+f n\network_meta.ado
+f n\network_meta.sthlp
+f n\network_pattern.ado
+f n\network_pattern.sthlp
+f n\network_query.ado
+f n\network_query.sthlp
+f n\network_rank.ado
+f n\network_rank.sthlp
+f n\network_setup.ado
+f n\network_setup.sthlp
+f n\network_sidesplit.ado
+f n\network_sidesplit.sthlp
+f n\network.sthlp
+f n\network_table.ado
+f n\network_table.sthlp
+f n\network_unset.ado
+f n\network_unset.sthlp
+e
+S http://www.stata-journal.com/software/sj15-4
+N st0156_2.pkg
+D 13 Mar 2023
+U 14
+d SJ15-4 st0156_2. Update: Multivariate...
+d Update: Multivariate random-effects
+d   meta-regression
+d by Ian White, MRC Biostatistics Unit, Cambridge,
+d      UK
+d Support:  ian.white@@mrc-bsu.cam.ac.uk
+d After installation, type help ^mvmeta^ and
+d   ^mvmeta_make^
+f m\mvmeta.ado
+f m\mvmeta.hlp
+f m\mvmeta_lmata.ado
+f m\mvmeta_make.ado
+f m\mvmeta_make.hlp
+f m\mvmeta_mufromsigma.ado
+f m\mvmeta_bscov_correlation.ado
+f m\mvmeta_bscov_unstructured.ado
+f m\mvmeta_bscov_proportional.ado
+f m\mvmeta_bscov_equals.ado
+f m\mvmetademo_setup.sthlp
+f m\mvmetademo_run.sthlp
+e
+S http://fmwww.bc.edu/RePEc/bocode/m
+N mdesc.pkg
+D 23 Mar 2023
+U 15
+d 'MDESC': module to tabulate prevalence of missing values
+d 
+d  Produces a table with the number of missing values, total number
+d of cases, and percent missing for each variable in varlist. mdesc
+d works with both numeric and character variables.
+d 
+d KW: missing values
+d KW: data management
+d 
+d Requires: Stata version 10
+d 
+d Distribution-Date: 20110825
+d 
+d Author: Rose Anne Medeiros, Department of Sociology, Rice University
+d Support: email rose.a.medeiros@@rice.edu
+d 
+d Author: Dan Blanchette, The Carolina Population Center, UNC-CH
+d Support: email dan_blanchette@@unc.edu
+d 
+f m\mdesc.ado
+f m\mdesc.sthlp
+e
+S http://personalpages.manchester.ac.uk/staff/mark.lunt
+N propensity.pkg
+D 26 Apr 2023
+U 17
+d Propensity Analysis
+d 
+d A suite of programs to facilitate data analysis using propensity
+d methods (various types of matching, weighting, checking balance etc.)
+d 
+d The first time you run one of thes programs you will be asked if you
+d are happy to send anonymous data to Google Analytics. For details
+d of the data sent, see the help file. We would appreciate it if you
+d would agree, but the programs will respect your decision if you choose
+d not to.
+d 
+d Author: Mark Lunt, Arthritis Research UK Epidemiology Unit, University of Manchester
+d Support: mark.lunt@manchester.ac.uk
+f g\gmatch.ado
+f g\gmatch.sthlp
+f f\fgmatch.ado
+f f\fgmatch.sthlp
+f r\rmatch.ado
+f r\rmatch.sthlp
+f p\propwt.ado
+f p\propwt.sthlp
+f p\proptrim.ado
+f p\proptrim.sthlp
+e
+S http://www.stata-journal.com/software/sj15-3
+N st0404.pkg
+D 11 May 2023
+U 18
+d SJ15-3 st0404. Bandwidth selection in kernel...
+d Bandwidth selection in kernel distribution
+d   function estimation
+d by Ignacio López-de-Ullibarri, Department of
+d      Mathematics, Universidade da Coruña,
+d      Ferrol, Spain
+d Support:  ilu@@udc.es
+d After installation, type help ^kcdf^
+f k\kcdf.ado
+f k\kcdf.sthlp
+e
+S http://fmwww.bc.edu/RePEc/bocode/t
+N table1_mc.pkg
+D 17 May 2023
+U 19
+d 'TABLE1_MC': module to create "table 1" of baseline characteristics for a manuscript
+d 
+d  table1_mc summarises continuous and categorical variables,
+d optionally by group, with a p-value column. This command is
+d essentially an extension of Phil Claytonâ€™s table1 command.
+d 
+d KW: data management
+d KW: baseline characteristics
+d KW: descriptive statistics
+d 
+d Requires: Stata version 14.2 (15.1 for docx output)
+d 
+d Distribution-Date: 20220507
+d 
+d Author: Mark Chatfield, University of Queensland
+d Support: email m.chatfield@@uq.edu.au
+d 
+f t\table1_mc.ado
+f t\table1_mc.sthlp
+f t\table1_mc_dta2docx.ado
+f t\table1_mc_dta2docx.sthlp
+e
+S http://personalpages.manchester.ac.uk/staff/mark.lunt
+N pbalchk.pkg
+D 17 May 2023
+U 21
+d Propensity Balance Checking
+d 
+d Programs to test the balance achieved by a propensity model. If you
+d have multiply imputed data (imputed by ice or mi impute), use
+d mpbalchk. Otherwise, use pbalchk.
+d 
+d The programs below require the package {net search isvar:isvar} in order
+d to function correctly. Use the above link to install it if it is not
+d already installed.
+d 
+d The first time you run pbalchk or mpbalchk you will be asked if you
+d are prepared to send anonymous data to Google Analytics. For details
+d of the data sent, see the help file.
+d 
+d Author: Mark Lunt, Arthritis Research UK Epidemiology Unit, University of Manchester
+d Support: mark.lunt@manchester.ac.uk
+f p\pbalchk.ado
+f p\pbalchk.sthlp
+f m\mpbalchk.ado
+f m\mpbalchk.sthlp
+f c\covwt.ado
+f c\covwt.mo
+f t\trackuse.ado
+f u\uuidv4.ado
+f t\trackuse.sthlp
+f t\trackuse_prog.sthlp
+f g\ga_fragment.sthlp
+e
