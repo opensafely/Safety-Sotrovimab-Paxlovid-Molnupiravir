@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/logs/preceed_rate.log
   log type:  text
- opened on:  19 Jun 2023, 11:31:13
+ opened on:  19 Jun 2023, 12:09:42
 
 . 
 . *Set Ado file path
@@ -3052,5 +3052,18 @@ molnupavir
 . postclose `comparator'
 
 . 
+. 
+. 
+. 
+. 
+. 
 end of do-file
 
+. do "C:\Users\k1635179\AppData\Local\Temp\STD2118_000000.tmp"
+
+. log close
+      name:  <unnamed>
+       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/logs/preceed_rate.log
+  log type:  text
+ closed on:  19 Jun 2023, 12:10:39
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
