@@ -1,0 +1,44 @@
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/logs/cleaning_dataset.log
+  log type:  text
+ opened on:  14 Jun 2023, 13:45:29
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD6924_000000.tmp"
+
+. import delimited "$projectdir/output/input.csv", clear
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/output/input.csv not found
+r(601);
+
+end of do-file
+
+r(601);
+
+. clear
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD6924_000000.tmp"
+
+. **Set filepaths
+. global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+
+. //global projectdir `c(pwd)'
+. di "$projectdir"
+C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir
+
+. capture mkdir "$projectdir/output/data"
+
+. capture mkdir "$projectdir/output/figures"
+
+. capture mkdir "$projectdir/output/tables"
+
+. global logdir "$projectdir/logs"
+
+. di "$logdir"
+C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/logs
+
+. 
+. * Open a log file
+. cap log close
