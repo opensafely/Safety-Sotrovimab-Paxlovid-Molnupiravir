@@ -3486,3 +3486,4 @@ end of do-file
 --Break--
 r(1);
 
+. exit, clear
