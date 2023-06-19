@@ -14,6 +14,7 @@
 **Set filepaths
 //global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
 global projectdir `c(pwd)'
+
 di "$projectdir"
 capture mkdir "$projectdir/output/data"
 capture mkdir "$projectdir/output/figures"
@@ -24,14 +25,30 @@ di "$logdir"
 cap log close
 log using "$logdir/cleaning_dataset.log", replace
 
-* import dataset
-import delimited "$projectdir/output/input.csv", clear
-
 *Set Ado file path
 adopath + "$projectdir/analysis/ado"
 
-//describe
-//codebook
+* import control dataset
+import delimited "$projectdir/output/input_control.csv", clear
+gen control_dataset=1
+save "$projectdir/output/data/control.dta", replace 
+
+* import treatment dataset
+import delimited "$projectdir/output/input_treatment.csv", clear
+gen treatment_dataset=1
+
+*********************************
+*  Append control & treatment datasets     *
+********************************* 
+append using "$projectdir/output/data/control.dta" 
+duplicates tag patient_id, gen(duplicate_patient_id)
+bys patient_id (treatment_dataset duplicate_patient_id): gen n=_n
+tab n
+drop if n>1  // drops duplicate patient id and in control group
+tab control_dataset,m
+tab treatment_dataset,m
+count if start_date!=date_treated & treatment_dataset==1
+count if start_date!=covid_test_positive_date & control_dataset==1
 
 *********************************
 *	Convert strings to dates     *
@@ -51,7 +68,6 @@ foreach var of varlist 	 covid_test_positive_date				///
 						 paxlovid_not_start						///
 						 date_treated							///
 						 start_date								///
-						 start_date_test						///
 						 drugs_paxlovid_interaction				///
 						 drugs_nirmatrelvir_interaction			///
 						 last_vaccination_date 					///
@@ -117,7 +133,7 @@ foreach var of varlist 	 covid_test_positive_date				///
 						 covid_hosp_date_mabs_not_primary		/// 
 						 died_date_ons							///
 						 died_ons_covid							///
-						  pre_diverticulitis_icd				///
+						 pre_diverticulitis_icd					///
 						 pre_diverticulitis_snomed				///
 						 pre_diverticulitis_ae					///
 						 pre_diarrhoea_snomed 					///
@@ -142,7 +158,8 @@ foreach var of varlist 	 covid_test_positive_date				///
 						 pre_sle_ctv							///
 						 pre_sle_icd							///
 						 pre_sle_ae								///
-						 pre_ibd_snomed {					 
+						 pre_ibd_ae								///
+						 pre_ibd_snomed	{					 
 	capture confirm string variable `var'
 	if _rc==0 {
 	rename `var' a
@@ -160,6 +177,7 @@ foreach var of varlist sotrovimab molnupiravir paxlovid {
     display "`var'"
 	count if `var'!=.
 	count if `var'==date_treated & `var'!=. & date_treated!=.
+	count if `var'==date_treated & `var'!=. & date_treated!=. & `var'_not_start!=.
 	gen `var'_start = 1 if `var'==date_treated & `var'!=. & date_treated!=. & `var'_not_start==.
 	replace `var'_start = 0 if `var'==date_treated & `var'!=. & date_treated!=. & `var'_not_start!=.
 	tab `var'_start, m  //number on treatment, first drug given, and drug was started
@@ -177,16 +195,14 @@ label define drug 0 "control" 1 "sotrovimab" 2 "paxlovid" 3"molnupiravir", repla
 label values drug drug
 tab drug, m
 drop if drug>3
+tab drug control_dataset ,m
+tab drug treatment_dataset ,m 
+
 ** start date is date treatment for treatment arms and date of covid test for control arm 
 count if start_date==. //should be 0
 count if start_date!=covid_test_positive_date & drug==0  //should be 0
-count if start_date!=date_treated & start_date!=covid_test_positive_treat & drug>0 //should be 0
-count if start_date!=date_treated & drug>0  // i.e. start date is covid_test_positive_treat
-count if start_date==covid_test_positive_treat & start_date!=date_treated & drug>0  // i.e. start date is covid_test_positive_treat
-gen time_startanddrug = (date_treated-start_date) if start_date!=date_treated & drug>0
-tabstat time_startanddrug, stat(count mean p25 p50 p75 min max)  // time between start date and drug 
-//replace start_date=covid_test_positive_date if drug==0 
-//replace start_date=date_treated if drug>0
+count if start_date!=date_treated & drug>0 //should be 0
+
 ** check number of positive covid tests prior to drug in treatment arms
 bys drug:count if covid_test_positive_date==. // should be 0 in control arm
 bys drug:count if covid_test_positive_date!=. 
@@ -614,13 +630,14 @@ foreach x in	$ae $ae_spc $ae_spc_icd $ae_spc_emerg ///
 				{
 	display "`x'"
 	by drug, sort: count if `x'!=.
-	by drug, sort: count if `x'<start_date & `x' 
-	replace `x'=. if `x'<start_date & `x'!=.
+	by drug, sort: count if `x'>start_date & `x'!=.
+	by drug, sort: count if `x'>=start_date & `x'<start_date_29 &`x'!=.
 	gen fail_`x'=(`x'!=.&`x'<= min(study_end_date, start_date_29, paxlovid, molnupiravir)) if drug==1
 	replace fail_`x'=(`x'!=.&`x'<= min(study_end_date, start_date_29, sotrovimab, molnupiravir)) if drug==2
 	replace fail_`x'=(`x'!=.&`x'<= min(study_end_date, start_date_29, sotrovimab, paxlovid)) if drug==3
 	replace fail_`x'=(`x'!=.&`x'<= min(study_end_date, start_date_29, sotrovimab, paxlovid, molnupiravir)) if drug==0
 	tab drug fail_`x', m
+	tab drug fail_`x' if `x'>start_date
 }
 
 * Add half-day buffer if outcome on indexdate
@@ -667,22 +684,6 @@ tab _t drug if fail_ae_all==0&_t<28&stop_ae_all==min(sotrovimab,molnupiravir)&dr
 tab _t drug if fail_ae_all==0&_t<28&stop_ae_all==min(sotrovimab,paxlovid)&drug==3,m col
 tab _t drug if fail_ae_all==0&_t<28&stop_ae_all==min(sotrovimab,paxlovid,molnupiravir)&drug==0,m col
 
-/****************************
-*	COMPARATOR RATE		*
-****************************
-*generate rate for adverse outcome in year 3-4 prior to start date for comparative rate by person years 
-* 1. Need to ensure no established diagnosis for some of the condition 4 year prior [ ie: gen NEW_pre]
-* 2. Need to define start and end date
-* 3. Gen rate of failure: 	gen fail_`x' if `x'=!. &`x'<end_date
-* 4. Failures over 1 years - convert into 29 day rate
-
-global pre_ae 			 pre_diverticulitis_icd	 pre_diverticulitis_snomed pre_diverticulitis_ae pre_divertic_all pre_diarrhoea_snomed pre_taste_snomed ///
-						 pre_taste_icd pre_rash_snomed pre_anaphylaxis_icd	pre_anaphylaxis_snomed	pre_anaphlaxis_ae pre_anaphylaxis_all pre_drugreact_ae	///
-						 pre_allergic_ae pre_rheumatoid_arthritis_ae pre_rheumatoid_arthritis_snomed pre_rheumatoid_arthritis_icd /// 		
-						 pre_ankylosing_spondylitis_ctv pre_ankylosing_spondylitis_ae pre_psoriasis_snomed pre_psoriasis_ae ///
-						 pre_psoriatic_arthritis_ae pre_psoriatic_arthritis_snomed pre_sle_ctv pre_sle_icd pre_sle_ae pre_ibd_snomed	
-
-*/
 
 save "$projectdir/output/data/main.dta", replace
 

@@ -1,0 +1,58 @@
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/cleaning_dataset.log
+  log type:  text
+ opened on:  14 Jun 2023, 13:42:10
+
+. 
+. * import dataset
+. import delimited "$projectdir/output/input.csv", clear
+(encoding automatically selected: ISO-8859-1)
+(212 vars, 50,000 obs)
+
+. 
+. *Set Ado file path
+. adopath + "$projectdir/analysis/ado"
+  [1]  (BASE)      "C:\Program Files\Stata17\ado\base/"
+  [2]  (SITE)      "C:\Program Files\Stata17\ado\site/"
+  [3]              "."
+  [4]  (PERSONAL)  "C:\users\PUBLIC\documents/"
+  [5]  (PLUS)      "C:\users\PUBLIC\documents/"
+  [6]  (OLDPLACE)  "c:\ado/"
+  [7]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/analysis/ado"
+
+. 
+end of do-file
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD6924_000000.tmp"
+
+. log using "$projectdir/logs/cleaning_dataset.log", replace
+log file already open
+r(604);
+
+end of do-file
+
+r(604);
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD6924_000000.tmp"
+
+. global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+
+. //global projectdir `c(pwd)'
+. di "$projectdir"
+C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir
+
+. capture mkdir "$projectdir/output/data"
+
+. capture mkdir "$projectdir/output/figures"
+
+. capture mkdir "$projectdir/output/tables"
+
+. global logdir "$projectdir/logs"
+
+. di "$logdir"
+C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/logs
+
+. 
+. * Open a log file
+. cap log close

@@ -5,20 +5,26 @@ expectations:
 
 actions:
 
-  generate_study_population:
-    run: cohortextractor:latest generate_cohort --study-definition study_definition
+  generate_study_population_control:
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_control
     outputs:
       highly_sensitive:
-        cohort: output/input.csv
+        cohort: output/input_control.csv
 
+  generate_study_population_treatment:
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_treatment
+    outputs:
+      highly_sensitive:
+        cohort: output/input_treatment.csv
 
   define_covariates:
     run: stata-mp:latest analysis/000_define_covariates.do
-    needs: [generate_study_population]
+    needs: [generate_study_population_control, generate_study_population_treatment ]
     outputs:
       moderately_sensitive:
         log: logs/cleaning_dataset.log 
       highly_sensitive:
+        data: output/data/control.dta
         data: output/data/main.dta
 
   baseline_characteristic:
@@ -76,3 +82,11 @@ actions:
         match_adj: output/figures/match_adj.svg
         match_fulladj1: output/figures/match_fulladj1.svg
         match_fulladj2: output/figures/match_fulladj2.svg  
+  
+  preceed_rate:
+    run: stata-mp:latest analysis/400_preceeding_rate.do
+    needs: [define_covariates]
+    outputs:
+      moderately_sensitive:
+        log: logs/preceed_rate.log 
+        data: output/tables/comparator_rate_summary.dta

@@ -108,7 +108,7 @@ def covid_therapeutics(dx_codelist):
       returning="date",
       date_format="YYYY-MM-DD",
       return_expectations={
-          "incidence": 0.1,
+          "incidence": 0.2,
           "date": {"earliest": "2021-12-16"},
       },
   )
@@ -152,19 +152,31 @@ def adverse_outcome_icd_pre(dx_codelist):
   return patients.admitted_to_hospital(
       with_these_diagnoses = dx_codelist,
       returning="date_admitted",
-      between = ["start_date - 1459 days", "start_date - 1095 days"],
+      between = ["start_date - 1460 days", "start_date - 1431 days"],
       find_first_match_in_period=True,
       date_format="YYYY-MM-DD",
       return_expectations={
           "incidence": 0.1,
-          "date": {"earliest": "2022-02-18"},
+          "date": {"earliest": "2017-12-16"},
       },
   )
 def adverse_outcome_snomed_pre(dx_codelist):
    return patients.with_these_clinical_events(
       dx_codelist,
       returning="date",
-      between = ["start_date - 1459 days", "start_date - 1095 days"],
+      between = ["start_date - 1460 days", "start_date - 1431 days"],
+      find_first_match_in_period=True,
+      date_format="YYYY-MM-DD",
+      return_expectations={
+          "incidence": 0.1,
+          "date": {"earliest": "2017-12-16"},
+      },
+  )
+def adverse_outcome_AE_pre(codelist):
+  return patients.attended_emergency_care(
+      with_these_diagnoses = codelist,
+      returning="date_arrived",
+      between = ["start_date - 1460 days", "start_date - 1431 days"],
       find_first_match_in_period=True,
       date_format="YYYY-MM-DD",
       return_expectations={
@@ -172,16 +184,24 @@ def adverse_outcome_snomed_pre(dx_codelist):
           "date": {"earliest": "2022-02-18"},
       },
   )
-def adverse_outcome_AE_pre(codelist):
-  return patients.attended_emergency_care(
-      with_these_diagnoses = codelist,
-      returning="date_arrived",
-      between = ["start_date - 1459 days", "start_date - 1095 days"],
-      find_first_match_in_period=True,
-      date_format="YYYY-MM-DD",
+def comorbidity_snomed_pre(dx_codelist):
+  return patients.with_these_clinical_events(
+      dx_codelist,
+      returning = "binary_flag",
+      on_or_before ="start_date - 1461 days",
+      find_last_match_in_period=True,
       return_expectations={
           "incidence": 0.1,
-          "date": {"earliest": "2022-02-18"},
+      },
+  )
+def comorbidity_icd_pre(dx_codelist):
+  return patients.admitted_to_hospital(
+      with_these_diagnoses = dx_codelist,
+      returning = "binary_flag",
+      on_or_before = "start_date - 1461 days",
+      find_last_match_in_period=True,
+      return_expectations={
+          "incidence": 0.1,
       },
   )
 study = StudyDefinition(
@@ -200,14 +220,6 @@ study = StudyDefinition(
     age >= 12 AND age < 110
     AND NOT has_died
     AND (
-        registered_eligible
-        AND
-        high_risk_cohort_nhsd
-        AND
-        covid_test_positive
-        ) 
-        OR 
-        (  
         registered_treated 
         AND
         high_risk_cohort_therapeutics
@@ -220,7 +232,6 @@ study = StudyDefinition(
         )
     """,
     
-    registered_eligible = patients.registered_as_of("covid_test_positive_date"),
     registered_treated = patients.registered_as_of("date_treated"),  
   ),
   
@@ -244,7 +255,7 @@ study = StudyDefinition(
     find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.01, "date": {"earliest": "2021-12-16"},},
   ),
   date_treated = patients.minimum_of(
-    "sotrovimab","paxlovid", "molnupiravir", "remdesivir", "casirivimab"
+    "sotrovimab","paxlovid", "molnupiravir"
   ),
   
   ## COVID TEST POSITIVE
@@ -302,14 +313,9 @@ study = StudyDefinition(
   ), 
   
   ## START DATE 
-  ## 1) most recent of 
-  #         i) covid test closest & prior to treatment (treated group) 
-  #         ii) covid test (control) 
-  ## 2) most recent of
-  #         i) treatment date (treated group)
-  #         ii) covid test (control) 
-  start_date_test = patients.maximum_of("covid_test_positive_treat","covid_test_positive_date"), 
-  start_date = patients.maximum_of("start_date_test","date_treated"), 
+  start_date = patients.minimum_of(
+    "sotrovimab","paxlovid", "molnupiravir"
+  ),
 
   # Eligable based on comorbidities for control population
   
@@ -751,7 +757,17 @@ study = StudyDefinition(
   pre_Ankylosing_Spondylitis_ctv=adverse_outcome_snomed_pre(Ankylosing_Spondylitis_ctv3),  
   pre_Ankylosing_Spondylitis_AE=adverse_outcome_AE_pre(codelist(["9631008"], system="snomed")),
   pre_IBD_snomed=adverse_outcome_snomed_pre(IBD_ctv3),  
-  pre__IBD_AE=adverse_outcome_AE_pre(codelist(["34000006", "64766004"], system="snomed")),
+  pre_IBD_AE=adverse_outcome_AE_pre(codelist(["34000006", "64766004"], system="snomed")),
+  
+  ## Ensure is a new diagnosis of adverse outcome 3-4 prior to start date 
+  pre_ra_snomed_new=comorbidity_snomed_pre(rheumatoid_arthritis_snowmed),
+  pre_ra_icd_new=comorbidity_icd_pre(rheumatoid_arthritis_icd10),
+  pre_SLE_ctv_new=comorbidity_snomed_pre(SLE_ctv),
+  pre_SLE_icd_new=comorbidity_icd_pre(SLE_icd10),
+  pre_Psoriasis_snomed_new=comorbidity_snomed_pre(Psoriasis_ctv3),
+  pre_psa_snomed_new=comorbidity_snomed_pre(Psoriatic_arthritis_snomed),
+  pre_ankspon_ctv_new=comorbidity_snomed_pre(Ankylosing_Spondylitis_ctv3),
+  pre_IBD_snomed_new=comorbidity_snomed_pre(IBD_ctv3),
   
   ## 2) ALL SAE INCLUDING COVID [Note need to consider patients admitted for MAB infusion]
   allcause_emerg_aande = patients.attended_emergency_care(
