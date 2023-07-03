@@ -272,7 +272,7 @@ foreach var of varlist 	 covid_test_positive_date				///
 *********************************
 *  Append control & treatment datasets     *
 ********************************* 
-append using "$projectdir/output/data/control.dta"
+append using "$projectdir/output/data/control.dta", force
 duplicates tag patient_id, gen(duplicate_patient_id)
 bys patient_id (treatment_dataset duplicate_patient_id): gen n=_n
 tab n
