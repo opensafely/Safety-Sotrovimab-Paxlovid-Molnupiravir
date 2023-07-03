@@ -1,8 +1,10 @@
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/logs/cleaning_dataset.log
+       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety m
+> AB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/logs/cleaning_datase
+> t.log
   log type:  text
- opened on:   3 Jul 2023, 09:24:50
+ opened on:   3 Jul 2023, 20:52:39
 
 . 
 . *Set Ado file path
@@ -13,43 +15,20 @@
   [4]  (PERSONAL)  "C:\users\PUBLIC\documents/"
   [5]  (PLUS)      "C:\users\PUBLIC\documents/"
   [6]  (OLDPLACE)  "c:\ado/"
-  [7]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/analysis/ado"
+  [7]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\S
+> afety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/analysis/ado"
+  [8]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\S
+> afety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/analysis/ado"
 
 . 
-end of do-file
-
-. do "C:\Users\k1635179\AppData\Local\Temp\STD4ee8_000000.tmp"
-
-. import delimited "$projectdir/output/input_control.csv", clear
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/output/input_control.csv not found
+. *       Import control dataset
+. import delimited "$projectdir/output/input.csv", clear
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and a
+> ntivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/output/input.csv not found
 r(601);
 
 end of do-file
 
 r(601);
 
-. do "C:\Users\k1635179\AppData\Local\Temp\STD4ee8_000000.tmp"
-
-. global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
-
-. 
-end of do-file
-
-. do "C:\Users\k1635179\AppData\Local\Temp\STD4ee8_000000.tmp"
-
-. di "$projectdir"
-C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir
-
-. capture mkdir "$projectdir/output/data"
-
-. capture mkdir "$projectdir/output/figures"
-
-. capture mkdir "$projectdir/output/tables"
-
-. global logdir "$projectdir/logs"
-
-. di "$logdir"
-C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/logs
-
-. * Open a log file
-. cap log close
+. exit, clear

@@ -1,3 +1,4 @@
+
 from cohortextractor import StudyDefinition, patients, codelist_from_csv, codelist, filter_codes_by_category, combine_codelists, Measure
 import datetime
 from codelists import *
@@ -108,7 +109,7 @@ def covid_therapeutics(dx_codelist):
       returning="date",
       date_format="YYYY-MM-DD",
       return_expectations={
-          "incidence": 0.2,
+          "incidence": 0.1,
           "date": {"earliest": "2021-12-16"},
       },
   )
@@ -220,6 +221,14 @@ study = StudyDefinition(
     age >= 12 AND age < 110
     AND NOT has_died
     AND (
+        registered_eligible
+        AND
+        high_risk_cohort_nhsd
+        AND
+        covid_test_positive
+        ) 
+        OR 
+        (  
         registered_treated 
         AND
         high_risk_cohort_therapeutics
@@ -231,7 +240,8 @@ study = StudyDefinition(
         casirivimab
         )
     """,
-    
+
+    registered_eligible = patients.registered_as_of("covid_test_positive_date"),
     registered_treated = patients.registered_as_of("date_treated"),  
   ),
   
@@ -255,7 +265,7 @@ study = StudyDefinition(
     find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.01, "date": {"earliest": "2021-12-16"},},
   ),
   date_treated = patients.minimum_of(
-    "sotrovimab","paxlovid", "molnupiravir"
+    "sotrovimab","paxlovid", "molnupiravir", "remdesivir", "casirivimab"
   ),
   
   ## COVID TEST POSITIVE
@@ -313,10 +323,16 @@ study = StudyDefinition(
   ), 
   
   ## START DATE 
-  start_date = patients.minimum_of(
-    "sotrovimab","paxlovid", "molnupiravir"
-  ),
+  ## 1) most recent of 
+  #         i) covid test closest & prior to treatment (treated group) 
+  #         ii) covid test (control) 
+  ## 2) most recent of
+  #         i) treatment date (treated group)
+  #         ii) covid test (control) 
+  start_date_test = patients.maximum_of("covid_test_positive_treat","covid_test_positive_date"), 
+  start_date = patients.maximum_of("start_date_test","date_treated"), 
 
+    
   # Eligable based on comorbidities for control population
   
   ## Down's syndrome
