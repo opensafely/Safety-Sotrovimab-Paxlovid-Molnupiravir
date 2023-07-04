@@ -102,7 +102,7 @@ def drug_12m(dx_codelist):
   )
 def covid_therapeutics(dx_codelist):
   return patients.with_covid_therapeutics(
-      dx_codelist,
+      with_these_therapeutics = "dx_codelist",
       with_these_indications = "non_hospitalised",
       on_or_after = "index_date",
       find_first_match_in_period=True,
