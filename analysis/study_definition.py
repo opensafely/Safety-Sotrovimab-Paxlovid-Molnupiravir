@@ -6,7 +6,7 @@ from codelists import *
 ## Define study time variables
 from datetime import timedelta, date, datetime 
 campaign_start = "2021-12-16"
-end_date = date.today().isoformat()
+end_date = "2022-6-16"
 
 def comorbidity_snomed(dx_codelist):
   return patients.with_these_clinical_events(
