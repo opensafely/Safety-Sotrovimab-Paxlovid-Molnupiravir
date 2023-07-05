@@ -382,10 +382,10 @@ covid_vaccine_declined_codes = combine_codelists(
 )
 # Paxlovid interactions
 drugs_interaction_paxlovid_codes = codelist_from_csv(
-  "codelists/opensafely-sps-paxlovid-interactions-do-not-use.csv",  system = "snomed", column = "code"
+  "codelists/opensafely-sps-paxlovid-interactions-do-not-use.csv",  system = "snomed", column = "dmd_id"
 )
 drugs_interaction_nirmatrelvir_codes = codelist_from_csv(
-  "codelists/opensafely-nirmatrelvir-drug-interactions.csv",  system = "snomed", column = "code"
+  "codelists/opensafely-nirmatrelvir-drug-interactions.csv",  system = "snomed", column = "dmd_id"
 )
 ## Outcomes  ---- Pre-specified adverse drug reactions and AESIs
 
