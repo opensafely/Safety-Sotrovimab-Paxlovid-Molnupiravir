@@ -514,12 +514,8 @@ sum day_after_campaign,de
 gen month_after_campaign=ceil((start_date-mdy(12,15,2021))/30)
 tab month_after_campaign,m
 * Variant
-tab sgtf,m
-tab sgtf_new, m
 label define sgtf_new 0 "S gene detected" 1 "confirmed SGTF" 9 "NA"
 label values sgtf_new sgtf_new
-tab variant_recorded,m
-tab sgtf_new variant_recorded ,m
 * Prior infection
 tab prior_covid, m
 gen prior_covid_index=1 if prior_covid==1 & prior_covid_date<campaign_start
@@ -530,11 +526,9 @@ tab drug if organ_transplant==1
 tab drug if liver_disease_nhsd_icd10==1
 tab drug if renal_disease==1
 * Calculating egfr: adapted from https://github.com/opensafely/COVID-19-vaccine-breakthrough/blob/updates-feb/analysis/data_process.R*
-tab creatinine_operator_ctv3,m
 tabstat creatinine_ctv3, stat(mean p25 p50 p75 min max) 
 replace creatinine_ctv3=. if !inrange(creatinine_ctv3, 20, 3000)|creatinine_ctv3_date>start_date
 tabstat creatinine_ctv3, stat(mean p25 p50 p75 min max) 
-tab creatinine_operator_ctv3 if creatinine_ctv3!=.,m
 replace creatinine_ctv3 = creatinine_ctv3/88.4
 gen min_creatinine_ctv3=.
 replace min_creatinine_ctv3 = (creatinine_ctv3/0.7)^-0.329 if sex==1
@@ -546,8 +540,6 @@ replace max_creatinine_ctv3 = (creatinine_ctv3/0.9)^-1.209 if sex==0
 replace max_creatinine_ctv3 = 1 if max_creatinine_ctv3>1
 gen egfr_creatinine_ctv3 = min_creatinine_ctv3*max_creatinine_ctv3*141*(0.993^age_creatinine_ctv3) if age_creatinine_ctv3>0&age_creatinine_ctv3<=120
 replace egfr_creatinine_ctv3 = egfr_creatinine_ctv3*1.018 if sex==1
-tab creatinine_operator_snomed,m
-tab creatinine_operator_snomed if creatinine_snomed!=.,m
 tabstat creatinine_snomed, stat(mean p25 p50 p75 min max) 
 replace creatinine_snomed = . if !inrange(creatinine_snomed, 20, 3000)| creatinine_snomed_date>start_date
 replace creatinine_snomed_date = creatinine_short_snomed_date if missing(creatinine_snomed)
@@ -566,8 +558,6 @@ replace max_creatinine_snomed = (creatinine_snomed/0.9)^-1.209 if sex==0
 replace max_creatinine_snomed = 1 if max_creatinine_snomed>1
 gen egfr_creatinine_snomed = min_creatinine_snomed*max_creatinine_snomed*141*(0.993^age_creatinine_snomed) if age_creatinine_snomed>0&age_creatinine_snomed<=120
 replace egfr_creatinine_snomed = egfr_creatinine_snomed*1.018 if sex==1
-tab egfr_operator if egfr_record!=.,m
-tab egfr_short_operator if egfr_short_record!=.,m
 gen egfr_60 = 1 if (egfr_creatinine_ctv3<60&creatinine_operator_ctv3!="<")|(egfr_creatinine_snomed<60&creatinine_operator_snomed!="<")|(egfr_record<60&egfr_record>0&egfr_operator!=">"&egfr_operator!=">=")|(egfr_short_record<60&egfr_short_record>0&egfr_short_operator!=">"&egfr_short_operator!=">=")
 gen egfr_30 = 1 if (egfr_creatinine_ctv3<30&creatinine_operator_ctv3!="<")|(egfr_creatinine_snomed<30&creatinine_operator_snomed!="<")|(egfr_record<30&egfr_record>0&egfr_operator!=">"&egfr_operator!=">=")|(egfr_short_record<30&egfr_short_record>0&egfr_short_operator!=">"&egfr_short_operator!=">=")
 tab drug if egfr_60==1
