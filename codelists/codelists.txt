@@ -94,7 +94,7 @@ user/bangzheng/egfr-value-shortlist/1d0e46c5
 user/ss808/estimated-glomerular-filtration-rate-egfr-values/5d974480
 primis-covid19-vacc-uptake/ckd35/v.1.5.3
 opensafely/sps-paxlovid-interactions-do-not-use-dmd/1a657b33
-opensafely/nirmatrelvir-drug-interactions-dmd/015607fe
+opensafely/nirmatrelvir-drug-interactions-dmd/015607fe/
 user/katiebechman/anaphylaxis/3ea7fc86/
 user/katiebechman/anaphylaxis-snomed/25988951/
 opensafely/symptoms-rashes/6bd2da47/
