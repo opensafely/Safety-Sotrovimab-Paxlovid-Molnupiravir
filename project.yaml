@@ -5,12 +5,6 @@ expectations:
 
 actions:
 
-  generate_study_population:
-    run: cohortextractor:latest generate_cohort --study-definition study_definition
-    outputs:
-      highly_sensitive:
-        cohort: output/input.csv
-
   generate_study_population_control:
     run: cohortextractor:latest generate_cohort --study-definition study_definition_control
     outputs:
