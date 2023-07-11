@@ -11,9 +11,9 @@
 # The first is the dataset that is to be summarised
 # The second in the directory where the txt output will be saved
 #
-# Input: /output/input.csv
+# Input: /output/input_control.csv
 #
-# Output: /output/data_properties/input*.txt
+# Output: /output/data_properties/input_control*.txt
 #
 # Author(s): W. Hulme (edited by M. Green)
 # Date last updated: 04/07/2023
@@ -36,7 +36,7 @@ args <- commandArgs(trailingOnly=TRUE)
 
 if(length(args)==0){
   # use for interactive testing
-  csv_file <- "output/input.csv"
+  csv_file <- "output/input_control.csv"
   output_dir <- "output/data_properties"
 } else {
   csv_file <- args[[1]]

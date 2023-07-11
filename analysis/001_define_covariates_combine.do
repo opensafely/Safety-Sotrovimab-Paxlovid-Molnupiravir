@@ -23,13 +23,14 @@ global logdir "$projectdir/logs"
 di "$logdir"
 * Open a log file
 cap log close
-log using "$logdir/cleaning_dataset.log", replace
+log using "$logdir/cleaning_dataset_combine.log", replace
 
 *Set Ado file path
 adopath + "$projectdir/analysis/ado"
 
 * 	Import control dataset
-import delimited "$projectdir/output/input.csv", clear
+import delimited "$projectdir/output/input_control.csv", clear
+gen control_dataset=1
 *	Convert control strings to dates     * 
 foreach var of varlist 	 covid_test_positive_date				///
 						 covid_test_positive_date2 				///
@@ -146,8 +147,142 @@ foreach var of varlist 	 covid_test_positive_date				///
 	format %td `var'
  }
 }
+tab control_dataset
+save "$projectdir/output/data/control.dta", replace 
 
-tabstat start_date
+* import treatment dataset
+import delimited "$projectdir/output/input_treatment.csv", clear
+gen treatment_dataset=1
+*	Convert control strings to dates     * 
+foreach var of varlist 	 covid_test_positive_date				///
+						 covid_test_positive_date2 				///
+						 covid_test_positive_date3 				///
+						 covid_test_positive_treat				///
+						 prior_covid_date				    	///
+						 sotrovimab								///
+						 molnupiravir							/// 
+						 paxlovid								///
+						 remdesivir								///
+						 casirivimab							///
+						 sotrovimab_not_start					///
+						 molnupiravir_not_start					///
+						 paxlovid_not_start						///
+						 date_treated							///
+						 start_date								///
+						 drugs_paxlovid_interaction				///
+						 drugs_nirmatrelvir_interaction			///
+						 last_vaccination_date 					///
+						 death_date								///
+						 dereg_date 							///
+						 bmi_date_measured						///
+						 creatinine_ctv3_date 					///
+						 creatinine_snomed_date					///
+						 creatinine_short_snomed_date			///
+						 ae_diverticulitis_icd					///
+						 ae_diverticulitis_snomed				///
+						 ae_diarrhoea_snomed					///
+						 ae_taste_snomed						///
+						 ae_taste_icd							///
+						 ae_rash_snomed							///
+						 ae_anaphylaxis_icd						///
+						 ae_anaphylaxis_snomed					///
+						 ae_anaphlaxis_ae						///
+						 ae_drugreact_ae						///
+						 ae_allergic_ae							///
+						 ae_rheumatoid_arthritis_snomed			///
+						 ae_rheumatoid_arthritis_icd			///
+						 ae_sle_ctv								///
+						 ae_sle_icd								///
+						 ae_psoriasis_snomed					///
+						 ae_psoriatic_arthritis_snomed			///
+						 ae_ankylosing_spondylitis_ctv			///
+						 ae_ibd_snomed							///
+						 ae_diverticulitis_ae					///
+						 ae_rheumatoid_arthritis_ae				///
+						 ae_sle_ae								///
+						 ae_psoriasis_ae						///
+						 ae_psoriatic_arthritis_ae				///
+						 ae_ankylosing_spondylitis_ae			///
+						 ae_ibd_ae								///
+						 rheumatoid_arthritis_nhsd_snomed		///
+						 rheumatoid_arthritis_nhsd_icd10		///
+						 sle_nhsd_ctv							///
+						 sle_nhsd_icd10							///
+						 psoriasis_nhsd							///
+						 psoriatic_arthritis_nhsd				///
+						 ankylosing_spondylitis_nhsd			///
+						 ibd_ctv								///
+						 allcause_emerg_aande					///
+						 all_hosp_date 							///
+						 all_hosp_date0 						///
+						 all_hosp_date1 						///
+						 all_hosp_date2							///
+						 hosp_discharge_date					///
+						 hosp_discharge_date0 					///
+						 hosp_discharge_date1 					///
+						 hosp_discharge_date2					///
+						 covid_hosp_date						///
+						 covid_hosp_date0 						///
+						 covid_hosp_date1 						///
+						 covid_hosp_date2  						///						
+						 covid_discharge_date					///
+						 covid_discharge_date0				  	///  						
+						 covid_discharge_date1					/// 
+						 covid_discharge_date2					/// 
+						 any_covid_hosp_discharge				///			
+						 covid_hosp_date_mabs					/// 
+						 covid_hosp_date_mabs_not_primary		/// 
+						 died_date_ons							///
+						 died_ons_covid							///
+						 pre_diverticulitis_icd					///
+						 pre_diverticulitis_snomed				///
+						 pre_diverticulitis_ae					///
+						 pre_diarrhoea_snomed 					///
+						 pre_taste_snomed						///
+						 pre_taste_icd							///
+						 pre_rash_snomed						///
+						 pre_anaphylaxis_icd					///
+						 pre_anaphylaxis_snomed					///
+						 pre_anaphlaxis_ae						///
+						 pre_drugreact_ae						///
+						 pre_allergic_ae						///
+						 pre_anaphlaxis_ae						///
+						 pre_rheumatoid_arthritis_ae			///
+						 pre_rheumatoid_arthritis_snomed		///
+						 pre_rheumatoid_arthritis_icd			///
+						 pre_ankylosing_spondylitis_ctv			///
+						 pre_ankylosing_spondylitis_ae			///
+						 pre_psoriasis_snomed					///
+						 pre_psoriasis_ae						///
+						 pre_psoriatic_arthritis_ae				///
+						 pre_psoriatic_arthritis_snomed			///
+						 pre_sle_ctv							///
+						 pre_sle_icd							///
+						 pre_sle_ae								///
+						 pre_ibd_ae								///
+						 pre_ibd_snomed	{					 
+	capture confirm string variable `var'
+	if _rc==0 {
+	rename `var' a
+	gen `var' = date(a, "YMD")
+	drop a
+	format %td `var'
+ }
+}
+tab treatment_dataset
+*********************************
+*  Append control & treatment datasets     *
+********************************* 
+append using "$projectdir/output/data/control.dta"
+duplicates tag patient_id, gen(duplicate_patient_id)
+bys patient_id (treatment_dataset duplicate_patient_id): gen n=_n
+tab n
+drop if n>1  // drops duplicate patient id and in control group
+tab control_dataset,m
+tab treatment_dataset,m
+count if start_date==.
+count if start_date!=date_treated & treatment_dataset==1
+count if start_date!=covid_test_positive_date & control_dataset==1
 
 ****************************
 *	EXPOSURE		*
@@ -197,7 +332,7 @@ drop if drug==0 & covid_test_positive==1 & covid_positive_previous_30_days==1
 ** gen study start and study end date
 gen campaign_start=mdy(12,16,2021)
 gen study_end_date=mdy(06,01,2023)
-gen start_date_29=start_date_29
+gen start_date_29=start_date + 29
 format campaign_start study_end_date start_date_29 %td
 
 ****************************
@@ -508,7 +643,7 @@ replace vaccination_3_plus=0 if vaccination_status<3
 * time between vaccine and covid positive test or treatment
 gen days_vacc_covid=covid_test_positive_date - last_vaccination_date
 sum days_vacc_covid,de
-gen days_vacc_treat=treat_date - last_vaccination_date
+gen days_vacc_treat=date_treated - last_vaccination_date
 sum days_vacc_treat,de
 gen days_vacc_treat_test = days_vacc_treat
 replace days_vacc_treat_test = days_vacc_covid if days_vacc_treat_test==.
