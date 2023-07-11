@@ -23,24 +23,6 @@ global logdir "$projectdir/logs"
 di "$logdir"
 * Open a log file
 cap log close
-log using "$logdir/cleaning_dataset.log", replace
-
-*Set Ado file path
-adopath + "$projectdir/analysis/ado"
-
-****************************************************************************************************************
-**Set filepaths
-global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
-//global projectdir `c(pwd)'
-
-di "$projectdir"
-capture mkdir "$projectdir/output/data"
-capture mkdir "$projectdir/output/figures"
-capture mkdir "$projectdir/output/tables"
-global logdir "$projectdir/logs"
-di "$logdir"
-* Open a log file
-cap log close
 log using "$logdir/cleaning_dataset_combine.log", replace
 
 *Set Ado file path
