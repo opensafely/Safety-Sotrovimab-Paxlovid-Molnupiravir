@@ -11,9 +11,21 @@ actions:
       highly_sensitive:
         cohort: output/input.csv
 
-  define_covariates:
-    run: stata-mp:latest analysis/000_define_covariates.do
-    needs: [generate_study_population]
+  generate_study_population_control:
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_control
+    outputs:
+      highly_sensitive:
+        cohort: output/input_control.csv
+
+  generate_study_population_treatment:
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_treatment
+    outputs:
+      highly_sensitive:
+        cohort: output/input_treatment.csv
+
+  define_covariates_combine:
+    run: stata-mp:latest analysis/001_define_covariates_combine.do
+    needs: [generate_study_population_control, generate_study_population_treatment ]
     outputs:
       moderately_sensitive:
         log: logs/cleaning_dataset.log 
