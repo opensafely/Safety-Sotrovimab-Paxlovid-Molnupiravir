@@ -41,7 +41,7 @@ global logdir "$projectdir/logs"
 di "$logdir"
 * Open a log file
 cap log close
-log using "$logdir/cleaning_dataset.log", replace
+log using "$logdir/cleaning_dataset_combine.log", replace
 
 *Set Ado file path
 adopath + "$projectdir/analysis/ado"
