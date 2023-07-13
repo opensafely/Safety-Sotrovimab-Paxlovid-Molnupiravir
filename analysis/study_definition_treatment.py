@@ -222,7 +222,6 @@ study = StudyDefinition(
     registered_treated = patients.registered_as_of("date_treated"),  
   ),
   
-          
   ## TREATMENT - MAB + Antivirals. 
   sotrovimab= patients.with_covid_therapeutics(
     with_these_therapeutics = "Sotrovimab", with_these_indications = "non_hospitalised", on_or_after = "index_date",

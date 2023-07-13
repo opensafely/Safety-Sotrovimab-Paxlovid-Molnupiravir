@@ -221,7 +221,11 @@ study = StudyDefinition(
   ),
   
           
+<<<<<<< Updated upstream
   ## TREATMENT - MAB + Antivirals. 
+=======
+## TREATMENT - MAB + Antivirals. 
+>>>>>>> Stashed changes
   sotrovimab= patients.with_covid_therapeutics(
     with_these_therapeutics = "Sotrovimab", with_these_indications = "non_hospitalised", on_or_after = "index_date",
     find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.01, "date": {"earliest": "2021-12-16"},},
