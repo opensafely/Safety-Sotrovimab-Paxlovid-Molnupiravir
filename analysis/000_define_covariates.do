@@ -12,8 +12,8 @@
 
 ****************************************************************************************************************
 **Set filepaths
-//global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
-global projectdir `c(pwd)'
+global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+//global projectdir `c(pwd)'
 
 di "$projectdir"
 capture mkdir "$projectdir/output/data"
