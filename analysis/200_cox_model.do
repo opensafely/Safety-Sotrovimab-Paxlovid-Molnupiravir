@@ -124,8 +124,8 @@ foreach fail in $spc $drug $imae_icd ae_all allcause_emerg_aande covid_hosp_date
 }
 
 postclose `coxoutput'
-   
-foreach fail in ae_spc_all ae_drug_all ae_imae_all ae_all allcause_emerg_aande covid_hosp_date all_hosp_date died_date_ons{
+
+foreach fail in ae_all allcause_emerg_aande covid_hosp_date all_hosp_date died_date_ons{
 
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 								
@@ -149,7 +149,7 @@ foreach fail in ae_spc_all ae_drug_all ae_imae_all ae_all allcause_emerg_aande c
 }
 
 
-foreach fail in ae_spc_all ae_drug_all ae_imae_all ae_all allcause_emerg_aande covid_hosp_date all_hosp_date died_date_ons{
+foreach fail in ae_all allcause_emerg_aande covid_hosp_date all_hosp_date died_date_ons{
 
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 			stcox i.drug 	
@@ -163,6 +163,7 @@ foreach fail in ae_spc_all ae_drug_all ae_imae_all ae_all allcause_emerg_aande c
 			
 }
 
+*/
 
 log close
 			

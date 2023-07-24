@@ -111,6 +111,19 @@ def adverse_outcome_icd(dx_codelist):
           "date": {"earliest": "2021-12-16"},
       },
   )
+## NEED TO INCLUDE WITH PRIMARY DIAGNOSIS as currently including all coding - diveritcular numbers too high   
+def adverse_outcome_icd_prim(dx_codelist):
+  return patients.admitted_to_hospital(
+      with_these_primary_diagnoses = dx_codelist,
+      returning="date_admitted",
+      between = ["start_date", "start_date + 28 days"],
+      find_first_match_in_period=True,
+      date_format="YYYY-MM-DD",
+      return_expectations={
+          "incidence": 0.4,
+          "date": {"earliest": "2021-12-16"},
+      },
+  )
 def adverse_outcome_snomed(dx_codelist):
   return patients.with_these_clinical_events(
       dx_codelist,
@@ -138,6 +151,19 @@ def adverse_outcome_AE(codelist):
 def adverse_outcome_icd_pre(dx_codelist):
   return patients.admitted_to_hospital(
       with_these_diagnoses = dx_codelist,
+      returning="date_admitted",
+      between = ["start_date - 1460 days", "start_date - 1431 days"],
+      find_first_match_in_period=True,
+      date_format="YYYY-MM-DD",
+      return_expectations={
+          "incidence": 0.1,
+          "date": {"earliest": "2017-12-16"},
+      },
+  )
+## NEED TO INCLUDE WITH PRIMARY DIAGNOSIS as currently including all coding - diveritcular numbers too high   
+def adverse_outcome_icd_pre_primary(dx_codelist):
+  return patients.admitted_to_hospital(
+      with_these_primary_diagnoses = dx_codelist,
       returning="date_admitted",
       between = ["start_date - 1460 days", "start_date - 1431 days"],
       find_first_match_in_period=True,
@@ -706,22 +732,27 @@ study = StudyDefinition(
   ## Time to outcome - coded in stata [28 days after +covid or 28day after Tx]
   ## 1) DRUG REACTIONS AND AESI (diarrhoea, diverticulitis, altered taste)
   ae_diverticulitis_icd=adverse_outcome_icd(diverticulitis_icd_codes),
+  ae_diverticulitis_icd_prim=adverse_outcome_icd_prim(diverticulitis_icd_codes),
   ae_diverticulitis_snomed=adverse_outcome_snomed(diverticulitis_snomed_codes),
   ae_diverticulitis_AE=adverse_outcome_AE(codelist(["397881000"], system="snomed")),
   ae_diarrhoea_snomed=adverse_outcome_snomed(diarrhoea_snomed_codes), 
   ae_taste_snomed=adverse_outcome_snomed(taste_snomed_codes),
   ae_taste_icd=adverse_outcome_icd(taste_icd_codes),
+  ae_taste_icd_prim=adverse_outcome_icd_prim(taste_icd_codes),
   ae_rash_snomed=adverse_outcome_snomed(rash_snomed_codes),
   ae_anaphylaxis_icd=adverse_outcome_icd(anaphylaxis_icd_codes),
+  ae_anaphylaxis_icd_prim=adverse_outcome_icd_prim(anaphylaxis_icd_codes),
   ae_anaphylaxis_snomed=adverse_outcome_snomed(anaphylaxis_snomed_codes),
   ae_anaphlaxis_AE=adverse_outcome_AE(codelist(["39579001"], system="snomed")),
   ae_drugreact_AE=adverse_outcome_AE(codelist(["62014003"], system="snomed")),
   ae_allergic_AE=adverse_outcome_AE(codelist(["609328004"], system="snomed")),
   ae_rheumatoid_arthritis_snomed=adverse_outcome_snomed(rheumatoid_arthritis_snowmed),
   ae_rheumatoid_arthritis_icd=adverse_outcome_icd(rheumatoid_arthritis_icd10),
+  ae_rheumatoid_arthritis_icd_prim=adverse_outcome_icd_prim(rheumatoid_arthritis_icd10),
   ae_rheumatoid_arthritis_AE=adverse_outcome_AE(codelist(["69896004"], system="snomed")),
   ae_SLE_ctv=adverse_outcome_snomed(SLE_ctv),
   ae_SLE_icd=adverse_outcome_icd(SLE_icd10), 
+  ae_SLE_icd_prim=adverse_outcome_icd_prim(SLE_icd10), 
   ae_SLE_AE=adverse_outcome_AE(codelist(["55464009"], system="snomed")),
   ae_Psoriasis_snomed=adverse_outcome_snomed(Psoriasis_ctv3),
   ae_Psoriasis_AE=adverse_outcome_AE(codelist(["9014002"], system="snomed")),
@@ -734,22 +765,27 @@ study = StudyDefinition(
 
   ## Adverse outcome in year 3-4 prior to start date for comparative rate by person years  
   pre_diverticulitis_icd=adverse_outcome_icd_pre(diverticulitis_icd_codes),
+  pre_diverticulitis_icd_prim=adverse_outcome_icd_pre_primary(diverticulitis_icd_codes),
   pre_diverticulitis_snomed=adverse_outcome_snomed_pre(diverticulitis_snomed_codes),
   pre_diverticulitis_AE=adverse_outcome_AE_pre(codelist(["397881000"], system="snomed")),
   pre_diarrhoea_snomed=adverse_outcome_snomed_pre(diarrhoea_snomed_codes), 
   pre_taste_snomed=adverse_outcome_snomed_pre(taste_snomed_codes),
   pre_taste_icd=adverse_outcome_icd_pre(taste_icd_codes),
+  pre_taste_icd_prim=adverse_outcome_icd_pre_primary(taste_icd_codes),
   pre_rash_snomed=adverse_outcome_snomed_pre(rash_snomed_codes),
   pre_anaphylaxis_icd=adverse_outcome_icd_pre(anaphylaxis_icd_codes),
+  pre_anaphylaxis_icd_prim=adverse_outcome_icd_pre_primary(anaphylaxis_icd_codes),
   pre_anaphylaxis_snomed=adverse_outcome_snomed_pre(anaphylaxis_snomed_codes),
   pre_anaphlaxis_AE=adverse_outcome_AE_pre(codelist(["39579001"], system="snomed")),
   pre_drugreact_AE=adverse_outcome_AE_pre(codelist(["62014003"], system="snomed")),
   pre_allergic_AE=adverse_outcome_AE_pre(codelist(["609328004"], system="snomed")),
   pre_rheumatoid_arthritis_snomed=adverse_outcome_snomed_pre(rheumatoid_arthritis_snowmed),
   pre_rheumatoid_arthritis_icd=adverse_outcome_icd_pre(rheumatoid_arthritis_icd10),
+  pre_rheumatoid_icd_prim=adverse_outcome_icd_pre_primary(rheumatoid_arthritis_icd10),
   pre_rheumatoid_arthritis_AE=adverse_outcome_AE_pre(codelist(["69896004"], system="snomed")),
   pre_SLE_ctv=adverse_outcome_snomed_pre(SLE_ctv),
   pre_SLE_icd=adverse_outcome_icd_pre(SLE_icd10), 
+  pre_SLE_icd_prim=adverse_outcome_icd_pre_primary(SLE_icd10), 
   pre_SLE_AE=adverse_outcome_AE_pre(codelist(["55464009"], system="snomed")),
   pre_Psoriasis_snomed=adverse_outcome_snomed_pre(Psoriasis_ctv3),
   pre_Psoriasis_AE=adverse_outcome_AE_pre(codelist(["9014002"], system="snomed")),
