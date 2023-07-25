@@ -53,11 +53,11 @@ actions:
         survrisk_covid_hosp_date: output/figures/survrisk_covid_hosp_date.svg
         survrisk_all_hosp_date: output/figures/survrisk_all_hosp_date.svg
         survrisk_died_date_ons: output/figures/survrisk_died_date_ons.svg
-        survhaz_ae_all: output/figures/survhaz_ae_all.svg
-        survhaz_allcause_emerg_aande: output/figures/survhaz_allcause_emerg_aande.svg
-        survhaz_covid_hosp_date: output/figures/survhaz_covid_hosp_date.svg
-        survhaz_all_hosp_date: output/figures/survhaz_all_hosp_date.svg
-        survhaz_died_date_ons: output/figures/survhaz_died_date_ons.svg 
+        survcur_ae_imae_all: output/figures/survcur_ae_imae_all.svg
+        survcur_allcause_emerg_aande: output/figures/survcur_allcause_emerg_aande.svg
+        survcur_covid_hosp_date: output/figures/survcur_covid_hosp_date.svg
+        survcur_all_hosp_date: output/figures/survcur_all_hosp_date.svg
+        survcur_died_date_ons: output/figures/survcur_died_date_ons.svg
         
 
   PS_model:
