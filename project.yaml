@@ -81,7 +81,7 @@ actions:
         match_fulladj2: output/figures/match_fulladj2.svg  
   
   preceed_rate:
-    run: stata-mp:latest analysis/401_preceeding_rate.do
+    run: stata-mp:latest analysis/400_preceeding_rate.do
     needs: [002_define_covariates_combine]
     outputs:
       moderately_sensitive:
