@@ -39,7 +39,6 @@ actions:
     outputs:
       moderately_sensitive:
         log: logs/baseline_characterisitcs.log 
-        data: output/tables/baseline_allpts.xls  
         data: output/tables/baseline_allpts.csv      
 
 
