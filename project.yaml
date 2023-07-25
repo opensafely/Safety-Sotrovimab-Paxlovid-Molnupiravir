@@ -25,7 +25,7 @@ actions:
         cohort: output/data_properties/input*.txt
 
   define_covariates_combine:
-    run: stata-mp:latest analysis/001_define_covariates_combine.do
+    run: stata-mp:latest analysis/002_define_covariates_combine.do
     needs: [generate_study_population_control, generate_study_population_treatment]
     outputs:
       moderately_sensitive:
@@ -35,7 +35,7 @@ actions:
 
   baseline_characteristic:
     run: stata-mp:latest analysis/100_baseline_characteristics.do
-    needs: [define_covariates_combine]
+    needs: [002_define_covariates_combine]
     outputs:
       moderately_sensitive:
         log: logs/baseline_characterisitcs.log 
@@ -43,7 +43,7 @@ actions:
 
   cox_model:
     run: stata-mp:latest analysis/200_cox_model.do
-    needs: [define_covariates_combine]
+    needs: [002_define_covariates_combine]
     outputs:
       moderately_sensitive:
         log: logs/cox_model.log 
@@ -66,7 +66,7 @@ actions:
 
   PS_model:
     run: stata-mp:latest analysis/300_ps_model.do
-    needs: [define_covariates_combine]
+    needs: [002_define_covariates_combine]
     outputs:
       moderately_sensitive:
         log: logs/ps_model.log
@@ -81,8 +81,8 @@ actions:
         match_fulladj2: output/figures/match_fulladj2.svg  
   
   preceed_rate:
-    run: stata-mp:latest analysis/400_preceeding_rate.do
-    needs: [define_covariates_combine]
+    run: stata-mp:latest analysis/401_preceeding_rate.do
+    needs: [002_define_covariates_combine]
     outputs:
       moderately_sensitive:
         log: logs/preceed_rate.log 
