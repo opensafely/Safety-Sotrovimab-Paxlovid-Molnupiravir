@@ -58,11 +58,7 @@ actions:
         survhaz_covid_hosp_date: output/figures/survhaz_covid_hosp_date.svg
         survhaz_all_hosp_date: output/figures/survhaz_all_hosp_date.svg
         survhaz_died_date_ons: output/figures/survhaz_died_date_ons.svg 
-        survcur_ae_all: output/figures/survcur_ae_all.svg
-        survcur_allcause_emerg_aande: output/figures/survcur_allcause_emerg_aande.svg
-        survcur_covid_hosp_date: output/figures/survcur_covid_hosp_date.svg
-        survcur_all_hosp_date: output/figures/survcur_all_hosp_date.svg
-        survcur_died_date_ons: output/figures/survcur_died_date_ons.svg
+        
 
   PS_model:
     run: stata-mp:latest analysis/300_ps_model.do
@@ -77,8 +73,6 @@ actions:
         histogram_fulladj2: output/figures/histogram_fulladj2.svg
         match_agesex: output/figures/match_agesex.svg
         match_adj: output/figures/match_adj.svg
-        match_fulladj1: output/figures/match_fulladj1.svg
-        match_fulladj2: output/figures/match_fulladj2.svg  
   
   preceed_rate:
     run: stata-mp:latest analysis/400_preceeding_rate.do
