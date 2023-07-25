@@ -65,7 +65,7 @@ table1_mc, by(drug) total(before) onecol iqrmiddle(",")  ///
 			paxlovid_contraindicated bin %5.1f)  saving("$projectdir/output/tables/baseline_allpts.xls", replace)
 		 
 import excel "$projectdir/output/tables/baseline_allpts.xls", clear
-outsheet * using "$projectdir/output/tables/baseline_allpts.csv" , comma nonames replace
+outsheet * using "$projectdir/output/tables/baseline_allpts_csv.csv", comma nonames replace
 
 
 

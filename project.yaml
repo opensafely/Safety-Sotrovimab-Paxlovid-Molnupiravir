@@ -39,7 +39,8 @@ actions:
     outputs:
       moderately_sensitive:
         log: logs/baseline_characterisitcs.log 
-        data: output/tables/baseline_allpts.csv      
+        data: output/tables/baseline_allpts.xls  
+        data1: output/tables/baseline_allpts_csv.csv      
 
   cox_model:
     run: stata-mp:latest analysis/200_cox_model.do
