@@ -53,7 +53,7 @@ actions:
         survrisk_covid_hosp_date: output/figures/survrisk_covid_hosp_date.svg
         survrisk_all_hosp_date: output/figures/survrisk_all_hosp_date.svg
         survrisk_died_date_ons: output/figures/survrisk_died_date_ons.svg
-        survcur_ae_imae_all: output/figures/survcur_ae_imae_all.svg
+        survcur_ae_all: output/figures/survcur_ae_all.svg
         survcur_allcause_emerg_aande: output/figures/survcur_allcause_emerg_aande.svg
         survcur_covid_hosp_date: output/figures/survcur_covid_hosp_date.svg
         survcur_all_hosp_date: output/figures/survcur_all_hosp_date.svg

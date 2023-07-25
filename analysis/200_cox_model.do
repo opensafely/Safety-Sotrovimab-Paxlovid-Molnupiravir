@@ -62,7 +62,7 @@ postfile `coxoutput' str20(model) str20(failure) ///
 	hr_sot lc_sot uc_sot hr_pax lc_pax uc_pax hr_mol lc_mol uc_mol ///
 	using "$projectdir/output/tables/cox_model_summary", replace	
 						 
-foreach fail in $spc $drug $imae_icd ae_all allcause_emerg_aande covid_hosp_date all_hosp_date died_date_ons{
+foreach fail in $spc $drug $imae_icd ae_all allcause_emerg_aande covid_hosp_date all_hosp_date died_date_ons {
 
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 						
@@ -125,6 +125,7 @@ foreach fail in $spc $drug $imae_icd ae_all allcause_emerg_aande covid_hosp_date
 
 postclose `coxoutput'
 
+
 foreach fail in ae_all allcause_emerg_aande covid_hosp_date all_hosp_date died_date_ons{
 
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
@@ -164,6 +165,9 @@ foreach fail in ae_all allcause_emerg_aande covid_hosp_date all_hosp_date died_d
 }
 
 */
+
+use "$projectdir/output/tables/cox_model_summary", replace
+export delimited using "$projectdir/output/tables/cox_model_summary_csv.csv", replace
 
 log close
 			
