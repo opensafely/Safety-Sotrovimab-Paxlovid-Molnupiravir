@@ -83,4 +83,4 @@ actions:
       moderately_sensitive:
         log: logs/preceed_rate.log 
         data: output/tables/comparator_rate_summary.dta
-        data: output/tables/comparator_rate_summary_csv.csv 
+        data1: output/tables/comparator_rate_summary_csv.csv 
