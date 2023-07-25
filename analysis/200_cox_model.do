@@ -148,7 +148,7 @@ foreach fail in ae_all allcause_emerg_aande covid_hosp_date all_hosp_date died_d
 			graph export "$projectdir/output/figures/survcur_`fail'.svg", as(svg) replace
 }
 
-
+/*
 foreach fail in ae_all allcause_emerg_aande covid_hosp_date all_hosp_date died_date_ons{
 
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 

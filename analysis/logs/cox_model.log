@@ -1,10 +1,8 @@
------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\k1635179\OneDrive - King's College London\K
-> atie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Pax
-> lovid-Molnupiravir\analysis/logs/cox_model.log
+       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/logs/cox_model.log
   log type:  text
- opened on:  19 Jun 2023, 11:37:20
+ opened on:  25 Jul 2023, 12:01:45
 
 . 
 . *Set Ado file path
@@ -15,9 +13,7 @@
   [4]  (PERSONAL)  "C:\users\PUBLIC\documents/"
   [5]  (PLUS)      "C:\users\PUBLIC\documents/"
   [6]  (OLDPLACE)  "c:\ado/"
-  [7]              "C:\Users\k1635179\OneDrive - King's College L
-> ondon\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovi
-> mab-Paxlovid-Molnupiravir\analysis/analysis/ado"
+  [7]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/analysis/ado"
 
 . 
 . * SET Index date 
@@ -25,18 +21,21 @@
 
 . 
 . use "$projectdir/output/data/main", clear
-file C:\Users\k1635179\OneDrive - King's College
-    London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis
-    > /output/data/main.dta not found
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/output/data/main.dta not found
 r(601);
 
 end of do-file
 
 r(601);
 
-. do "C:\Users\k1635179\AppData\Local\Temp\STD4188_000000.tmp"
+. do "C:\Users\k1635179\AppData\Local\Temp\STD3dd4_000000.tmp"
 
+. *       Data created:           coxoutput
+. *       Other output:           logfiles, printed to folder $Logdir
+. *       User installed ado: (place .ado file(s) in analysis folder)
+. 
+. ****************************************************************************************************************
+. **Set filepaths
 . global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
 
 . //global projectdir `c(pwd)'

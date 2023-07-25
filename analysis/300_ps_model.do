@@ -104,17 +104,17 @@ pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid
 wt(iptw_adj) graph
 graph export "$projectdir/output/figures/match_adj.svg", as(svg) replace 
 
-pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 White
-pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 White, ///
-wt(iptw_fulladj1) graph
-graph export "$projectdir/output/figures/match_fulladj1.svg", as(svg) replace
+pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 
+//pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 White, ///
+//wt(iptw_fulladj1) graph
+//graph export "$projectdir/output/figures/match_fulladj1.svg", as(svg) replace
 
 pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 White ///
 bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension	
-pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 White ///
-bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension, ///
-wt(iptw_fulladj2) graph
-graph export "$projectdir/output/figures/match_fulladj2.svg", as(svg) replace
+//pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 White ///
+//bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension, ///
+//wt(iptw_fulladj2) graph
+//graph export "$projectdir/output/figures/match_fulladj2.svg", as(svg) replace
 
 log close
 

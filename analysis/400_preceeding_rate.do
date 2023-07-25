@@ -41,7 +41,7 @@ use "$projectdir/output/data/main", clear
 *ensure not established diagnosis for some of the condition 4 year prior
 gen new_pre_ra_ae = pre_rheumatoid_arthritis_ae if pre_ra_snomed_new==0 & pre_ra_icd_new==0  
 gen new_pre_ra_snomed = pre_rheumatoid_arthritis_snomed if pre_ra_snomed_new==0 & pre_ra_icd_new==0
-gen new_pre_ra_icd = pre_rheumatoid_arthritis_icd if pre_ra_snomed_new==0 & pre_ra_icd_new==0  
+gen new_pre_ra_icd = pre_rheumatoid_icd_prim if pre_ra_snomed_new==0 & pre_ra_icd_new==0  
 gen new_pre_ankspon_ctv = pre_ankylosing_spondylitis_ctv if pre_ankspon_ctv_new==0 
 gen new_pre_ankspon_ae = pre_ankylosing_spondylitis_ae if pre_ankspon_ctv_new==0
 gen new_pre_psoriasis_snomed = pre_psoriasis_snomed if pre_psoriasis_snomed_new==0 
@@ -49,9 +49,10 @@ gen new_pre_psoriasis_ae = pre_psoriasis_ae if pre_psoriasis_snomed_new==0
 gen new_pre_psa_ae = pre_psoriatic_arthritis_ae if pre_psa_snomed_new==0 
 gen new_pre_psa_snomed = pre_psoriatic_arthritis_snomed	if pre_psa_snomed_new==0 							 				
 gen new_pre_sle_ctv = pre_sle_ctv if pre_sle_ctv_new==0 & pre_sle_icd_new==0  
-gen new_pre_sle_icd = pre_sle_icd if pre_sle_ctv_new==0 & pre_sle_icd_new==0
+gen new_pre_sle_icd = pre_sle_icd_prim if pre_sle_ctv_new==0 & pre_sle_icd_new==0
 gen new_pre_sle_ae = pre_sle_ae if pre_sle_ctv_new==0 & pre_sle_icd_new==0  
 
+**for ICD using primary diagnosis as per main analyses
 global preceeding_ae    new_pre_ra_ae 				///
 						new_pre_ra_snomed 			///
 						new_pre_ra_icd 				///
@@ -64,14 +65,14 @@ global preceeding_ae    new_pre_ra_ae 				///
 						new_pre_psa_snomed 			///
 						new_pre_sle_icd 			///
 						new_pre_sle_ae				///
-						pre_diverticulitis_icd		///
+						pre_diverticulitis_icd_prim ///
 						pre_diverticulitis_snomed	///
 						pre_diverticulitis_ae		///
 						pre_diarrhoea_snomed 		///
 						pre_taste_snomed			///
-						pre_taste_icd				///
+						pre_taste_icd_prim			///
 						pre_rash_snomed				///
-						pre_anaphylaxis_icd			///
+						pre_anaphylaxis_icd_prim	///
 						pre_anaphylaxis_snomed		///
 						pre_anaphlaxis_ae			///
 						pre_drugreact_ae			///
@@ -80,17 +81,17 @@ global preceeding_ae    new_pre_ra_ae 				///
 
 *gen start date for comparator rate
 gen start_comparator = start_date-1460
-gen start_comparator_29 = start_date - 1431
+gen start_comparator_28 = start_date - 1432
 *remove if occurred outside of window, gen failure and stop date: 
 foreach x in $preceeding_ae {
 		display "`x'"
-		sum `x', f 
-		count if (`x'<start_comparator | `x'>start_comparator_29) & `x'!=.  // event outside windown - should be 0 
-		count if (`x'>start_comparator & `x'<start_comparator_29) & `x'!=.  // event 4-3 years prior to start
+		count if `x'!=. 
+		count if (`x'<start_comparator | `x'>start_comparator_28) & `x'!=.  // event outside windown - should be 0 
+		count if (`x'>start_comparator & `x'<start_comparator_28) & `x'!=.  // event 4-3 years prior to start
 		gen fail_`x'=1 if `x'!=.
 		tab drug fail_`x', m
 		gen stop_`x'=`x' if fail_`x'==1
-		replace stop_`x'= start_comparator_29 if fail_`x'==.
+		replace stop_`x'= start_comparator_28 if fail_`x'==.
 		tab drug fail_`x' if stop_`x'!=.
 		format %td stop_`x'
 }
@@ -104,7 +105,7 @@ postfile `comparator' str20(failure) ///
 	ptime_mol events_mol rate_mol ///
 	using "$projectdir/output/tables/comparator_rate_summary", replace	
 						 
-* Failures over 1 years - convert into 29 day rate
+* Failures over 1 years - convert into 28 day rate
 foreach fail in $preceeding_ae {
 							 
 	stset stop_`fail', id(patient_id) origin(time start_comparator) enter(time start_comparator) failure(fail_`fail'==1)	
