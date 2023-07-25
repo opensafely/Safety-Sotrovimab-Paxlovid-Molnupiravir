@@ -41,7 +41,6 @@ actions:
         log: logs/baseline_characterisitcs.log 
         data: output/tables/baseline_allpts.csv      
 
-
   cox_model:
     run: stata-mp:latest analysis/200_cox_model.do
     needs: [define_covariates_combine]
@@ -49,7 +48,7 @@ actions:
       moderately_sensitive:
         log: logs/cox_model.log 
         data: output/tables/cox_model_summary.dta
-        data: output/tables/cox_model_summary_csv.csv 
+        data1: output/tables/cox_model_summary_csv.csv 
         survrisk_ae_all: output/figures/survrisk_ae_all.svg
         survrisk_allcause_emerg_aande: output/figures/survrisk_allcause_emerg_aande.svg
         survrisk_covid_hosp_date: output/figures/survrisk_covid_hosp_date.svg
@@ -69,7 +68,7 @@ actions:
       moderately_sensitive:
         log: logs/ps_model.log
         data: output/tables/cox_model_propensity.dta
-        data: output/tables/cox_model_propensity_csv.csv 
+        data1: output/tables/cox_model_propensity_csv.csv 
         histogram_agesex: output/figures/histogram_agesex.svg
         histogram_adj: output/figures/histogram_adj.svg
         histogram_fuladj1: output/figures/histogram_fulladj1.svg
