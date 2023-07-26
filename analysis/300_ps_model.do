@@ -116,6 +116,9 @@ bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertens
 //wt(iptw_fulladj2) graph
 //graph export "$projectdir/output/figures/match_fulladj2.svg", as(svg) replace
 
+use "$projectdir/output/tables/cox_model_propensity", replace
+export delimited using "$projectdir/output/tables/cox_model_propensity_csv.csv", replace
+
 log close
 
 

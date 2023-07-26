@@ -152,6 +152,10 @@ foreach fail in $preceeding_ae {
 }
 
 postclose `comparator'
+use "$projectdir/output/tables/comparator_rate_summary", replace
+export delimited using "$projectdir/output/tables/comparator_rate_summary_csv.csv", replace
+
+
 
 log close
 
