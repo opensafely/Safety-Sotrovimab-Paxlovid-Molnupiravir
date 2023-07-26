@@ -1,6 +1,6 @@
 ********************************************************************************
 *
-*	Do-file:			retracted_table.do
+*	Do-file:			redacted_table.do
 *	Project:			Sotrovimab-Paxlovid-Molnupiravir
 *   Date:  				25/07/23
 *	Programmed by:		Katie Bechman
@@ -23,18 +23,17 @@ global logdir "$projectdir/logs"
 di "$logdir"
 * Open a log file
 cap log close
-log using "$logdir/retracted_table.log", replace
+log using "$logdir/redacted_table.log", replace
 
 *Set Ado file path
 adopath + "$projectdir/analysis/ado"
 set scheme plotplainblind
 
-
-
 **Baseline table redacted and rounded 
 clear *
 save "$projectdir/output/tables/baseline_table_redact_all.dta", replace emptyok
 use "$projectdir/output/data/main", clear
+set type double
 
 ** labeling 
 label define ethnicity_with_missing 1 "Black" 3 "Other" 4 "South Asian" 5 "White" 9 "Missing", replace
@@ -222,4 +221,4 @@ save "$projectdir/output/tables/baseline_table_redact_mean.dta", replace
 export excel  "$projectdir/output/tables/baseline_table_redact_mean.dta", replace
 export delimited using "$projectdir/output/tables/baseline_table_redact_mean.csv" , novarnames  replace		
 
-
+log close

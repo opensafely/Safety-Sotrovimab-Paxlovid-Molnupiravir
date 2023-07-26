@@ -39,8 +39,7 @@ actions:
     outputs:
       moderately_sensitive:
         log: logs/baseline_characterisitcs.log 
-        data: output/tables/baseline_allpts.xls  
-        data1: output/tables/baseline_allpts_csv.csv      
+        data: output/tables/baseline_allpts_csv.csv      
 
   cox_model:
     run: stata-mp:latest analysis/200_cox_model.do
@@ -48,8 +47,7 @@ actions:
     outputs:
       moderately_sensitive:
         log: logs/cox_model.log 
-        data: output/tables/cox_model_summary.dta
-        data1: output/tables/cox_model_summary_csv.csv 
+        data: output/tables/cox_model_summary_csv.csv 
         survrisk_ae_all: output/figures/survrisk_ae_all.svg
         survrisk_allcause_emerg_aande: output/figures/survrisk_allcause_emerg_aande.svg
         survrisk_covid_hosp_date: output/figures/survrisk_covid_hosp_date.svg
@@ -68,8 +66,7 @@ actions:
     outputs:
       moderately_sensitive:
         log: logs/ps_model.log
-        data: output/tables/cox_model_propensity.dta
-        data1: output/tables/cox_model_propensity_csv.csv 
+        data: output/tables/cox_model_propensity_csv.csv 
         histogram_agesex: output/figures/histogram_agesex.svg
         histogram_adj: output/figures/histogram_adj.svg
         histogram_fuladj1: output/figures/histogram_fulladj1.svg
@@ -83,5 +80,13 @@ actions:
     outputs:
       moderately_sensitive:
         log: logs/preceed_rate.log 
-        data: output/tables/comparator_rate_summary.dta
-        data1: output/tables/comparator_rate_summary_csv.csv 
+        data: output/tables/comparator_rate_summary_csv.csv 
+  
+  redacted_tables:
+    run: stata-mp:latest analysis/500_redacted_tables.do
+    needs: [define_covariates_combine]
+    outputs:
+      moderately_sensitive:
+        log1: logs/redacted_table.log   
+        doc1: output/tables/baseline_table_redact_bydrug.csv   
+        doc2: output/tables/baseline_table_redact_mean.csv
