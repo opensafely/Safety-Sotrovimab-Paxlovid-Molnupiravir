@@ -83,7 +83,7 @@ actions:
         data: output/tables/comparator_rate_summary_csv.csv 
   
   redacted_tables:
-    run: stata-mp:latest analysis/500_redacted_tables.do
+    run: stata-mp:latest analysis/500_redacted_table.do
     needs: [define_covariates_combine]
     outputs:
       moderately_sensitive:
