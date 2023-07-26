@@ -12,8 +12,8 @@
 
 ****************************************************************************************************************
 **Set filepaths
-//global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
-global projectdir `c(pwd)'
+global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+//global projectdir `c(pwd)'
 di "$projectdir"
 capture mkdir "$projectdir/output/data"
 capture mkdir "$projectdir/output/figures"
@@ -33,7 +33,7 @@ global indexdate 			= "01/03/2020"
 use "$projectdir/output/data/main", clear
 
 /*Tables=====================================================================================*/
-table1_mc, by(drug) total(before) onecol iqrmiddle(",")  ///
+table1_mc, by(drug) total(before) mis onecol iqrmiddle(",")  ///
 		vars(age contn %5.1f \ ///
 			age_group cat %5.1f \ ///	
 			bmi contn %5.1f \	///		
@@ -44,7 +44,6 @@ table1_mc, by(drug) total(before) onecol iqrmiddle(",")  ///
 			imdq5 cat %5.1f \ ///
 			region_nhs cat %5.1f \ ///
 			region_covid_therapeutics cat %5.1f \ ///
-			pre_drug_test cat %5.1f \	///	
 			downs_syndrome_comb bin %5.1f \ ///
 			solid_cancer_comb bin %5.1f \ ///
 			haem_disease_comb bin %5.1f \ ///
@@ -65,7 +64,7 @@ table1_mc, by(drug) total(before) onecol iqrmiddle(",")  ///
 			paxlovid_contraindicated bin %5.1f)  saving("$projectdir/output/tables/baseline_allpts.xls", replace)
 		 
 import excel "$projectdir/output/tables/baseline_allpts.xls", clear
-outsheet * using "$projectdir/output/tables/baseline_allpts_csv.csv", comma nonames replace
+outsheet * using "$projectdir/output/tables/baseline_allpts.csv" , comma nonames replace
 
 
 
