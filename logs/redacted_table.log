@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  /workspace/logs/redacted_table.log
   log type:  text
- opened on:  26 Jul 2023, 16:12:37
+ opened on:  26 Jul 2023, 16:32:50
 
 . 
 . *Set Ado file path
@@ -3094,5 +3094,5 @@ file /workspace/output/tables/baseline_table_redact_mean.csv saved
       name:  <unnamed>
        log:  /workspace/logs/redacted_table.log
   log type:  text
- closed on:  26 Jul 2023, 16:12:46
+ closed on:  26 Jul 2023, 16:32:57
 -------------------------------------------------------------------------------
