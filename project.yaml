@@ -82,7 +82,7 @@ actions:
         log: logs/preceed_rate.log 
         data: output/tables/comparator_rate_summary_csv.csv 
   
-  redacted_tables:
+  redacted_table:
     run: stata-mp:latest analysis/500_redacted_table.do
     needs: [define_covariates_combine]
     outputs:
