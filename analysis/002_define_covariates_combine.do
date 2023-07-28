@@ -326,7 +326,7 @@ tab high_risk_cohort_therapeutics dataset,m //should be 0 in control group
 gen downs_syndrome_therap= 1 if strpos(high_risk_cohort_therapeutics, "Downs syndrome")
 gen solid_cancer_therap=1 if strpos(high_risk_cohort_therapeutics, "solid cancer")
 gen haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "haematological malignancies")
-replace haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "haematological malignancy")
+replace haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "haematologic malignancy")
 replace haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "sickle cell disease")
 replace haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "haematological diseases")
 replace haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "stem cell transplant")
@@ -346,15 +346,15 @@ foreach var of varlist downs_syndrome_therap solid_cancer_therap haem_disease_th
 
 ** high risk cohort from open codelist from control group
 tab high_risk_cohort_nhsd,m 
-count if downs_syndrome!=.
-count if solid_cancer!=.
-count if haem_disease!=.
-count if renal_disease!=.
-count if liver_disease!=.
-count if imid_on_drug!=.
-count if hiv_aids!=.
-count if organ_transplant!=.
-count if rare_neuro!=.
+count if downs_syndrome==0
+count if solid_cancer==0
+count if haem_disease==0
+count if renal_disease==0
+count if liver_disease==0
+count if imid_on_drug==0
+count if hiv_aids==0
+count if organ_transplant==0
+count if rare_neuro==0
 count if imid_on_drug==1 & imid_nhsd==1 & imid_drug==0 //should be 0
 count if imid_on_drug==1 & imid_nhsd==0 & imid_drug==1 //should be 0
 count if imid_on_drug==1 & imid_nhsd==1 & imid_drug==1 & downs_syndrome==0 &solid_cancer==0 &haem_disease==0 &renal_disease==0 &liver_disease==0 &immunosupression==0 &hiv_aids==0 &organ_transplant==0 &rare_neuro==0
@@ -505,7 +505,7 @@ count if ae_anaphylaxis_icd_prim!=.
 global ae_spc			ae_diverticulitis_snomed		///
 						ae_diarrhoea_snomed				///
 						ae_taste_snomed						
-global ae_spc_icd		ae_diverticulitis_icd_prim			///
+global ae_spc_icd		ae_diverticulitis_icd_prim		///
 						ae_taste_icd_prim					
 global ae_spc_emerg		ae_diverticulitis_ae									
 global ae_drug 			ae_anaphylaxis_snomed			///	
