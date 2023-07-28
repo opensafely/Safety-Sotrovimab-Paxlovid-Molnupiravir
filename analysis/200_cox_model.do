@@ -46,10 +46,10 @@ global fulladj2 i.drug age i.sex i.region_nhs paxlovid_contraindicated ///
 			    downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro  ///
 				vaccination_status imdq5 White 1b.bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension
 * Outcome
-global spc			ae_spc_all ae_diverticulitis_snomed ae_diarrhoea_snomed ae_taste_snomed ae_diverticulitis_icd ae_taste_icd ae_diverticulitis_ae
-global drug 		ae_drug_all	ae_anaphylaxis_snomed ae_rash_snomed ae_anaphlaxis_ae ae_drugreact_ae ae_allergic_ae ae_anaphylaxis_icd		
+global spc			ae_spc_all ae_diverticulitis_snomed ae_diarrhoea_snomed ae_taste_snomed ae_diverticulitis_icd_prim ae_taste_icd_prim ae_diverticulitis_ae
+global drug 		ae_drug_all	ae_anaphylaxis_snomed ae_rash_snomed ae_anaphlaxis_ae ae_drugreact_ae ae_allergic_ae ae_anaphylaxis_icd_prim		
 global imae			ae_imae_all new_ae_ra_snomed new_ae_sle_ctv new_ae_psoriasis_snomed new_ae_psa_snomed new_ae_ankspon_ctv new_ae_ibd_snomed ///
-					new_ae_ra_icd new_ae_sle_icd new_ae_ra_icd new_ae_sle_icd new_ae_ra_ae new_ae_sle_ae new_ae_psoriasis_ae new_ae_psa_ae ///
+					new_ae_ra_icd_prim new_ae_sle_icd_prim  new_ae_ra_ae new_ae_sle_ae new_ae_psoriasis_ae new_ae_psa_ae ///
 					new_ae_ankspon_ae new_ae_ibd_ae									
 			  
 tempname coxoutput
