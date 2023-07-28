@@ -304,6 +304,82 @@ tab treatment_dataset,m
 count if start_date==.
 count if start_date!=date_treated & treatment_dataset==1
 count if start_date!=covid_test_positive_date & control_dataset==1
+gen dataset = 0 if control_dataset==1
+replace dataset= 1 if treatment_dataset==1
+label define dataset 0 "control" 1 "drug" 
+label values dataset dataset
+
+****************************
+*	INCLUSION		*
+****************************
+** inclusion criteria*
+keep if age>=18 & age<110
+keep if sex=="F"|sex=="M"
+keep if has_died==0
+** exclusion criteria*
+count if start_date>dereg_date & start_date!=.
+count if start_date>death_date & start_date!=.
+drop if start_date>death_date | start_date>dereg_date
+
+** high risk cohort from blueteq therapeutics datafor drug arms
+tab high_risk_cohort_therapeutics dataset,m //should be 0 in control group
+gen downs_syndrome_therap= 1 if strpos(high_risk_cohort_therapeutics, "Downs syndrome")
+gen solid_cancer_therap=1 if strpos(high_risk_cohort_therapeutics, "solid cancer")
+gen haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "haematological malignancies")
+replace haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "haematologic malignancy")
+replace haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "sickle cell disease")
+replace haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "haematological diseases")
+replace haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "stem cell transplant")
+gen renal_disease_therap= 1 if strpos(high_risk_cohort_therapeutics, "renal disease")
+gen liver_disease_therap= 1 if strpos(high_risk_cohort_therapeutics, "liver disease")
+gen imid_on_drug_therap= 1 if strpos(high_risk_cohort_therapeutics, "IMID")
+gen immunosupression_therap= 1 if strpos(high_risk_cohort_therapeutics, "primary immune deficiencies")
+gen hiv_aids_therap= 1 if strpos(high_risk_cohort_therapeutics, "HIV or AIDS")
+gen organ_transplant_therap= 1 if strpos(high_risk_cohort_therapeutics, "solid organ recipients")
+replace organ_transplant_therap= 1 if strpos(high_risk_cohort_therapeutics, "solid organ transplant")
+gen rare_neuro_therap= 1 if strpos(high_risk_cohort_therapeutics, "rare neurological conditions")
+count if high_risk_cohort_therapeutics!=""&high_risk_cohort_therapeutics!="other"& min(downs_syndrome_therap,solid_cancer_therap,haem_disease_therap,renal_disease_therap,liver_disease_therap,imid_on_drug_therap,immunosupression_therap,hiv_aids_therap,organ_transplant_therap,rare_neuro_therap)==. //check if all diseases have been captured
+tab high_risk_cohort_therapeutics if high_risk_cohort_therapeutics!=""&high_risk_cohort_therapeutics!="other"& min(downs_syndrome_therap,solid_cancer_therap,haem_disease_therap,renal_disease_therap,liver_disease_therap,imid_on_drug_therap,immunosupression_therap,hiv_aids_therap,organ_transplant_therap,rare_neuro_therap)==.
+foreach var of varlist downs_syndrome_therap solid_cancer_therap haem_disease_therap renal_disease_therap liver_disease_therap imid_on_drug_therap immunosupression_therap hiv_aids_therap organ_transplant_therap rare_neuro_therap{
+	replace `var'=0 if `var'==. 
+}
+
+** high risk cohort from open codelist from control group
+tab high_risk_cohort_nhsd,m 
+count if downs_syndrome==0
+count if solid_cancer==0
+count if haem_disease==0
+count if renal_disease==0
+count if liver_disease==0
+count if imid_on_drug==0
+count if hiv_aids==0
+count if organ_transplant==0
+count if rare_neuro==0
+count if imid_on_drug==1 & imid_nhsd==1 & imid_drug==0 //should be 0
+count if imid_on_drug==1 & imid_nhsd==0 & imid_drug==1 //should be 0
+count if imid_on_drug==1 & imid_nhsd==1 & imid_drug==1 & downs_syndrome==0 &solid_cancer==0 &haem_disease==0 &renal_disease==0 &liver_disease==0 &immunosupression==0 &hiv_aids==0 &organ_transplant==0 &rare_neuro==0
+count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1
+count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 
+count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_on_drug==1
+count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_on_drug==1 &downs_syndrome==0 &solid_cancer==0 &haem_disease==0 &renal_disease==0 &liver_disease==0 &immunosupression==0 &hiv_aids==0 &organ_transplant==0 &rare_neuro==0
+replace imid_drug=0 if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_on_drug==1 //ignore if steriods<4 scripts in 6m & not coded other imid drug 
+replace oral_steroid_drugs_nhsd=0 if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 //ignore if steriods<4 scripts in 6m
+count if imid_on_drug==0 & imid_nhsd==1 & imid_drug==0 //should be same number as those dropped above 
+replace imid_on_drug=0 if imid_nhsd==1 & imid_drug==0 
+replace imid_on_drug=0 if imid_nhsd==0 & imid_drug==1 
+gen high_risk_cohort_codelist=((downs_syndrome + solid_cancer + haem_disease + renal_disease + liver_disease + imid_on_drug + immunosupression + hiv_aids + organ_transplant + rare_neuro )>0)
+tab high_risk_cohort_codelist dataset
+tab high_risk_cohort_nhsd dataset
+bys dataset:count if high_risk_cohort_codelist==. & high_risk_cohort_nhsd==.
+tab high_risk_cohort_nhsd high_risk_cohort_codelist
+tab high_risk_cohort_nhsd high_risk_cohort_codelist if high_risk_cohort_therapeutics!="other"
+** combine two high risk cohorts into one 
+foreach var of varlist downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro {
+	gen `var'_comb = `var'
+	replace `var'_comb = 1 if `var'_therap==1 
+	tab `var' `var'_therap 
+	tab dataset `var'_comb 
+}
 
 ****************************
 *	EXPOSURE		*
@@ -356,76 +432,7 @@ gen study_end_date=mdy(01,08,2023)
 gen start_date_28=start_date + 28
 format campaign_start study_end_date start_date_28 %td
 
-****************************
-*	INCLUSION		*
-****************************
-** inclusion criteria*
-keep if age>=18 & age<110
-keep if sex=="F"|sex=="M"
-keep if has_died==0
-** exclusion criteria*
-count if start_date>dereg_date & start_date!=.
-count if start_date>death_date & start_date!=.
-drop if start_date>death_date | start_date>dereg_date
 
-** high risk cohort from blueteq therapeutics datafor drug arms
-tab high_risk_cohort_therapeutics drug,m //should be 0 in control group
-gen downs_syndrome_therap= 1 if strpos(high_risk_cohort_therapeutics, "Downs syndrome")
-gen solid_cancer_therap=1 if strpos(high_risk_cohort_therapeutics, "solid cancer")
-gen haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "haematological malignancies")
-replace haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "haematological malignancy")
-replace haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "sickle cell disease")
-replace haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "haematological diseases")
-replace haem_disease_therap=1 if strpos(high_risk_cohort_therapeutics, "stem cell transplant")
-gen renal_disease_therap= 1 if strpos(high_risk_cohort_therapeutics, "renal disease")
-gen liver_disease_therap= 1 if strpos(high_risk_cohort_therapeutics, "liver disease")
-gen imid_on_drug_therap= 1 if strpos(high_risk_cohort_therapeutics, "IMID")
-gen immunosupression_therap= 1 if strpos(high_risk_cohort_therapeutics, "primary immune deficiencies")
-gen hiv_aids_therap= 1 if strpos(high_risk_cohort_therapeutics, "HIV or AIDS")
-gen organ_transplant_therap= 1 if strpos(high_risk_cohort_therapeutics, "solid organ recipients")
-replace organ_transplant_therap= 1 if strpos(high_risk_cohort_therapeutics, "solid organ transplant")
-gen rare_neuro_therap= 1 if strpos(high_risk_cohort_therapeutics, "rare neurological conditions")
-bys drug: count if high_risk_cohort_therapeutics!=""&high_risk_cohort_therapeutics!="other"& min(downs_syndrome_therap,solid_cancer_therap,haem_disease_therap,renal_disease_therap,liver_disease_therap,imid_on_drug_therap,immunosupression_therap,hiv_aids_therap,organ_transplant_therap,rare_neuro_therap)==. //check if all diseases have been captured
-tab high_risk_cohort_therapeutics if high_risk_cohort_therapeutics!=""&high_risk_cohort_therapeutics!="other"& min(downs_syndrome_therap,solid_cancer_therap,haem_disease_therap,renal_disease_therap,liver_disease_therap,imid_on_drug_therap,immunosupression_therap,hiv_aids_therap,organ_transplant_therap,rare_neuro_therap)==.
-foreach var of varlist downs_syndrome_therap solid_cancer_therap haem_disease_therap renal_disease_therap liver_disease_therap imid_on_drug_therap immunosupression_therap hiv_aids_therap organ_transplant_therap rare_neuro_therap{
-	replace `var'=0 if `var'==. 
-}
-
-** high risk cohort from open codelist from control group
-tab high_risk_cohort_nhsd drug,m 
-count if downs_syndrome!=.
-count if solid_cancer!=.
-count if haem_disease!=.
-count if renal_disease!=.
-count if liver_disease!=.
-count if imid_on_drug!=.
-count if hiv_aids!=.
-count if organ_transplant!=.
-count if rare_neuro!=.
-count if imid_on_drug==1 & imid_nhsd==1 & imid_drug==0 //should be 0
-count if imid_on_drug==1 & imid_nhsd==0 & imid_drug==1 //should be 0
-count if imid_on_drug==1 & imid_nhsd==1 & imid_drug==1 & downs_syndrome==0 &solid_cancer==0 &haem_disease==0 &renal_disease==0 &liver_disease==0 &immunosupression==0 &hiv_aids==0 &organ_transplant==0 &rare_neuro==0
-count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1
-count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 
-count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_on_drug==1
-count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_on_drug==1 &downs_syndrome==0 &solid_cancer==0 &haem_disease==0 &renal_disease==0 &liver_disease==0 &immunosupression==0 &hiv_aids==0 &organ_transplant==0 &rare_neuro==0
-replace imid_drug=0 if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_on_drug==1 //ignore if steriods<4 scripts in 6m & not coded other imid drug 
-replace oral_steroid_drugs_nhsd=0 if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 //ignore if steriods<4 scripts in 6m
-count if imid_on_drug==0 & imid_nhsd==1 & imid_drug==0 //should be same number as those dropped above 
-replace imid_on_drug=0 if imid_nhsd==1 & imid_drug==0 
-replace imid_on_drug=0 if imid_nhsd==0 & imid_drug==1 
-gen high_risk_cohort_codelist=((downs_syndrome + solid_cancer + haem_disease + renal_disease + liver_disease + imid_on_drug + immunosupression + hiv_aids + organ_transplant + rare_neuro )>0)
-bys drug:count if high_risk_cohort_codelist!=.
-bys drug:count if high_risk_cohort_codelist==.
-tab high_risk_cohort_nhsd high_risk_cohort_codelist
-
-** combine two high risk cohorts into one 
-foreach var of varlist downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro {
-	gen `var'_comb = `var'
-	replace `var'_comb = 1 if `var'_therap==1 
-	tab `var' `var'_therap 
-	tab `var'_comb
-}
 
 ****************************
 *	OUTCOME		*
@@ -498,7 +505,7 @@ count if ae_anaphylaxis_icd_prim!=.
 global ae_spc			ae_diverticulitis_snomed		///
 						ae_diarrhoea_snomed				///
 						ae_taste_snomed						
-global ae_spc_icd		ae_diverticulitis_icd_prim			///
+global ae_spc_icd		ae_diverticulitis_icd_prim		///
 						ae_taste_icd_prim					
 global ae_spc_emerg		ae_diverticulitis_ae									
 global ae_drug 			ae_anaphylaxis_snomed			///	
@@ -523,7 +530,7 @@ global ae_imae_emerg	new_ae_ra_ae					///
 						new_ae_ibd_ae				
 									
 *remove event if occurred before start
-foreach x in $ae_spc $ae_spc_icd $ae_spc_emerg $ae_drug $ae_drug_icd $ae_drug_emerg $ae_imae $ae_imae_icd $ae_drug_emerg{
+foreach x in $ae_spc $ae_spc_icd $ae_spc_emerg $ae_drug $ae_drug_icd $ae_drug_emerg $ae_imae $ae_imae_icd $ae_imae_emerg{
 				display "`x'"
 				count if (`x' > start_date | `x' < start_date + 28) & `x'!=. 
 				count if (`x' < start_date | `x' > start_date + 28) & `x'!=. & drug==0
@@ -549,15 +556,27 @@ by drug, sort: count if ae_imae_all!=.
 by drug, sort: count if ae_all!=.
 
 *** Secondary outcome - SAEs hospitalisation or death including COVID-19 
+* death
+bys drug: count if died_date_ons!=.
+
 * a&e all admission
 bys drug: count if allcause_emerg_aande!=.
-*correcting COVID hosp events: admitted on day 0 or day 1 after treatment - to ignore sotro initiators with mab procedure codes*
-bys drug: count if covid_hosp_date!=. // all covid hospitalisation
-bys drug: count if covid_hosp_date0!=. // hospitalisation after treatment date (control group will not have covid_hosp_date0)
-// covid admission is the same date as date treated 
+
+*covid admission
+// checking admission and discharge date; missing admission, missing dischagre, or dischagre preceed admission 
+count if covid_hosp_date!=.&covid_discharge_date==.
+count if covid_hosp_date==.&covid_discharge_date!=.
+count if covid_hosp_date!=.&covid_discharge_date!=.&covid_hosp_date==covid_discharge_date
+count if covid_hosp_date!=.&covid_discharge_date!=.&covid_hosp_date<covid_discharge_date
+count if covid_hosp_date!=.&covid_discharge_date!=.&covid_hosp_date>covid_discharge_date
+// all covid hospitalisation
+bys drug: count if covid_hosp_date!=. 
+// covid admission on treatment date (control group will not have covid_hosp_date0)
+bys drug: count if covid_hosp_date0!=. 
+//  covid admission is the same as date treated 
 bys drug: count if covid_hosp_date0==date_treated&covid_hosp_date0!=.&date_treated!=.
 bys drug: count if covid_hosp_date1==(date_treated+1) &covid_hosp_date1!=.&date_treated!=.
-// covid admission is the same date as date treated and is a daycase
+// covid admission is the same  as date treated and is a daycase
 bys drug: count if covid_hosp_date0==covid_discharge_date0&covid_hosp_date0!=.
 bys drug: count if covid_hosp_date1==covid_discharge_date1&covid_hosp_date1!=.
 // covid admission is the same date as mab
@@ -568,28 +587,35 @@ bys drug: count if covid_hosp_date0==covid_hosp_date_mabs&covid_hosp_date0!=.&co
 bys drug: count if covid_hosp_date1==covid_hosp_date_mabs&covid_hosp_date1!=.&covid_hosp_date1==covid_discharge_date1
 bys drug: count if covid_hosp_date0==covid_hosp_date_mabs&covid_hosp_date0!=.&(covid_discharge_date0 - covid_hosp_date0)==1
 bys drug: count if covid_hosp_date1==covid_hosp_date_mabs&covid_hosp_date1!=.&(covid_discharge_date1 - covid_hosp_date1)==1
-// checking admission and discharge date; missing admission, missing dischagre, or dischagre preceed admission 
-count if covid_hosp_date!=.&covid_discharge_date==.
-count if covid_hosp_date==.&covid_discharge_date!=.
-count if covid_hosp_date!=.&covid_discharge_date!=.&covid_hosp_date==covid_discharge_date
-count if covid_hosp_date!=.&covid_discharge_date!=.&covid_hosp_date<covid_discharge_date
-count if covid_hosp_date!=.&covid_discharge_date!=.&covid_hosp_date>covid_discharge_date
 // REPLACE - ignore covid admission if admission is the day 0 or day 1 after treatment date treated AND a day case
 replace covid_hosp_date=. if covid_hosp_date0==covid_discharge_date0&covid_hosp_date0!=.
 replace covid_hosp_date=. if covid_hosp_date1==covid_discharge_date1&covid_hosp_date1!=.  
 // REPLACE - ignore covid admission if admission is the day 0 or day 1 after treatment date AND a mab procedures 
-replace covid_hosp_date=. if covid_hosp_date0==covid_hosp_date_mabs&covid_hosp_date_mabs!=.
-replace covid_hosp_date=. if covid_hosp_date1==covid_hosp_date_mabs&covid_hosp_date_mabs!=.
+replace covid_hosp_date=. if covid_hosp_date0==covid_hosp_date_mabs&covid_hosp_date0!=.&covid_hosp_date0==covid_discharge_date0
+replace covid_hosp_date=. if covid_hosp_date1==covid_hosp_date_mabs&covid_hosp_date1!=.&covid_hosp_date1==covid_discharge_date1
+replace covid_hosp_date=. if covid_hosp_date0==covid_hosp_date_mabs&covid_hosp_date0!=.&(covid_discharge_date0 - covid_hosp_date0)==1
+replace covid_hosp_date=. if covid_hosp_date1==covid_hosp_date_mabs&covid_hosp_date1!=.&(covid_discharge_date1 - covid_hosp_date1)==1
 
-*correcting ALL hosp events: admitted on day 0 or day 1 after treatment - to ignore mab procedure codes*
-bys drug: count if all_hosp_date!=. // all hospitalisation
-bys drug: count if all_hosp_date0!=. // hospitalisation after treatment date (control group will not have all_hosp_date0)
+*hosp admission
+// checking admission and discharge date; missing admission, missing dischagre, or dischagre preceed admission 
+count if all_hosp_date!=.&hosp_discharge_date==.
+count if all_hosp_date==.&hosp_discharge_date!=.
+count if all_hosp_date!=.&hosp_discharge_date!=.&all_hosp_date==hosp_discharge_date
+count if all_hosp_date!=.&hosp_discharge_date!=.&all_hosp_date<hosp_discharge_date
+count if all_hosp_date!=.&hosp_discharge_date!=.&all_hosp_date>hosp_discharge_date
+// all hospitalisation
+bys drug: count if all_hosp_date!=.
+// admission on treatment date (control group will not have hosp_date0)
+bys drug: count if all_hosp_date0!=. 
 // admission is the same date as date treated 
 bys drug: count if all_hosp_date0==date_treated&all_hosp_date0!=.&date_treated!=.
 bys drug: count if all_hosp_date1==(date_treated+1) &all_hosp_date1!=.&date_treated!=.
 // admission is the same date as date treated and is a daycase
 bys drug: count if all_hosp_date0==hosp_discharge_date0&all_hosp_date0!=.
 bys drug: count if all_hosp_date1==hosp_discharge_date1&all_hosp_date1!=.
+// admission is for Covid and is the same date as date treated and is a daycase
+bys drug: count if all_hosp_date0==covid_hosp_date0  & all_hosp_date0==hosp_discharge_date0&all_hosp_date0!=.
+bys drug: count if all_hosp_date1==covid_hosp_date1 & all_hosp_date1==hosp_discharge_date1&all_hosp_date1!=.
 //  admission is the same date as mab
 bys drug: count if all_hosp_date0==covid_hosp_date_mabs&covid_hosp_date_mabs!=.
 bys drug: count if all_hosp_date1==covid_hosp_date_mabs&covid_hosp_date_mabs!=.
@@ -598,22 +624,23 @@ bys drug: count if all_hosp_date0==covid_hosp_date_mabs&all_hosp_date0!=.&all_ho
 bys drug: count if all_hosp_date1==covid_hosp_date_mabs&all_hosp_date1!=.&all_hosp_date1==hosp_discharge_date1
 bys drug: count if all_hosp_date0==covid_hosp_date_mabs&all_hosp_date0!=.&(hosp_discharge_date0-all_hosp_date0)==1
 bys drug: count if all_hosp_date1==covid_hosp_date_mabs&all_hosp_date1!=.&(hosp_discharge_date1-all_hosp_date1)==1
-// checking admission and discharge date; missing admission, missing dischagre, or dischagre preceed admission 
-count if all_hosp_date!=.&hosp_discharge_date==.
-count if all_hosp_date==.&hosp_discharge_date!=.
-count if all_hosp_date!=.&hosp_discharge_date!=.&all_hosp_date==hosp_discharge_date
-count if all_hosp_date!=.&hosp_discharge_date!=.&all_hosp_date<hosp_discharge_date
-count if all_hosp_date!=.&hosp_discharge_date!=.&all_hosp_date>hosp_discharge_date
+//  admission is is for Covid and the same date as mab and is a daycase, 1 day admission
+bys drug: count if all_hosp_date0==covid_hosp_date0 & all_hosp_date0==covid_hosp_date_mabs&all_hosp_date0!=.&all_hosp_date0==hosp_discharge_date0
+bys drug: count if all_hosp_date1==covid_hosp_date1 & all_hosp_date1==covid_hosp_date_mabs&all_hosp_date1!=.&all_hosp_date1==hosp_discharge_date1
+bys drug: count if all_hosp_date0==covid_hosp_date0 & all_hosp_date0==covid_hosp_date_mabs&all_hosp_date0!=.&(hosp_discharge_date0-all_hosp_date0)==1
+bys drug: count if all_hosp_date1==covid_hosp_date1 & all_hosp_date1==covid_hosp_date_mabs&all_hosp_date1!=.&(hosp_discharge_date1-all_hosp_date1)==1
 // REPLACE - ignore covid admission if admission is for covid AND day 0 or day 1 after treatment AND daycase
-replace all_hosp_date=. if all_hosp_date0==covid_hosp_date0 & all_hosp_date0==hosp_discharge_date0&all_hosp_date0!=.
-replace all_hosp_date=. if all_hosp_date1==covid_hosp_date1 & all_hosp_date1==hosp_discharge_date1&all_hosp_date1!=.
+replace all_hosp_date=. if all_hosp_date0==covid_hosp_date0 & all_hosp_date0==hosp_discharge_date0 & all_hosp_date0!=.
+replace all_hosp_date=. if all_hosp_date1==covid_hosp_date1 & all_hosp_date0==hosp_discharge_date1 & all_hosp_date1!=.
 // REPLACE - ignore admission if admission is for covid AND day 0 or day 1 after treatment AND a mab procedures for sotro 
-replace all_hosp_date=. if all_hosp_date0==covid_hosp_date0 & all_hosp_date0==covid_hosp_date_mabs & covid_hosp_date_mabs!=.&drug==1
-replace all_hosp_date=. if all_hosp_date1==covid_hosp_date1 & all_hosp_date1==covid_hosp_date_mabs & covid_hosp_date_mabs!=.&drug==1 
+replace all_hosp_date=. if all_hosp_date0==covid_hosp_date0 & all_hosp_date0==covid_hosp_date_mabs&all_hosp_date0!=.&all_hosp_date0==hosp_discharge_date0
+replace all_hosp_date=. if all_hosp_date1==covid_hosp_date1 & all_hosp_date1==covid_hosp_date_mabs&all_hosp_date1!=.&all_hosp_date1==hosp_discharge_date1
+replace all_hosp_date=. if all_hosp_date0==covid_hosp_date0 & all_hosp_date0==covid_hosp_date_mabs&all_hosp_date0!=.&(hosp_discharge_date0 - all_hosp_date0)==1
+replace all_hosp_date=. if all_hosp_date1==covid_hosp_date1 & all_hosp_date1==covid_hosp_date_mabs&all_hosp_date1!=.&(hosp_discharge_date1 - all_hosp_date1)==1
 
 foreach var of varlist allcause_emerg_aande covid_hosp_date all_hosp_date died_date_ons{
 				display "`var'"
-				bys drug: count if (`var' > start_date & `var' < start_date + 28) & `var'!=.				
+				bys drug: count if (`var' >= start_date & `var' <= start_date + 28) & `var'!=.				
 				bys drug: count if (`var' < start_date | `var' > start_date + 28) & `var'!=.				
 }
 
@@ -726,12 +753,12 @@ label values vaccination_status vaccination_status
 gen vaccination_3_plus=1 if vaccination_status==3|vaccination_status==4
 replace vaccination_3_plus=0 if vaccination_status<3
 * time between vaccine and covid positive test or treatment
-gen days_vacc_covid=covid_test_positive_date - last_vaccination_date
+gen days_vacc_covid=covid_test_positive_date - last_vaccination_date if (covid_test_positive_date>last_vaccination_date & drug==0)
 sum days_vacc_covid,de
-gen days_vacc_treat=date_treated - last_vaccination_date
+gen days_vacc_treat=date_treated - last_vaccination_date if (date_treated>last_vaccination_date & drug>0)
 sum days_vacc_treat,de
-gen days_vacc_treat_test = days_vacc_treat
-replace days_vacc_treat_test = days_vacc_covid if days_vacc_treat_test==.
+gen days_vacc_treat_test = days_vacc_covid if drug==0
+replace days_vacc_treat_test = days_vacc_treat if drug>0
 sum days_vacc_treat_test,de
 gen month_vacc_covid=ceil(days_vacc_covid/30)
 tab month_vacc_covid,m
@@ -740,10 +767,12 @@ gen day_after_campaign=start_date-mdy(12,15,2021)
 sum day_after_campaign,de
 gen month_after_campaign=ceil((start_date-mdy(12,15,2021))/30)
 tab month_after_campaign,m
+tab start_date if month_after_campaign>100
+//drop if month_after_campaign>100
 * Variant
 label define sgtf_new 0 "S gene detected" 1 "confirmed SGTF" 9 "NA"
 label values sgtf_new sgtf_new
-* Prior infection
+* Prior infection / check Bang code
 tab prior_covid, m
 gen prior_covid_index=1 if prior_covid==1 & prior_covid_date<campaign_start
 tab prior_covid_index,m
@@ -862,7 +891,7 @@ stset stop_ae_all, id(patient_id) origin(time start_date) enter(time start_date)
 *count censored due to second therapy*
 count if fail_ae_all==0&drug==1&min(paxlovid,molnupiravir)==stop_ae_all
 count if fail_ae_all==0&drug==2&min(sotrovimab,molnupiravir)==stop_ae_all
-count if fail_ae_all==0&drug==3&min(sotrovimab,paxlovid,remdesivir,casirivimab)==stop_ae_all
+count if fail_ae_all==0&drug==3&min(sotrovimab,paxlovid)==stop_ae_all
 count if fail_ae_all==0&drug==0&min(sotrovimab,paxlovid,molnupiravir)==stop_ae_all
 tab _st  // keep if _st==1 -> removes observations that end on or before enter 
 count if start_date>=stop_ae_all & _st==0
