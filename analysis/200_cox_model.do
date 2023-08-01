@@ -46,11 +46,27 @@ global fulladj2 i.drug age i.sex i.region_nhs paxlovid_contraindicated ///
 			    downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro  ///
 				vaccination_status imdq5 White 1b.bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension
 * Outcome
-global spc			ae_spc_all ae_diverticulitis_snomed ae_diarrhoea_snomed ae_taste_snomed ae_diverticulitis_icd_prim ae_taste_icd_prim ae_diverticulitis_ae
-global drug 		ae_drug_all	ae_anaphylaxis_snomed ae_rash_snomed ae_anaphlaxis_ae ae_drugreact_ae ae_allergic_ae ae_anaphylaxis_icd_prim		
-global imae			ae_imae_all new_ae_ra_snomed new_ae_sle_ctv new_ae_psoriasis_snomed new_ae_psa_snomed new_ae_ankspon_ctv new_ae_ibd_snomed ///
-					new_ae_ra_icd_prim new_ae_sle_icd_prim  new_ae_ra_ae new_ae_sle_ae new_ae_psoriasis_ae new_ae_psa_ae ///
-					new_ae_ankspon_ae new_ae_ibd_ae									
+global ae_group			ae_spc_all 					///
+						ae_drug_all					///		
+						ae_imae_all 				///				
+						ae_all						///
+						allcause_emerg_aande 		///
+						covid_hosp_date				///
+						all_hosp_date				///
+						died_date_ons
+global ae_disease		ae_diverticulitis 				///
+						ae_diarrhoea					///
+						ae_taste 						///
+						ae_anaphylaxis 					///
+						ae_rash 						///
+						ae_drug 						///
+						ae_allergic 					///
+						ae_ra 							///
+						ae_sle 							///
+						ae_psorasis 					///
+						ae_psa 							///
+						ae_ankspon 						///
+						ae_ibd 														
 			  
 tempname coxoutput
 postfile `coxoutput' str20(model) str20(failure) ///
@@ -62,7 +78,7 @@ postfile `coxoutput' str20(model) str20(failure) ///
 	hr_sot lc_sot uc_sot hr_pax lc_pax uc_pax hr_mol lc_mol uc_mol ///
 	using "$projectdir/output/tables/cox_model_summary", replace	
 						 
-foreach fail in $spc $drug $imae_icd ae_all allcause_emerg_aande covid_hosp_date all_hosp_date died_date_ons {
+foreach fail in $ae_group $ae_disease {
 
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 						
@@ -126,7 +142,7 @@ foreach fail in $spc $drug $imae_icd ae_all allcause_emerg_aande covid_hosp_date
 postclose `coxoutput'
 
 
-foreach fail in ae_all allcause_emerg_aande covid_hosp_date all_hosp_date died_date_ons{
+foreach fail in $ae_group {
 
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 								
@@ -149,8 +165,8 @@ foreach fail in ae_all allcause_emerg_aande covid_hosp_date all_hosp_date died_d
 			graph export "$projectdir/output/figures/survcur_`fail'.svg", as(svg) replace
 }
 
-/*
-foreach fail in ae_all allcause_emerg_aande covid_hosp_date all_hosp_date died_date_ons{
+
+/*foreach fail in $ae_group {
 
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 			stcox i.drug 	
@@ -163,8 +179,8 @@ foreach fail in ae_all allcause_emerg_aande covid_hosp_date all_hosp_date died_d
 			graph export "$projectdir/output/figures/survhaz_`fail'.svg", as(svg) replace
 			
 }
-
 */
+
 
 use "$projectdir/output/tables/cox_model_summary", replace
 export delimited using "$projectdir/output/tables/cox_model_summary_csv.csv", replace

@@ -23,7 +23,7 @@ global logdir "$projectdir/logs"
 di "$logdir"
 * Open a log file
 cap log close
-log using "$logdir/cleaning_dataset_combine_2.log", replace
+log using "$logdir/cleaning_dataset_combine.log", replace
 
 *Set Ado file path
 adopath + "$projectdir/analysis/ado"
@@ -340,21 +340,24 @@ replace organ_transplant_therap= 1 if strpos(high_risk_cohort_therapeutics, "sol
 gen rare_neuro_therap= 1 if strpos(high_risk_cohort_therapeutics, "rare neurological conditions")
 count if high_risk_cohort_therapeutics!=""&high_risk_cohort_therapeutics!="other"& min(downs_syndrome_therap,solid_cancer_therap,haem_disease_therap,renal_disease_therap,liver_disease_therap,imid_on_drug_therap,immunosupression_therap,hiv_aids_therap,organ_transplant_therap,rare_neuro_therap)==. //check if all diseases have been captured
 tab high_risk_cohort_therapeutics if high_risk_cohort_therapeutics!=""&high_risk_cohort_therapeutics!="other"& min(downs_syndrome_therap,solid_cancer_therap,haem_disease_therap,renal_disease_therap,liver_disease_therap,imid_on_drug_therap,immunosupression_therap,hiv_aids_therap,organ_transplant_therap,rare_neuro_therap)==.
-foreach var of varlist downs_syndrome_therap solid_cancer_therap haem_disease_therap renal_disease_therap liver_disease_therap imid_on_drug_therap immunosupression_therap hiv_aids_therap organ_transplant_therap rare_neuro_therap{
+gen high_risk_cohort_ther= 1 if high_risk_cohort_therapeutics!=""&high_risk_cohort_therapeutics!="other"
+foreach var of varlist high_risk_cohort_ther downs_syndrome_therap solid_cancer_therap haem_disease_therap renal_disease_therap liver_disease_therap imid_on_drug_therap immunosupression_therap hiv_aids_therap organ_transplant_therap rare_neuro_therap{
 	replace `var'=0 if `var'==. 
 }
+tab high_risk_cohort_ther
+tab high_risk_cohort_ther dataset
 
 ** high risk cohort from open codelist from control group
 tab high_risk_cohort_nhsd,m 
-count if downs_syndrome==0
-count if solid_cancer==0
-count if haem_disease==0
-count if renal_disease==0
-count if liver_disease==0
-count if imid_on_drug==0
-count if hiv_aids==0
-count if organ_transplant==0
-count if rare_neuro==0
+count if downs_syndrome==1
+count if solid_cancer==1
+count if haem_disease==1
+count if renal_disease==1
+count if liver_disease==1
+count if imid_on_drug==1
+count if hiv_aids==1
+count if organ_transplant==1
+count if rare_neuro==1
 count if imid_on_drug==1 & imid_nhsd==1 & imid_drug==0 //should be 0
 count if imid_on_drug==1 & imid_nhsd==0 & imid_drug==1 //should be 0
 count if imid_on_drug==1 & imid_nhsd==1 & imid_drug==1 & downs_syndrome==0 &solid_cancer==0 &haem_disease==0 &renal_disease==0 &liver_disease==0 &immunosupression==0 &hiv_aids==0 &organ_transplant==0 &rare_neuro==0
@@ -364,15 +367,15 @@ count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosu
 count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_on_drug==1 &downs_syndrome==0 &solid_cancer==0 &haem_disease==0 &renal_disease==0 &liver_disease==0 &immunosupression==0 &hiv_aids==0 &organ_transplant==0 &rare_neuro==0
 replace imid_drug=0 if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_on_drug==1 //ignore if steriods<4 scripts in 6m & not coded other imid drug 
 replace oral_steroid_drugs_nhsd=0 if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 //ignore if steriods<4 scripts in 6m
-count if imid_on_drug==0 & imid_nhsd==1 & imid_drug==0 //should be same number as those dropped above 
-replace imid_on_drug=0 if imid_nhsd==1 & imid_drug==0 
+count if imid_on_drug==1 & imid_nhsd==1 & imid_drug==0 
+replace imid_on_drug=0 if imid_nhsd==1 & imid_drug==0 //ignore if steriods<4 & not coded other imid drug 
 replace imid_on_drug=0 if imid_nhsd==0 & imid_drug==1 
 gen high_risk_cohort_codelist=((downs_syndrome + solid_cancer + haem_disease + renal_disease + liver_disease + imid_on_drug + immunosupression + hiv_aids + organ_transplant + rare_neuro )>0)
+tab high_risk_cohort_codelist dataset,m 
+drop if high_risk_cohort_codelist==. & dataset==0 //should be same number dropped as change above 
 tab high_risk_cohort_codelist dataset
-tab high_risk_cohort_nhsd dataset
-bys dataset:count if high_risk_cohort_codelist==. & high_risk_cohort_nhsd==.
-tab high_risk_cohort_nhsd high_risk_cohort_codelist
-tab high_risk_cohort_nhsd high_risk_cohort_codelist if high_risk_cohort_therapeutics!="other"
+bys dataset:count if high_risk_cohort_codelist==. & high_risk_cohort_ther==.
+
 ** combine two high risk cohorts into one 
 foreach var of varlist downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro {
 	gen `var'_comb = `var'
@@ -396,14 +399,17 @@ foreach var of varlist sotrovimab molnupiravir paxlovid {
 }
 gen drug=7 if remdesivir==date_treated&remdesivir!=.&date_treated!=.
 replace drug=8 if casirivimab==date_treated&casirivimab!=.&date_treated!=.
-tab drug 
+tab drug,m 
 replace drug=1 if sotrovimab_start==1 
 replace drug=2 if paxlovid_start==1
 replace drug=3 if molnupiravir_start==1
+tab drug,m 
 replace drug=4 if sotrovimab==date_treated & sotrovimab_start==0 
 replace drug=5 if paxlovid==date_treated & paxlovid_start==0 
 replace drug=6 if molnupiravir==date_treated & molnupiravir_start==0 
-replace drug=0 if control_dataset==1
+tab drug,m 
+bys dataset: tab drug,m
+replace drug=0 if drug==.
 label define drug 0 "control" 1 "sotrovimab" 2 "paxlovid" 3"molnupiravir", replace
 label values drug drug
 tab drug, m
@@ -419,18 +425,18 @@ bys drug:count if covid_test_positive_date==. // should be 0 in control arm
 bys drug:count if covid_test_positive_date!=. 
 bys drug:count if covid_test_positive_date!=.&date_treated!=.& date_treated>covid_test_positive_date //test prior to treatment
 bys drug:count if covid_test_positive_date!=.&date_treated!=.& (date_treated-covid_test_positive_date>0)&(date_treated-covid_test_positive_date<=5) //test <5d
-bys drug:count if covid_test_positive_date2!=.&date_treated!=.& date_treated<covid_test_positive_date2 //2nd covid episode prior to treatment 
+bys drug:count if covid_test_positive_date2!=.&date_treated!=.& date_treated>covid_test_positive_date2 //2nd covid episode prior to treatment 
 bys drug:count if covid_test_positive_date2!=.&date_treated!=.& (date_treated-covid_test_positive_date2>0)&(date_treated-covid_test_positive_date2<=5) //test <5d
-bys drug:count if covid_test_positive_date3!=.&date_treated!=.& date_treated<covid_test_positive_date3 //3rd covid episode prior to treatment 
+bys drug:count if covid_test_positive_date3!=.&date_treated!=.& date_treated>covid_test_positive_date3 //3rd covid episode prior to treatment 
 bys drug:count if covid_test_positive_date3!=.&date_treated!=.& (date_treated-covid_test_positive_date3>0)&(date_treated-covid_test_positive_date3<=5) //test <5d
 ** check in control group that covid positive, and not repeat covid test after an infection within 30 days prior
 tab covid_test_positive covid_positive_previous_30_days if drug==0
 drop if drug==0 & covid_test_positive==1 & covid_positive_previous_30_days==1
 ** gen study start and study end date
 gen campaign_start=mdy(12,16,2021)
-gen study_end_date=mdy(01,08,2023)
-gen start_date_28=start_date + 28
-format campaign_start study_end_date start_date_28 %td
+gen study_end_date=mdy(09,01,2023)
+gen start_date_29=start_date + 29
+format campaign_start study_end_date start_date_29 %td
 
 
 
@@ -501,6 +507,21 @@ count if ae_taste_icd_prim!=.
 count if ae_anaphylaxis_icd!=.
 count if ae_anaphylaxis_icd_prim!=.
 
+*** combined ae from GP, hosp and A&E
+egen ae_diverticulitis = rmin(ae_diverticulitis_snomed ae_diverticulitis_icd_prim ae_diverticulitis_ae)
+egen ae_diarrhoea = rmin(ae_diarrhoea_snomed)
+egen ae_taste = rmin(ae_taste_snomed ae_taste_icd_prim)
+egen ae_anaphylaxis = rmin(ae_anaphylaxis_snomed ae_anaphlaxis_ae ae_anaphylaxis_icd_prim)
+egen ae_rash = rmin(ae_rash_snomed)
+egen ae_drug = rmin(ae_drugreact_ae)
+egen ae_allergic = rmin(ae_allergic_ae)
+egen ae_ra = rmin(new_ae_ra_snomed new_ae_ra_icd_prim new_ae_ra_ae)
+egen ae_sle = rmin(new_ae_sle_ctv new_ae_sle_icd_prim new_ae_sle_ae)
+egen ae_psorasis = rmin(new_ae_psoriasis_snomed new_ae_psoriasis_ae)
+egen ae_psa = rmin(new_ae_psa_snomed new_ae_psa_ae)
+egen ae_ankspon = rmin(new_ae_ankspon_ctv new_ae_ankspon_ae)
+egen ae_ibd = rmin(new_ae_ibd_snomed new_ae_ibd_ae)
+
 *** global all ae
 global ae_spc			ae_diverticulitis_snomed		///
 						ae_diarrhoea_snomed				///
@@ -527,10 +548,23 @@ global ae_imae_emerg	new_ae_ra_ae					///
 						new_ae_psoriasis_ae				///
 						new_ae_psa_ae					///
 						new_ae_ankspon_ae				///
-						new_ae_ibd_ae				
+						new_ae_ibd_ae	
+global ae_disease		ae_diverticulitis 				///
+						ae_diarrhoea					///
+						ae_taste 						///
+						ae_anaphylaxis 					///
+						ae_rash 						///
+						ae_drug 						///
+						ae_allergic 					///
+						ae_ra 							///
+						ae_sle 							///
+						ae_psorasis 					///
+						ae_psa 							///
+						ae_ankspon 						///
+						ae_ibd 					
 									
 *remove event if occurred before start
-foreach x in $ae_spc $ae_spc_icd $ae_spc_emerg $ae_drug $ae_drug_icd $ae_drug_emerg $ae_imae $ae_imae_icd $ae_imae_emerg{
+foreach x in $ae_spc $ae_spc_icd $ae_spc_emerg $ae_drug $ae_drug_icd $ae_drug_emerg $ae_imae $ae_imae_icd $ae_imae_emerg $ae_disease{
 				display "`x'"
 				count if (`x' > start_date | `x' < start_date + 28) & `x'!=. 
 				count if (`x' < start_date | `x' > start_date + 28) & `x'!=. & drug==0
@@ -550,6 +584,7 @@ egen ae_imae_emerg = rmin($ae_imae_emerg)
 egen ae_imae_all = rmin($ae_imae $ae_imae_icd $ae_imae_emerg)	
 egen ae_all = rmin($ae_spc $ae_spc_icd $ae_spc_emerg $ae_drug $ae_drug_icd $ae_drug_emerg $ae_imae $ae_imae_icd $ae_imae_emerg)
 egen ae_all_serious = rmin($ae_spc_icd $ae_spc_emerg $ae_drug_icd $ae_drug_emerg $ae_imae_icd $ae_imae_emerg)
+
 by drug, sort: count if ae_spc_all!=.
 by drug, sort: count if ae_drug_all!=.
 by drug, sort: count if ae_imae_all!=.
@@ -631,8 +666,8 @@ bys drug: count if all_hosp_date0==covid_hosp_date0 & all_hosp_date0==covid_hosp
 bys drug: count if all_hosp_date1==covid_hosp_date1 & all_hosp_date1==covid_hosp_date_mabs&all_hosp_date1!=.&(hosp_discharge_date1-all_hosp_date1)==1
 // REPLACE - ignore covid admission if admission is for covid AND day 0 or day 1 after treatment AND daycase
 replace all_hosp_date=. if all_hosp_date0==covid_hosp_date0 & all_hosp_date0==hosp_discharge_date0 & all_hosp_date0!=.
-replace all_hosp_date=. if all_hosp_date1==covid_hosp_date1 & all_hosp_date0==hosp_discharge_date1 & all_hosp_date1!=.
-// REPLACE - ignore admission if admission is for covid AND day 0 or day 1 after treatment AND a mab procedures for sotro 
+replace all_hosp_date=. if all_hosp_date1==covid_hosp_date1 & all_hosp_date1==hosp_discharge_date1 & all_hosp_date1!=.
+// REPLACE - ignore admission if admission is for covid AND day 0 or day 1 after treatment 
 replace all_hosp_date=. if all_hosp_date0==covid_hosp_date0 & all_hosp_date0==covid_hosp_date_mabs&all_hosp_date0!=.&all_hosp_date0==hosp_discharge_date0
 replace all_hosp_date=. if all_hosp_date1==covid_hosp_date1 & all_hosp_date1==covid_hosp_date_mabs&all_hosp_date1!=.&all_hosp_date1==hosp_discharge_date1
 replace all_hosp_date=. if all_hosp_date0==covid_hosp_date0 & all_hosp_date0==covid_hosp_date_mabs&all_hosp_date0!=.&(hosp_discharge_date0 - all_hosp_date0)==1
@@ -760,7 +795,7 @@ sum days_vacc_treat,de
 gen days_vacc_treat_test = days_vacc_covid if drug==0
 replace days_vacc_treat_test = days_vacc_treat if drug>0
 sum days_vacc_treat_test,de
-gen month_vacc_covid=ceil(days_vacc_covid/30)
+gen month_vacc_covid=ceil(days_vacc_treat_test/30)
 tab month_vacc_covid,m
 *Calendar time*
 gen day_after_campaign=start_date-mdy(12,15,2021)
@@ -768,7 +803,7 @@ sum day_after_campaign,de
 gen month_after_campaign=ceil((start_date-mdy(12,15,2021))/30)
 tab month_after_campaign,m
 tab start_date if month_after_campaign>100
-//drop if month_after_campaign>100
+drop if month_after_campaign>100
 * Variant
 label define sgtf_new 0 "S gene detected" 1 "confirmed SGTF" 9 "NA"
 label values sgtf_new sgtf_new
@@ -848,24 +883,27 @@ global ae		ae_spc_all 				///
 				covid_hosp_date			///
 				all_hosp_date			///
 				died_date_ons
+
 * Generate failure 
-foreach x in	$ae $ae_spc $ae_spc_icd $ae_spc_emerg ///
+foreach x in	$ae $ae_disease ///
+				$ae_spc $ae_spc_icd $ae_spc_emerg ///
 				$ae_drug $ae_drug_icd $ae_drug_emerg ///
 				$ae_imae $ae_imae_icd $ae_imae_emerg ///
 				{
 	display "`x'"
 	by drug, sort: count if `x'!=.
 	by drug, sort: count if `x'>=start_date & `x'!=.
-	by drug, sort: count if `x'>=start_date & `x'<start_date_28 &`x'!=.
-	gen fail_`x'=(`x'!=.&`x'<= min(study_end_date, start_date_28, paxlovid, molnupiravir)) if drug==1
-	replace fail_`x'=(`x'!=.&`x'<= min(study_end_date, start_date_28, sotrovimab, molnupiravir)) if drug==2
-	replace fail_`x'=(`x'!=.&`x'<= min(study_end_date, start_date_28, sotrovimab, paxlovid)) if drug==3
-	replace fail_`x'=(`x'!=.&`x'<= min(study_end_date, start_date_28, sotrovimab, paxlovid, molnupiravir)) if drug==0
+	by drug, sort: count if `x'>=start_date & `x'<start_date_29 &`x'!=.
+	gen fail_`x'=(`x'!=.&`x'<= min(study_end_date, start_date_29, paxlovid, molnupiravir)) if drug==1
+	replace fail_`x'=(`x'!=.&`x'<= min(study_end_date, start_date_29, sotrovimab, molnupiravir)) if drug==2
+	replace fail_`x'=(`x'!=.&`x'<= min(study_end_date, start_date_29, sotrovimab, paxlovid)) if drug==3
+	replace fail_`x'=(`x'!=.&`x'<= min(study_end_date, start_date_29, sotrovimab, paxlovid, molnupiravir)) if drug==0
 	tab drug fail_`x', m
 }
 
 * Add half-day buffer if outcome on indexdate
-foreach x in	$ae $ae_spc $ae_spc_icd $ae_spc_emerg ///
+foreach x in	$ae $ae_disease ///
+				$ae_spc $ae_spc_icd $ae_spc_emerg ///
 				$ae_drug $ae_drug_icd $ae_drug_emerg ///
 				$ae_imae $ae_imae_icd $ae_imae_emerg ///
 				{
@@ -874,15 +912,16 @@ foreach x in	$ae $ae_spc $ae_spc_icd $ae_spc_emerg ///
 }
 
 *Generate censor date
-foreach x in	$ae $ae_spc $ae_spc_icd $ae_spc_emerg ///
+foreach x in	$ae $ae_disease ///
+				$ae_spc $ae_spc_icd $ae_spc_emerg ///
 				$ae_drug $ae_drug_icd $ae_drug_emerg ///
 				$ae_imae $ae_imae_icd $ae_imae_emerg ///
 				{
 	gen stop_`x'=`x' if fail_`x'==1
-	replace stop_`x'=min(death_date,dereg_date,study_end_date,start_date_28,paxlovid,molnupiravir) if fail_`x'==0&drug==1
-	replace stop_`x'=min(death_date,dereg_date,study_end_date,start_date_28,sotrovimab,molnupiravir) if fail_`x'==0&drug==2
-	replace stop_`x'=min(death_date,dereg_date,study_end_date,start_date_28,sotrovimab,paxlovid) if fail_`x'==0&drug==3
-	replace stop_`x'=min(death_date,dereg_date,study_end_date,start_date_28,sotrovimab,paxlovid,molnupiravir) if fail_`x'==0&drug==0
+	replace stop_`x'=min(death_date,dereg_date,study_end_date,start_date_29,paxlovid,molnupiravir) if fail_`x'==0&drug==1
+	replace stop_`x'=min(death_date,dereg_date,study_end_date,start_date_29,sotrovimab,molnupiravir) if fail_`x'==0&drug==2
+	replace stop_`x'=min(death_date,dereg_date,study_end_date,start_date_29,sotrovimab,paxlovid) if fail_`x'==0&drug==3
+	replace stop_`x'=min(death_date,dereg_date,study_end_date,start_date_29,sotrovimab,paxlovid,molnupiravir) if fail_`x'==0&drug==0
 	format %td stop_`x'
 }
 

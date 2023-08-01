@@ -1,8 +1,8 @@
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/logs/cleaning_dataset_combine_2.log
+       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/logs/preceed_rate.log
   log type:  text
- opened on:   1 Aug 2023, 13:59:17
+ opened on:   1 Aug 2023, 14:22:11
 
 . 
 . *Set Ado file path
@@ -13,12 +13,16 @@
   [4]  (PERSONAL)  "C:\users\PUBLIC\documents/"
   [5]  (PLUS)      "C:\users\PUBLIC\documents/"
   [6]  (OLDPLACE)  "c:\ado/"
-  [7]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/analysis/ado"
+  [7]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/analysis/ado"
+  [8]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/analysis/ado"
 
 . 
-. *       Import control dataset
-. import delimited "$projectdir/output/input_control.csv", clear
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/output/input_control.csv not found
+. * SET Index date 
+. global indexdate                        = "01/03/2020"
+
+. 
+. use "$projectdir/output/data/main", clear
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/output/data/main.dta not found
 r(601);
 
 end of do-file
@@ -29,13 +33,13 @@ r(601);
 
 . ********************************************************************************
 . *
-. *       Do-file:                        define covariates.do
+. *       Do-file:                        preceeding rate
 . *       Project:                        Sotrovimab-Paxlovid-Molnupiravir
-. *   Date:                               15/2/23
+. *   Date:                               06/4/23
 . *       Programmed by:          Katie Bechman
-. *       Description:            data management, reformat variables, categorise variables, label variables 
-. *       Data used:                      data in memory (from output/input.csv) 
-. *       Data created:           analysis main.dta  (main analysis dataset)
+. *       Description:            run cox models
+. *       Data used:                      main.dta
+. *       Data created:           preceeding rate
 . *       Other output:           logfiles, printed to folder $Logdir
 . *       User installed ado: (place .ado file(s) in analysis folder)
 . 
@@ -44,7 +48,6 @@ r(601);
 . global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
 
 . //global projectdir `c(pwd)'
-. 
 . di "$projectdir"
 C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir
 
