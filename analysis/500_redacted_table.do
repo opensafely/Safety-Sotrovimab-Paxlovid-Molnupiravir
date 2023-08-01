@@ -66,6 +66,7 @@ foreach var of varlist organ_transplant_comb hiv_aids_comb immunosupression_comb
 	rename totalstr total_all
 	gen missingstr = string(missing)
 	replace missingstr = "-" if count_all =="<8"
+	replace missingstr = "-" if missing <=7 & missing !=0
 	rename missingstr missing_all
 	drop count percent total missing
 	list variable `var' count percent total missing
@@ -144,6 +145,7 @@ foreach var of varlist organ_transplant_comb hiv_aids_comb immunosupression_comb
 	rename totalstr total_`i'
 	gen missingstr = string(missing)
 	replace missingstr = "-" if count_`i' =="<8"
+	replace missingstr = "-" if missing <=7 & missing !=0
 	rename missingstr missing_`i'
 	drop count percent total missing
 	list `var' count percent total missing
@@ -212,12 +214,16 @@ foreach var of varlist bmi age {
 	restore
 }	
 use "$projectdir/output/tables/baseline_table_redact_mean.dta", clear
-foreach var of varlist count mean stdev {
-	rename `var' `var'_
-}
-reshape wide count_ mean_ stdev_, i(variable) j(drug_str, string) 
 save "$projectdir/output/tables/baseline_table_redact_mean.dta", replace
 export excel  "$projectdir/output/tables/baseline_table_redact_mean.dta", replace
 export delimited using "$projectdir/output/tables/baseline_table_redact_mean.csv" , novarnames  replace		
 
 log close
+
+
+
+
+
+
+
+

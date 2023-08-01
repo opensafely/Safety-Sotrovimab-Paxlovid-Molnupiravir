@@ -52,38 +52,48 @@ gen new_pre_sle_ctv = pre_sle_ctv if pre_sle_ctv_new==0 & pre_sle_icd_new==0
 gen new_pre_sle_icd = pre_sle_icd_prim if pre_sle_ctv_new==0 & pre_sle_icd_new==0
 gen new_pre_sle_ae = pre_sle_ae if pre_sle_ctv_new==0 & pre_sle_icd_new==0  
 
-**for ICD using primary diagnosis as per main analyses
-global preceeding_ae    new_pre_ra_ae 				///
-						new_pre_ra_snomed 			///
-						new_pre_ra_icd 				///
-						new_pre_ankspon_ctv			///
-						new_pre_ankspon_ae 			///
-						new_pre_psoriasis_snomed	///
-						new_pre_psoriasis_ae 		///
-						new_pre_psa_ae 				///
-						new_pre_sle_ctv 			///
-						new_pre_psa_snomed 			///
-						new_pre_sle_icd 			///
-						new_pre_sle_ae				///
-						pre_diverticulitis_icd_prim ///
-						pre_diverticulitis_snomed	///
-						pre_diverticulitis_ae		///
-						pre_diarrhoea_snomed 		///
-						pre_taste_snomed			///
-						pre_taste_icd_prim			///
-						pre_rash_snomed				///
-						pre_anaphylaxis_icd_prim	///
-						pre_anaphylaxis_snomed		///
-						pre_anaphlaxis_ae			///
-						pre_drugreact_ae			///
-						pre_allergic_ae			
-  
+*** combined ae from GP, hosp and A&E
+egen pre_diverticulitis = rmin(pre_diverticulitis_icd_prim pre_diverticulitis_snomed pre_diverticulitis_ae)	 
+egen pre_diarrhoea = rmin(pre_diarrhoea_snomed)
+egen pre_taste = rmin(pre_taste_snomed pre_taste_icd_prim)
+egen pre_anaphylaxis = rmin(pre_anaphylaxis_icd_prim pre_anaphylaxis_snomed	pre_anaphlaxis_ae)
+egen pre_rash = rmin(pre_rash_snomed)
+egen pre_drug = rmin(pre_drugreact_ae)
+egen pre_allergic = rmin(pre_allergic_ae)
+egen pre_ra = rmin(new_pre_ra_ae new_pre_ra_snomed new_pre_ra_icd)
+egen pre_sle = rmin(new_pre_sle_ctv new_pre_sle_icd new_pre_sle_ae)
+egen pre_psorasis = rmin(new_pre_psoriasis_snomed new_pre_psoriasis_ae)
+egen pre_psa = rmin(new_pre_psa_ae new_pre_psa_snomed)
+egen pre_ankspon = rmin(new_pre_ankspon_ctv	new_pre_ankspon_ae)
+egen pre_ibd = rmin(new_ae_ibd_snomed new_ae_ibd_ae)
+egen pre_spc_all = rmin(pre_diverticulitis pre_diarrhoea pre_taste) 
+egen pre_drug_all = rmin(pre_anaphylaxis pre_rash pre_drug pre_allergic)
+egen pre_imae_all = rmin(pre_ra pre_sle pre_psorasis pre_psa pre_ankspon pre_ibd)	
+egen pre_ae_all = rmin($pre_spc_all $pre_drug_all $pre_imae_all)
+
+global pre_ae_group			pre_spc_all 					///
+							pre_drug_all					///		
+							pre_imae_all 					///				
+							pre_ae_all
+global pre_ae_disease		pre_diverticulitis 				///
+							pre_diarrhoea					///
+							pre_taste 						///
+							pre_anaphylaxis 				///
+							pre_rash 						///
+							pre_drug 						///
+							pre_allergic 					///
+							pre_ra 							///
+							pre_sle 						///
+							pre_psorasis 					///
+							pre_psa 						///
+							pre_ankspon 					///
+							pre_ibd 		
 
 *gen start date for comparator rate
 gen start_comparator = start_date-1460
-gen start_comparator_28 = start_date - 1432
+gen start_comparator_28 = start_date - 1431
 *remove if occurred outside of window, gen failure and stop date: 
-foreach x in $preceeding_ae {
+foreach x in $pre_ae_group $pre_ae_disease {
 		display "`x'"
 		count if `x'!=. 
 		count if (`x'<start_comparator | `x'>start_comparator_28) & `x'!=.  // event outside windown - should be 0 
@@ -106,7 +116,7 @@ postfile `comparator' str20(failure) ///
 	using "$projectdir/output/tables/comparator_rate_summary", replace	
 						 
 * Failures over 1 years - convert into 28 day rate
-foreach fail in $preceeding_ae {
+foreach fail in $pre_ae_group $pre_ae_disease {
 							 
 	stset stop_`fail', id(patient_id) origin(time start_comparator) enter(time start_comparator) failure(fail_`fail'==1)	
 		stptime 
