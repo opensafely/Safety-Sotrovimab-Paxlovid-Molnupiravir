@@ -53,7 +53,7 @@ tabstat age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer 
 
 tempname coxoutput_propensity
 
-postfile `coxoutput_propensity' str20(model) ///
+postfile `coxoutput_propensity' str20(model) str20(fail)   ///
 	hr_sot lc_sot uc_sot hr_pax lc_pax uc_pax hr_mol lc_mol uc_mol ///
 	using "$projectdir/output/tables/cox_model_propensity", replace						
 
@@ -67,7 +67,7 @@ global fulladj2 age i.sex i.region_nhs paxlovid_contraindicated downs_syndrome s
 				liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 White ///
 				1b.bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension
 		
-				
+	
 foreach model in agesex adj fulladj1 fulladj2 {
 		logistic no_drug $`model'
 		predict p_`model'
@@ -78,7 +78,9 @@ foreach model in agesex adj fulladj1 fulladj2 {
 		graph export "$projectdir/output/figures/histogram_`model'.svg", as(svg) replace
 		gen iptw_`model' = 1/p_`model' if no_drug==1
 		replace iptw_`model' = 1/(1-p_`model') if no_drug==0
-		stset stop_ae_all [pw=iptw_`model'], id(patient_id) origin(time start_date) enter(time start_date) failure(fail_ae_all==1) 
+		
+		foreach fail in ae_spc_all ae_drug_all ae_imae_all ae_all{
+		stset stop_`fail' [pw=iptw_`model'], id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 		stcox i.drug, vce(robust)
 						matrix b = r(table)
 						local hr_sot = b[1,2]
@@ -90,7 +92,8 @@ foreach model in agesex adj fulladj1 fulladj2 {
 						local hr_mol = b[1,4]
 						local lc_mol = b[5,4]
 						local uc_mol = b[6,4]
-		post `coxoutput_propensity' ("`model'") (`hr_sot') (`lc_sot') (`uc_sot') (`hr_pax') (`lc_pax') (`uc_pax') (`hr_mol') (`lc_mol') (`uc_mol')	
+		post `coxoutput_propensity' ("`model'") ("`fail'") (`hr_sot') (`lc_sot') (`uc_sot') (`hr_pax') (`lc_pax') (`uc_pax') (`hr_mol') (`lc_mol') (`uc_mol')
+}
 }
 
 postclose `coxoutput_propensity'

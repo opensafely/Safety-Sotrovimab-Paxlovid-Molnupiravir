@@ -12,8 +12,8 @@
 
 ****************************************************************************************************************
 **Set filepaths
-global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
-//global projectdir `c(pwd)'
+//global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+global projectdir `c(pwd)'
 
 di "$projectdir"
 capture mkdir "$projectdir/output/data"
@@ -59,51 +59,111 @@ foreach var of varlist 	 pre_covid_hosp_date					///
 						 creatinine_snomed_date					///
 						 creatinine_short_snomed_date			///
 						 ae_diverticulitis_icd					///
+						 ae_diverticulitis_icd_prim				///
 						 ae_diverticulitis_snomed				///
+						 ae_diverticulitis_ae					///			 
 						 ae_diarrhoea_snomed					///
+						 ae_diarrhoea_icd						///
+						 ae_diarrhoea_icd_prim					///
+						 ae_diarrhoeal_icd						///
+						 ae_diarrhoeal_icd_prim					///		 
 						 ae_taste_snomed						///
 						 ae_taste_icd							///
+						 ae_taste_icd_prim						///
 						 ae_rash_snomed							///
 						 ae_rash_ae								///
+						 ae_rash_icd							///
+						 ae_rash_icd_prim						///
 						 ae_anaphylaxis_icd						///
-						 ae_anaphylaxis_snomed					///
+					     ae_anaphylaxis_icd_prim				///
+					     ae_anaphylaxis_snomed					///
 						 ae_anaphlaxis_ae						///
-						 ae_drugreact_ae						///
-						 ae_allergic_ae							///
-						 ae_sjs_ae								///
-						 ae_rheumatoid_arthritis_snomed			///
+						 ae_severedrug_icd						///
+						 ae_severedrug_icd_prim					///
+						 ae_severedrug_sjs_icd					///
+						 ae_severedrug_sjs_icd_prim				///
+						 ae_severedrug_snomed					///
+						 ae_severedrug_ae						///
+						 ae_nonsevere_drug_snomed				///
+						 ae_nonsevere_drug_ae					///
 						 ae_rheumatoid_arthritis_icd			///
-						 ae_sle_ctv								///
-						 ae_sle_icd								///
-						 ae_psoriasis_snomed					///
-						 ae_psoriatic_arthritis_snomed			///
-						 ae_ankylosing_spondylitis_ctv			///
-						 ae_ibd_snomed							///
-						 ae_diverticulitis_ae					///
-						 ae_rheumatoid_arthritis_ae				///
-						 ae_sle_ae								///
-						 ae_psoriasis_ae						///
-						 ae_psoriatic_arthritis_ae				///
-						 ae_ankylosing_spondylitis_ae			///
-						 ae_ibd_ae								///
-						 ae_diverticulitis_icd_prim				///	
-						 ae_taste_icd_prim						///
-						 ae_anaphylaxis_icd_prim				///
 						 ae_rheumatoid_arthritis_icd_prim		///
+						 ae_rheumatoid_arthritis_snomed			///
+						 ae_rheumatoid_arthritis_ae				///
+						 ae_sle_icd								///
 						 ae_sle_icd_prim						///
+						 ae_sle_ae								///
+						 ae_sle_ctv								///
+						 ae_psoriasis_icd						///
+						 ae_psoriasis_icd_prim					///
+						 ae_psoriasis_ae						///
+						 ae_psoriasis_snomed					///
+						 ae_psa_icd								///
+						 ae_psa_icd_prim						///
+						 ae_psa_snomed							///
+						 ae_psa_ae								///
+						 ae_psa_snomed							///
+						 ae_axspa_icd							///
+						 ae_axspa_icd_prim						///
+						 ae_axspa_ctv							///
+						 ae_axspa_ae							///
+						 ae_ibd_icd								///
+						 ae_ibd_icd_prim						///
+						 ae_ibd_ctv								///
+						 ae_ibd_ae								///
+						 pre_diverticulitis_icd					///
 						 pre_diverticulitis_icd_prim			///
+						 pre_diverticulitis_snomed				///
+						 pre_diverticulitis_ae					///
+						 pre_diarrhoea_snomed 					///
+						 pre_diarrhoea_icd						///
+						 pre_diarrhoea_icd_prim					///
+						 pre_diarrhoeal_icd						///
+						 pre_diarrhoeal_icd_prim				///
+						 pre_taste_icd							///
 						 pre_taste_icd_prim						///
+						 pre_taste_snomed						///
+						 pre_rash_snomed						///
+						 pre_rash_ae							///
+						 pre_rash_icd							///
+						 pre_rash_icd_prim 						///
 						 pre_anaphylaxis_icd_prim				///
-						 pre_sle_icd_prim						///
+						 pre_anaphylaxis_icd					///
+						 pre_anaphylaxis_snomed					///						 
+						 pre_anaphlaxis_ae						///
+						 pre_severedrug_icd						///
+						 pre_severedrug_icd_prim				///
+						 pre_severedrug_sjs_icd					///
+						 pre_severedrug_sjs_icd_prim			///
+						 pre_severedrug_snomed					///
+						 pre_severedrug_ae						///
+					     pre_nonsevere_drug_snomed				///
+						 pre_nonsevere_drug_ae					///
 						 pre_rheumatoid_icd_prim				///
-						 rheumatoid_arthritis_nhsd_snomed		///
-						 rheumatoid_arthritis_nhsd_icd10		///
-						 sle_nhsd_ctv							///
-						 sle_nhsd_icd10							///
-						 psoriasis_nhsd							///
-						 psoriatic_arthritis_nhsd				///
-						 ankylosing_spondylitis_nhsd			///
-						 ibd_ctv								///
+						 pre_sle_icd_prim						///
+						 pre_sle_ctv							///
+						 pre_sle_icd							///
+						 pre_sle_ae								///
+						 pre_rheumatoid_arthritis_icd			///
+						 pre_rheumatoid_icd_prim				///
+						 pre_rheumatoid_arthritis_ae			///
+						 pre_rheumatoid_arthritis_snomed		///
+						 pre_psoriasis_icd						///
+						 pre_psoriasis_icd_prim					///
+						 pre_psoriasis_snomed					///
+						 pre_psoriasis_ae						/// 
+						 pre_psa_icd							/// 
+						 pre_psa_icd_prim						/// 
+						 pre_psa_ae								///
+						 pre_psa_snomed							///						 
+						 pre_axspa_icd							///	
+						 pre_axspa_icd_prim						///	
+						 pre_axspa_ctv							///
+						 pre_axspa_ae							///
+						 pre_ibd_ae								///
+						 pre_ibd_ctv							///
+						 pre_ibd_icd							///
+						 pre_ibd_icd_prim						///
 						 allcause_emerg_aande					///
 						 all_hosp_date 							///
 						 all_hosp_date0 						///
@@ -125,34 +185,7 @@ foreach var of varlist 	 pre_covid_hosp_date					///
 						 covid_hosp_date_mabs					/// 
 						 covid_hosp_date_mabs_not_primary		/// 
 						 died_date_ons							///
-						 died_ons_covid							///
-						 pre_diverticulitis_icd					///
-						 pre_diverticulitis_snomed				///
-						 pre_diverticulitis_ae					///
-						 pre_diarrhoea_snomed 					///
-						 pre_taste_snomed						///
-						 pre_taste_icd							///
-						 pre_rash_snomed						///
-						 pre_anaphylaxis_icd					///
-						 pre_anaphylaxis_snomed					///
-						 pre_anaphlaxis_ae						///
-						 pre_drugreact_ae						///
-						 pre_allergic_ae						///
-						 pre_anaphlaxis_ae						///
-						 pre_rheumatoid_arthritis_ae			///
-						 pre_rheumatoid_arthritis_snomed		///
-						 pre_rheumatoid_arthritis_icd			///
-						 pre_ankylosing_spondylitis_ctv			///
-						 pre_ankylosing_spondylitis_ae			///
-						 pre_psoriasis_snomed					///
-						 pre_psoriasis_ae						///
-						 pre_psoriatic_arthritis_ae				///
-						 pre_psoriatic_arthritis_snomed			///
-						 pre_sle_ctv							///
-						 pre_sle_icd							///
-						 pre_sle_ae								///
-						 pre_ibd_ae								///
-						 pre_ibd_snomed	{					 
+						 died_ons_covid	{					 
 	capture confirm string variable `var'
 	if _rc==0 {
 	rename `var' a
@@ -168,8 +201,6 @@ save "$projectdir/output/data/control.dta", replace
 * import treatment dataset
 import delimited "$projectdir/output/input_treatment.csv", clear
 gen treatment_dataset=1
-
-ae_sjs_AE
 
 *	Convert control strings to dates     * 
 foreach var of varlist 	 pre_covid_hosp_date					///
@@ -199,51 +230,111 @@ foreach var of varlist 	 pre_covid_hosp_date					///
 						 creatinine_snomed_date					///
 						 creatinine_short_snomed_date			///
 						 ae_diverticulitis_icd					///
+						 ae_diverticulitis_icd_prim				///
 						 ae_diverticulitis_snomed				///
+						 ae_diverticulitis_ae					///			 
 						 ae_diarrhoea_snomed					///
+						 ae_diarrhoea_icd						///
+						 ae_diarrhoea_icd_prim					///
+						 ae_diarrhoeal_icd						///
+						 ae_diarrhoeal_icd_prim					///		 
 						 ae_taste_snomed						///
 						 ae_taste_icd							///
+						 ae_taste_icd_prim						///
 						 ae_rash_snomed							///
 						 ae_rash_ae								///
+						 ae_rash_icd							///
+						 ae_rash_icd_prim						///
 						 ae_anaphylaxis_icd						///
-						 ae_anaphylaxis_snomed					///
+					     ae_anaphylaxis_icd_prim				///
+					     ae_anaphylaxis_snomed					///
 						 ae_anaphlaxis_ae						///
-						 ae_drugreact_ae						///
-						 ae_allergic_ae							///
-						 ae_sjs_ae								///
-						 ae_rheumatoid_arthritis_snomed			///
+						 ae_severedrug_icd						///
+						 ae_severedrug_icd_prim					///
+						 ae_severedrug_sjs_icd					///
+						 ae_severedrug_sjs_icd_prim				///
+						 ae_severedrug_snomed					///
+						 ae_severedrug_ae						///
+						 ae_nonsevere_drug_snomed				///
+						 ae_nonsevere_drug_ae					///
 						 ae_rheumatoid_arthritis_icd			///
-						 ae_sle_ctv								///
-						 ae_sle_icd								///
-						 ae_psoriasis_snomed					///
-						 ae_psoriatic_arthritis_snomed			///
-						 ae_ankylosing_spondylitis_ctv			///
-						 ae_ibd_snomed							///
-						 ae_diverticulitis_ae					///
+						 ae_rheumatoid_arthritis_icd_prim		///
+						 ae_rheumatoid_arthritis_snomed			///
 						 ae_rheumatoid_arthritis_ae				///
-						 ae_sle_ae								///
-						 ae_psoriasis_ae						///
-						 ae_psoriatic_arthritis_ae				///
-						 ae_ankylosing_spondylitis_ae			///
-						 ae_ibd_ae								///
-						 ae_diverticulitis_icd_prim				///	
-						 ae_taste_icd_prim						///
-						 ae_anaphylaxis_icd_prim				///
-						 ae_rheumatoid_arthritis_icd_pri		///
+						 ae_sle_icd								///
 						 ae_sle_icd_prim						///
+						 ae_sle_ae								///
+						 ae_sle_ctv								///
+						 ae_psoriasis_icd						///
+						 ae_psoriasis_icd_prim					///
+						 ae_psoriasis_ae						///
+						 ae_psoriasis_snomed					///
+						 ae_psa_icd								///
+						 ae_psa_icd_prim						///
+						 ae_psa_snomed							///
+						 ae_psa_ae								///
+						 ae_psa_snomed							///
+						 ae_axspa_icd							///
+						 ae_axspa_icd_prim						///
+						 ae_axspa_ctv							///
+						 ae_axspa_ae							///
+						 ae_ibd_icd								///
+						 ae_ibd_icd_prim						///
+						 ae_ibd_ctv								///
+						 ae_ibd_ae								///
+						 pre_diverticulitis_icd					///
 						 pre_diverticulitis_icd_prim			///
+						 pre_diverticulitis_snomed				///
+						 pre_diverticulitis_ae					///
+						 pre_diarrhoea_snomed 					///
+						 pre_diarrhoea_icd						///
+						 pre_diarrhoea_icd_prim					///
+						 pre_diarrhoeal_icd						///
+						 pre_diarrhoeal_icd_prim				///
+						 pre_taste_icd							///
 						 pre_taste_icd_prim						///
+						 pre_taste_snomed						///
+						 pre_rash_snomed						///
+						 pre_rash_ae							///
+						 pre_rash_icd							///
+						 pre_rash_icd_prim 						///
 						 pre_anaphylaxis_icd_prim				///
+						 pre_anaphylaxis_icd					///
+						 pre_anaphylaxis_snomed					///						 
+						 pre_anaphlaxis_ae						///
+						 pre_severedrug_icd						///
+						 pre_severedrug_icd_prim				///
+						 pre_severedrug_sjs_icd					///
+						 pre_severedrug_sjs_icd_prim			///
+						 pre_severedrug_snomed					///
+						 pre_severedrug_ae						///
+					     pre_nonsevere_drug_snomed				///
+						 pre_nonsevere_drug_ae					///
 						 pre_rheumatoid_icd_prim				///
 						 pre_sle_icd_prim						///
-						 rheumatoid_arthritis_nhsd_snomed		///
-						 rheumatoid_arthritis_nhsd_icd10		///
-						 sle_nhsd_ctv							///
-						 sle_nhsd_icd10							///
-						 psoriasis_nhsd							///
-						 psoriatic_arthritis_nhsd				///
-						 ankylosing_spondylitis_nhsd			///
-						 ibd_ctv								///
+						 pre_sle_ctv							///
+						 pre_sle_icd							///
+						 pre_sle_ae								///
+						 pre_rheumatoid_arthritis_icd			///
+						 pre_rheumatoid_icd_prim				///
+						 pre_rheumatoid_arthritis_ae			///
+						 pre_rheumatoid_arthritis_snomed		///
+						 pre_psoriasis_icd						///
+						 pre_psoriasis_icd_prim					///
+						 pre_psoriasis_snomed					///
+						 pre_psoriasis_ae						/// 
+						 pre_psa_icd							/// 
+						 pre_psa_icd_prim						/// 
+						 pre_psa_ae								///
+						 pre_psa_snomed							///						 
+						 pre_axspa_icd							///	
+						 pre_axspa_icd_prim						///	
+						 pre_axspa_ctv							///
+						 pre_axspa_ae							///
+						 pre_ibd_ae								///
+						 pre_ibd_ctv							///
+						 pre_ibd_icd							///
+						 pre_ibd_icd_prim						///
 						 allcause_emerg_aande					///
 						 all_hosp_date 							///
 						 all_hosp_date0 						///
@@ -265,34 +356,7 @@ foreach var of varlist 	 pre_covid_hosp_date					///
 						 covid_hosp_date_mabs					/// 
 						 covid_hosp_date_mabs_not_primary		/// 
 						 died_date_ons							///
-						 died_ons_covid							///
-						 pre_diverticulitis_icd					///
-						 pre_diverticulitis_snomed				///
-						 pre_diverticulitis_ae					///
-						 pre_diarrhoea_snomed 					///
-						 pre_taste_snomed						///
-						 pre_taste_icd							///
-						 pre_rash_snomed						///
-						 pre_anaphylaxis_icd					///
-						 pre_anaphylaxis_snomed					///
-						 pre_anaphlaxis_ae						///
-						 pre_drugreact_ae						///
-						 pre_allergic_ae						///
-						 pre_anaphlaxis_ae						///
-						 pre_rheumatoid_arthritis_ae			///
-						 pre_rheumatoid_arthritis_snomed		///
-						 pre_rheumatoid_arthritis_icd			///
-						 pre_ankylosing_spondylitis_ctv			///
-						 pre_ankylosing_spondylitis_ae			///
-						 pre_psoriasis_snomed					///
-						 pre_psoriasis_ae						///
-						 pre_psoriatic_arthritis_ae				///
-						 pre_psoriatic_arthritis_snomed			///
-						 pre_sle_ctv							///
-						 pre_sle_icd							///
-						 pre_sle_ae								///
-						 pre_ibd_ae								///
-						 pre_ibd_snomed	{					 
+						 died_ons_covid	{					 
 	capture confirm string variable `var'
 	if _rc==0 {
 	rename `var' a
@@ -479,11 +543,11 @@ format campaign_start study_end_date start_date_29 %td
 *	OUTCOME		*
 ****************************
 *** AESI, IMAE and some Drug reaction (need to add further IMAE and DRESS, SJS, TEN) 
-gen new_ae_ra_icd = ae_rheumatoid_arthritis_icd if rheumatoid_arthritis_nhsd_snomed==0 & rheumatoid_arthritis_nhsd_icd10==0  
-gen new_ae_ra_icd_prim = ae_rheumatoid_arthritis_icd_prim if rheumatoid_arthritis_nhsd_snomed==0 & rheumatoid_arthritis_nhsd_icd10==0  
-gen new_ae_ra_snomed = ae_rheumatoid_arthritis_snomed if rheumatoid_arthritis_nhsd_snomed==0 & rheumatoid_arthritis_nhsd_icd10==0
-gen new_ae_ra_ae = ae_rheumatoid_arthritis_ae if rheumatoid_arthritis_nhsd_snomed==0 & rheumatoid_arthritis_nhsd_icd10==0  
-count if rheumatoid_arthritis_nhsd_snomed!=0 | rheumatoid_arthritis_nhsd_icd10!=0
+gen new_ae_ra_icd = ae_rheumatoid_arthritis_icd if rheumatoid_arthritis_nhsd_snomed==0 
+gen new_ae_ra_icd_prim = ae_rheumatoid_arthritis_icd_prim if rheumatoid_arthritis_nhsd_snomed==0 
+gen new_ae_ra_snomed = ae_rheumatoid_arthritis_snomed if rheumatoid_arthritis_nhsd_snomed==0 
+gen new_ae_ra_ae = ae_rheumatoid_arthritis_ae if rheumatoid_arthritis_nhsd_snomed==0
+count if rheumatoid_arthritis_nhsd_snomed!=0 
 count if ae_rheumatoid_arthritis_icd!=. 
 count if new_ae_ra_icd!=.
 count if ae_rheumatoid_arthritis_icd_prim!=. 
@@ -492,11 +556,11 @@ count if ae_rheumatoid_arthritis_snomed!=.
 count if new_ae_ra_snomed!=.
 count if ae_rheumatoid_arthritis_ae!=. 
 count if new_ae_ra_ae!=.
-gen new_ae_sle_icd = ae_sle_icd if sle_nhsd_ctv==0 & sle_nhsd_icd10==0
-gen new_ae_sle_icd_prim = ae_sle_icd_prim if sle_nhsd_ctv==0 & sle_nhsd_icd10==0
-gen new_ae_sle_ctv = ae_sle_ctv if sle_nhsd_ctv==0 & sle_nhsd_icd10==0
-gen new_ae_sle_ae = ae_sle_ae if sle_nhsd_ctv==0 & sle_nhsd_icd10==0
-count if sle_nhsd_ctv!=0 | sle_nhsd_icd10!=0
+gen new_ae_sle_icd = ae_sle_icd if sle_nhsd_ctv==0 
+gen new_ae_sle_icd_prim = ae_sle_icd_prim if sle_nhsd_ctv==0 
+gen new_ae_sle_ctv = ae_sle_ctv if sle_nhsd_ctv==0 
+gen new_ae_sle_ae = ae_sle_ae if sle_nhsd_ctv==0 
+count if sle_nhsd_ctv!=0 
 count if ae_sle_icd!=. 
 count if new_ae_sle_icd!=.
 count if ae_sle_icd_prim!=. 
@@ -505,101 +569,143 @@ count if ae_sle_ctv!=.
 count if new_ae_sle_ctv!=.
 count if ae_sle_ae!=. 
 count if new_ae_sle_ae!=.
+gen new_ae_psoriasis_icd = ae_psoriasis_icd if psoriasis_nhsd==0 
+gen new_ae_psoriasis_icd_prim = ae_psoriasis_icd_prim if psoriasis_nhsd==0 
 gen new_ae_psoriasis_snomed = ae_psoriasis_snomed if psoriasis_nhsd==0
 gen new_ae_psoriasis_ae = ae_psoriasis_ae if psoriasis_nhsd==0
 count if psoriasis_nhsd!=0 
+count if ae_psoriasis_icd!=. 
+count if new_ae_psoriasis_icd!=. 
+count if ae_psoriasis_icd_prim!=. 
+count if new_ae_psoriasis_icd_prim!=. 
 count if ae_psoriasis_snomed!=. 
 count if new_ae_psoriasis_snomed!=.
 count if ae_psoriasis_ae!=. 
 count if new_ae_psoriasis_ae!=.
-gen new_ae_psa_snomed = ae_psoriatic_arthritis_snomed if psoriatic_arthritis_nhsd==0
-gen new_ae_psa_ae = ae_psoriatic_arthritis_ae if psoriatic_arthritis_nhsd==0
+gen new_ae_psa_icd = ae_psa_icd if psoriatic_arthritis_nhsd==0
+gen new_ae_psa_icd_prim = ae_psa_icd_prim if psoriatic_arthritis_nhsd==0
+gen new_ae_psa_snomed = ae_psa_snomed if psoriatic_arthritis_nhsd==0
+gen new_ae_psa_ae = ae_psa_ae if psoriatic_arthritis_nhsd==0
 count if psoriatic_arthritis_nhsd!=0 
-count if ae_psoriatic_arthritis_snomed!=. 
+count if ae_psa_icd!=. 
+count if new_ae_psa_icd!=. 
+count if ae_psa_icd_prim!=. 
+count if new_ae_psa_icd_prim!=. 
+count if ae_psa_snomed!=. 
 count if new_ae_psa_snomed!=.
-count if ae_psoriatic_arthritis_ae!=. 
+count if ae_psa_ae!=. 
 count if new_ae_psa_ae!=.
-gen new_ae_ankspon_ctv = ae_ankylosing_spondylitis_ctv if ankylosing_spondylitis_nhsd==0
-gen new_ae_ankspon_ae = ae_ankylosing_spondylitis_ae if ankylosing_spondylitis_nhsd==0
+gen new_ae_axspa_icd = ae_axspa_icd if ankylosing_spondylitis_nhsd==0
+gen new_ae_axspa_icd_prim = ae_axspa_icd_prim if ankylosing_spondylitis_nhsd==0
+gen new_ae_axspa_ctv = ae_axspa_ctv if ankylosing_spondylitis_nhsd==0
+gen new_ae_axspa_ae = ae_axspa_ae if ankylosing_spondylitis_nhsd==0
 count if ankylosing_spondylitis_nhsd!=0 
-count if ae_ankylosing_spondylitis_ctv!=. 
-count if new_ae_ankspon_ctv!=.
-count if ae_ankylosing_spondylitis_ae!=. 
-count if new_ae_ankspon_ae!=.
-gen new_ae_ibd_snomed = ae_ibd_snomed if ibd_ctv==0
+count if ae_axspa_icd!=. 
+count if new_ae_axspa_icd!=.
+count if ae_axspa_icd_prim!=. 
+count if new_ae_axspa_icd_prim!=.
+count if ae_axspa_ctv!=. 
+count if new_ae_axspa_ctv!=.
+count if ae_axspa_ae!=. 
+count if new_ae_axspa_ae!=.
+gen new_ae_ibd_icd = ae_ibd_icd if ibd_ctv==0
+gen new_ae_ibd_icd_prim = ae_ibd_icd_prim if ibd_ctv==0
+gen new_ae_ibd_ctv = ae_ibd_ctv if ibd_ctv==0
 gen new_ae_ibd_ae = ae_ibd_ae if ibd_ctv==0
 count if ibd_ctv!=0 
-count if ae_ibd_snomed!=. 
-count if new_ae_ibd_snomed!=.
+count if ae_ibd_icd!=. 
+count if new_ae_ibd_icd!=.
+count if ae_ibd_icd_prim!=. 
+count if new_ae_ibd_icd_prim!=.
+count if ae_ibd_ctv!=. 
+count if new_ae_ibd_ctv!=.
 count if ae_ibd_ae!=. 
 count if new_ae_ibd_ae!=.
-
+	
 *** comparison of ICD admission primary diagnosis and all diagnoses
 count if ae_diverticulitis_icd!=.
 count if ae_diverticulitis_icd_prim!=.
 count if ae_taste_icd!=.
 count if ae_taste_icd_prim!=.
+count if ae_rash_icd!=.
+count if ae_rash_icd_prim!=.
+count if ae_diarrhoea_icd!=.					
+count if ae_diarrhoea_icd_prim!=.					
+count if ae_diarrhoeal_icd!=.					
+count if ae_diarrhoeal_icd_prim!=.	
 count if ae_anaphylaxis_icd!=.
 count if ae_anaphylaxis_icd_prim!=.
+count if ae_severedrug_icd!=.
+count if ae_severedrug_icd_prim!=.
+count if ae_severedrug_sjs_icd!=.
+count if ae_severedrug_sjs_icd_prim!=.
 
 *** combined ae from GP, hosp and A&E
 egen ae_diverticulitis = rmin(ae_diverticulitis_snomed ae_diverticulitis_icd_prim ae_diverticulitis_ae)
-egen ae_diarrhoea = rmin(ae_diarrhoea_snomed)
+egen ae_diarrhoea = rmin(ae_diarrhoea_snomed ae_diarrhoea_icd_prim ae_diarrhoeal_icd_prim)
 egen ae_taste = rmin(ae_taste_snomed ae_taste_icd_prim)
+egen ae_rash = rmin(ae_rash_snomed ae_rash_icd_prim ae_rash_ae)
 egen ae_anaphylaxis = rmin(ae_anaphylaxis_snomed ae_anaphlaxis_ae ae_anaphylaxis_icd_prim)
-egen ae_rash = rmin(ae_rash_snomed ae_rash_ae)
-egen ae_drug = rmin(ae_drugreact_ae)
-egen ae_allergic = rmin(ae_allergic_ae)
-egen ae_sjs_ten = rmin(ae_sjs_ae)
+egen ae_severe_drug = rmin(ae_severedrug_icd_prim ae_severedrug_sjs_icd_prim ae_severedrug_snomed ae_severedrug_ae)
+egen ae_nonsevere_drug = rmin(ae_nonsevere_drug_snomed ae_nonsevere_drug_ae)
 egen ae_ra = rmin(new_ae_ra_snomed new_ae_ra_icd_prim new_ae_ra_ae)
 egen ae_sle = rmin(new_ae_sle_ctv new_ae_sle_icd_prim new_ae_sle_ae)
-egen ae_psorasis = rmin(new_ae_psoriasis_snomed new_ae_psoriasis_ae)
-egen ae_psa = rmin(new_ae_psa_snomed new_ae_psa_ae)
-egen ae_ankspon = rmin(new_ae_ankspon_ctv new_ae_ankspon_ae)
-egen ae_ibd = rmin(new_ae_ibd_snomed new_ae_ibd_ae)
+egen ae_psorasis = rmin(new_ae_psoriasis_icd_prim new_ae_psoriasis_snomed new_ae_psoriasis_ae)
+egen ae_psa = rmin(new_ae_psa_icd_prim new_ae_psa_snomed new_ae_psa_ae)
+egen ae_axspa = rmin(new_ae_axspa_icd_prim new_ae_axspa_ctv new_ae_axspa_ae)
+egen ae_ibd = rmin(new_ae_ibd_icd_prim new_ae_ibd_ctv new_ae_ibd_ae)
 
 *** global all ae
-global ae_spc			ae_diverticulitis_snomed		///
+global ae_spc_gp		ae_diverticulitis_snomed		///
 						ae_diarrhoea_snomed				///
-						ae_taste_snomed						
+						ae_taste_snomed					///		
+						ae_rash_snomed						
 global ae_spc_icd		ae_diverticulitis_icd_prim		///
-						ae_taste_icd_prim					
-global ae_spc_emerg		ae_diverticulitis_ae									
-global ae_drug 			ae_anaphylaxis_snomed			///	
-						ae_rash_snomed					
+						ae_taste_icd_prim				///
+						ae_rash_icd_prim				///
+						ae_diarrhoea_icd_prim			///
+						ae_diarrhoeal_icd_prim
+global ae_spc_emerg		ae_diverticulitis_ae			///
+						ae_rash_ae								
+global ae_drug_gp 		ae_anaphylaxis_snomed			///	
+						ae_severedrug_snomed			///
+						ae_nonsevere_drug_snomed				
+global ae_drug_icd		ae_anaphylaxis_icd_prim			///
+						ae_severedrug_icd_prim			///	
+						ae_severedrug_sjs_icd_prim		
 global ae_drug_emerg	ae_anaphlaxis_ae				///
-						ae_drugreact_ae					///
-						ae_allergic_ae					///
-						ae_sjs_ae						///
-						ae_rash_ae
-global ae_drug_icd		ae_anaphylaxis_icd_prim
-global ae_imae			new_ae_ra_snomed 				///
+						ae_severedrug_ae				///
+						ae_nonsevere_drug_ae					
+global ae_imae_gp		new_ae_ra_snomed 				///
 						new_ae_sle_ctv 					///
 						new_ae_psoriasis_snomed 		///
 						new_ae_psa_snomed 				///
-						new_ae_ankspon_ctv				///
-						new_ae_ibd_snomed	
+						new_ae_axspa_ctv				///
+						new_ae_ibd_ctv	
 global ae_imae_icd		new_ae_ra_icd_prim 				///
-						new_ae_sle_icd_prim		
+						new_ae_sle_icd_prim				///
+						new_ae_psoriasis_icd_prim		///
+						new_ae_psa_icd_prim				///
+						new_ae_axspa_icd_prim			///
+						new_ae_ibd_icd_prim
 global ae_imae_emerg	new_ae_ra_ae					///
 						new_ae_sle_ae					///
 						new_ae_psoriasis_ae				///
 						new_ae_psa_ae					///
-						new_ae_ankspon_ae				///
+						new_ae_axspa_ae					///
 						new_ae_ibd_ae	
 global ae_disease		ae_diverticulitis 				///
 						ae_diarrhoea					///
 						ae_taste 						///
-						ae_anaphylaxis 					///
 						ae_rash 						///
-						ae_drug 						///
-						ae_allergic 					///
-						ae_sjs_ten
+						ae_anaphylaxis 					///
+						ae_severe_drug 					///
+						ae_nonsevere_drug				///
 						ae_ra 							///
 						ae_sle 							///
 						ae_psorasis 					///
 						ae_psa 							///
-						ae_ankspon 						///
+						ae_axspa 						///
 						ae_ibd 					
 									
 *remove event if occurred before start
@@ -623,7 +729,6 @@ egen ae_imae_emerg = rmin($ae_imae_emerg)
 egen ae_imae_all = rmin($ae_imae $ae_imae_icd $ae_imae_emerg)	
 egen ae_all = rmin($ae_spc $ae_spc_icd $ae_spc_emerg $ae_drug $ae_drug_icd $ae_drug_emerg $ae_imae $ae_imae_icd $ae_imae_emerg)
 egen ae_all_serious = rmin($ae_spc_icd $ae_spc_emerg $ae_drug_icd $ae_drug_emerg $ae_imae_icd $ae_imae_emerg)
-
 by drug, sort: count if ae_spc_all!=.
 by drug, sort: count if ae_drug_all!=.
 by drug, sort: count if ae_imae_all!=.

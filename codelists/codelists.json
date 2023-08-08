@@ -456,18 +456,6 @@
       "downloaded_at": "2022-07-01 08:20:57.891274Z",
       "sha": "5d5471bb6a8a01e362b191b3eb8e80c2febeb1da"
     },
-    "user-katiebechman-diverticulitis.csv": {
-      "id": "user/katiebechman/diverticulitis/4927290f",
-      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/diverticulitis/4927290f/",
-      "downloaded_at": "2023-01-16 10:33:51.578680Z",
-      "sha": "5806ea5b60d32c88684f263fcb922e4b28188475"
-    },
-    "user-katiebechman-diverticulitis_icd10.csv": {
-      "id": "user/katiebechman/diverticulitis_icd10/32ca75d0",
-      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/diverticulitis_icd10/32ca75d0/",
-      "downloaded_at": "2023-01-16 12:10:57.566593Z",
-      "sha": "69e1f7351e23fb93a37964d74a5115293cb3dc9d"
-    },
     "opensafely-methotrexate-injectable.csv": {
       "id": "opensafely/methotrexate-injectable/3328044b",
       "url": "https://codelists.opensafely.org/codelist/opensafely/methotrexate-injectable/3328044b/",
@@ -491,24 +479,6 @@
       "url": "https://codelists.opensafely.org/codelist/opensafely/ciclosporin-oral-dmd/4c961cc9/",
       "downloaded_at": "2023-01-30 11:59:51.746495Z",
       "sha": "e5c310a46991fd4aae1ac7b4a2272d87c4f68439"
-    },
-    "opensafely-symptoms-diarrhoea.csv": {
-      "id": "opensafely/symptoms-diarrhoea/7b4f7876",
-      "url": "https://codelists.opensafely.org/codelist/opensafely/symptoms-diarrhoea/7b4f7876/",
-      "downloaded_at": "2023-02-08 17:13:58.016423Z",
-      "sha": "803ea81e531b1404afbf85aaae3245321acf3d22"
-    },
-    "user-katiebechman-abnormal-taste.csv": {
-      "id": "user/katiebechman/abnormal-taste/0cfa8d5f",
-      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/abnormal-taste/0cfa8d5f/",
-      "downloaded_at": "2023-02-09 09:51:09.917521Z",
-      "sha": "3b6a5a63cafb3b20913eadbfb7d298e1fa502a41"
-    },
-    "user-katiebechman-abnormal-taste-icd10.csv": {
-      "id": "user/katiebechman/abnormal-taste-icd10/73eb1a29",
-      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/abnormal-taste-icd10/73eb1a29/",
-      "downloaded_at": "2023-02-09 09:51:10.125446Z",
-      "sha": "0bd7122422b1ab7ea734930a32e24ca370d91a01"
     },
     "opensafely-dialysis.csv": {
       "id": "opensafely/dialysis/3ce108ac",
@@ -582,6 +552,24 @@
       "downloaded_at": "2023-07-05 16:17:42.567528Z",
       "sha": "496c698c13e59be0de955da9535927d637da2081"
     },
+    "opensafely-symptoms-rashes.csv": {
+      "id": "opensafely/symptoms-rashes/6bd2da47",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/symptoms-rashes/6bd2da47/",
+      "downloaded_at": "2023-06-01 11:35:34.324471Z",
+      "sha": "b4f30abf8d6f7763f06a27d2aefa49a2d019c793"
+    },
+    "user-katiebechman-abnormal-taste-icd10.csv": {
+      "id": "user/katiebechman/abnormal-taste-icd10/73eb1a29",
+      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/abnormal-taste-icd10/73eb1a29/",
+      "downloaded_at": "2023-02-09 09:51:10.125446Z",
+      "sha": "0bd7122422b1ab7ea734930a32e24ca370d91a01"
+    },
+    "user-katiebechman-abnormal-taste.csv": {
+      "id": "user/katiebechman/abnormal-taste/0cfa8d5f",
+      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/abnormal-taste/0cfa8d5f/",
+      "downloaded_at": "2023-02-09 09:51:09.917521Z",
+      "sha": "3b6a5a63cafb3b20913eadbfb7d298e1fa502a41"
+    },
     "user-katiebechman-anaphylaxis.csv": {
       "id": "user/katiebechman/anaphylaxis/3ea7fc86",
       "url": "https://codelists.opensafely.org/codelist/user/katiebechman/anaphylaxis/3ea7fc86/",
@@ -589,16 +577,82 @@
       "sha": "6dc8f35faa9356b30b7d84701d124627d4c37062"
     },
     "user-katiebechman-anaphylaxis-snomed.csv": {
-      "id": "user/katiebechman/anaphylaxis-snomed/25988951",
-      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/anaphylaxis-snomed/25988951/",
-      "downloaded_at": "2023-05-11 08:48:29.315970Z",
-      "sha": "a7d0ddbdb758bd43ca3c54a5e4adba9eae5412a1"
+      "id": "user/katiebechman/anaphylaxis-snomed/01b4ad47",
+      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/anaphylaxis-snomed/01b4ad47/",
+      "downloaded_at": "2023-08-03 21:25:31.978903Z",
+      "sha": "4245595d018af9e546ca56520b08cc1c6b4a8eb0"
     },
-    "opensafely-symptoms-rashes.csv": {
-      "id": "opensafely/symptoms-rashes/6bd2da47",
-      "url": "https://codelists.opensafely.org/codelist/opensafely/symptoms-rashes/6bd2da47/",
-      "downloaded_at": "2023-06-01 11:35:34.324471Z",
-      "sha": "b4f30abf8d6f7763f06a27d2aefa49a2d019c793"
+    "user-katiebechman-diverticulitis.csv": {
+      "id": "user/katiebechman/diverticulitis/174aacf7",
+      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/diverticulitis/174aacf7/",
+      "downloaded_at": "2023-08-07 11:07:36.694112Z",
+      "sha": "1a24f8ead933e33eeacb4bf3a0aa9cbc17fc2388"
+    },
+    "user-katiebechman-diverticulitis_icd10.csv": {
+      "id": "user/katiebechman/diverticulitis_icd10/32ca75d0",
+      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/diverticulitis_icd10/32ca75d0/",
+      "downloaded_at": "2023-01-16 12:10:57.566593Z",
+      "sha": "69e1f7351e23fb93a37964d74a5115293cb3dc9d"
+    },
+    "user-katiebechman-diarrhoea-icd10.csv": {
+      "id": "user/katiebechman/diarrhoea-icd10/3dd7dffa",
+      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/diarrhoea-icd10/3dd7dffa/",
+      "downloaded_at": "2023-08-08 12:45:23.713128Z",
+      "sha": "86fd91de9bd715370cd0b4e83f410fe12b19fcb2"
+    },
+    "user-katiebechman-diarrhoea-snomed.csv": {
+      "id": "user/katiebechman/diarrhoea-snomed/599a1325",
+      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/diarrhoea-snomed/599a1325/",
+      "downloaded_at": "2023-08-08 12:45:23.929088Z",
+      "sha": "60e6d204da638875257e82fefbd9c87ce89beb39"
+    },
+    "user-katiebechman-rash-icd10.csv": {
+      "id": "user/katiebechman/rash-icd10/408a9ff0",
+      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/rash-icd10/408a9ff0/",
+      "downloaded_at": "2023-08-08 12:45:24.146827Z",
+      "sha": "bcd55fbac204ddc025c11be4e0b5f678ae749928"
+    },
+    "user-katiebechman-severe-drug-reaction-icd.csv": {
+      "id": "user/katiebechman/severe-drug-reaction-icd/4ce306e6",
+      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/severe-drug-reaction-icd/4ce306e6/",
+      "downloaded_at": "2023-08-07 11:07:37.118538Z",
+      "sha": "55c4d9e6ed76e8f1dd0af62af68b689e85ef264d"
+    },
+    "user-katiebechman-severe-drug-reaction-snomed.csv": {
+      "id": "user/katiebechman/severe-drug-reaction-snomed/00edf9b8",
+      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/severe-drug-reaction-snomed/00edf9b8/",
+      "downloaded_at": "2023-08-07 11:07:37.360751Z",
+      "sha": "7cd991ea7e754e14ca804ea62c5546ea45c8c17f"
+    },
+    "user-katiebechman-non-severe-drug-reaction-snomed.csv": {
+      "id": "user/katiebechman/non-severe-drug-reaction-snomed/67de8682",
+      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/non-severe-drug-reaction-snomed/67de8682/",
+      "downloaded_at": "2023-08-07 11:07:37.543818Z",
+      "sha": "ac0722a7afa7b8fc793504b0c50d2027a2293a8f"
+    },
+    "user-katiebechman-inflammatory-bowel-disease.csv": {
+      "id": "user/katiebechman/inflammatory-bowel-disease/7b8879cb",
+      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/inflammatory-bowel-disease/7b8879cb/",
+      "downloaded_at": "2023-08-07 11:07:37.727261Z",
+      "sha": "dc6bd5a75fc14a1a5915cf5a9d43cb69700fa336"
+    },
+    "user-katiebechman-psoriasis-icd10.csv": {
+      "id": "user/katiebechman/psoriasis-icd10/5fc646a0",
+      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/psoriasis-icd10/5fc646a0/",
+      "downloaded_at": "2023-08-07 11:07:37.927443Z",
+      "sha": "eabe5d5ed2db4909aa35d85ef9313e66c0e0837a"
+    },
+    "user-katiebechman-psoriatic-arthritis-icd10.csv": {
+      "id": "user/katiebechman/psoriatic-arthritis-icd10/1497ed01",
+      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/psoriatic-arthritis-icd10/1497ed01/",
+      "downloaded_at": "2023-08-07 11:07:38.144168Z",
+      "sha": "f0ab300db4a450362eec213fdba275320c312fe1"
+    },
+    "user-katiebechman-seronegative-spondyloarthropathy.csv": {
+      "id": "user/katiebechman/seronegative-spondyloarthropathy/62790696",
+      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/seronegative-spondyloarthropathy/62790696/",
+      "downloaded_at": "2023-08-07 11:07:38.360862Z",
+      "sha": "528ffd1859ce20572e22ec7b8ddf7f74475d6373"
     }
   }
 }

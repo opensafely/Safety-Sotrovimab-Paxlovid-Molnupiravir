@@ -39,37 +39,43 @@ use "$projectdir/output/data/main", clear
 ****************************
 **generate rate for adverse outcome in year 3-4 prior to start date for comparative rate by person years 
 *ensure not established diagnosis for some of the condition 4 year prior
-gen new_pre_ra_ae = pre_rheumatoid_arthritis_ae if pre_ra_snomed_new==0 & pre_ra_icd_new==0  
-gen new_pre_ra_snomed = pre_rheumatoid_arthritis_snomed if pre_ra_snomed_new==0 & pre_ra_icd_new==0
-gen new_pre_ra_icd = pre_rheumatoid_icd_prim if pre_ra_snomed_new==0 & pre_ra_icd_new==0  
-gen new_pre_ankspon_ctv = pre_ankylosing_spondylitis_ctv if pre_ankspon_ctv_new==0 
-gen new_pre_ankspon_ae = pre_ankylosing_spondylitis_ae if pre_ankspon_ctv_new==0
+gen new_pre_ra_icd = pre_rheumatoid_icd_prim if pre_ra_snomed_new==0 
+gen new_pre_ra_ae = pre_rheumatoid_arthritis_ae if pre_ra_snomed_new==0 
+gen new_pre_ra_snomed = pre_rheumatoid_arthritis_snomed if pre_ra_snomed_new==0 
+gen new_pre_sle_ctv = pre_sle_ctv if pre_sle_ctv_new==0 
+gen new_pre_sle_icd = pre_sle_icd_prim if pre_sle_ctv_new==0 
+gen new_pre_sle_ae = pre_sle_ae if pre_sle_ctv_new==0 
+gen new_pre_psoriasis_icd = pre_psoriasis_icd_prim if pre_psoriasis_snomed_new==0 
 gen new_pre_psoriasis_snomed = pre_psoriasis_snomed if pre_psoriasis_snomed_new==0 
 gen new_pre_psoriasis_ae = pre_psoriasis_ae if pre_psoriasis_snomed_new==0
-gen new_pre_psa_ae = pre_psoriatic_arthritis_ae if pre_psa_snomed_new==0 
-gen new_pre_psa_snomed = pre_psoriatic_arthritis_snomed	if pre_psa_snomed_new==0 							 				
-gen new_pre_sle_ctv = pre_sle_ctv if pre_sle_ctv_new==0 & pre_sle_icd_new==0  
-gen new_pre_sle_icd = pre_sle_icd_prim if pre_sle_ctv_new==0 & pre_sle_icd_new==0
-gen new_pre_sle_ae = pre_sle_ae if pre_sle_ctv_new==0 & pre_sle_icd_new==0  
+gen new_pre_psa_icd = pre_psa_icd_prim if pre_psa_snomed_new==0
+gen new_pre_psa_ae = pre_psa_ae if pre_psa_snomed_new==0 
+gen new_pre_psa_snomed = pre_psa_snomed	if pre_psa_snomed_new==0 
+gen new_pre_axspa_icd = pre_axspa_icd_prim if pre_axspa_ctv_new==0
+gen new_pre_axspa_ctv = pre_axspa_ctv if pre_axspa_ctv_new==0 
+gen new_pre_axspa_ae = pre_axspa_ae if pre_axspa_ctv_new==0
+gen new_pre_ibd_icd = pre_ibd_icd_prim if pre_ibd_ctv==0
+gen new_pre_ibd_ctv = pre_ibd_ctv if pre_ibd_ctv==0
+gen new_pre_ibd_ae = pre_ibd_ae if pre_ibd_ctv==0
 
 *** combined ae from GP, hosp and A&E
 egen pre_diverticulitis = rmin(pre_diverticulitis_icd_prim pre_diverticulitis_snomed pre_diverticulitis_ae)	 
-egen pre_diarrhoea = rmin(pre_diarrhoea_snomed)
-egen pre_taste = rmin(pre_taste_snomed pre_taste_icd_prim)
+egen pre_diarrhoea = rmin(pre_diarrhoea_icd_prim pre_diarrhoea_snomed  pre_diarrhoeal_icd_prim)
+egen pre_taste = rmin(pre_taste_icd_prim pre_taste_snomed )
+egen pre_rash = rmin(pre_rash_icd_prim pre_rash_snomed pre_rash_ae)
 egen pre_anaphylaxis = rmin(pre_anaphylaxis_icd_prim pre_anaphylaxis_snomed	pre_anaphlaxis_ae)
-egen pre_rash = rmin(pre_rash_snomed)
-egen pre_drug = rmin(pre_drugreact_ae)
-egen pre_allergic = rmin(pre_allergic_ae)
-egen pre_ra = rmin(new_pre_ra_ae new_pre_ra_snomed new_pre_ra_icd)
-egen pre_sle = rmin(new_pre_sle_ctv new_pre_sle_icd new_pre_sle_ae)
-egen pre_psorasis = rmin(new_pre_psoriasis_snomed new_pre_psoriasis_ae)
-egen pre_psa = rmin(new_pre_psa_ae new_pre_psa_snomed)
-egen pre_ankspon = rmin(new_pre_ankspon_ctv	new_pre_ankspon_ae)
-egen pre_ibd = rmin(new_ae_ibd_snomed new_ae_ibd_ae)
+egen pre_severe_drug = rmin(pre_severedrug_icd_prim pre_severedrug_sjs_icd_prim pre_severedrug_snomed pre_severedrug_ae)
+egen pre_nonsevere_drug = rmin(pre_nonsevere_drug_snomed pre_nonsevere_drug_ae)
+egen pre_ra = rmin(new_pre_ra_icd new_pre_ra_ae new_pre_ra_snomed )
+egen pre_sle = rmin(new_pre_sle_icd new_pre_sle_ctv new_pre_sle_ae)
+egen pre_psorasis = rmin(new_pre_psoriasis_icd new_pre_psoriasis_snomed  new_pre_psoriasis_ae)
+egen pre_psa = rmin(new_pre_psa_icd new_pre_psa_ae new_pre_psa_snomed)
+egen pre_axspa = rmin(new_pre_axspa_icd  new_pre_axspa_ae pre_axspa_ctv)
+egen pre_ibd = rmin(new_pre_ibd_icd new_pre_ibd_ctv new_pre_ibd_ae)
 egen pre_spc_all = rmin(pre_diverticulitis pre_diarrhoea pre_taste) 
-egen pre_drug_all = rmin(pre_anaphylaxis pre_rash pre_drug pre_allergic)
-egen pre_imae_all = rmin(pre_ra pre_sle pre_psorasis pre_psa pre_ankspon pre_ibd)	
-egen pre_ae_all = rmin($pre_spc_all $pre_drug_all $pre_imae_all)
+egen pre_drug_all = rmin(pre_anaphylaxis pre_rash pre_severe_drug pre_nonsevere_drug)
+egen pre_imae_all = rmin(pre_ra pre_sle pre_psorasis pre_psa pre_axspa pre_ibd)	
+egen pre_ae_all = rmin(pre_spc_all pre_drug_all pre_imae_all)
 
 global pre_ae_group			pre_spc_all 					///
 							pre_drug_all					///		
@@ -80,13 +86,13 @@ global pre_ae_disease		pre_diverticulitis 				///
 							pre_taste 						///
 							pre_anaphylaxis 				///
 							pre_rash 						///
-							pre_drug 						///
-							pre_allergic 					///
+							pre_severe_drug					///
+							pre_nonsevere_drug				///
 							pre_ra 							///
 							pre_sle 						///
 							pre_psorasis 					///
 							pre_psa 						///
-							pre_ankspon 					///
+							pre_axspa	 					///
 							pre_ibd 		
 
 *gen start date for comparator rate
@@ -101,6 +107,7 @@ foreach x in $pre_ae_group $pre_ae_disease {
 		gen fail_`x'=1 if `x'!=.
 		tab drug fail_`x', m
 		gen stop_`x'=`x' if fail_`x'==1
+		replace `x'=`x'+0.75 if `x'==start_date
 		replace stop_`x'= start_comparator_28 if fail_`x'==.
 		tab drug fail_`x' if stop_`x'!=.
 		format %td stop_`x'

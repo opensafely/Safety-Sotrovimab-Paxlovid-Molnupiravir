@@ -1,8 +1,8 @@
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
        log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/logs/cox_model.log
   log type:  text
- opened on:   1 Aug 2023, 14:07:29
+ opened on:   8 Aug 2023, 14:08:35
 
 . 
 . *Set Ado file path
@@ -14,7 +14,8 @@
   [5]  (PLUS)      "C:\users\PUBLIC\documents/"
   [6]  (OLDPLACE)  "c:\ado/"
   [7]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/analysis/ado"
-  [8]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/analysis/ado"
+  [8]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/analysis/ado
+> "
 
 . 
 . * SET Index date 
@@ -22,14 +23,15 @@
 
 . 
 . use "$projectdir/output/data/main", clear
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/output/data/main.dta not found
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/output/data/main.dta not
+    found
 r(601);
 
 end of do-file
 
 r(601);
 
-. do "C:\Users\k1635179\AppData\Local\Temp\STD5f0_000000.tmp"
+. do "C:\Users\k1635179\AppData\Local\Temp\STD394c_000000.tmp"
 
 . ********************************************************************************
 . *

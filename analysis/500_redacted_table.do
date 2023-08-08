@@ -35,8 +35,6 @@ use "$projectdir/output/data/main", clear
 set type double
 
 ** labeling 
-label define ethnicity_with_missing 1 "Black" 3 "Other" 4 "South Asian" 5 "White" 9 "Missing", replace
-label values ethnicity_with_missing ethnicity_with_missing
 foreach var of varlist downs_syndrome_comb solid_cancer_comb haem_disease_comb liver_disease_comb renal_disease_comb imid_on_drug_comb immunosupression_comb hiv_aids_comb organ_transplant_comb rare_neuro_comb diabetes chronic_cardiac_disease hypertension chronic_respiratory_disease prior_covid paxlovid_contraindicated egfr_30{
 	recode `var' . = 0
 	label define `var'  1 "yes" 0 "no", replace
@@ -114,8 +112,6 @@ foreach i of local levels {
 
 use "$projectdir/output/data/main", clear
 decode drug, gen(drug_str)
-label define ethnicity_with_missing 1 "Black" 3 "Other" 4 "South Asian" 5 "White" 9 "Missing", replace
-label values ethnicity_with_missing ethnicity_with_missing
 foreach var of varlist downs_syndrome_comb solid_cancer_comb haem_disease_comb liver_disease_comb renal_disease_comb imid_on_drug_comb immunosupression_comb hiv_aids_comb organ_transplant_comb rare_neuro_comb diabetes chronic_cardiac_disease hypertension chronic_respiratory_disease prior_covid paxlovid_contraindicated egfr_30{
 	recode `var' . = 0
 	label define `var'  1 "yes" 0 "no", replace

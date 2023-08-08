@@ -1,8 +1,9 @@
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/logs/preceed_rate.log
+       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/logs/preceed_rate.l
+> og
   log type:  text
- opened on:   1 Aug 2023, 14:22:11
+ opened on:   8 Aug 2023, 14:51:04
 
 . 
 . *Set Ado file path
@@ -14,7 +15,8 @@
   [5]  (PLUS)      "C:\users\PUBLIC\documents/"
   [6]  (OLDPLACE)  "c:\ado/"
   [7]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/analysis/ado"
-  [8]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/analysis/ado"
+  [8]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/analysis/ado
+> "
 
 . 
 . * SET Index date 
@@ -22,27 +24,16 @@
 
 . 
 . use "$projectdir/output/data/main", clear
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/output/data/main.dta not found
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/output/data/main.dta not
+    found
 r(601);
 
 end of do-file
 
 r(601);
 
-. do "C:\Users\k1635179\AppData\Local\Temp\STD5f0_000000.tmp"
+. do "C:\Users\k1635179\AppData\Local\Temp\STD394c_000000.tmp"
 
-. ********************************************************************************
-. *
-. *       Do-file:                        preceeding rate
-. *       Project:                        Sotrovimab-Paxlovid-Molnupiravir
-. *   Date:                               06/4/23
-. *       Programmed by:          Katie Bechman
-. *       Description:            run cox models
-. *       Data used:                      main.dta
-. *       Data created:           preceeding rate
-. *       Other output:           logfiles, printed to folder $Logdir
-. *       User installed ado: (place .ado file(s) in analysis folder)
-. 
 . ****************************************************************************************************************
 . **Set filepaths
 . global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
