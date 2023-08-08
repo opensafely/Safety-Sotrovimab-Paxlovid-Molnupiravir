@@ -57,15 +57,15 @@ global ae_group			ae_spc_all 					///
 global ae_disease		ae_diverticulitis 				///
 						ae_diarrhoea					///
 						ae_taste 						///
+						ae_rash							///
 						ae_anaphylaxis 					///
-						ae_rash 						///
-						ae_drug 						///
-						ae_allergic 					///
+						ae_severe_drug					///
+						ae_nonsevere_drug				///
 						ae_ra 							///
 						ae_sle 							///
 						ae_psorasis 					///
 						ae_psa 							///
-						ae_ankspon 						///
+						ae_axspa 						///
 						ae_ibd 														
 			  
 tempname coxoutput
@@ -99,34 +99,34 @@ foreach fail in $ae_group $ae_disease {
 					local rate_all = `r(rate)'
 					local ptime_all = `r(ptime)'
 					local events_all .
-						if `r(failures)' == 0 | `r(failures)' > 5 local events_all `r(failures)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local events_all `r(failures)'
 		
 		stptime if drug == 0
 					local rate_control = `r(rate)'
 					local ptime_control = `r(ptime)'
 					local events_control .
-						if `r(failures)' == 0 | `r(failures)' > 5 local events_control `r(failures)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local events_control `r(failures)'
 		display "no drug"
 
 		stptime if drug == 1
 					local rate_sot = `r(rate)'
 					local ptime_sot = `r(ptime)'
 					local events_sot .
-						if `r(failures)' == 0 | `r(failures)' > 5 local events_sot `r(failures)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local events_sot `r(failures)'
 		display "sotrovimab"
 		
 		stptime if drug == 2
 					local rate_pax = `r(rate)'
 					local ptime_pax = `r(ptime)'
 					local events_pax .
-						if `r(failures)' == 0 | `r(failures)' > 5 local events_pax `r(failures)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local events_pax `r(failures)'
 		display "paxlovid"
 		
 		stptime if drug == 3
 					local rate_mol = `r(rate)'
 					local ptime_mol = `r(ptime)'
 					local events_mol .
-						if `r(failures)' == 0 | `r(failures)' > 5 local events_mol `r(failures)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local events_mol `r(failures)'
 		display "molnupavir"
 						
 		post `coxoutput' ("`model'") ("`fail'") (`ptime_all') (`events_all') (`rate_all') ///

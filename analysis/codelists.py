@@ -390,22 +390,30 @@ drugs_interaction_nirmatrelvir_codes = codelist_from_csv(
 ## Outcomes  ---- Pre-specified adverse drug reactions and AESIs
 
 ### Pre-specified adverse drug reactions
+rash_snomed_codes = codelist_from_csv( 
+  "codelists/opensafely-symptoms-rashes.csv", system = "snomed",  column = "code",
+) 
+rash_icd_codes = codelist_from_csv( 
+  "codelists/user-katiebechman-rash-icd10.csv", system = "icd10",  column = "code",
+) 
 diverticulitis_snomed_codes = codelist_from_csv(
   "codelists/user-katiebechman-diverticulitis.csv",  system = "snomed",  column = "code",
 )
-
 diverticulitis_icd_codes = codelist_from_csv(
   "codelists/user-katiebechman-diverticulitis_icd10.csv",  system = "icd10",  column = "code",
 )
-
 diarrhoea_snomed_codes = codelist_from_csv(
-  "codelists/opensafely-symptoms-diarrhoea.csv",  system = "snomed",  column = "code",
+  "codelists/user-katiebechman-diarrhoea-snomed.csv",  system = "snomed",  column = "code",
 )
-
+diarrhoeal_icd_codes = codelist(
+  ["R19.7"], system="icd10",
+)
+diarrhoea_icd_codes = codelist_from_csv(
+  "codelists/user-katiebechman-diarrhoea-icd10.csv",  system = "icd10",  column = "code",
+)
 taste_snomed_codes = codelist_from_csv(
   "codelists/user-katiebechman-abnormal-taste.csv",  system = "snomed",  column = "code",
 )
-
 taste_icd_codes = codelist_from_csv( 
   "codelists/user-katiebechman-abnormal-taste-icd10.csv", system = "icd10",  column = "code",
 )
@@ -415,6 +423,27 @@ anaphylaxis_snomed_codes = codelist_from_csv(
 anaphylaxis_icd_codes = codelist_from_csv( 
   "codelists/user-katiebechman-anaphylaxis.csv", system = "icd10",  column = "code",
 ) 
-rash_snomed_codes = codelist_from_csv( 
-  "codelists/opensafely-symptoms-rashes.csv", system = "snomed",  column = "code",
+severe_drug_icd_codes = codelist_from_csv(
+  "codelists/user-katiebechman-severe-drug-reaction-icd.csv", system = "icd10",  column = "code",
 ) 
+severe_drug_snomed_codes = codelist_from_csv(
+  "codelists/user-katiebechman-severe-drug-reaction-snomed.csv", system = "snomed",  column = "code",
+) 
+non_severe_drug_snomed_codes = codelist_from_csv(
+  "codelists/user-katiebechman-non-severe-drug-reaction-snomed.csv", system = "snomed",  column = "code",
+) 
+inflam_bowel_icd_codes = codelist_from_csv(
+  "codelists/user-katiebechman-inflammatory-bowel-disease.csv", system = "icd10",  column = "code",
+)
+psoriasis_icd_codes = codelist_from_csv(
+  "codelists/user-katiebechman-psoriasis-icd10.csv", system = "icd10",  column = "code",
+)
+psoriatic_arthritis_icd_codes = codelist_from_csv(
+  "codelists/user-katiebechman-psoriatic-arthritis-icd10.csv", system = "icd10",  column = "code",
+)
+spondyloarthropathy_icd_codes = codelist_from_csv(
+  "codelists/user-katiebechman-seronegative-spondyloarthropathy.csv", system = "icd10",  column = "code",
+)
+severe_drug_icd_codes_sjs = codelist(
+  ["D72.12", "L51.1", "L51.2", "L51.3"], system="icd10",
+)

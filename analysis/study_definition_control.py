@@ -245,8 +245,7 @@ study = StudyDefinition(
     registered_eligible = patients.registered_as_of("covid_test_positive_date"),
     registered_treated = patients.registered_as_of("date_treated"),  
   ),
-  
-          
+           
   ## TREATMENT - MAB + Antivirals. 
   sotrovimab= patients.with_covid_therapeutics(
     with_these_therapeutics = "Sotrovimab", with_these_indications = "non_hospitalised", on_or_after = "index_date",
@@ -345,7 +344,16 @@ study = StudyDefinition(
   ),
     
   # Eligable based on comorbidities for control population
-  
+  ## Not hospitalised
+  pre_covid_hosp_date = patients.admitted_to_hospital(
+    returning = "date_admitted", on_or_before ="start_date", find_last_match_in_period = True, date_format = "YYYY-MM-DD",
+    return_expectations = {"date": {"earliest": "2010-02-16"},"rate": "uniform", "incidence": 0.05},
+  ),
+  pre_covid_hosp_discharge = patients.admitted_to_hospital (
+    returning = "date_discharged", on_or_before ="start_date", date_format = "YYYY-MM-DD", find_last_match_in_period = True, 
+    return_expectations = {"date": {"earliest": "2010-12-20"},"rate": "uniform", "incidence": 0.05},
+  ),
+    
   ## Down's syndrome
   downs_syndrome_snomed=comorbidity_snomed(downs_syndrome_nhsd_snomed_codes),
   downs_syndrome_icd=comorbidity_icd(downs_syndrome_nhsd_icd10_codes),
@@ -730,22 +738,39 @@ study = StudyDefinition(
    
   ## OUTCOME  
   ## Time to outcome - coded in stata [28 days after +covid or 28day after Tx]
-  ## 1) DRUG REACTIONS AND AESI (diarrhoea, diverticulitis, altered taste)
+  ## 1) Adverse events of interest SPC (diarrhoea, diverticulitis, altered taste)
   ae_diverticulitis_icd=adverse_outcome_icd(diverticulitis_icd_codes),
   ae_diverticulitis_icd_prim=adverse_outcome_icd_prim(diverticulitis_icd_codes),
   ae_diverticulitis_snomed=adverse_outcome_snomed(diverticulitis_snomed_codes),
   ae_diverticulitis_AE=adverse_outcome_AE(codelist(["397881000"], system="snomed")),
   ae_diarrhoea_snomed=adverse_outcome_snomed(diarrhoea_snomed_codes), 
+  ae_diarrhoea_icd=adverse_outcome_icd(diarrhoea_icd_codes),
+  ae_diarrhoea_icd_prim=adverse_outcome_icd(diarrhoea_icd_codes),
+  ae_diarrhoeal_icd=adverse_outcome_icd(diarrhoeal_icd_codes),
+  ae_diarrhoeal_icd_prim=adverse_outcome_icd(diarrhoeal_icd_codes),
   ae_taste_snomed=adverse_outcome_snomed(taste_snomed_codes),
   ae_taste_icd=adverse_outcome_icd(taste_icd_codes),
   ae_taste_icd_prim=adverse_outcome_icd_prim(taste_icd_codes),
   ae_rash_snomed=adverse_outcome_snomed(rash_snomed_codes),
+  ae_rash_icd=adverse_outcome_icd(rash_icd_codes),
+  ae_rash_icd_prim=adverse_outcome_icd(rash_icd_codes),
+  ae_rash_AE=adverse_outcome_AE(codelist(["126485001", "89322006",  "36715001", "7231009", "32861005", "40275004"], system="snomed")),
+
+  ## 2) Drug reactions / allergy   
   ae_anaphylaxis_icd=adverse_outcome_icd(anaphylaxis_icd_codes),
   ae_anaphylaxis_icd_prim=adverse_outcome_icd_prim(anaphylaxis_icd_codes),
   ae_anaphylaxis_snomed=adverse_outcome_snomed(anaphylaxis_snomed_codes),
   ae_anaphlaxis_AE=adverse_outcome_AE(codelist(["39579001"], system="snomed")),
-  ae_drugreact_AE=adverse_outcome_AE(codelist(["62014003"], system="snomed")),
-  ae_allergic_AE=adverse_outcome_AE(codelist(["609328004"], system="snomed")),
+  ae_severedrug_icd=adverse_outcome_icd(severe_drug_icd_codes),
+  ae_severedrug_icd_prim=adverse_outcome_icd_prim(severe_drug_icd_codes),
+  ae_severedrug_sjs_icd=adverse_outcome_icd(severe_drug_icd_codes_sjs),
+  ae_severedrug_sjs_icd_prim=adverse_outcome_icd_prim(severe_drug_icd_codes_sjs),
+  ae_severedrug_snomed=adverse_outcome_snomed(severe_drug_snomed_codes),
+  ae_severedrug_AE=adverse_outcome_AE(codelist(["73442001"], system="snomed")),
+  ae_nonsevere_drug_snomed=adverse_outcome_snomed(non_severe_drug_snomed_codes),
+  ae_nonsevere_drug_AE=adverse_outcome_AE(codelist(["89322006","62014003"], system="snomed")),
+    
+  ## 3) Immune related AEs   
   ae_rheumatoid_arthritis_snomed=adverse_outcome_snomed(rheumatoid_arthritis_snowmed),
   ae_rheumatoid_arthritis_icd=adverse_outcome_icd(rheumatoid_arthritis_icd10),
   ae_rheumatoid_arthritis_icd_prim=adverse_outcome_icd_prim(rheumatoid_arthritis_icd10),
@@ -754,57 +779,87 @@ study = StudyDefinition(
   ae_SLE_icd=adverse_outcome_icd(SLE_icd10), 
   ae_SLE_icd_prim=adverse_outcome_icd_prim(SLE_icd10), 
   ae_SLE_AE=adverse_outcome_AE(codelist(["55464009"], system="snomed")),
+  ae_Psoriasis_icd=adverse_outcome_icd(psoriasis_icd_codes), 
+  ae_Psoriasis_icd_prim=adverse_outcome_icd_prim(psoriasis_icd_codes), 
   ae_Psoriasis_snomed=adverse_outcome_snomed(Psoriasis_ctv3),
   ae_Psoriasis_AE=adverse_outcome_AE(codelist(["9014002"], system="snomed")),
-  ae_Psoriatic_arthritis_snomed=adverse_outcome_snomed(Psoriatic_arthritis_snomed),
-  ae_Psoriatic_arthritis_AE=adverse_outcome_AE(codelist(["156370009"], system="snomed")),
-  ae_Ankylosing_Spondylitis_ctv=adverse_outcome_snomed(Ankylosing_Spondylitis_ctv3),  
-  ae_Ankylosing_Spondylitis_AE=adverse_outcome_AE(codelist(["9631008"], system="snomed")),
-  ae_IBD_snomed=adverse_outcome_snomed(IBD_ctv3),  
-  ae_IBD_AE=adverse_outcome_AE(codelist(["34000006", "64766004"], system="snomed")),
+  ae_PsA_icd=adverse_outcome_icd(psoriatic_arthritis_icd_codes), 
+  ae_PsA_icd_prim=adverse_outcome_icd_prim(psoriatic_arthritis_icd_codes), 
+  ae_PsA_snomed=adverse_outcome_snomed(Psoriatic_arthritis_snomed),
+  ae_PsA_AE=adverse_outcome_AE(codelist(["156370009"], system="snomed")),
+  ae_AxSpa_icd=adverse_outcome_icd(spondyloarthropathy_icd_codes), 
+  ae_AxSpa_icd_prim=adverse_outcome_icd_prim(spondyloarthropathy_icd_codes), 
+  ae_AxSpa_ctv=adverse_outcome_snomed(Ankylosing_Spondylitis_ctv3),  
+  ae_AxSpa_AE=adverse_outcome_AE(codelist(["9631008", "399112009"], system="snomed")),
+  ae_IBD_icd=adverse_outcome_icd(inflam_bowel_icd_codes), 
+  ae_IBD_icd_prim=adverse_outcome_icd_prim(inflam_bowel_icd_codes), 
+  ae_IBD_ctv=adverse_outcome_snomed(IBD_ctv3),  
+  ae_IBD_AE=adverse_outcome_AE(codelist(["34000006", "64766004", "735426009"], system="snomed")),
 
   ## Adverse outcome in year 3-4 prior to start date for comparative rate by person years  
+  ## 1 
   pre_diverticulitis_icd=adverse_outcome_icd_pre(diverticulitis_icd_codes),
   pre_diverticulitis_icd_prim=adverse_outcome_icd_pre_primary(diverticulitis_icd_codes),
   pre_diverticulitis_snomed=adverse_outcome_snomed_pre(diverticulitis_snomed_codes),
   pre_diverticulitis_AE=adverse_outcome_AE_pre(codelist(["397881000"], system="snomed")),
   pre_diarrhoea_snomed=adverse_outcome_snomed_pre(diarrhoea_snomed_codes), 
-  pre_taste_snomed=adverse_outcome_snomed_pre(taste_snomed_codes),
+  pre_diarrhoea_icd=adverse_outcome_icd_pre(diarrhoea_icd_codes),
+  pre_diarrhoea_icd_prim=adverse_outcome_icd_pre_primary(diarrhoea_icd_codes),
+  pre_diarrhoeal_icd=adverse_outcome_icd_pre(diarrhoeal_icd_codes),
+  pre_diarrhoeal_icd_prim=adverse_outcome_icd_pre_primary(diarrhoeal_icd_codes),
   pre_taste_icd=adverse_outcome_icd_pre(taste_icd_codes),
   pre_taste_icd_prim=adverse_outcome_icd_pre_primary(taste_icd_codes),
+  pre_taste_snomed=adverse_outcome_snomed_pre(taste_snomed_codes),
   pre_rash_snomed=adverse_outcome_snomed_pre(rash_snomed_codes),
+  pre_rash_icd=adverse_outcome_icd_pre(rash_icd_codes),
+  pre_rash_icd_prim=adverse_outcome_icd_pre_primary(rash_icd_codes),  
+  pre_rash_AE=adverse_outcome_AE_pre(codelist(["126485001", "89322006",  "36715001", "7231009", "32861005", "40275004"], system="snomed")),
+  ## 2
   pre_anaphylaxis_icd=adverse_outcome_icd_pre(anaphylaxis_icd_codes),
   pre_anaphylaxis_icd_prim=adverse_outcome_icd_pre_primary(anaphylaxis_icd_codes),
   pre_anaphylaxis_snomed=adverse_outcome_snomed_pre(anaphylaxis_snomed_codes),
   pre_anaphlaxis_AE=adverse_outcome_AE_pre(codelist(["39579001"], system="snomed")),
-  pre_drugreact_AE=adverse_outcome_AE_pre(codelist(["62014003"], system="snomed")),
-  pre_allergic_AE=adverse_outcome_AE_pre(codelist(["609328004"], system="snomed")),
-  pre_rheumatoid_arthritis_snomed=adverse_outcome_snomed_pre(rheumatoid_arthritis_snowmed),
+  pre_severedrug_icd=adverse_outcome_icd_pre(severe_drug_icd_codes),
+  pre_severedrug_icd_prim=adverse_outcome_icd_pre_primary(severe_drug_icd_codes),
+  pre_severedrug_sjs_icd=adverse_outcome_icd_pre(severe_drug_icd_codes_sjs),
+  pre_severedrug_sjs_icd_prim=adverse_outcome_icd_pre_primary(severe_drug_icd_codes_sjs),
+  pre_severedrug_snomed=adverse_outcome_snomed_pre(severe_drug_snomed_codes),
+  pre_severedrug_AE=adverse_outcome_AE_pre(codelist(["73442001"], system="snomed")),
+  pre_nonsevere_drug_snomed=adverse_outcome_snomed_pre(non_severe_drug_snomed_codes),
+  pre_nonsevere_drug_AE=adverse_outcome_AE_pre(codelist(["609328004","62014003"], system="snomed")),
+  ## 3
   pre_rheumatoid_arthritis_icd=adverse_outcome_icd_pre(rheumatoid_arthritis_icd10),
-  pre_rheumatoid_icd_prim=adverse_outcome_icd_pre_primary(rheumatoid_arthritis_icd10),
+  pre_rheumatoid_icd_prim=adverse_outcome_icd_pre_primary(rheumatoid_arthritis_icd10),  
+  pre_rheumatoid_arthritis_snomed=adverse_outcome_snomed_pre(rheumatoid_arthritis_snowmed),
   pre_rheumatoid_arthritis_AE=adverse_outcome_AE_pre(codelist(["69896004"], system="snomed")),
-  pre_SLE_ctv=adverse_outcome_snomed_pre(SLE_ctv),
   pre_SLE_icd=adverse_outcome_icd_pre(SLE_icd10), 
   pre_SLE_icd_prim=adverse_outcome_icd_pre_primary(SLE_icd10), 
+  pre_SLE_ctv=adverse_outcome_snomed_pre(SLE_ctv),
   pre_SLE_AE=adverse_outcome_AE_pre(codelist(["55464009"], system="snomed")),
+  pre_Psoriasis_icd=adverse_outcome_icd_pre(psoriasis_icd_codes), 
+  pre_Psoriasis_icd_prim=adverse_outcome_icd_pre_primary(psoriasis_icd_codes), 
   pre_Psoriasis_snomed=adverse_outcome_snomed_pre(Psoriasis_ctv3),
   pre_Psoriasis_AE=adverse_outcome_AE_pre(codelist(["9014002"], system="snomed")),
-  pre_Psoriatic_arthritis_snomed=adverse_outcome_snomed_pre(Psoriatic_arthritis_snomed),
-  pre_Psoriatic_arthritis_AE=adverse_outcome_AE_pre(codelist(["156370009"], system="snomed")),
-  pre_Ankylosing_Spondylitis_ctv=adverse_outcome_snomed_pre(Ankylosing_Spondylitis_ctv3),  
-  pre_Ankylosing_Spondylitis_AE=adverse_outcome_AE_pre(codelist(["9631008"], system="snomed")),
-  pre_IBD_snomed=adverse_outcome_snomed_pre(IBD_ctv3),  
+  pre_PsA_icd=adverse_outcome_icd_pre(psoriatic_arthritis_icd_codes), 
+  pre_PsA_icd_prim=adverse_outcome_icd_pre_primary(psoriatic_arthritis_icd_codes), 
+  pre_PsA_snomed=adverse_outcome_snomed_pre(Psoriatic_arthritis_snomed),
+  pre_PsA_AE=adverse_outcome_AE_pre(codelist(["156370009"], system="snomed")),
+  pre_AxSpa_icd=adverse_outcome_icd_pre(spondyloarthropathy_icd_codes), 
+  pre_AxSpa_icd_prim=adverse_outcome_icd_pre_primary(spondyloarthropathy_icd_codes), 
+  pre_AxSpa_ctv=adverse_outcome_snomed_pre(Ankylosing_Spondylitis_ctv3),  
+  pre_AxSpa_AE=adverse_outcome_AE_pre(codelist(["9631008"], system="snomed")),
+  pre_IBD_icd=adverse_outcome_icd_pre(inflam_bowel_icd_codes), 
+  pre_IBD_icd_prim=adverse_outcome_icd_pre_primary(inflam_bowel_icd_codes), 
+  pre_IBD_ctv=adverse_outcome_snomed_pre(IBD_ctv3),  
   pre_IBD_AE=adverse_outcome_AE_pre(codelist(["34000006", "64766004"], system="snomed")),
-  
+     
   ## Ensure is a new diagnosis of adverse outcome 3-4 prior to start date 
   pre_ra_snomed_new=comorbidity_snomed_pre(rheumatoid_arthritis_snowmed),
-  pre_ra_icd_new=comorbidity_icd_pre(rheumatoid_arthritis_icd10),
   pre_SLE_ctv_new=comorbidity_snomed_pre(SLE_ctv),
-  pre_SLE_icd_new=comorbidity_icd_pre(SLE_icd10),
   pre_Psoriasis_snomed_new=comorbidity_snomed_pre(Psoriasis_ctv3),
-  pre_psa_snomed_new=comorbidity_snomed_pre(Psoriatic_arthritis_snomed),
-  pre_ankspon_ctv_new=comorbidity_snomed_pre(Ankylosing_Spondylitis_ctv3),
-  pre_IBD_snomed_new=comorbidity_snomed_pre(IBD_ctv3),
+  pre_PsA_snomed_new=comorbidity_snomed_pre(Psoriatic_arthritis_snomed),
+  pre_AxSpa_ctv_new=comorbidity_snomed_pre(Ankylosing_Spondylitis_ctv3),
+  pre_IBD_ctv_new=comorbidity_snomed_pre(IBD_ctv3),
   
   ## 2) ALL SAE INCLUDING COVID [Note need to consider patients admitted for MAB infusion]
   allcause_emerg_aande = patients.attended_emergency_care(

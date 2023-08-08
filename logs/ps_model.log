@@ -1,19 +1,21 @@
--------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  /workspace/logs/ps_model.log
+       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/logs/ps_model.log
   log type:  text
- opened on:   1 Aug 2023, 14:31:41
+ opened on:   8 Aug 2023, 14:47:09
 
 . 
 . *Set Ado file path
 . adopath + "$projectdir/analysis/ado"
-  [1]  (BASE)      "/usr/local/stata/ado/base/"
-  [2]  (SITE)      "/usr/local/ado/"
+  [1]  (BASE)      "C:\Program Files\Stata17\ado\base/"
+  [2]  (SITE)      "C:\Program Files\Stata17\ado\site/"
   [3]              "."
-  [4]  (PERSONAL)  "~/ado/personal/"
-  [5]  (PLUS)      "~/ado/plus/"
-  [6]  (OLDPLACE)  "~/ado/"
-  [7]              "/workspace/analysis/ado"
+  [4]  (PERSONAL)  "C:\users\PUBLIC\documents/"
+  [5]  (PLUS)      "C:\users\PUBLIC\documents/"
+  [6]  (OLDPLACE)  "c:\ado/"
+  [7]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/analysis/ado
+> "
+  [8]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/analysis/ado"
 
 . 
 . * SET Index date 
@@ -26,627 +28,1306 @@
 . 
 . *Predictors of drug use 
 . gen no_drug=1 if drug==0
-(1,630 missing values generated)
+(915 missing values generated)
 
 . replace no_drug=0 if drug >0
-(1,630 real changes made)
+(915 real changes made)
 
 .                                 
 . * Outcome                                                               
-. tabstat age sex region_nhs, by(no_drug) statistics(n mean sd) column(statisti
-> cs) nototal long
+. tabstat age sex region_nhs, by(no_drug) statistics(n mean sd) column(statistics) nototal long
 
-no_drug      variable |         N      mean        sd
+no_drug      Variable |         N      Mean        SD
 ----------------------+------------------------------
-0                 age |      1630  48.15583  19.03227
-                  sex |      1630   .490184  .5000571
-           region_nhs |      1630  4.803067  2.559757
+0                 age |       915  47.73115  18.96766
+                  sex |       915  .5136612  .5000867
+           region_nhs |       915  4.715847  2.508218
 ----------------------+------------------------------
-1                 age |     24839  49.00757  18.98055
-                  sex |     24839  .5137888  .4998199
-           region_nhs |     24839  4.814324  2.516486
+1                 age |     23774  48.85968  18.96259
+                  sex |     23774  .5083284  .4999411
+           region_nhs |     23774  4.789939  2.522827
 -----------------------------------------------------
 
-. tabstat age sex region_nhs paxlovid_contraindicated downs_syndrome solid_canc
-> er haem_disease renal_disease ///
->                 liver_disease imid_on_drug immunosupression hiv_aids organ_tr
-> ansplant rare_neuro, ///
->                 by(no_drug) statistics(n mean sd) column(statistics) nototal 
-> long
+. tabstat age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease ///
+>                 liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro, ///
+>                 by(no_drug) statistics(n mean sd) column(statistics) nototal long
 
-no_drug      variable |         N      mean        sd
+no_drug      Variable |         N      Mean        SD
 ----------------------+------------------------------
-0                 age |      1630  48.15583  19.03227
-                  sex |      1630   .490184  .5000571
-           region_nhs |      1630  4.803067  2.559757
-         paxlovid_c~d |      1630  .5337423  .4990133
-         downs_synd~e |      1630  .1809816  .3851211
-         solid_cancer |      1630   .107362  .3096679
-         haem_disease |      1630  .4852761  .4999365
-         renal_dise~e |      1630  .3527607  .4779757
-         liver_dise~e |      1630   .197546  .3982699
-         imid_on_drug |      1630  .2239264  .4170012
-         immunosupr~n |      1630  .0981595  .2976215
-             hiv_aids |      1630  .2190184   .413708
-         organ_tran~t |      1630  .3177914  .4657608
-           rare_neuro |      1630  .5736196  .4947022
+0                 age |       915  47.73115  18.96766
+                  sex |       915  .5136612  .5000867
+           region_nhs |       915  4.715847  2.508218
+         paxlovid_c~d |       915   .515847  .5000221
+         downs_synd~e |       915  .1530055  .3601896
+         solid_cancer |       915   .115847  .3202164
+         haem_disease |       915   .473224  .4995556
+         renal_dise~e |       915  .3420765  .4746645
+         liver_dise~e |       915  .1879781  .3909084
+         imid_on_drug |       915  .2295082  .4207465
+         immunosupr~n |       915  .0885246  .2842117
+             hiv_aids |       915  .1836066  .3873747
+         organ_tran~t |       915  .3180328   .465967
+           rare_neuro |       915  .5606557  .4965787
 ----------------------+------------------------------
-1                 age |     24839  49.00757  18.98055
-                  sex |     24839  .5137888  .4998199
-           region_nhs |     24839  4.814324  2.516486
-         paxlovid_c~d |     24839  .5212368  .4995589
-         downs_synd~e |     24839  .1885744  .3911781
-         solid_cancer |     24839   .098756  .2983401
-         haem_disease |     24839  .4674906  .4989521
-         renal_dise~e |     24839  .3494505   .476806
-         liver_dise~e |     24839  .1908289  .3929624
-         imid_on_drug |     24839  .2187689  .4134198
-         immunosupr~n |     24839  .1006482  .3008683
-             hiv_aids |     24839  .1893796  .3918178
-         organ_tran~t |     24839  .3129353  .4636976
-           rare_neuro |     24839  .5682596  .4953287
+1                 age |     23774  48.85968  18.96259
+                  sex |     23774  .5083284  .4999411
+           region_nhs |     23774  4.789939  2.522827
+         paxlovid_c~d |     23774   .536174  .4987002
+         downs_synd~e |     23774  .2001767  .4001409
+         solid_cancer |     23774  .1056196  .3073566
+         haem_disease |     23774  .4894422   .499899
+         renal_dise~e |     23774  .3563136  .4789195
+         liver_dise~e |     23774  .1993354  .3995091
+         imid_on_drug |     23774  .2231009  .4163342
+         immunosupr~n |     23774  .1051569  .3067619
+             hiv_aids |     23774  .1989148  .3991922
+         organ_tran~t |     23774   .321738  .4671529
+           rare_neuro |     23774  .5940103  .4910929
 -----------------------------------------------------
 
-. tabstat age sex region_nhs paxlovid_contraindicated downs_syndrome solid_canc
-> er haem_disease renal_disease ///
->                 liver_disease imid_on_drug immunosupression hiv_aids organ_tr
-> ansplant rare_neuro ///
+. tabstat age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease ///
+>                 liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro ///
 >                 vaccination_status imdq5 White, ///
->                 by(no_drug) statistics(n mean sd) column(statistics) nototal 
-> long
+>                 by(no_drug) statistics(n mean sd) column(statistics) nototal long
 
-no_drug      variable |         N      mean        sd
+no_drug      Variable |         N      Mean        SD
 ----------------------+------------------------------
-0                 age |      1630  48.15583  19.03227
-                  sex |      1630   .490184  .5000571
-           region_nhs |      1630  4.803067  2.559757
-         paxlovid_c~d |      1630  .5337423  .4990133
-         downs_synd~e |      1630  .1809816  .3851211
-         solid_cancer |      1630   .107362  .3096679
-         haem_disease |      1630  .4852761  .4999365
-         renal_dise~e |      1630  .3527607  .4779757
-         liver_dise~e |      1630   .197546  .3982699
-         imid_on_drug |      1630  .2239264  .4170012
-         immunosupr~n |      1630  .0981595  .2976215
-             hiv_aids |      1630  .2190184   .413708
-         organ_tran~t |      1630  .3177914  .4657608
-           rare_neuro |      1630  .5736196  .4947022
-         vaccinat~tus |      1630  2.161963  1.308527
-                imdq5 |      1616  3.046411  1.421968
-                White |       588         0         0
+0                 age |       915  47.73115  18.96766
+                  sex |       915  .5136612  .5000867
+           region_nhs |       915  4.715847  2.508218
+         paxlovid_c~d |       915   .515847  .5000221
+         downs_synd~e |       915  .1530055  .3601896
+         solid_cancer |       915   .115847  .3202164
+         haem_disease |       915   .473224  .4995556
+         renal_dise~e |       915  .3420765  .4746645
+         liver_dise~e |       915  .1879781  .3909084
+         imid_on_drug |       915  .2295082  .4207465
+         immunosupr~n |       915  .0885246  .2842117
+             hiv_aids |       915  .1836066  .3873747
+         organ_tran~t |       915  .3180328   .465967
+           rare_neuro |       915  .5606557  .4965787
+         vaccinat~tus |       915  2.225137  1.309627
+                imdq5 |       905  3.035359  1.409853
+                White |       359         0         0
 ----------------------+------------------------------
-1                 age |     24839  49.00757  18.98055
-                  sex |     24839  .5137888  .4998199
-           region_nhs |     24839  4.814324  2.516486
-         paxlovid_c~d |     24839  .5212368  .4995589
-         downs_synd~e |     24839  .1885744  .3911781
-         solid_cancer |     24839   .098756  .2983401
-         haem_disease |     24839  .4674906  .4989521
-         renal_dise~e |     24839  .3494505   .476806
-         liver_dise~e |     24839  .1908289  .3929624
-         imid_on_drug |     24839  .2187689  .4134198
-         immunosupr~n |     24839  .1006482  .3008683
-             hiv_aids |     24839  .1893796  .3918178
-         organ_tran~t |     24839  .3129353  .4636976
-           rare_neuro |     24839  .5682596  .4953287
-         vaccinat~tus |     24839  2.194774  1.328664
-                imdq5 |     24565  3.032689  1.413044
-                White |      8887         0         0
+1                 age |     23774  48.85968  18.96259
+                  sex |     23774  .5083284  .4999411
+           region_nhs |     23774  4.789939  2.522827
+         paxlovid_c~d |     23774   .536174  .4987002
+         downs_synd~e |     23774  .2001767  .4001409
+         solid_cancer |     23774  .1056196  .3073566
+         haem_disease |     23774  .4894422   .499899
+         renal_dise~e |     23774  .3563136  .4789195
+         liver_dise~e |     23774  .1993354  .3995091
+         imid_on_drug |     23774  .2231009  .4163342
+         immunosupr~n |     23774  .1051569  .3067619
+             hiv_aids |     23774  .1989148  .3991922
+         organ_tran~t |     23774   .321738  .4671529
+           rare_neuro |     23774  .5940103  .4910929
+         vaccinat~tus |     23774  2.209052  1.323007
+                imdq5 |     23524  3.027036  1.407718
+                White |      8448         0         0
 -----------------------------------------------------
 
-. tabstat age sex region_nhs paxlovid_contraindicated downs_syndrome solid_canc
-> er haem_disease renal_disease ///
->                 liver_disease imid_on_drug immunosupression hiv_aids organ_tr
-> ansplant rare_neuro ///
->                 vaccination_status imdq5 White bmi_group diabetes chronic_car
-> diac_disease chronic_respiratory_disease hypertension, ///
->                 by(no_drug) statistics(n mean sd) column(statistics) nototal 
-> long
+. tabstat age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease ///
+>                 liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro ///
+>                 vaccination_status imdq5 White bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension, ///
+>                 by(no_drug) statistics(n mean sd) column(statistics) nototal long
 
-no_drug      variable |         N      mean        sd
+no_drug      Variable |         N      Mean        SD
 ----------------------+------------------------------
-0                 age |      1630  48.15583  19.03227
-                  sex |      1630   .490184  .5000571
-           region_nhs |      1630  4.803067  2.559757
-         paxlovid_c~d |      1630  .5337423  .4990133
-         downs_synd~e |      1630  .1809816  .3851211
-         solid_cancer |      1630   .107362  .3096679
-         haem_disease |      1630  .4852761  .4999365
-         renal_dise~e |      1630  .3527607  .4779757
-         liver_dise~e |      1630   .197546  .3982699
-         imid_on_drug |      1630  .2239264  .4170012
-         immunosupr~n |      1630  .0981595  .2976215
-             hiv_aids |      1630  .2190184   .413708
-         organ_tran~t |      1630  .3177914  .4657608
-           rare_neuro |      1630  .5736196  .4947022
-         vaccinat~tus |      1630  2.161963  1.308527
-                imdq5 |      1616  3.046411  1.421968
-                White |       588         0         0
-            bmi_group |      1528  1.942408    1.0252
-             diabetes |      1630  .1042945   .305736
-         chronic_ca~e |      1630   .095092   .293432
-         chronic_re~e |      1630   .108589  .3112183
-         hypertension |      1630   .098773  .2984486
+0                 age |       915  47.73115  18.96766
+                  sex |       915  .5136612  .5000867
+           region_nhs |       915  4.715847  2.508218
+         paxlovid_c~d |       915   .515847  .5000221
+         downs_synd~e |       915  .1530055  .3601896
+         solid_cancer |       915   .115847  .3202164
+         haem_disease |       915   .473224  .4995556
+         renal_dise~e |       915  .3420765  .4746645
+         liver_dise~e |       915  .1879781  .3909084
+         imid_on_drug |       915  .2295082  .4207465
+         immunosupr~n |       915  .0885246  .2842117
+             hiv_aids |       915  .1836066  .3873747
+         organ_tran~t |       915  .3180328   .465967
+           rare_neuro |       915  .5606557  .4965787
+         vaccinat~tus |       915  2.225137  1.309627
+                imdq5 |       905  3.035359  1.409853
+                White |       359         0         0
+            bmi_group |       861  1.917538  1.030435
+             diabetes |       915  .1103825  .3135373
+         chronic_ca~e |       915   .104918  .3066154
+         chronic_re~e |       915  .1038251  .3052004
+         hypertension |       915   .104918  .3066154
 ----------------------+------------------------------
-1                 age |     24839  49.00757  18.98055
-                  sex |     24839  .5137888  .4998199
-           region_nhs |     24839  4.814324  2.516486
-         paxlovid_c~d |     24839  .5212368  .4995589
-         downs_synd~e |     24839  .1885744  .3911781
-         solid_cancer |     24839   .098756  .2983401
-         haem_disease |     24839  .4674906  .4989521
-         renal_dise~e |     24839  .3494505   .476806
-         liver_dise~e |     24839  .1908289  .3929624
-         imid_on_drug |     24839  .2187689  .4134198
-         immunosupr~n |     24839  .1006482  .3008683
-             hiv_aids |     24839  .1893796  .3918178
-         organ_tran~t |     24839  .3129353  .4636976
-           rare_neuro |     24839  .5682596  .4953287
-         vaccinat~tus |     24839  2.194774  1.328664
-                imdq5 |     24565  3.032689  1.413044
-                White |      8887         0         0
-            bmi_group |     23324  1.952067  1.037363
-             diabetes |     24839  .0999235   .299904
-         chronic_ca~e |     24839   .102178  .3028884
-         chronic_re~e |     24839    .10093  .3012421
-         hypertension |     24839  .1010105  .3013487
+1                 age |     23774  48.85968  18.96259
+                  sex |     23774  .5083284  .4999411
+           region_nhs |     23774  4.789939  2.522827
+         paxlovid_c~d |     23774   .536174  .4987002
+         downs_synd~e |     23774  .2001767  .4001409
+         solid_cancer |     23774  .1056196  .3073566
+         haem_disease |     23774  .4894422   .499899
+         renal_dise~e |     23774  .3563136  .4789195
+         liver_dise~e |     23774  .1993354  .3995091
+         imid_on_drug |     23774  .2231009  .4163342
+         immunosupr~n |     23774  .1051569  .3067619
+             hiv_aids |     23774  .1989148  .3991922
+         organ_tran~t |     23774   .321738  .4671529
+           rare_neuro |     23774  .5940103  .4910929
+         vaccinat~tus |     23774  2.209052  1.323007
+                imdq5 |     23524  3.027036  1.407718
+                White |      8448         0         0
+            bmi_group |     22253  1.964319  1.033496
+             diabetes |     23774  .0983427  .2977838
+         chronic_ca~e |     23774   .099899  .2998717
+         chronic_re~e |     23774   .099857  .2998155
+         hypertension |     23774  .1009506  .3012697
 -----------------------------------------------------
 
 . 
 . tempname coxoutput_propensity
 
 . 
-. postfile `coxoutput_propensity' str20(model) ///
+. postfile `coxoutput_propensity' str20(model) str20(fail)   ///
 >         hr_sot lc_sot uc_sot hr_pax lc_pax uc_pax hr_mol lc_mol uc_mol ///
->         using "$projectdir/output/tables/cox_model_propensity", replace      
->                                    
+>         using "$projectdir/output/tables/cox_model_propensity", replace                                         
 
 . 
 . * Models
 . global agesex   age i.sex
 
-. global adj              age i.sex i.region_nhs paxlovid_contraindicated downs
-> _syndrome solid_cancer haem_disease renal_disease ///
->                                 liver_disease imid_on_drug immunosupression h
-> iv_aids organ_transplant rare_neuro  
+. global adj              age i.sex i.region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease ///
+>                                 liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro  
 
-. global fulladj1 age i.sex i.region_nhs paxlovid_contraindicated downs_syndrom
-> e solid_cancer haem_disease renal_disease ///
->                                 liver_disease imid_on_drug immunosupression h
-> iv_aids organ_transplant rare_neuro  vaccination_status imdq5 White 
+. global fulladj1 age i.sex i.region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease ///
+>                                 liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro  vaccination_status imdq5 White 
 
-. global fulladj2 age i.sex i.region_nhs paxlovid_contraindicated downs_syndrom
-> e solid_cancer haem_disease renal_disease ///
->                                 liver_disease imid_on_drug immunosupression h
-> iv_aids organ_transplant rare_neuro vaccination_status imdq5 White ///
->                                 1b.bmi_group diabetes chronic_cardiac_disease
->  chronic_respiratory_disease hypertension
+. global fulladj2 age i.sex i.region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease ///
+>                                 liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 White ///
+>                                 1b.bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension
 
 .                 
-.                                 
+.         
 . foreach model in agesex adj fulladj1 fulladj2 {
   2.                 logistic no_drug $`model'
   3.                 predict p_`model'
-  4.                 twoway  (histogram p_`model' if no_drug==1, color(green)) 
-> ///
->                                 (histogram p_`model' if no_drug==0, fcolor(no
-> ne) lcolor(black)), ///
->                                 legend(order(1 "No Drug" 2 "Drug")) name(hist
-> ogram_`model', replace) ///
->                                 saving("$projectdir/output/figures/histogram_
-> `model'", replace)
-  5.                 graph export "$projectdir/output/figures/histogram_`model'
-> .svg", as(svg) replace
+  4.                 twoway  (histogram p_`model' if no_drug==1, color(green)) ///
+>                                 (histogram p_`model' if no_drug==0, fcolor(none) lcolor(black)), ///
+>                                 legend(order(1 "No Drug" 2 "Drug")) name(histogram_`model', replace) ///
+>                                 saving("$projectdir/output/figures/histogram_`model'", replace)
+  5.                 graph export "$projectdir/output/figures/histogram_`model'.svg", as(svg) replace
   6.                 gen iptw_`model' = 1/p_`model' if no_drug==1
   7.                 replace iptw_`model' = 1/(1-p_`model') if no_drug==0
-  8.                 stset stop_ae_all [pw=iptw_`model'], id(patient_id) origin
-> (time start_date) enter(time start_date) failure(fail_ae_all==1) 
-  9.                 stcox i.drug, vce(robust)
- 10.                                                 matrix b = r(table)
- 11.                                                 local hr_sot = b[1,2]
- 12.                                                 local lc_sot = b[5,2]
- 13.                                                 local uc_sot = b[6,2]
- 14.                                                 local hr_pax = b[1,3]
- 15.                                                 local lc_pax = b[5,3]
- 16.                                                 local uc_pax = b[6,3]
- 17.                                                 local hr_mol = b[1,4]
- 18.                                                 local lc_mol = b[5,4]
- 19.                                                 local uc_mol = b[6,4]
- 20.                 post `coxoutput_propensity' ("`model'") (`hr_sot') (`lc_so
-> t') (`uc_sot') (`hr_pax') (`lc_pax') (`uc_pax') (`hr_mol') (`lc_mol') (`uc_mo
-> l')      
- 21. }
+  8.                 
+.                 foreach fail in ae_spc_all ae_drug_all ae_imae_all ae_all{
+  9.                 stset stop_`fail' [pw=iptw_`model'], id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
+ 10.                 stcox i.drug, vce(robust)
+ 11.                                                 matrix b = r(table)
+ 12.                                                 local hr_sot = b[1,2]
+ 13.                                                 local lc_sot = b[5,2]
+ 14.                                                 local uc_sot = b[6,2]
+ 15.                                                 local hr_pax = b[1,3]
+ 16.                                                 local lc_pax = b[5,3]
+ 17.                                                 local uc_pax = b[6,3]
+ 18.                                                 local hr_mol = b[1,4]
+ 19.                                                 local lc_mol = b[5,4]
+ 20.                                                 local uc_mol = b[6,4]
+ 21.                 post `coxoutput_propensity' ("`model'") ("`fail'") (`hr_sot') (`lc_sot') (`uc_sot') (`hr_pax') (`lc_pax') (`uc_pax') (`hr_mol') (`lc_mol') (`uc_mol')
+ 22. }
+ 23. }
 
-Logistic regression                             Number of obs     =     26,469
-                                                LR chi2(2)        =       6.40
-                                                Prob > chi2       =     0.0407
-Log likelihood = -6118.9987                     Pseudo R2         =     0.0005
+Logistic regression                                     Number of obs = 24,689
+                                                        LR chi2(2)    =   3.23
+                                                        Prob > chi2   = 0.1987
+Log likelihood = -3911.3134                             Pseudo R2     = 0.0004
 
 ------------------------------------------------------------------------------
-     no_drug | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
+     no_drug | Odds ratio   Std. err.      z    P>|z|     [95% conf. interval]
 -------------+----------------------------------------------------------------
-         age |   1.002342   .0013581     1.73   0.084     .9996842    1.005008
+         age |   1.003166   .0017971     1.76   0.078     .9996497    1.006694
              |
          sex |
-     Female  |   1.097578    .056148     1.82   0.069     .9928672    1.213332
-       _cons |   12.98028   .9629966    34.55   0.000     11.22365    15.01185
+     Female  |   .9794926   .0660257    -0.31   0.759     .8582689    1.117838
+       _cons |   22.54167   2.218699    31.65   0.000     18.58682    27.33801
 ------------------------------------------------------------------------------
 Note: _cons estimates baseline odds.
 (option pr assumed; Pr(no_drug))
-(file /workspace/output/figures/histogram_agesex.gph saved)
-(note: file /workspace/output/figures/histogram_agesex.svg not found)
-(file /workspace/output/figures/histogram_agesex.svg written in SVG format)
-(1,630 missing values generated)
-(1,630 real changes made)
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/histogram_agesex.gph 
+> saved
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/histogram_agesex.svg saved as SVG format
+(915 missing values generated)
+(915 real changes made)
 
-                id:  patient_id
-     failure event:  fail_ae_all == 1
-obs. time interval:  (stop_ae_all[_n-1], stop_ae_all]
- enter on or after:  time start_date
- exit on or before:  failure
-    t for analysis:  (time-origin)
-            origin:  time start_date
-            weight:  [pweight=iptw_agesex]
+Survival-time data settings
 
-------------------------------------------------------------------------------
-     26,469  total observations
-     23,554  observations end on or before enter()
-------------------------------------------------------------------------------
-      2,915  observations remaining, representing
-      2,915  subjects
-      1,143  failures in single-failure-per-subject data
-   65,820.5  total analysis time at risk and under observation
-                                                at risk from t =         0
-                                     earliest observed entry t =         0
-                                          last observed exit t =        29
+           ID variable: patient_id
+         Failure event: fail_ae_spc_all==1
+Observed time interval: (stop_ae_spc_all[_n-1], stop_ae_spc_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+                Weight: [pweight=iptw_agesex]
 
-         failure _d:  fail_ae_all == 1
-   analysis time _t:  (stop_ae_all-origin)
-             origin:  time start_date
-  enter on or after:  time start_date
-                 id:  patient_id
-             weight:  [pweight=iptw_agesex]
+--------------------------------------------------------------------------
+     24,689  total observations
+     16,997  observations end on or before enter()
+--------------------------------------------------------------------------
+      7,692  observations remaining, representing
+      7,692  subjects
+      1,139  failures in single-failure-per-subject data
+ 204,515.75  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =        29
 
-(sum of wgt is 5,637.28170335293)
-Iteration 0:   log pseudolikelihood = -20601.795
-Iteration 1:   log pseudolikelihood = -20561.513
-Iteration 2:   log pseudolikelihood = -20561.331
-Iteration 3:   log pseudolikelihood = -20561.331
+         Failure _d: fail_ae_spc_all==1
+   Analysis time _t: (stop_ae_spc_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+             Weight: [pweight=iptw_agesex]
+
+(sum of wgt is 14,994.3717939854)
+Iteration 0:   log pseudolikelihood = -20633.755
+Iteration 1:   log pseudolikelihood = -20559.821
+Iteration 2:   log pseudolikelihood = -20557.533
+Iteration 3:   log pseudolikelihood = -20557.532
 Refining estimates:
-Iteration 0:   log pseudolikelihood = -20561.331
+Iteration 0:   log pseudolikelihood = -20557.532
 
-Cox regression -- Breslow method for ties
+Cox regression with Breslow method for ties
 
-No. of subjects      =        5,637             Number of obs    =       2,915
-No. of failures      =        2,461
-Time at risk         =  122579.3426
-                                                Wald chi2(3)     =        9.39
-Log pseudolikelihood =   -20561.331             Prob > chi2      =      0.0246
+No. of subjects =      14,994                           Number of obs =  7,692
+No. of failures =       2,163
+Time at risk    = 401,159.371
+                                                        Wald chi2(3)  =   5.56
+Log pseudolikelihood = -20557.532                       Prob > chi2   = 0.1352
 
-                         (Std. Err. adjusted for 2,915 clusters in patient_id)
-------------------------------------------------------------------------------
-             |               Robust
-          _t | Haz. Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-        drug |
- sotrovimab  |   1.536366   .3354679     1.97   0.049      1.00146     2.35698
-   paxlovid  |   1.203278   .2273949     0.98   0.327     .8308187    1.742712
-molnupira~r  |   1.472309   .2556881     2.23   0.026     1.047552    2.069296
-------------------------------------------------------------------------------
+                          (Std. err. adjusted for 7,692 clusters in patient_id)
+-------------------------------------------------------------------------------
+              |               Robust
+           _t | Haz. ratio   std. err.      z    P>|z|     [95% conf. interval]
+--------------+----------------------------------------------------------------
+         drug |
+  sotrovimab  |   .7953509   .2320414    -0.78   0.433     .4489759    1.408946
+    paxlovid  |   1.435688   .3305976     1.57   0.116     .9142243    2.254588
+molnupiravir  |   .5592619   .2095406    -1.55   0.121     .2683445    1.165568
+-------------------------------------------------------------------------------
 
-Logistic regression                             Number of obs     =     26,469
-                                                LR chi2(21)       =      40.89
-                                                Prob > chi2       =     0.0058
-Log likelihood = -6101.7577                     Pseudo R2         =     0.0033
+Survival-time data settings
 
-------------------------------------------------------------------------------
-     no_drug | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-         age |   1.002314   .0013585     1.71   0.088      .999655     1.00498
-             |
-         sex |
-     Female  |   1.095017    .056081     1.77   0.076     .9904368     1.21064
-             |
-  region_nhs |
-East Midl..  |   .9451636    .104836    -0.51   0.611     .7604892    1.174684
-     London  |   1.076211   .1054211     0.75   0.453     .8882131       1.304
- North East  |   1.225788   .1429964     1.75   0.081     .9752525    1.540685
- North West  |    1.29914   .1547701     2.20   0.028     1.028608    1.640823
- South East  |   .9517857   .1047142    -0.45   0.653     .7671691     1.18083
- South West  |   1.132516   .1295069     1.09   0.276     .9051209    1.417039
-West Midl..  |   .8770669   .0957752    -1.20   0.230     .7080795    1.086384
-Yorkshire..  |   1.150704   .1322127     1.22   0.222     .9186768    1.441333
-             |
-paxlovid_c~d |   .9482121    .082084    -0.61   0.539     .8002385    1.123548
-downs_synd~e |   1.048118    .069617     0.71   0.479     .9201793    1.193844
-solid_cancer |    .909416   .0753806    -1.15   0.252     .7730496    1.069838
-haem_disease |   .9314998   .0477211    -1.39   0.166     .8425106    1.029888
-renal_dise~e |   .9972439    .055113    -0.05   0.960     .8948691    1.111331
-liver_dise~e |   .9883567   .0810517    -0.14   0.886     .8416076    1.160694
-imid_on_drug |   .9719627   .0597147    -0.46   0.643     .8616962    1.096339
-immunosupr~n |    1.03327   .0888333     0.38   0.703     .8730387    1.222909
-    hiv_aids |   .8326239   .0517072    -2.95   0.003     .7372044    .9403939
-organ_tran~t |   1.010202   .0818199     0.13   0.900     .8619185    1.183996
-  rare_neuro |   .9741239   .0504178    -0.51   0.612     .8801536    1.078127
-       _cons |   13.81561   1.655394    21.91   0.000     10.92393    17.47276
-------------------------------------------------------------------------------
+           ID variable: patient_id
+         Failure event: fail_ae_drug_all==1
+Observed time interval: (stop_ae_drug_all[_n-1], stop_ae_drug_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+                Weight: [pweight=iptw_agesex]
+
+--------------------------------------------------------------------------
+     24,689  total observations
+     15,925  observations end on or before enter()
+--------------------------------------------------------------------------
+      8,764  observations remaining, representing
+      8,764  subjects
+      1,119  failures in single-failure-per-subject data
+ 236,353.25  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =        29
+
+         Failure _d: fail_ae_drug_all==1
+   Analysis time _t: (stop_ae_drug_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+             Weight: [pweight=iptw_agesex]
+
+(sum of wgt is 18,008.9497311115)
+Iteration 0:   log pseudolikelihood = -22979.599
+Iteration 1:   log pseudolikelihood = -22954.959
+Iteration 2:   log pseudolikelihood = -22954.621
+Iteration 3:   log pseudolikelihood = -22954.621
+Refining estimates:
+Iteration 0:   log pseudolikelihood = -22954.621
+
+Cox regression with Breslow method for ties
+
+No. of subjects =      18,009                           Number of obs =  8,764
+No. of failures =       2,362
+Time at risk    = 485,729.627
+                                                        Wald chi2(3)  =   2.06
+Log pseudolikelihood = -22954.621                       Prob > chi2   = 0.5601
+
+                          (Std. err. adjusted for 8,764 clusters in patient_id)
+-------------------------------------------------------------------------------
+              |               Robust
+           _t | Haz. ratio   std. err.      z    P>|z|     [95% conf. interval]
+--------------+----------------------------------------------------------------
+         drug |
+  sotrovimab  |   1.359461   .3146758     1.33   0.185     .8636509    2.139908
+    paxlovid  |   .8684266   .2452941    -0.50   0.617     .4992342    1.510643
+molnupiravir  |   .9575892   .2528861    -0.16   0.870     .5706747     1.60683
+-------------------------------------------------------------------------------
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_ae_imae_all==1
+Observed time interval: (stop_ae_imae_all[_n-1], stop_ae_imae_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+                Weight: [pweight=iptw_agesex]
+
+--------------------------------------------------------------------------
+     24,689  total observations
+     19,232  observations end on or before enter()
+--------------------------------------------------------------------------
+      5,457  observations remaining, representing
+      5,457  subjects
+      1,127  failures in single-failure-per-subject data
+ 140,331.25  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =        29
+
+         Failure _d: fail_ae_imae_all==1
+   Analysis time _t: (stop_ae_imae_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+             Weight: [pweight=iptw_agesex]
+
+(sum of wgt is 10,696.2101308107)
+Iteration 0:   log pseudolikelihood = -19681.602
+Iteration 1:   log pseudolikelihood = -19679.224
+Iteration 2:   log pseudolikelihood =  -19679.22
+Refining estimates:
+Iteration 0:   log pseudolikelihood =  -19679.22
+
+Cox regression with Breslow method for ties
+
+No. of subjects =      10,696                           Number of obs =  5,457
+No. of failures =       2,146
+Time at risk    = 275,159.057
+                                                        Wald chi2(3)  =   0.24
+Log pseudolikelihood = -19679.22                        Prob > chi2   = 0.9710
+
+                          (Std. err. adjusted for 5,457 clusters in patient_id)
+-------------------------------------------------------------------------------
+              |               Robust
+           _t | Haz. ratio   std. err.      z    P>|z|     [95% conf. interval]
+--------------+----------------------------------------------------------------
+         drug |
+  sotrovimab  |   .9700569   .2714299    -0.11   0.913     .5605625     1.67869
+    paxlovid  |   .9644078    .259248    -0.13   0.893     .5694352    1.633342
+molnupiravir  |   .8686663   .2656362    -0.46   0.645     .4770429    1.581789
+-------------------------------------------------------------------------------
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_ae_all==1
+Observed time interval: (stop_ae_all[_n-1], stop_ae_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+                Weight: [pweight=iptw_agesex]
+
+--------------------------------------------------------------------------
+     24,689  total observations
+     21,993  observations end on or before enter()
+--------------------------------------------------------------------------
+      2,696  observations remaining, representing
+      2,696  subjects
+      1,025  failures in single-failure-per-subject data
+     61,317  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =        29
+
+         Failure _d: fail_ae_all==1
+   Analysis time _t: (stop_ae_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+             Weight: [pweight=iptw_agesex]
+
+(sum of wgt is 5,194.5966347456)
+Iteration 0:   log pseudolikelihood =  -17080.44
+Iteration 1:   log pseudolikelihood = -17061.469
+Iteration 2:   log pseudolikelihood = -17061.134
+Iteration 3:   log pseudolikelihood = -17061.134
+Refining estimates:
+Iteration 0:   log pseudolikelihood = -17061.134
+
+Cox regression with Breslow method for ties
+
+No. of subjects =       5,195                           Number of obs =  2,696
+No. of failures =       2,051
+Time at risk    = 116,257.625
+                                                        Wald chi2(3)  =   1.70
+Log pseudolikelihood = -17061.134                       Prob > chi2   = 0.6367
+
+                          (Std. err. adjusted for 2,696 clusters in patient_id)
+-------------------------------------------------------------------------------
+              |               Robust
+           _t | Haz. ratio   std. err.      z    P>|z|     [95% conf. interval]
+--------------+----------------------------------------------------------------
+         drug |
+  sotrovimab  |   1.014149   .2973785     0.05   0.962     .5708271     1.80177
+    paxlovid  |   1.414462   .3800459     1.29   0.197     .8353832    2.394954
+molnupiravir  |   .9529187   .2758115    -0.17   0.868     .5403626    1.680453
+-------------------------------------------------------------------------------
+
+Logistic regression                                     Number of obs = 24,689
+                                                        LR chi2(21)   =  38.90
+                                                        Prob > chi2   = 0.0101
+Log likelihood = -3893.4796                             Pseudo R2     = 0.0050
+
+-------------------------------------------------------------------------------------------
+                  no_drug | Odds ratio   Std. err.      z    P>|z|     [95% conf. interval]
+--------------------------+----------------------------------------------------------------
+                      age |   1.003146   .0017989     1.75   0.080     .9996263    1.006678
+                          |
+                      sex |
+                  Female  |   .9789469   .0660666    -0.32   0.753     .8576572    1.117389
+                          |
+               region_nhs |
+           East Midlands  |   1.034503   .1498255     0.23   0.815     .7788491    1.374073
+                  London  |   1.237073   .1596578     1.65   0.099     .9605912    1.593134
+              North East  |   1.029791   .1491509     0.20   0.839     .7752899    1.367835
+              North West  |    .968531   .1393032    -0.22   0.824     .7306102     1.28393
+              South East  |   .9963879    .143651    -0.03   0.980     .7511198    1.321745
+              South West  |   1.259136   .1921445     1.51   0.131      .933639    1.698111
+           West Midlands  |   1.170459    .174169     1.06   0.290     .8743677    1.566818
+Yorkshire and The Humber  |   1.156775     .17372     0.97   0.332     .8618239    1.552669
+                          |
+ paxlovid_contraindicated |   1.117648   .1318779     0.94   0.346     .8868834    1.408456
+           downs_syndrome |   1.402592    .131065     3.62   0.000      1.16786    1.684503
+             solid_cancer |   .9171504   .0968961    -0.82   0.413     .7456103    1.128156
+             haem_disease |   1.088521   .0737634     1.25   0.211     .9531372    1.243135
+            renal_disease |    1.06464   .0780109     0.85   0.393     .9222132    1.229063
+            liver_disease |   1.023005   .1138542     0.20   0.838     .8225161    1.272364
+             imid_on_drug |   .9710519    .077973    -0.37   0.714     .8296465    1.136558
+         immunosupression |   1.221664   .1447091     1.69   0.091      .968556    1.540915
+                 hiv_aids |   1.120701   .0976579     1.31   0.191     .9447479    1.329424
+         organ_transplant |   .9531077   .1055707    -0.43   0.665     .7671122      1.1842
+               rare_neuro |   1.165677   .0795336     2.25   0.025     1.019767    1.332463
+                    _cons |   15.47192   2.437049    17.39   0.000     11.36234    21.06787
+-------------------------------------------------------------------------------------------
 Note: _cons estimates baseline odds.
 (option pr assumed; Pr(no_drug))
-(file /workspace/output/figures/histogram_adj.gph saved)
-(note: file /workspace/output/figures/histogram_adj.svg not found)
-(file /workspace/output/figures/histogram_adj.svg written in SVG format)
-(1,630 missing values generated)
-(1,630 real changes made)
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/histogram_adj.gph sav
+> ed
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/histogram_adj.svg
+    saved as SVG format
+(915 missing values generated)
+(915 real changes made)
 
-                id:  patient_id
-     failure event:  fail_ae_all == 1
-obs. time interval:  (stop_ae_all[_n-1], stop_ae_all]
- enter on or after:  time start_date
- exit on or before:  failure
-    t for analysis:  (time-origin)
-            origin:  time start_date
-            weight:  [pweight=iptw_adj]
+Survival-time data settings
 
-------------------------------------------------------------------------------
-     26,469  total observations
-     23,554  observations end on or before enter()
-------------------------------------------------------------------------------
-      2,915  observations remaining, representing
-      2,915  subjects
-      1,143  failures in single-failure-per-subject data
-   65,820.5  total analysis time at risk and under observation
-                                                at risk from t =         0
-                                     earliest observed entry t =         0
-                                          last observed exit t =        29
+           ID variable: patient_id
+         Failure event: fail_ae_spc_all==1
+Observed time interval: (stop_ae_spc_all[_n-1], stop_ae_spc_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+                Weight: [pweight=iptw_adj]
 
-         failure _d:  fail_ae_all == 1
-   analysis time _t:  (stop_ae_all-origin)
-             origin:  time start_date
-  enter on or after:  time start_date
-                 id:  patient_id
-             weight:  [pweight=iptw_adj]
+--------------------------------------------------------------------------
+     24,689  total observations
+     16,997  observations end on or before enter()
+--------------------------------------------------------------------------
+      7,692  observations remaining, representing
+      7,692  subjects
+      1,139  failures in single-failure-per-subject data
+ 204,515.75  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =        29
 
-(sum of wgt is 5,617.6177867651)
-Iteration 0:   log pseudolikelihood = -20470.183
-Iteration 1:   log pseudolikelihood =  -20430.86
-Iteration 2:   log pseudolikelihood = -20430.692
-Iteration 3:   log pseudolikelihood = -20430.692
+         Failure _d: fail_ae_spc_all==1
+   Analysis time _t: (stop_ae_spc_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+             Weight: [pweight=iptw_adj]
+
+(sum of wgt is 14,967.7938479185)
+Iteration 0:   log pseudolikelihood = -20509.976
+Iteration 1:   log pseudolikelihood = -20430.708
+Iteration 2:   log pseudolikelihood = -20427.964
+Iteration 3:   log pseudolikelihood = -20427.962
 Refining estimates:
-Iteration 0:   log pseudolikelihood = -20430.692
+Iteration 0:   log pseudolikelihood = -20427.962
 
-Cox regression -- Breslow method for ties
+Cox regression with Breslow method for ties
 
-No. of subjects      =        5,618             Number of obs    =       2,915
-No. of failures      =        2,446
-Time at risk         =   122383.614
-                                                Wald chi2(3)     =        9.04
-Log pseudolikelihood =   -20430.692             Prob > chi2      =      0.0288
+No. of subjects =      14,968                           Number of obs =  7,692
+No. of failures =       2,150
+Time at risk    = 400,376.903
+                                                        Wald chi2(3)  =   5.94
+Log pseudolikelihood = -20427.962                       Prob > chi2   = 0.1148
 
-                         (Std. Err. adjusted for 2,915 clusters in patient_id)
-------------------------------------------------------------------------------
-             |               Robust
-          _t | Haz. Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-        drug |
- sotrovimab  |   1.494243   .3308897     1.81   0.070     .9681188     2.30629
-   paxlovid  |   1.185256   .2256226     0.89   0.372     .8161679    1.721254
-molnupira~r  |   1.494202    .260017     2.31   0.021     1.062393    2.101518
-------------------------------------------------------------------------------
-note: White omitted because of collinearity
+                          (Std. err. adjusted for 7,692 clusters in patient_id)
+-------------------------------------------------------------------------------
+              |               Robust
+           _t | Haz. ratio   std. err.      z    P>|z|     [95% conf. interval]
+--------------+----------------------------------------------------------------
+         drug |
+  sotrovimab  |   .7938615    .236595    -0.77   0.439     .4426502    1.423734
+    paxlovid  |   1.440487   .3366657     1.56   0.118     .9111066    2.277452
+molnupiravir  |   .5286788   .2003824    -1.68   0.093     .2515158    1.111267
+-------------------------------------------------------------------------------
 
-Logistic regression                             Number of obs     =      9,366
-                                                LR chi2(23)       =      38.06
-                                                Prob > chi2       =     0.0251
-Log likelihood = -2166.9388                     Pseudo R2         =     0.0087
+Survival-time data settings
 
-------------------------------------------------------------------------------
-     no_drug | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-         age |   1.005573   .0023162     2.41   0.016     1.001043    1.010123
-             |
-         sex |
-     Female  |   1.077531   .0924533     0.87   0.384     .9107429    1.274864
-             |
-  region_nhs |
-East Midl..  |   .9889391   .1845046    -0.06   0.952     .6860606    1.425531
-     London  |   1.290411   .2146638     1.53   0.125     .9313821    1.787837
- North East  |   1.156716   .2220597     0.76   0.448     .7939952    1.685138
- North West  |   1.730713   .3640853     2.61   0.009     1.145936    2.613906
- South East  |   .9993501   .1829907    -0.00   0.997     .6979983    1.430807
- South West  |   1.176398   .2236208     0.85   0.393     .8104945    1.707492
-West Midl..  |   .8218828   .1458184    -1.11   0.269     .5804833     1.16367
-Yorkshire..  |   1.114151    .208305     0.58   0.563     .7723266    1.607264
-             |
-paxlovid_c~d |   1.070579   .1559989     0.47   0.640     .8046112    1.424462
-downs_synd~e |   .9622645   .1056503    -0.35   0.726     .7759579    1.193303
-solid_cancer |   .8133182   .1099665    -1.53   0.126     .6239818    1.060105
-haem_disease |   .8983441   .0770152    -1.25   0.211     .7593972    1.062714
-renal_dise~e |     .97561    .089622    -0.27   0.788     .8148595    1.168072
-liver_dise~e |   .8741861   .1186714    -0.99   0.322     .6699658    1.140657
-imid_on_drug |   .9316163   .0945847    -0.70   0.485     .7635135     1.13673
-immunosupr~n |   1.150859   .1727282     0.94   0.349     .8575682    1.544457
-    hiv_aids |   .7806599   .0793556    -2.44   0.015     .6396399    .9527703
-organ_tran~t |   .9359151    .126733    -0.49   0.625     .7177523    1.220389
-  rare_neuro |   1.016682    .087979     0.19   0.848     .8580764    1.204603
-vaccinat~tus |   .9739088   .0318079    -0.81   0.418     .9135198     1.03829
-       imdq5 |   1.001041   .0302015     0.03   0.972     .9435634     1.06202
-       White |          1  (omitted)
-       _cons |    12.1392   2.786673    10.87   0.000     7.740848    19.03671
-------------------------------------------------------------------------------
+           ID variable: patient_id
+         Failure event: fail_ae_drug_all==1
+Observed time interval: (stop_ae_drug_all[_n-1], stop_ae_drug_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+                Weight: [pweight=iptw_adj]
+
+--------------------------------------------------------------------------
+     24,689  total observations
+     15,925  observations end on or before enter()
+--------------------------------------------------------------------------
+      8,764  observations remaining, representing
+      8,764  subjects
+      1,119  failures in single-failure-per-subject data
+ 236,353.25  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =        29
+
+         Failure _d: fail_ae_drug_all==1
+   Analysis time _t: (stop_ae_drug_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+             Weight: [pweight=iptw_adj]
+
+(sum of wgt is 18,009.5651954412)
+Iteration 0:   log pseudolikelihood = -23274.089
+Iteration 1:   log pseudolikelihood = -23245.305
+Iteration 2:   log pseudolikelihood = -23244.819
+Iteration 3:   log pseudolikelihood = -23244.819
+Refining estimates:
+Iteration 0:   log pseudolikelihood = -23244.819
+
+Cox regression with Breslow method for ties
+
+No. of subjects =      18,010                           Number of obs =  8,764
+No. of failures =       2,392
+Time at risk    = 484,750.924
+                                                        Wald chi2(3)  =   2.36
+Log pseudolikelihood = -23244.819                       Prob > chi2   = 0.5017
+
+                          (Std. err. adjusted for 8,764 clusters in patient_id)
+-------------------------------------------------------------------------------
+              |               Robust
+           _t | Haz. ratio   std. err.      z    P>|z|     [95% conf. interval]
+--------------+----------------------------------------------------------------
+         drug |
+  sotrovimab  |   1.411881   .3331774     1.46   0.144     .8890587    2.242155
+    paxlovid  |   .8796789    .254431    -0.44   0.658     .4990335    1.550667
+molnupiravir  |   .9805673   .2678252    -0.07   0.943     .5740983    1.674822
+-------------------------------------------------------------------------------
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_ae_imae_all==1
+Observed time interval: (stop_ae_imae_all[_n-1], stop_ae_imae_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+                Weight: [pweight=iptw_adj]
+
+--------------------------------------------------------------------------
+     24,689  total observations
+     19,232  observations end on or before enter()
+--------------------------------------------------------------------------
+      5,457  observations remaining, representing
+      5,457  subjects
+      1,127  failures in single-failure-per-subject data
+ 140,331.25  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =        29
+
+         Failure _d: fail_ae_imae_all==1
+   Analysis time _t: (stop_ae_imae_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+             Weight: [pweight=iptw_adj]
+
+(sum of wgt is 10,691.0755858421)
+Iteration 0:   log pseudolikelihood = -19160.379
+Iteration 1:   log pseudolikelihood = -19147.608
+Iteration 2:   log pseudolikelihood = -19147.579
+Iteration 3:   log pseudolikelihood = -19147.579
+Refining estimates:
+Iteration 0:   log pseudolikelihood = -19147.579
+
+Cox regression with Breslow method for ties
+
+No. of subjects =      10,691                           Number of obs =  5,457
+No. of failures =       2,089
+Time at risk    = 275,877.467
+                                                        Wald chi2(3)  =   1.17
+Log pseudolikelihood = -19147.579                       Prob > chi2   = 0.7602
+
+                          (Std. err. adjusted for 5,457 clusters in patient_id)
+-------------------------------------------------------------------------------
+              |               Robust
+           _t | Haz. ratio   std. err.      z    P>|z|     [95% conf. interval]
+--------------+----------------------------------------------------------------
+         drug |
+  sotrovimab  |   1.052604   .2971345     0.18   0.856     .6053173    1.830402
+    paxlovid  |   .8212697   .2289287    -0.71   0.480     .4755691    1.418267
+molnupiravir  |   .7756069   .2454402    -0.80   0.422     .4171379    1.442128
+-------------------------------------------------------------------------------
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_ae_all==1
+Observed time interval: (stop_ae_all[_n-1], stop_ae_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+                Weight: [pweight=iptw_adj]
+
+--------------------------------------------------------------------------
+     24,689  total observations
+     21,993  observations end on or before enter()
+--------------------------------------------------------------------------
+      2,696  observations remaining, representing
+      2,696  subjects
+      1,025  failures in single-failure-per-subject data
+     61,317  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =        29
+
+         Failure _d: fail_ae_all==1
+   Analysis time _t: (stop_ae_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+             Weight: [pweight=iptw_adj]
+
+(sum of wgt is 5,163.58835029602)
+Iteration 0:   log pseudolikelihood = -16799.312
+Iteration 1:   log pseudolikelihood = -16779.402
+Iteration 2:   log pseudolikelihood = -16779.168
+Iteration 3:   log pseudolikelihood = -16779.168
+Refining estimates:
+Iteration 0:   log pseudolikelihood = -16779.168
+
+Cox regression with Breslow method for ties
+
+No. of subjects =       5,164                           Number of obs =  2,696
+No. of failures =       2,018
+Time at risk    = 115,522.594
+                                                        Wald chi2(3)  =   1.59
+Log pseudolikelihood = -16779.168                       Prob > chi2   = 0.6613
+
+                          (Std. err. adjusted for 2,696 clusters in patient_id)
+-------------------------------------------------------------------------------
+              |               Robust
+           _t | Haz. ratio   std. err.      z    P>|z|     [95% conf. interval]
+--------------+----------------------------------------------------------------
+         drug |
+  sotrovimab  |   1.084208   .3220691     0.27   0.785     .6057025    1.940734
+    paxlovid  |   1.364462   .3841537     1.10   0.270     .7858009    2.369249
+molnupiravir  |   .8531097   .2544589    -0.53   0.594     .4754612    1.530716
+-------------------------------------------------------------------------------
+note: White omitted because of collinearity.
+
+Logistic regression                                     Number of obs =  8,705
+                                                        LR chi2(23)   =  28.69
+                                                        Prob > chi2   = 0.1908
+Log likelihood = -1465.9912                             Pseudo R2     = 0.0097
+
+-------------------------------------------------------------------------------------------
+                  no_drug | Odds ratio   Std. err.      z    P>|z|     [95% conf. interval]
+--------------------------+----------------------------------------------------------------
+                      age |   1.004165   .0029078     1.44   0.151     .9984818     1.00988
+                          |
+                      sex |
+                  Female  |   .9225196   .1006058    -0.74   0.460     .7449848    1.142362
+                          |
+               region_nhs |
+           East Midlands  |   .8010462    .190875    -0.93   0.352     .5021477    1.277861
+                  London  |   1.237644   .2789615     0.95   0.344     .7956782    1.925104
+              North East  |   .7017154   .1619954    -1.53   0.125     .4463297     1.10323
+              North West  |   .8413301    .201402    -0.72   0.470     .5262612    1.345029
+              South East  |   .8924403   .2200563    -0.46   0.644     .5504164    1.446995
+              South West  |   1.038183   .2610662     0.15   0.882     .6342014    1.699499
+           West Midlands  |   1.020782   .2587557     0.08   0.935     .6211035    1.677653
+Yorkshire and The Humber  |   .9750993   .2436151    -0.10   0.920     .5975688    1.591145
+                          |
+ paxlovid_contraindicated |   1.256491   .2428219     1.18   0.237     .8603222     1.83509
+           downs_syndrome |   1.530562   .2359594     2.76   0.006     1.131424    2.070506
+             solid_cancer |   1.248127   .2362891     1.17   0.242     .8612189    1.808856
+             haem_disease |   1.063644   .1162747     0.56   0.572     .8585094    1.317793
+            renal_disease |   .9982402     .11639    -0.02   0.988     .7943082     1.25453
+            liver_disease |   1.087451   .2030753     0.45   0.653     .7541412    1.568075
+             imid_on_drug |   .9360433   .1203451    -0.51   0.607     .7275432    1.204296
+         immunosupression |   1.201487   .2308507     0.96   0.339     .8244636    1.750923
+                 hiv_aids |   1.079415   .1508525     0.55   0.585     .8207859    1.419539
+         organ_transplant |   .9583835   .1769928    -0.23   0.818     .6673301    1.376379
+               rare_neuro |   .9779683   .1095377    -0.20   0.842     .7852096    1.218047
+       vaccination_status |   .9757205   .0405173    -0.59   0.554     .8994539    1.058454
+                    imdq5 |   1.002175   .0386493     0.06   0.955     .9292158    1.080863
+                    White |          1  (omitted)
+                    _cons |   17.49183   5.317426     9.41   0.000     9.639942    31.73921
+-------------------------------------------------------------------------------------------
 Note: _cons estimates baseline odds.
 (option pr assumed; Pr(no_drug))
-(17,103 missing values generated)
-(file /workspace/output/figures/histogram_fulladj1.gph saved)
-(note: file /workspace/output/figures/histogram_fulladj1.svg not found)
-(file /workspace/output/figures/histogram_fulladj1.svg written in SVG format)
-(17,687 missing values generated)
-(584 real changes made)
+(15,984 missing values generated)
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/histogram_fulladj1.gp
+> h saved
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/histogram_fulladj1.svg saved as SVG format
+(16,338 missing values generated)
+(354 real changes made)
 
-                id:  patient_id
-     failure event:  fail_ae_all == 1
-obs. time interval:  (stop_ae_all[_n-1], stop_ae_all]
- enter on or after:  time start_date
- exit on or before:  failure
-    t for analysis:  (time-origin)
-            origin:  time start_date
-            weight:  [pweight=iptw_fulladj1]
+Survival-time data settings
 
-------------------------------------------------------------------------------
-     26,469  total observations
-     23,554  observations end on or before enter()
-      1,913  weights invalid                                    PROBABLE ERROR
-------------------------------------------------------------------------------
-      1,002  observations remaining, representing
-      1,002  subjects
-        412  failures in single-failure-per-subject data
-     22,253  total analysis time at risk and under observation
-                                                at risk from t =         0
-                                     earliest observed entry t =         0
-                                          last observed exit t =        29
+           ID variable: patient_id
+         Failure event: fail_ae_spc_all==1
+Observed time interval: (stop_ae_spc_all[_n-1], stop_ae_spc_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+                Weight: [pweight=iptw_fulladj1]
 
-         failure _d:  fail_ae_all == 1
-   analysis time _t:  (stop_ae_all-origin)
-             origin:  time start_date
-  enter on or after:  time start_date
-                 id:  patient_id
-             weight:  [pweight=iptw_fulladj1]
+--------------------------------------------------------------------------
+     24,689  total observations
+     16,997  observations end on or before enter()
+      4,950  weights invalid                                PROBABLE ERROR
+--------------------------------------------------------------------------
+      2,742  observations remaining, representing
+      2,742  subjects
+        371  failures in single-failure-per-subject data
+     73,354  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =        29
 
-(sum of wgt is 1,939.02155470848)
-Iteration 0:   log pseudolikelihood = -6147.7816
-Iteration 1:   log pseudolikelihood = -6139.2378
-Iteration 2:   log pseudolikelihood = -6139.2036
-Iteration 3:   log pseudolikelihood = -6139.2036
+         Failure _d: fail_ae_spc_all==1
+   Analysis time _t: (stop_ae_spc_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+             Weight: [pweight=iptw_fulladj1]
+
+(sum of wgt is 5,007.33514773846)
+Iteration 0:   log pseudolikelihood = -6288.7198
+Iteration 1:   log pseudolikelihood = -6200.2202
+Iteration 2:   log pseudolikelihood = -6170.3821
+Iteration 3:   log pseudolikelihood = -6170.3515
+Iteration 4:   log pseudolikelihood = -6170.3515
 Refining estimates:
-Iteration 0:   log pseudolikelihood = -6139.2036
+Iteration 0:   log pseudolikelihood = -6170.3515
 
-Cox regression -- Breslow method for ties
+Cox regression with Breslow method for ties
 
-No. of subjects      =        1,939             Number of obs    =       1,002
-No. of failures      =          841
-Time at risk         =  43370.36029
-                                                Wald chi2(3)     =        1.39
-Log pseudolikelihood =   -6139.2036             Prob > chi2      =      0.7081
+No. of subjects =       5,007                           Number of obs =  2,742
+No. of failures =         745
+Time at risk    = 132,948.958
+                                                        Wald chi2(3)  =  11.43
+Log pseudolikelihood = -6170.3515                       Prob > chi2   = 0.0096
 
-                         (Std. Err. adjusted for 1,002 clusters in patient_id)
-------------------------------------------------------------------------------
-             |               Robust
-          _t | Haz. Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-        drug |
- sotrovimab  |   .8385302   .3243704    -0.46   0.649      .392868    1.789743
-   paxlovid  |   1.268386   .4189193     0.72   0.472     .6639246    2.423171
-molnupira~r  |   1.256026    .349056     0.82   0.412     .7285268    2.165469
-------------------------------------------------------------------------------
-note: White omitted because of collinearity
+                          (Std. err. adjusted for 2,742 clusters in patient_id)
+-------------------------------------------------------------------------------
+              |               Robust
+           _t | Haz. ratio   std. err.      z    P>|z|     [95% conf. interval]
+--------------+----------------------------------------------------------------
+         drug |
+  sotrovimab  |   .9161164   .4201277    -0.19   0.848     .3729003    2.250653
+    paxlovid  |   2.831839   .9757871     3.02   0.003     1.441331    5.563821
+molnupiravir  |   .3568589   .2553159    -1.44   0.150     .0878014    1.450413
+-------------------------------------------------------------------------------
 
-Logistic regression                             Number of obs     =      8,842
-                                                LR chi2(27)       =      38.95
-                                                Prob > chi2       =     0.0641
-Log likelihood = -2054.1394                     Pseudo R2         =     0.0094
+Survival-time data settings
 
-------------------------------------------------------------------------------
-     no_drug | Odds Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-         age |   1.005922   .0023834     2.49   0.013     1.001261    1.010604
-             |
-         sex |
-     Female  |    1.09781   .0967072     1.06   0.289     .9237278    1.304699
-             |
-  region_nhs |
-East Midl..  |   .9884613   .1870608    -0.06   0.951     .6821416    1.432336
-     London  |   1.335323   .2277325     1.70   0.090     .9559128    1.865325
- North East  |   1.215527   .2400899     0.99   0.323     .8253458    1.790166
- North West  |   1.721842   .3680833     2.54   0.011     1.132477    2.617925
- South East  |    1.03926   .1950602     0.21   0.837     .7193842    1.501369
- South West  |   1.227381   .2387696     1.05   0.292     .8382818    1.797085
-West Midl..  |   .8507805   .1544124    -0.89   0.373     .5961131    1.214245
-Yorkshire..  |     1.1388   .2177111     0.68   0.497     .7829213    1.656443
-             |
-paxlovid_c~d |   1.089892   .1641616     0.57   0.568     .8112853    1.464175
-downs_synd~e |    .960323    .108477    -0.36   0.720     .7696027    1.198307
-solid_cancer |   .8269016   .1144917    -1.37   0.170     .6303729    1.084701
-haem_disease |   .9438834   .0830734    -0.66   0.512     .7943321    1.121591
-renal_dise~e |   1.018165   .0964041     0.19   0.849     .8457124    1.225782
-liver_dise~e |    .862092   .1210804    -1.06   0.291     .6546404    1.135284
-imid_on_drug |     .91749   .0951797    -0.83   0.406     .7486836    1.124357
-immunosupr~n |   1.142327   .1751459     0.87   0.385     .8458255    1.542765
-    hiv_aids |   .7649944   .0792568    -2.59   0.010     .6244102    .9372307
-organ_tran~t |   .9443278   .1323845    -0.41   0.683     .7174531    1.242945
-  rare_neuro |   1.041768    .092405     0.46   0.645     .8755265    1.239575
-vaccinat~tus |   .9853979   .0328851    -0.44   0.659     .9230069    1.052006
-       imdq5 |   1.000946   .0310268     0.03   0.976     .9419449    1.063642
-       White |          1  (omitted)
-             |
-    diabetes |   1.008892   .1443152     0.06   0.951     .7622299    1.335375
-chronic_ca~e |   1.176201    .181724     1.05   0.294     .8689009    1.592183
-chronic_re~e |   1.123604   .1706297     0.77   0.443      .834354    1.513129
-hypertension |     .90573   .1259673    -0.71   0.477     .6896283    1.189549
-       _cons |   10.39543   2.452317     9.93   0.000     6.546981    16.50607
-------------------------------------------------------------------------------
+           ID variable: patient_id
+         Failure event: fail_ae_drug_all==1
+Observed time interval: (stop_ae_drug_all[_n-1], stop_ae_drug_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+                Weight: [pweight=iptw_fulladj1]
+
+--------------------------------------------------------------------------
+     24,689  total observations
+     15,925  observations end on or before enter()
+      5,619  weights invalid                                PROBABLE ERROR
+--------------------------------------------------------------------------
+      3,145  observations remaining, representing
+      3,145  subjects
+        417  failures in single-failure-per-subject data
+  84,718.75  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =        29
+
+         Failure _d: fail_ae_drug_all==1
+   Analysis time _t: (stop_ae_drug_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+             Weight: [pweight=iptw_fulladj1]
+
+(sum of wgt is 6,585.79249727726)
+Iteration 0:   log pseudolikelihood = -9191.7113
+Iteration 1:   log pseudolikelihood = -9144.5028
+Iteration 2:   log pseudolikelihood = -9142.0131
+Iteration 3:   log pseudolikelihood = -9142.0117
+Refining estimates:
+Iteration 0:   log pseudolikelihood = -9142.0117
+
+Cox regression with Breslow method for ties
+
+No. of subjects =       6,586                           Number of obs =  3,145
+No. of failures =       1,055
+Time at risk    = 174,370.534
+                                                        Wald chi2(3)  =   5.87
+Log pseudolikelihood = -9142.0117                       Prob > chi2   = 0.1179
+
+                          (Std. err. adjusted for 3,145 clusters in patient_id)
+-------------------------------------------------------------------------------
+              |               Robust
+           _t | Haz. ratio   std. err.      z    P>|z|     [95% conf. interval]
+--------------+----------------------------------------------------------------
+         drug |
+  sotrovimab  |   1.092801   .4350215     0.22   0.824     .5008355    2.384442
+    paxlovid  |   1.164792   .5363646     0.33   0.740     .4723744    2.872173
+molnupiravir  |   2.089804   .6419231     2.40   0.016     1.144571    3.815649
+-------------------------------------------------------------------------------
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_ae_imae_all==1
+Observed time interval: (stop_ae_imae_all[_n-1], stop_ae_imae_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+                Weight: [pweight=iptw_fulladj1]
+
+--------------------------------------------------------------------------
+     24,689  total observations
+     19,232  observations end on or before enter()
+      3,465  weights invalid                                PROBABLE ERROR
+--------------------------------------------------------------------------
+      1,992  observations remaining, representing
+      1,992  subjects
+        385  failures in single-failure-per-subject data
+  51,832.75  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =        29
+
+         Failure _d: fail_ae_imae_all==1
+   Analysis time _t: (stop_ae_imae_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+             Weight: [pweight=iptw_fulladj1]
+
+(sum of wgt is 3,791.37818300724)
+Iteration 0:   log pseudolikelihood = -5521.9028
+Iteration 1:   log pseudolikelihood = -5515.3395
+Iteration 2:   log pseudolikelihood = -5515.2732
+Iteration 3:   log pseudolikelihood = -5515.2732
+Refining estimates:
+Iteration 0:   log pseudolikelihood = -5515.2732
+
+Cox regression with Breslow method for ties
+
+No. of subjects =       3,791                           Number of obs =  1,992
+No. of failures =         678
+Time at risk    = 99,616.0559
+                                                        Wald chi2(3)  =   0.76
+Log pseudolikelihood = -5515.2732                       Prob > chi2   = 0.8578
+
+                          (Std. err. adjusted for 1,992 clusters in patient_id)
+-------------------------------------------------------------------------------
+              |               Robust
+           _t | Haz. ratio   std. err.      z    P>|z|     [95% conf. interval]
+--------------+----------------------------------------------------------------
+         drug |
+  sotrovimab  |   .8279983   .4141257    -0.38   0.706     .3106695    2.206786
+    paxlovid  |   .6598401   .3515583    -0.78   0.435     .2322332    1.874792
+molnupiravir  |   .9369194   .4017074    -0.15   0.879       .40434     2.17099
+-------------------------------------------------------------------------------
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_ae_all==1
+Observed time interval: (stop_ae_all[_n-1], stop_ae_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+                Weight: [pweight=iptw_fulladj1]
+
+--------------------------------------------------------------------------
+     24,689  total observations
+     21,993  observations end on or before enter()
+      1,736  weights invalid                                PROBABLE ERROR
+--------------------------------------------------------------------------
+        960  observations remaining, representing
+        960  subjects
+        348  failures in single-failure-per-subject data
+  22,274.75  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =        29
+
+         Failure _d: fail_ae_all==1
+   Analysis time _t: (stop_ae_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+             Weight: [pweight=iptw_fulladj1]
+
+(sum of wgt is 1,810.59268295765)
+Iteration 0:   log pseudolikelihood = -4953.5527
+Iteration 1:   log pseudolikelihood = -4943.6259
+Iteration 2:   log pseudolikelihood = -4943.2875
+Iteration 3:   log pseudolikelihood = -4943.2873
+Refining estimates:
+Iteration 0:   log pseudolikelihood = -4943.2873
+
+Cox regression with Breslow method for ties
+
+No. of subjects =       1,811                           Number of obs =    960
+No. of failures =         679
+Time at risk    = 41,829.1902
+                                                        Wald chi2(3)  =   0.78
+Log pseudolikelihood = -4943.2873                       Prob > chi2   = 0.8539
+
+                            (Std. err. adjusted for 960 clusters in patient_id)
+-------------------------------------------------------------------------------
+              |               Robust
+           _t | Haz. ratio   std. err.      z    P>|z|     [95% conf. interval]
+--------------+----------------------------------------------------------------
+         drug |
+  sotrovimab  |   .8698376    .439916    -0.28   0.783     .3228102    2.343846
+    paxlovid  |   1.523311   .7769707     0.83   0.409     .5605704    4.139494
+molnupiravir  |   .9518676   .3973597    -0.12   0.906     .4199911    2.157312
+-------------------------------------------------------------------------------
+note: White omitted because of collinearity.
+
+Logistic regression                                     Number of obs =  8,142
+                                                        LR chi2(27)   =  26.38
+                                                        Prob > chi2   = 0.4978
+Log likelihood = -1377.3917                             Pseudo R2     = 0.0095
+
+---------------------------------------------------------------------------------------------
+                    no_drug | Odds ratio   Std. err.      z    P>|z|     [95% conf. interval]
+----------------------------+----------------------------------------------------------------
+                        age |   1.004052   .0029915     1.36   0.175     .9982061    1.009933
+                            |
+                        sex |
+                    Female  |   .9238054   .1039339    -0.70   0.481     .7409945    1.151718
+                            |
+                 region_nhs |
+             East Midlands  |   .7652129   .1893278    -1.08   0.279     .4711718    1.242754
+                    London  |   1.175532   .2749527     0.69   0.489     .7432613    1.859206
+                North East  |   .7571137   .1854681    -1.14   0.256     .4684299    1.223707
+                North West  |   .7701953   .1895067    -1.06   0.289     .4755132    1.247496
+                South East  |   .8267814   .2105908    -0.75   0.455     .5018567    1.362077
+                South West  |   1.043061   .2750441     0.16   0.873     .6220952     1.74889
+             West Midlands  |   .9776849   .2579679    -0.09   0.932     .5829139    1.639809
+  Yorkshire and The Humber  |   .9176155   .2368169    -0.33   0.739     .5533295     1.52173
+                            |
+   paxlovid_contraindicated |   1.183063    .234669     0.85   0.397     .8019841    1.745218
+             downs_syndrome |   1.517621   .2412409     2.62   0.009     1.111364    2.072384
+               solid_cancer |   1.253029   .2449813     1.15   0.249     .8541645    1.838149
+               haem_disease |    1.03571   .1167224     0.31   0.756     .8304425    1.291716
+              renal_disease |   1.006309   .1211266     0.05   0.958     .7948303    1.274055
+              liver_disease |   1.131365   .2185885     0.64   0.523     .7747184    1.652195
+               imid_on_drug |   .8945065   .1176867    -0.85   0.397      .691185    1.157638
+           immunosupression |   1.178774   .2307069     0.84   0.401     .8032215    1.729919
+                   hiv_aids |   1.040491   .1482956     0.28   0.781     .7869034    1.375801
+           organ_transplant |   .9998416   .1901065    -0.00   0.999     .6887896    1.451362
+                 rare_neuro |   .9638077   .1114198    -0.32   0.750     .7684017    1.208906
+         vaccination_status |   .9594932   .0413975    -0.96   0.338     .8816915     1.04416
+                      imdq5 |   1.014462   .0403405     0.36   0.718     .9383984    1.096691
+                      White |          1  (omitted)
+                            |
+                   diabetes |   1.039746   .1980419     0.20   0.838       .71581    1.510278
+    chronic_cardiac_disease |   .8707524   .1579589    -0.76   0.446     .6102143     1.24253
+chronic_respiratory_disease |   .9682786    .182017    -0.17   0.864     .6698715    1.399617
+               hypertension |    .955561   .1751331    -0.25   0.804     .6671939    1.368563
+                      _cons |   19.30659   6.138476     9.31   0.000     10.35306    36.00333
+---------------------------------------------------------------------------------------------
 Note: _cons estimates baseline odds.
 (option pr assumed; Pr(no_drug))
-(17,627 missing values generated)
-(file /workspace/output/figures/histogram_fulladj2.gph saved)
-(note: file /workspace/output/figures/histogram_fulladj2.svg not found)
-(file /workspace/output/figures/histogram_fulladj2.svg written in SVG format)
-(18,182 missing values generated)
-(555 real changes made)
+(16,547 missing values generated)
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/histogram_fulladj2.gp
+> h saved
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/histogram_fulladj2.svg saved as SVG format
+(16,880 missing values generated)
+(333 real changes made)
 
-                id:  patient_id
-     failure event:  fail_ae_all == 1
-obs. time interval:  (stop_ae_all[_n-1], stop_ae_all]
- enter on or after:  time start_date
- exit on or before:  failure
-    t for analysis:  (time-origin)
-            origin:  time start_date
-            weight:  [pweight=iptw_fulladj2]
+Survival-time data settings
 
-------------------------------------------------------------------------------
-     26,469  total observations
-     23,554  observations end on or before enter()
-      1,982  weights invalid                                    PROBABLE ERROR
-------------------------------------------------------------------------------
-        933  observations remaining, representing
-        933  subjects
-        383  failures in single-failure-per-subject data
-   20,668.5  total analysis time at risk and under observation
-                                                at risk from t =         0
-                                     earliest observed entry t =         0
-                                          last observed exit t =        29
+           ID variable: patient_id
+         Failure event: fail_ae_spc_all==1
+Observed time interval: (stop_ae_spc_all[_n-1], stop_ae_spc_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+                Weight: [pweight=iptw_fulladj2]
 
-         failure _d:  fail_ae_all == 1
-   analysis time _t:  (stop_ae_all-origin)
-             origin:  time start_date
-  enter on or after:  time start_date
-                 id:  patient_id
-             weight:  [pweight=iptw_fulladj2]
+--------------------------------------------------------------------------
+     24,689  total observations
+     16,997  observations end on or before enter()
+      5,127  weights invalid                                PROBABLE ERROR
+--------------------------------------------------------------------------
+      2,565  observations remaining, representing
+      2,565  subjects
+        341  failures in single-failure-per-subject data
+  68,854.25  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =        29
 
-(sum of wgt is 1,806.55953264236)
-Iteration 0:   log pseudolikelihood = -5521.3379
-Iteration 1:   log pseudolikelihood = -5509.5737
-Iteration 2:   log pseudolikelihood = -5509.4232
-Iteration 3:   log pseudolikelihood = -5509.4231
+         Failure _d: fail_ae_spc_all==1
+   Analysis time _t: (stop_ae_spc_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+             Weight: [pweight=iptw_fulladj2]
+
+(sum of wgt is 4,659.26468503475)
+Iteration 0:   log pseudolikelihood = -5540.5371
+Iteration 1:   log pseudolikelihood = -5464.3735
+Iteration 2:   log pseudolikelihood = -5438.7974
+Iteration 3:   log pseudolikelihood = -5438.7452
+Iteration 4:   log pseudolikelihood = -5438.7452
 Refining estimates:
-Iteration 0:   log pseudolikelihood = -5509.4231
+Iteration 0:   log pseudolikelihood = -5438.7452
 
-Cox regression -- Breslow method for ties
+Cox regression with Breslow method for ties
 
-No. of subjects      =        1,807             Number of obs    =         933
-No. of failures      =          762
-Time at risk         =  40249.26956
-                                                Wald chi2(3)     =        1.45
-Log pseudolikelihood =   -5509.4231             Prob > chi2      =      0.6932
+No. of subjects =       4,659                           Number of obs =  2,565
+No. of failures =         662
+Time at risk    = 124,367.759
+                                                        Wald chi2(3)  =  10.05
+Log pseudolikelihood = -5438.7452                       Prob > chi2   = 0.0182
 
-                           (Std. Err. adjusted for 933 clusters in patient_id)
-------------------------------------------------------------------------------
-             |               Robust
-          _t | Haz. Ratio   Std. Err.      z    P>|z|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-        drug |
- sotrovimab  |   .6971539   .3277795    -0.77   0.443     .2774093    1.752009
-   paxlovid  |   1.236392   .4272442     0.61   0.539     .6280831    2.433856
-molnupira~r  |   1.218056   .3454807     0.70   0.487     .6986163    2.123714
-------------------------------------------------------------------------------
+                          (Std. err. adjusted for 2,565 clusters in patient_id)
+-------------------------------------------------------------------------------
+              |               Robust
+           _t | Haz. ratio   std. err.      z    P>|z|     [95% conf. interval]
+--------------+----------------------------------------------------------------
+         drug |
+  sotrovimab  |   .7367116   .3766895    -0.60   0.550     .2704381    2.006906
+    paxlovid  |    2.74257   .9891147     2.80   0.005     1.352601    5.560908
+molnupiravir  |   .3884236   .2854012    -1.29   0.198     .0920174    1.639613
+-------------------------------------------------------------------------------
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_ae_drug_all==1
+Observed time interval: (stop_ae_drug_all[_n-1], stop_ae_drug_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+                Weight: [pweight=iptw_fulladj2]
+
+--------------------------------------------------------------------------
+     24,689  total observations
+     15,925  observations end on or before enter()
+      5,822  weights invalid                                PROBABLE ERROR
+--------------------------------------------------------------------------
+      2,942  observations remaining, representing
+      2,942  subjects
+        386  failures in single-failure-per-subject data
+     79,262  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =        29
+
+         Failure _d: fail_ae_drug_all==1
+   Analysis time _t: (stop_ae_drug_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+             Weight: [pweight=iptw_fulladj2]
+
+(sum of wgt is 6,205.22733724117)
+Iteration 0:   log pseudolikelihood = -8605.6718
+Iteration 1:   log pseudolikelihood = -8552.8674
+Iteration 2:   log pseudolikelihood = -8549.4403
+Iteration 3:   log pseudolikelihood =  -8549.438
+Refining estimates:
+Iteration 0:   log pseudolikelihood =  -8549.438
+
+Cox regression with Breslow method for ties
+
+No. of subjects =       6,205                           Number of obs =  2,942
+No. of failures =         995
+Time at risk    = 164,416.733
+                                                        Wald chi2(3)  =   6.95
+Log pseudolikelihood = -8549.438                        Prob > chi2   = 0.0736
+
+                          (Std. err. adjusted for 2,942 clusters in patient_id)
+-------------------------------------------------------------------------------
+              |               Robust
+           _t | Haz. ratio   std. err.      z    P>|z|     [95% conf. interval]
+--------------+----------------------------------------------------------------
+         drug |
+  sotrovimab  |   1.113678   .4452071     0.27   0.788     .5087222    2.438026
+    paxlovid  |   1.110888   .5136998     0.23   0.820     .4488026    2.749699
+molnupiravir  |   2.215969   .6727691     2.62   0.009      1.22219    4.017805
+-------------------------------------------------------------------------------
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_ae_imae_all==1
+Observed time interval: (stop_ae_imae_all[_n-1], stop_ae_imae_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+                Weight: [pweight=iptw_fulladj2]
+
+--------------------------------------------------------------------------
+     24,689  total observations
+     19,232  observations end on or before enter()
+      3,590  weights invalid                                PROBABLE ERROR
+--------------------------------------------------------------------------
+      1,867  observations remaining, representing
+      1,867  subjects
+        349  failures in single-failure-per-subject data
+     48,695  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =        29
+
+         Failure _d: fail_ae_imae_all==1
+   Analysis time _t: (stop_ae_imae_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+             Weight: [pweight=iptw_fulladj2]
+
+(sum of wgt is 3,569.5339653492)
+Iteration 0:   log pseudolikelihood = -5189.4656
+Iteration 1:   log pseudolikelihood =  -5185.331
+Iteration 2:   log pseudolikelihood = -5185.2963
+Iteration 3:   log pseudolikelihood = -5185.2963
+Refining estimates:
+Iteration 0:   log pseudolikelihood = -5185.2963
+
+Cox regression with Breslow method for ties
+
+No. of subjects =       3,570                           Number of obs =  1,867
+No. of failures =         642
+Time at risk    = 93,658.9735
+                                                        Wald chi2(3)  =   0.40
+Log pseudolikelihood = -5185.2963                       Prob > chi2   = 0.9397
+
+                          (Std. err. adjusted for 1,867 clusters in patient_id)
+-------------------------------------------------------------------------------
+              |               Robust
+           _t | Haz. ratio   std. err.      z    P>|z|     [95% conf. interval]
+--------------+----------------------------------------------------------------
+         drug |
+  sotrovimab  |   .9066503    .451038    -0.20   0.844     .3419687    2.403772
+    paxlovid  |   .7274247   .3909334    -0.59   0.554     .2537081    2.085652
+molnupiravir  |   1.050582   .4490172     0.12   0.908     .4545982    2.427908
+-------------------------------------------------------------------------------
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_ae_all==1
+Observed time interval: (stop_ae_all[_n-1], stop_ae_all]
+     Enter on or after: time start_date
+     Exit on or before: failure
+     Time for analysis: (time-origin)
+                Origin: time start_date
+                Weight: [pweight=iptw_fulladj2]
+
+--------------------------------------------------------------------------
+     24,689  total observations
+     21,993  observations end on or before enter()
+      1,803  weights invalid                                PROBABLE ERROR
+--------------------------------------------------------------------------
+        893  observations remaining, representing
+        893  subjects
+        315  failures in single-failure-per-subject data
+   20,860.5  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =        29
+
+         Failure _d: fail_ae_all==1
+   Analysis time _t: (stop_ae_all-origin)
+             Origin: time start_date
+  Enter on or after: time start_date
+        ID variable: patient_id
+             Weight: [pweight=iptw_fulladj2]
+
+(sum of wgt is 1,699.64557945728)
+Iteration 0:   log pseudolikelihood = -4367.6482
+Iteration 1:   log pseudolikelihood = -4355.3358
+Iteration 2:   log pseudolikelihood = -4354.9785
+Iteration 3:   log pseudolikelihood = -4354.9784
+Refining estimates:
+Iteration 0:   log pseudolikelihood = -4354.9784
+
+Cox regression with Breslow method for ties
+
+No. of subjects =       1,700                           Number of obs =    893
+No. of failures =         603
+Time at risk    = 39,688.4368
+                                                        Wald chi2(3)  =   1.02
+Log pseudolikelihood = -4354.9784                       Prob > chi2   = 0.7965
+
+                            (Std. err. adjusted for 893 clusters in patient_id)
+-------------------------------------------------------------------------------
+              |               Robust
+           _t | Haz. ratio   std. err.      z    P>|z|     [95% conf. interval]
+--------------+----------------------------------------------------------------
+         drug |
+  sotrovimab  |   .6407841   .3963697    -0.72   0.472     .1906269    2.153968
+    paxlovid  |   1.432974   .7364043     0.70   0.484      .523367    3.923469
+molnupiravir  |   .9862672   .4072123    -0.03   0.973     .4390849    2.215341
+-------------------------------------------------------------------------------
 
 . 
 . postclose `coxoutput_propensity'
@@ -656,9 +1337,9 @@ molnupira~r  |   1.218056   .3454807     0.70   0.487     .6986163    2.123714
 
                Mean in treated   Mean in Untreated   Standardised diff.
 ----------------------------------------------------------------------
-         age |           49.01              48.16                0.045
-         sex |            0.51               0.49                0.047
-  region_nhs |            4.81               4.80                0.004
+         age |           48.86              47.73                0.060
+         sex |            0.51               0.51               -0.011
+  region_nhs |            4.79               4.72                0.029
 ----------------------------------------------------------------------
 
 
@@ -666,156 +1347,143 @@ molnupira~r  |   1.218056   .3454807     0.70   0.487     .6986163    2.123714
 
                Mean in treated   Mean in Untreated   Standardised diff.
 ----------------------------------------------------------------------
-         age |           48.96              48.95                0.000
+         age |           48.82              48.84               -0.001
          sex |            0.51               0.51                0.001
-  region_nhs |            4.81               4.81                0.002
+  region_nhs |            4.79               4.72                0.030
 ----------------------------------------------------------------------
 
 
 . graph export "$projectdir/output/figures/match_agesex.svg", as(svg) replace
-(note: file /workspace/output/figures/match_agesex.svg not found)
-(file /workspace/output/figures/match_agesex.svg written in SVG format)
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/match_agesex.svg
+    saved as SVG format
 
 . 
-. pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome so
-> lid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupres
-> sion hiv_aids organ_transplant rare_neuro
+. pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ
+> _transplant rare_neuro
 
                Mean in treated   Mean in Untreated   Standardised diff.
 ----------------------------------------------------------------------
-         age |           49.01              48.16                0.045
-         sex |            0.51               0.49                0.047
-  region_nhs |            4.81               4.80                0.004
-paxlovid_c~d |            0.52               0.53               -0.025
-downs_synd~e |            0.19               0.18                0.020
-solid_cancer |            0.10               0.11               -0.028
-haem_disease |            0.47               0.49               -0.036
-renal_dise~e |            0.35               0.35               -0.007
-liver_dise~e |            0.19               0.20               -0.017
-imid_on_drug |            0.22               0.22               -0.012
-immunosupr~n |            0.10               0.10                0.008
-    hiv_aids |            0.19               0.22               -0.074
-organ_tran~t |            0.31               0.32               -0.010
-  rare_neuro |            0.57               0.57               -0.011
+         age |           48.86              47.73                0.060
+         sex |            0.51               0.51               -0.011
+  region_nhs |            4.79               4.72                0.029
+paxlovid_c~d |            0.54               0.52                0.041
+downs_synd~e |            0.20               0.15                0.124
+solid_cancer |            0.11               0.12               -0.033
+haem_disease |            0.49               0.47                0.032
+renal_dise~e |            0.36               0.34                0.030
+liver_dise~e |            0.20               0.19                0.029
+imid_on_drug |            0.22               0.23               -0.015
+immunosupr~n |            0.11               0.09                0.056
+    hiv_aids |            0.20               0.18                0.039
+organ_tran~t |            0.32               0.32                0.008
+  rare_neuro |            0.59               0.56                0.068
 ----------------------------------------------------------------------
 
 
-. pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome so
-> lid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupres
-> sion hiv_aids organ_transplant rare_neuro, ///
+. pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ
+> _transplant rare_neuro, ///
 > wt(iptw_adj) graph
 
                Mean in treated   Mean in Untreated   Standardised diff.
 ----------------------------------------------------------------------
-         age |           48.95              48.85                0.006
-         sex |            0.51               0.51                0.001
-  region_nhs |            4.81               4.83               -0.006
-paxlovid_c~d |            0.52               0.52                0.004
-downs_synd~e |            0.19               0.19                0.000
-solid_cancer |            0.10               0.10               -0.002
-haem_disease |            0.47               0.47                0.004
-renal_dise~e |            0.35               0.35                0.003
-liver_dise~e |            0.19               0.19                0.001
-imid_on_drug |            0.22               0.22               -0.001
-immunosupr~n |            0.10               0.10               -0.004
-    hiv_aids |            0.19               0.19                0.002
-organ_tran~t |            0.31               0.31                0.011
-  rare_neuro |            0.57               0.57               -0.000
+         age |           48.82              49.04               -0.012
+         sex |            0.51               0.51               -0.000
+  region_nhs |            4.79               4.80               -0.005
+paxlovid_c~d |            0.54               0.54               -0.009
+downs_synd~e |            0.20               0.20               -0.005
+solid_cancer |            0.11               0.10                0.007
+haem_disease |            0.49               0.49               -0.011
+renal_dise~e |            0.36               0.36               -0.002
+liver_dise~e |            0.20               0.20               -0.004
+imid_on_drug |            0.22               0.22                0.001
+immunosupr~n |            0.10               0.11               -0.006
+    hiv_aids |            0.20               0.20               -0.010
+organ_tran~t |            0.32               0.32                0.000
+  rare_neuro |            0.59               0.60               -0.007
 ----------------------------------------------------------------------
 
 
 . graph export "$projectdir/output/figures/match_adj.svg", as(svg) replace 
-(note: file /workspace/output/figures/match_adj.svg not found)
-(file /workspace/output/figures/match_adj.svg written in SVG format)
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/match_adj.svg saved
+    as SVG format
 
 . 
-. pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome so
-> lid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupres
-> sion hiv_aids organ_transplant rare_neuro vaccination_status imdq5 
+. pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ
+> _transplant rare_neuro vaccination_status imdq5 
 
                Mean in treated   Mean in Untreated   Standardised diff.
 ----------------------------------------------------------------------
-         age |           49.01              48.19                0.043
-         sex |            0.51               0.49                0.048
-  region_nhs |            4.82               4.80                0.006
-paxlovid_c~d |            0.52               0.53               -0.025
-downs_synd~e |            0.19               0.18                0.019
-solid_cancer |            0.10               0.11               -0.028
-haem_disease |            0.47               0.49               -0.038
-renal_dise~e |            0.35               0.35               -0.010
-liver_dise~e |            0.19               0.20               -0.017
-imid_on_drug |            0.22               0.22               -0.015
-immunosupr~n |            0.10               0.10                0.007
-    hiv_aids |            0.19               0.22               -0.075
-organ_tran~t |            0.31               0.32               -0.011
-  rare_neuro |            0.57               0.57               -0.011
-vaccinat~tus |            2.20               2.16                0.028
-       imdq5 |            3.03               3.05               -0.010
+         age |           48.84              47.79                0.056
+         sex |            0.51               0.51               -0.013
+  region_nhs |            4.79               4.71                0.031
+paxlovid_c~d |            0.54               0.52                0.041
+downs_synd~e |            0.20               0.15                0.125
+solid_cancer |            0.11               0.12               -0.033
+haem_disease |            0.49               0.47                0.033
+renal_dise~e |            0.36               0.34                0.031
+liver_dise~e |            0.20               0.19                0.029
+imid_on_drug |            0.22               0.23               -0.009
+immunosupr~n |            0.11               0.09                0.053
+    hiv_aids |            0.20               0.18                0.040
+organ_tran~t |            0.32               0.32                0.008
+  rare_neuro |            0.59               0.56                0.067
+vaccinat~tus |            2.21               2.23               -0.017
+       imdq5 |            3.03               3.04               -0.006
 ----------------------------------------------------------------------
 
 
-. //pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome 
-> solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupr
-> ession hiv_aids organ_transplant rare_neuro vaccination_status imdq5 White, /
-> //
+. //pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids org
+> an_transplant rare_neuro vaccination_status imdq5 White, ///
 . //wt(iptw_fulladj1) graph
-. //graph export "$projectdir/output/figures/match_fulladj1.svg", as(svg) repla
-> ce
+. //graph export "$projectdir/output/figures/match_fulladj1.svg", as(svg) replace
 . 
-. pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome so
-> lid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupres
-> sion hiv_aids organ_transplant rare_neuro vaccination_status imdq5 White ///
-> bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypert
-> ension     
+. pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ
+> _transplant rare_neuro vaccination_status imdq5 White ///
+> bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension     
 
                Mean in treated   Mean in Untreated   Standardised diff.
 ----------------------------------------------------------------------
-         age |           49.10              47.03                0.111
-         sex |            0.51               0.49                0.053
-  region_nhs |            4.85               4.93               -0.029
-paxlovid_c~d |            0.53               0.53               -0.002
-downs_synd~e |            0.18               0.19               -0.013
-solid_cancer |            0.10               0.12               -0.056
-haem_disease |            0.47               0.49               -0.031
-renal_dise~e |            0.36               0.35                0.009
-liver_dise~e |            0.19               0.20               -0.040
-imid_on_drug |            0.22               0.24               -0.035
-immunosupr~n |            0.10               0.09                0.034
-    hiv_aids |            0.19               0.24               -0.109
-organ_tran~t |            0.32               0.32                0.000
-  rare_neuro |            0.57               0.56                0.022
-vaccinat~tus |            2.19               2.21               -0.013
-       imdq5 |            3.05               3.04                0.006
+         age |           49.10              47.59                0.079
+         sex |            0.51               0.53               -0.040
+  region_nhs |            4.79               4.79                0.000
+paxlovid_c~d |            0.53               0.48                0.098
+downs_synd~e |            0.20               0.14                0.150
+solid_cancer |            0.11               0.09                0.060
+haem_disease |            0.49               0.49                0.007
+renal_dise~e |            0.36               0.36                0.009
+liver_dise~e |            0.20               0.17                0.085
+imid_on_drug |            0.22               0.24               -0.048
+immunosupr~n |            0.10               0.09                0.046
+    hiv_aids |            0.20               0.19                0.016
+organ_tran~t |            0.32               0.30                0.049
+  rare_neuro |            0.60               0.61               -0.026
+vaccinat~tus |            2.21               2.28               -0.057
+       imdq5 |            3.01               2.98                0.019
        White |            0.00               0.00                    .
-   bmi_group |            1.95               1.98               -0.031
-    diabetes |            0.10               0.11               -0.005
-chronic_ca~e |            0.10               0.09                0.045
-chronic_re~e |            0.10               0.09                0.036
-hypertension |            0.10               0.11               -0.031
+   bmi_group |            1.96               1.88                0.077
+    diabetes |            0.10               0.10                0.008
+chronic_ca~e |            0.09               0.11               -0.045
+chronic_re~e |            0.10               0.10               -0.007
+hypertension |            0.10               0.11               -0.011
 ----------------------------------------------------------------------
 
 
-. //pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome 
-> solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupr
-> ession hiv_aids organ_transplant rare_neuro vaccination_status imdq5 White //
-> /
-. //bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hype
-> rtension, ///
+. //pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids org
+> an_transplant rare_neuro vaccination_status imdq5 White ///
+. //bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension, ///
 . //wt(iptw_fulladj2) graph
-. //graph export "$projectdir/output/figures/match_fulladj2.svg", as(svg) repla
-> ce
+. //graph export "$projectdir/output/figures/match_fulladj2.svg", as(svg) replace
 . 
 . use "$projectdir/output/tables/cox_model_propensity", replace
 
-. export delimited using "$projectdir/output/tables/cox_model_propensity_csv.cs
-> v", replace
-(note: file /workspace/output/tables/cox_model_propensity_csv.csv not found)
-file /workspace/output/tables/cox_model_propensity_csv.csv saved
+. export delimited using "$projectdir/output/tables/cox_model_propensity_csv.csv", replace
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/cox_model_propensity_c
+> sv.csv saved
 
 . 
 . log close
       name:  <unnamed>
-       log:  /workspace/logs/ps_model.log
+       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/logs/ps_model.log
   log type:  text
- closed on:   1 Aug 2023, 14:31:50
--------------------------------------------------------------------------------
+ closed on:   8 Aug 2023, 14:47:19
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

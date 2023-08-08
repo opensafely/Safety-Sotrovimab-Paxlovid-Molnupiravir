@@ -1,8 +1,9 @@
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/logs/ps_model.log
+       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/logs/redacted_table
+> .log
   log type:  text
- opened on:   8 Aug 2023, 14:20:08
+ opened on:   8 Aug 2023, 15:23:47
 
 . 
 . *Set Ado file path
@@ -18,30 +19,32 @@
 > "
 
 . 
-. * SET Index date 
-. global indexdate                        = "01/03/2020"
+. **Baseline table redacted and rounded 
+. clear *
 
-. 
-. use "$projectdir/output/data/main", clear
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/output/data/main.dta not
-    found
-r(601);
+. save "$projectdir/output/tables/baseline_table_redact_all.dta", replace emptyok
+(dataset contains 0 observations)
+(file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/output/tables/baseline_table_redact_all.dta not found)
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/output/tables/baseline_table_redact_all.dta could not be opened
+r(603);
 
 end of do-file
 
-r(601);
+r(603);
 
 . do "C:\Users\k1635179\AppData\Local\Temp\STD394c_000000.tmp"
 
 . ********************************************************************************
 . *
-. *       Do-file:                        propensity score cox model
+. *       Do-file:                        redacted_table.do
 . *       Project:                        Sotrovimab-Paxlovid-Molnupiravir
-. *   Date:                               24/4/23
+. *   Date:                               25/07/23
 . *       Programmed by:          Katie Bechman
-. *       Description:            create and run ps model
-. *       Data used:                      main.dta
-. *       Data created:           psoutput
+. *       Description:            data management, reformat variables, categorise variables, label variables 
+. *       Data used:                      data in memory (from output/input.csv) 
+. *       Data created:           analysis main.dta  (main analysis dataset)
 . *       Other output:           logfiles, printed to folder $Logdir
 . *       User installed ado: (place .ado file(s) in analysis folder)
 . 
@@ -50,6 +53,7 @@ r(601);
 . global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
 
 . //global projectdir `c(pwd)'
+. 
 . di "$projectdir"
 C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir
 

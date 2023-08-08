@@ -1,20 +1,19 @@
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/logs/preceed_rate.log
+       log:  /workspace/logs/preceed_rate.log
   log type:  text
- opened on:   1 Aug 2023, 14:23:52
+ opened on:   8 Aug 2023, 14:49:26
 
 . 
 . *Set Ado file path
 . adopath + "$projectdir/analysis/ado"
-  [1]  (BASE)      "C:\Program Files\Stata17\ado\base/"
-  [2]  (SITE)      "C:\Program Files\Stata17\ado\site/"
+  [1]  (BASE)      "/usr/local/stata/ado/base/"
+  [2]  (SITE)      "/usr/local/ado/"
   [3]              "."
-  [4]  (PERSONAL)  "C:\users\PUBLIC\documents/"
-  [5]  (PLUS)      "C:\users\PUBLIC\documents/"
-  [6]  (OLDPLACE)  "c:\ado/"
-  [7]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/analysis/ado"
-  [8]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/analysis/ado"
+  [4]  (PERSONAL)  "~/ado/personal/"
+  [5]  (PLUS)      "~/ado/plus/"
+  [6]  (OLDPLACE)  "~/ado/"
+  [7]              "/workspace/analysis/ado"
 
 . 
 . * SET Index date 
@@ -29,116 +28,162 @@
 . 
 . *       COMPARATOR RATE         
 . ****************************
-. **generate rate for adverse outcome in year 3-4 prior to start date for comparative rate by person years 
+. **generate rate for adverse outcome in year 3-4 prior to start date for compa
+> rative rate by person years 
 . *ensure not established diagnosis for some of the condition 4 year prior
-. gen new_pre_ra_ae = pre_rheumatoid_arthritis_ae if pre_ra_snomed_new==0 & pre_ra_icd_new==0  
-(24,281 missing values generated)
+. gen new_pre_ra_icd = pre_rheumatoid_icd_prim if pre_ra_snomed_new==0 
+(22,497 missing values generated)
 
-. gen new_pre_ra_snomed = pre_rheumatoid_arthritis_snomed if pre_ra_snomed_new==0 & pre_ra_icd_new==0
-(24,363 missing values generated)
+. gen new_pre_ra_ae = pre_rheumatoid_arthritis_ae if pre_ra_snomed_new==0 
+(22,519 missing values generated)
 
-. gen new_pre_ra_icd = pre_rheumatoid_icd_prim if pre_ra_snomed_new==0 & pre_ra_icd_new==0  
-(24,264 missing values generated)
+. gen new_pre_ra_snomed = pre_rheumatoid_arthritis_snomed if pre_ra_snomed_new=
+> =0 
+(22,506 missing values generated)
 
-. gen new_pre_ankspon_ctv = pre_ankylosing_spondylitis_ctv if pre_ankspon_ctv_new==0 
-(24,123 missing values generated)
+. gen new_pre_sle_ctv = pre_sle_ctv if pre_sle_ctv_new==0 
+(22,567 missing values generated)
 
-. gen new_pre_ankspon_ae = pre_ankylosing_spondylitis_ae if pre_ankspon_ctv_new==0
-(24,110 missing values generated)
+. gen new_pre_sle_icd = pre_sle_icd_prim if pre_sle_ctv_new==0 
+(22,584 missing values generated)
 
-. gen new_pre_psoriasis_snomed = pre_psoriasis_snomed if pre_psoriasis_snomed_new==0 
-(24,073 missing values generated)
+. gen new_pre_sle_ae = pre_sle_ae if pre_sle_ctv_new==0 
+(22,517 missing values generated)
+
+. gen new_pre_psoriasis_icd = pre_psoriasis_icd_prim if pre_psoriasis_snomed_ne
+> w==0 
+(22,588 missing values generated)
+
+. gen new_pre_psoriasis_snomed = pre_psoriasis_snomed if pre_psoriasis_snomed_n
+> ew==0 
+(22,559 missing values generated)
 
 . gen new_pre_psoriasis_ae = pre_psoriasis_ae if pre_psoriasis_snomed_new==0
-(24,083 missing values generated)
+(22,582 missing values generated)
 
-. gen new_pre_psa_ae = pre_psoriatic_arthritis_ae if pre_psa_snomed_new==0 
-(24,063 missing values generated)
+. gen new_pre_psa_icd = pre_psa_icd_prim if pre_psa_snomed_new==0
+(22,527 missing values generated)
 
-. gen new_pre_psa_snomed = pre_psoriatic_arthritis_snomed if pre_psa_snomed_new==0                                                                                        
-(24,076 missing values generated)
+. gen new_pre_psa_ae = pre_psa_ae if pre_psa_snomed_new==0 
+(22,514 missing values generated)
 
-. gen new_pre_sle_ctv = pre_sle_ctv if pre_sle_ctv_new==0 & pre_sle_icd_new==0  
-(24,327 missing values generated)
+. gen new_pre_psa_snomed = pre_psa_snomed if pre_psa_snomed_new==0 
+(22,545 missing values generated)
 
-. gen new_pre_sle_icd = pre_sle_icd_prim if pre_sle_ctv_new==0 & pre_sle_icd_new==0
-(24,297 missing values generated)
+. gen new_pre_axspa_icd = pre_axspa_icd_prim if pre_axspa_ctv_new==0
+(22,577 missing values generated)
 
-. gen new_pre_sle_ae = pre_sle_ae if pre_sle_ctv_new==0 & pre_sle_icd_new==0  
-(24,348 missing values generated)
+. gen new_pre_axspa_ctv = pre_axspa_ctv if pre_axspa_ctv_new==0 
+(22,542 missing values generated)
+
+. gen new_pre_axspa_ae = pre_axspa_ae if pre_axspa_ctv_new==0
+(22,571 missing values generated)
+
+. gen new_pre_ibd_icd = pre_ibd_icd_prim if pre_ibd_ctv==0
+(24,775 missing values generated)
+
+. gen new_pre_ibd_ctv = pre_ibd_ctv if pre_ibd_ctv==0
+(24,775 missing values generated)
+
+. gen new_pre_ibd_ae = pre_ibd_ae if pre_ibd_ctv==0
+(24,775 missing values generated)
 
 . 
 . *** combined ae from GP, hosp and A&E
-. egen pre_diverticulitis = rmin(pre_diverticulitis_icd_prim pre_diverticulitis_snomed pre_diverticulitis_ae)      
-(19,213 missing values generated)
+. egen pre_diverticulitis = rmin(pre_diverticulitis_icd_prim pre_diverticulitis
+> _snomed pre_diverticulitis_ae)      
+(18100 missing values generated)
 
-. egen pre_diarrhoea = rmin(pre_diarrhoea_snomed)
-(23,846 missing values generated)
+. egen pre_diarrhoea = rmin(pre_diarrhoea_icd_prim pre_diarrhoea_snomed  pre_di
+> arrhoeal_icd_prim)
+(18054 missing values generated)
 
-. egen pre_taste = rmin(pre_taste_snomed pre_taste_icd_prim)
-(21,391 missing values generated)
+. egen pre_taste = rmin(pre_taste_icd_prim pre_taste_snomed )
+(20053 missing values generated)
 
-. egen pre_anaphylaxis = rmin(pre_anaphylaxis_icd_prim pre_anaphylaxis_snomed     pre_anaphlaxis_ae)
-(19,312 missing values generated)
+. egen pre_rash = rmin(pre_rash_icd_prim pre_rash_snomed pre_rash_ae)
+(18103 missing values generated)
 
-. egen pre_rash = rmin(pre_rash_snomed)
-(23,831 missing values generated)
+. egen pre_anaphylaxis = rmin(pre_anaphylaxis_icd_prim pre_anaphylaxis_snomed  
+>    pre_anaphlaxis_ae)
+(18060 missing values generated)
 
-. egen pre_drug = rmin(pre_drugreact_ae)
-(23,834 missing values generated)
+. egen pre_severe_drug = rmin(pre_severedrug_icd_prim pre_severedrug_sjs_icd_pr
+> im pre_severedrug_snomed pre_severedrug_ae)
+(16250 missing values generated)
 
-. egen pre_allergic = rmin(pre_allergic_ae)
-(23,815 missing values generated)
+. egen pre_nonsevere_drug = rmin(pre_nonsevere_drug_snomed pre_nonsevere_drug_a
+> e)
+(20033 missing values generated)
 
-. egen pre_ra = rmin(new_pre_ra_ae new_pre_ra_snomed new_pre_ra_icd)
-(20,570 missing values generated)
+. egen pre_ra = rmin(new_pre_ra_icd new_pre_ra_ae new_pre_ra_snomed )
+(18619 missing values generated)
 
-. egen pre_sle = rmin(new_pre_sle_ctv new_pre_sle_icd new_pre_sle_ae)
-(20,661 missing values generated)
+. egen pre_sle = rmin(new_pre_sle_icd new_pre_sle_ctv new_pre_sle_ae)
+(18737 missing values generated)
 
-. egen pre_psorasis = rmin(new_pre_psoriasis_snomed new_pre_psoriasis_ae)
-(21,919 missing values generated)
+. egen pre_psorasis = rmin(new_pre_psoriasis_icd new_pre_psoriasis_snomed  new_
+> pre_psoriasis_ae)
+(18812 missing values generated)
 
-. egen pre_psa = rmin(new_pre_psa_ae new_pre_psa_snomed)
-(21,922 missing values generated)
+. egen pre_psa = rmin(new_pre_psa_icd new_pre_psa_ae new_pre_psa_snomed)
+(18700 missing values generated)
 
-. egen pre_ankspon = rmin(new_pre_ankspon_ctv     new_pre_ankspon_ae)
-(22,026 missing values generated)
+. egen pre_axspa = rmin(new_pre_axspa_icd  new_pre_axspa_ae pre_axspa_ctv)
+(18547 missing values generated)
 
-. egen pre_ibd = rmin(new_ae_ibd_snomed new_ae_ibd_ae)
-(11,255 missing values generated)
+. egen pre_ibd = rmin(new_pre_ibd_icd new_pre_ibd_ctv new_pre_ibd_ae)
+(24775 missing values generated)
 
 . egen pre_spc_all = rmin(pre_diverticulitis pre_diarrhoea pre_taste) 
-(14,005 missing values generated)
+(10691 missing values generated)
 
-. egen pre_drug_all = rmin(pre_anaphylaxis pre_rash pre_drug pre_allergic)
-(14,100 missing values generated)
+. egen pre_drug_all = rmin(pre_anaphylaxis pre_rash pre_severe_drug pre_nonseve
+> re_drug)
+(6956 missing values generated)
 
-. egen pre_imae_all = rmin(pre_ra pre_sle pre_psorasis pre_psa pre_ankspon pre_ibd)       
-(3,810 missing values generated)
+. egen pre_imae_all = rmin(pre_ra pre_sle pre_psorasis pre_psa pre_axspa pre_ib
+> d) 
+(6038 missing values generated)
 
-. egen pre_ae_all = rmin($pre_spc_all $pre_drug_all $pre_imae_all)
-(26,469 missing values generated)
+. egen pre_ae_all = rmin(pre_spc_all pre_drug_all pre_imae_all)
+(717 missing values generated)
 
 . 
-. global pre_ae_group                     pre_spc_all                                     ///
->                                                         pre_drug_all                                    ///             
->                                                         pre_imae_all                                    ///                             
+. global pre_ae_group                     pre_spc_all                          
+>            ///
+>                                                         pre_drug_all         
+>                            ///             
+>                                                         pre_imae_all         
+>                            ///                             
 >                                                         pre_ae_all
 
-. global pre_ae_disease           pre_diverticulitis                              ///
->                                                         pre_diarrhoea                                   ///
->                                                         pre_taste                                               ///
->                                                         pre_anaphylaxis                                 ///
->                                                         pre_rash                                                ///
->                                                         pre_drug                                                ///
->                                                         pre_allergic                                    ///
->                                                         pre_ra                                                  ///
->                                                         pre_sle                                                 ///
->                                                         pre_psorasis                                    ///
->                                                         pre_psa                                                 ///
->                                                         pre_ankspon                                     ///
->                                                         pre_ibd                 
+. global pre_ae_disease           pre_diverticulitis                           
+>    ///
+>                                                         pre_diarrhoea        
+>                            ///
+>                                                         pre_taste            
+>                                    ///
+>                                                         pre_anaphylaxis      
+>                            ///
+>                                                         pre_rash             
+>                                    ///
+>                                                         pre_severe_drug      
+>                            ///
+>                                                         pre_nonsevere_drug   
+>                            ///
+>                                                         pre_ra               
+>                                    ///
+>                                                         pre_sle              
+>                                    ///
+>                                                         pre_psorasis         
+>                            ///
+>                                                         pre_psa              
+>                                    ///
+>                                                         pre_axspa            
+>                                    ///
+>                                                         pre_ibd              
+>    
 
 . 
 . *gen start date for comparator rate
@@ -150,490 +195,508 @@
 . foreach x in $pre_ae_group $pre_ae_disease {
   2.                 display "`x'"
   3.                 count if `x'!=. 
-  4.                 count if (`x'<start_comparator | `x'>start_comparator_28) & `x'!=.  // event outside windown - should be 0 
-  5.                 count if (`x'>start_comparator & `x'<start_comparator_28) & `x'!=.  // event 4-3 years prior to start
+  4.                 count if (`x'<start_comparator | `x'>start_comparator_28) 
+> & `x'!=.  // event outside windown - should be 0 
+  5.                 count if (`x'>start_comparator & `x'<start_comparator_28) 
+> & `x'!=.  // event 4-3 years prior to start
   6.                 gen fail_`x'=1 if `x'!=.
   7.                 tab drug fail_`x', m
   8.                 gen stop_`x'=`x' if fail_`x'==1
-  9.                 replace stop_`x'= start_comparator_28 if fail_`x'==.
- 10.                 tab drug fail_`x' if stop_`x'!=.
- 11.                 format %td stop_`x'
- 12. }
+  9.                 replace `x'=`x'+0.75 if `x'==start_date
+ 10.                 replace stop_`x'= start_comparator_28 if fail_`x'==.
+ 11.                 tab drug fail_`x' if stop_`x'!=.
+ 12.                 format %td stop_`x'
+ 13. }
 pre_spc_all
-  12,464
-  12,277
-  170
-(14,005 missing values generated)
+  14,084
+  13,844
+  222
+(10,691 missing values generated)
 
              |   fail_pre_spc_all
         drug |         1          . |     Total
 -------------+----------------------+----------
-     control |    11,720     13,119 |    24,839 
-  sotrovimab |       227        309 |       536 
-    paxlovid |       266        278 |       544 
-molnupiravir |       251        299 |       550 
+     control |    13,603     10,297 |    23,900 
+  sotrovimab |       169        139 |       308 
+    paxlovid |       168        125 |       293 
+molnupiravir |       144        130 |       274 
 -------------+----------------------+----------
-       Total |    12,464     14,005 |    26,469 
-(14,005 missing values generated)
-(14,005 real changes made)
+       Total |    14,084     10,691 |    24,775 
+(10,691 missing values generated)
+(7 real changes made)
+(10,691 real changes made)
 
              | fail_pre_s
              |   pc_all
         drug |         1 |     Total
 -------------+-----------+----------
-     control |    11,720 |    11,720 
-  sotrovimab |       227 |       227 
-    paxlovid |       266 |       266 
-molnupiravir |       251 |       251 
+     control |    13,603 |    13,603 
+  sotrovimab |       169 |       169 
+    paxlovid |       168 |       168 
+molnupiravir |       144 |       144 
 -------------+-----------+----------
-       Total |    12,464 |    12,464 
+       Total |    14,084 |    14,084 
 pre_drug_all
-  12,369
-  12,249
-  111
-(14,100 missing values generated)
+  17,819
+  17,597
+  212
+(6,956 missing values generated)
 
              |   fail_pre_drug_all
         drug |         1          . |     Total
 -------------+----------------------+----------
-     control |    11,588     13,251 |    24,839 
-  sotrovimab |       253        283 |       536 
-    paxlovid |       251        293 |       544 
-molnupiravir |       277        273 |       550 
+     control |    17,192      6,708 |    23,900 
+  sotrovimab |       219         89 |       308 
+    paxlovid |       211         82 |       293 
+molnupiravir |       197         77 |       274 
 -------------+----------------------+----------
-       Total |    12,369     14,100 |    26,469 
-(14,100 missing values generated)
-(14,100 real changes made)
+       Total |    17,819      6,956 |    24,775 
+(6,956 missing values generated)
+(9 real changes made)
+(6,956 real changes made)
 
              | fail_pre_d
              |  rug_all
         drug |         1 |     Total
 -------------+-----------+----------
-     control |    11,588 |    11,588 
-  sotrovimab |       253 |       253 
-    paxlovid |       251 |       251 
-molnupiravir |       277 |       277 
+     control |    17,192 |    17,192 
+  sotrovimab |       219 |       219 
+    paxlovid |       211 |       211 
+molnupiravir |       197 |       197 
 -------------+-----------+----------
-       Total |    12,369 |    12,369 
+       Total |    17,819 |    17,819 
 pre_imae_all
-  22,659
-  22,429
-  218
-(3,810 missing values generated)
+  18,737
+  18,452
+  261
+(6,038 missing values generated)
 
              |   fail_pre_imae_all
         drug |         1          . |     Total
 -------------+----------------------+----------
-     control |    21,281      3,558 |    24,839 
-  sotrovimab |       444         92 |       536 
-    paxlovid |       462         82 |       544 
-molnupiravir |       472         78 |       550 
+     control |    18,052      5,848 |    23,900 
+  sotrovimab |       239         69 |       308 
+    paxlovid |       237         56 |       293 
+molnupiravir |       209         65 |       274 
 -------------+----------------------+----------
-       Total |    22,659      3,810 |    26,469 
-(3,810 missing values generated)
-(3,810 real changes made)
+       Total |    18,737      6,038 |    24,775 
+(6,038 missing values generated)
+(10 real changes made)
+(6,038 real changes made)
 
              | fail_pre_i
              |  mae_all
         drug |         1 |     Total
 -------------+-----------+----------
-     control |    21,281 |    21,281 
-  sotrovimab |       444 |       444 
-    paxlovid |       462 |       462 
-molnupiravir |       472 |       472 
+     control |    18,052 |    18,052 
+  sotrovimab |       239 |       239 
+    paxlovid |       237 |       237 
+molnupiravir |       209 |       209 
 -------------+-----------+----------
-       Total |    22,659 |    22,659 
+       Total |    18,737 |    18,737 
 pre_ae_all
-  0
-  0
-  0
-(26,469 missing values generated)
+  24,058
+  23,454
+  561
+(717 missing values generated)
+
+             |    fail_pre_ae_all
+        drug |         1          . |     Total
+-------------+----------------------+----------
+     control |    23,201        699 |    23,900 
+  sotrovimab |       301          7 |       308 
+    paxlovid |       288          5 |       293 
+molnupiravir |       268          6 |       274 
+-------------+----------------------+----------
+       Total |    24,058        717 |    24,775 
+(717 missing values generated)
+(3 real changes made)
+(717 real changes made)
 
              | fail_pre_a
              |   e_all
-        drug |         . |     Total
+        drug |         1 |     Total
 -------------+-----------+----------
-     control |    24,839 |    24,839 
-  sotrovimab |       536 |       536 
-    paxlovid |       544 |       544 
-molnupiravir |       550 |       550 
+     control |    23,201 |    23,201 
+  sotrovimab |       301 |       301 
+    paxlovid |       288 |       288 
+molnupiravir |       268 |       268 
 -------------+-----------+----------
-       Total |    26,469 |    26,469 
-(26,469 missing values generated)
-(26,469 real changes made)
-no observations
+       Total |    24,058 |    24,058 
 pre_diverticulitis
-  7,256
-  7,178
-  71
-(19,213 missing values generated)
+  6,675
+  6,597
+  75
+(18,100 missing values generated)
 
              | fail_pre_diverticulit
              |          is
         drug |         1          . |     Total
 -------------+----------------------+----------
-     control |     6,824     18,015 |    24,839 
-  sotrovimab |       133        403 |       536 
-    paxlovid |       154        390 |       544 
-molnupiravir |       145        405 |       550 
+     control |     6,437     17,463 |    23,900 
+  sotrovimab |        79        229 |       308 
+    paxlovid |        88        205 |       293 
+molnupiravir |        71        203 |       274 
 -------------+----------------------+----------
-       Total |     7,256     19,213 |    26,469 
-(19,213 missing values generated)
-(19,213 real changes made)
+       Total |     6,675     18,100 |    24,775 
+(18,100 missing values generated)
+(6 real changes made)
+(18,100 real changes made)
 
              | fail_pre_d
              | iverticuli
              |    tis
         drug |         1 |     Total
 -------------+-----------+----------
-     control |     6,824 |     6,824 
-  sotrovimab |       133 |       133 
-    paxlovid |       154 |       154 
-molnupiravir |       145 |       145 
+     control |     6,437 |     6,437 
+  sotrovimab |        79 |        79 
+    paxlovid |        88 |        88 
+molnupiravir |        71 |        71 
 -------------+-----------+----------
-       Total |     7,256 |     7,256 
+       Total |     6,675 |     6,675 
 pre_diarrhoea
-  2,623
-  2,579
-  39
-(23,846 missing values generated)
+  6,721
+  6,614
+  98
+(18,054 missing values generated)
 
              |  fail_pre_diarrhoea
         drug |         1          . |     Total
 -------------+----------------------+----------
-     control |     2,461     22,378 |    24,839 
-  sotrovimab |        40        496 |       536 
-    paxlovid |        65        479 |       544 
-molnupiravir |        57        493 |       550 
+     control |     6,488     17,412 |    23,900 
+  sotrovimab |        83        225 |       308 
+    paxlovid |        82        211 |       293 
+molnupiravir |        68        206 |       274 
 -------------+----------------------+----------
-       Total |     2,623     23,846 |    26,469 
-(23,846 missing values generated)
-(23,846 real changes made)
+       Total |     6,721     18,054 |    24,775 
+(18,054 missing values generated)
+(1 real change made)
+(18,054 real changes made)
 
              | fail_pre_d
              |  iarrhoea
         drug |         1 |     Total
 -------------+-----------+----------
-     control |     2,461 |     2,461 
-  sotrovimab |        40 |        40 
-    paxlovid |        65 |        65 
-molnupiravir |        57 |        57 
+     control |     6,488 |     6,488 
+  sotrovimab |        83 |        83 
+    paxlovid |        82 |        82 
+molnupiravir |        68 |        68 
 -------------+-----------+----------
-       Total |     2,623 |     2,623 
+       Total |     6,721 |     6,721 
 pre_taste
-  5,078
-  5,005
-  68
-(21,391 missing values generated)
+  4,722
+  4,647
+  69
+(20,053 missing values generated)
 
              |    fail_pre_taste
         drug |         1          . |     Total
 -------------+----------------------+----------
-     control |     4,762     20,077 |    24,839 
-  sotrovimab |       102        434 |       536 
-    paxlovid |       109        435 |       544 
-molnupiravir |       105        445 |       550 
+     control |     4,569     19,331 |    23,900 
+  sotrovimab |        55        253 |       308 
+    paxlovid |        56        237 |       293 
+molnupiravir |        42        232 |       274 
 -------------+----------------------+----------
-       Total |     5,078     21,391 |    26,469 
-(21,391 missing values generated)
-(21,391 real changes made)
+       Total |     4,722     20,053 |    24,775 
+(20,053 missing values generated)
+(1 real change made)
+(20,053 real changes made)
 
              | fail_pre_t
              |    aste
         drug |         1 |     Total
 -------------+-----------+----------
-     control |     4,762 |     4,762 
-  sotrovimab |       102 |       102 
-    paxlovid |       109 |       109 
-molnupiravir |       105 |       105 
+     control |     4,569 |     4,569 
+  sotrovimab |        55 |        55 
+    paxlovid |        56 |        56 
+molnupiravir |        42 |        42 
 -------------+-----------+----------
-       Total |     5,078 |     5,078 
+       Total |     4,722 |     4,722 
 pre_anaphylaxis
-  7,157
-  7,072
-  80
-(19,312 missing values generated)
+  6,715
+  6,644
+  67
+(18,060 missing values generated)
 
              | fail_pre_anaphylaxis
         drug |         1          . |     Total
 -------------+----------------------+----------
-     control |     6,706     18,133 |    24,839 
-  sotrovimab |       149        387 |       536 
-    paxlovid |       148        396 |       544 
-molnupiravir |       154        396 |       550 
+     control |     6,464     17,436 |    23,900 
+  sotrovimab |        91        217 |       308 
+    paxlovid |        82        211 |       293 
+molnupiravir |        78        196 |       274 
 -------------+----------------------+----------
-       Total |     7,157     19,312 |    26,469 
-(19,312 missing values generated)
-(19,312 real changes made)
+       Total |     6,715     18,060 |    24,775 
+(18,060 missing values generated)
+(5 real changes made)
+(18,060 real changes made)
 
              | fail_pre_a
              | naphylaxis
         drug |         1 |     Total
 -------------+-----------+----------
-     control |     6,706 |     6,706 
-  sotrovimab |       149 |       149 
-    paxlovid |       148 |       148 
-molnupiravir |       154 |       154 
+     control |     6,464 |     6,464 
+  sotrovimab |        91 |        91 
+    paxlovid |        82 |        82 
+molnupiravir |        78 |        78 
 -------------+-----------+----------
-       Total |     7,157 |     7,157 
+       Total |     6,715 |     6,715 
 pre_rash
-  2,638
-  2,598
-  36
-(23,831 missing values generated)
+  6,672
+  6,613
+  57
+(18,103 missing values generated)
 
              |     fail_pre_rash
         drug |         1          . |     Total
 -------------+----------------------+----------
-     control |     2,481     22,358 |    24,839 
-  sotrovimab |        54        482 |       536 
-    paxlovid |        48        496 |       544 
-molnupiravir |        55        495 |       550 
+     control |     6,430     17,470 |    23,900 
+  sotrovimab |        88        220 |       308 
+    paxlovid |        83        210 |       293 
+molnupiravir |        71        203 |       274 
 -------------+----------------------+----------
-       Total |     2,638     23,831 |    26,469 
-(23,831 missing values generated)
-(23,831 real changes made)
+       Total |     6,672     18,103 |    24,775 
+(18,103 missing values generated)
+(6 real changes made)
+(18,103 real changes made)
 
              | fail_pre_r
              |    ash
         drug |         1 |     Total
 -------------+-----------+----------
-     control |     2,481 |     2,481 
-  sotrovimab |        54 |        54 
-    paxlovid |        48 |        48 
-molnupiravir |        55 |        55 
+     control |     6,430 |     6,430 
+  sotrovimab |        88 |        88 
+    paxlovid |        83 |        83 
+molnupiravir |        71 |        71 
 -------------+-----------+----------
-       Total |     2,638 |     2,638 
-pre_drug
-  2,635
-  2,635
-  0
-(23,834 missing values generated)
+       Total |     6,672 |     6,672 
+pre_severe_drug
+  8,525
+  8,435
+  88
+(16,250 missing values generated)
 
-             |     fail_pre_drug
+             | fail_pre_severe_drug
         drug |         1          . |     Total
 -------------+----------------------+----------
-     control |     2,460     22,379 |    24,839 
-  sotrovimab |        54        482 |       536 
-    paxlovid |        56        488 |       544 
-molnupiravir |        65        485 |       550 
+     control |     8,239     15,661 |    23,900 
+  sotrovimab |        96        212 |       308 
+    paxlovid |        94        199 |       293 
+molnupiravir |        96        178 |       274 
 -------------+----------------------+----------
-       Total |     2,635     23,834 |    26,469 
-(23,834 missing values generated)
-(23,834 real changes made)
+       Total |     8,525     16,250 |    24,775 
+(16,250 missing values generated)
+(3 real changes made)
+(16,250 real changes made)
 
-             | fail_pre_d
+             | fail_pre_s
+             | evere_drug
+        drug |         1 |     Total
+-------------+-----------+----------
+     control |     8,239 |     8,239 
+  sotrovimab |        96 |        96 
+    paxlovid |        94 |        94 
+molnupiravir |        96 |        96 
+-------------+-----------+----------
+       Total |     8,525 |     8,525 
+pre_nonsevere_drug
+  4,742
+  4,714
+  25
+(20,033 missing values generated)
+
+             | fail_pre_nonsevere_dr
+             |          ug
+        drug |         1          . |     Total
+-------------+----------------------+----------
+     control |     4,580     19,320 |    23,900 
+  sotrovimab |        61        247 |       308 
+    paxlovid |        56        237 |       293 
+molnupiravir |        45        229 |       274 
+-------------+----------------------+----------
+       Total |     4,742     20,033 |    24,775 
+(20,033 missing values generated)
+(5 real changes made)
+(20,033 real changes made)
+
+             | fail_pre_n
+             | onsevere_d
              |    rug
         drug |         1 |     Total
 -------------+-----------+----------
-     control |     2,460 |     2,460 
-  sotrovimab |        54 |        54 
-    paxlovid |        56 |        56 
-molnupiravir |        65 |        65 
--------------+-----------+----------
-       Total |     2,635 |     2,635 
-pre_allergic
-  2,654
-  2,654
-  0
-(23,815 missing values generated)
-
-             |   fail_pre_allergic
-        drug |         1          . |     Total
--------------+----------------------+----------
-     control |     2,476     22,363 |    24,839 
-  sotrovimab |        61        475 |       536 
-    paxlovid |        53        491 |       544 
-molnupiravir |        64        486 |       550 
--------------+----------------------+----------
-       Total |     2,654     23,815 |    26,469 
-(23,815 missing values generated)
-(23,815 real changes made)
-
-             | fail_pre_a
-             |  llergic
-        drug |         1 |     Total
--------------+-----------+----------
-     control |     2,476 |     2,476 
+     control |     4,580 |     4,580 
   sotrovimab |        61 |        61 
-    paxlovid |        53 |        53 
-molnupiravir |        64 |        64 
+    paxlovid |        56 |        56 
+molnupiravir |        45 |        45 
 -------------+-----------+----------
-       Total |     2,654 |     2,654 
+       Total |     4,742 |     4,742 
 pre_ra
-  5,899
-  5,827
-  67
-(20,570 missing values generated)
+  6,156
+  6,093
+  56
+(18,619 missing values generated)
 
              |      fail_pre_ra
         drug |         1          . |     Total
 -------------+----------------------+----------
-     control |     5,556     19,283 |    24,839 
-  sotrovimab |       102        434 |       536 
-    paxlovid |       122        422 |       544 
-molnupiravir |       119        431 |       550 
+     control |     5,939     17,961 |    23,900 
+  sotrovimab |        79        229 |       308 
+    paxlovid |        80        213 |       293 
+molnupiravir |        58        216 |       274 
 -------------+----------------------+----------
-       Total |     5,899     20,570 |    26,469 
-(20,570 missing values generated)
-(20,570 real changes made)
+       Total |     6,156     18,619 |    24,775 
+(18,619 missing values generated)
+(5 real changes made)
+(18,619 real changes made)
 
              | fail_pre_r
              |     a
         drug |         1 |     Total
 -------------+-----------+----------
-     control |     5,556 |     5,556 
-  sotrovimab |       102 |       102 
-    paxlovid |       122 |       122 
-molnupiravir |       119 |       119 
+     control |     5,939 |     5,939 
+  sotrovimab |        79 |        79 
+    paxlovid |        80 |        80 
+molnupiravir |        58 |        58 
 -------------+-----------+----------
-       Total |     5,899 |     5,899 
+       Total |     6,156 |     6,156 
 pre_sle
-  5,808
-  5,753
-  53
-(20,661 missing values generated)
+  6,038
+  5,971
+  61
+(18,737 missing values generated)
 
              |     fail_pre_sle
         drug |         1          . |     Total
 -------------+----------------------+----------
-     control |     5,457     19,382 |    24,839 
-  sotrovimab |       108        428 |       536 
-    paxlovid |       114        430 |       544 
-molnupiravir |       129        421 |       550 
+     control |     5,813     18,087 |    23,900 
+  sotrovimab |        80        228 |       308 
+    paxlovid |        72        221 |       293 
+molnupiravir |        73        201 |       274 
 -------------+----------------------+----------
-       Total |     5,808     20,661 |    26,469 
-(20,661 missing values generated)
-(20,661 real changes made)
+       Total |     6,038     18,737 |    24,775 
+(18,737 missing values generated)
+(7 real changes made)
+(18,737 real changes made)
 
              | fail_pre_s
              |     le
         drug |         1 |     Total
 -------------+-----------+----------
-     control |     5,457 |     5,457 
-  sotrovimab |       108 |       108 
-    paxlovid |       114 |       114 
-molnupiravir |       129 |       129 
+     control |     5,813 |     5,813 
+  sotrovimab |        80 |        80 
+    paxlovid |        72 |        72 
+molnupiravir |        73 |        73 
 -------------+-----------+----------
-       Total |     5,808 |     5,808 
+       Total |     6,038 |     6,038 
 pre_psorasis
-  4,550
-  4,504
-  44
-(21,919 missing values generated)
+  5,963
+  5,888
+  70
+(18,812 missing values generated)
 
              |   fail_pre_psorasis
         drug |         1          . |     Total
 -------------+----------------------+----------
-     control |     4,267     20,572 |    24,839 
-  sotrovimab |        85        451 |       536 
-    paxlovid |       101        443 |       544 
-molnupiravir |        97        453 |       550 
+     control |     5,748     18,152 |    23,900 
+  sotrovimab |        81        227 |       308 
+    paxlovid |        72        221 |       293 
+molnupiravir |        62        212 |       274 
 -------------+----------------------+----------
-       Total |     4,550     21,919 |    26,469 
-(21,919 missing values generated)
-(21,919 real changes made)
+       Total |     5,963     18,812 |    24,775 
+(18,812 missing values generated)
+(3 real changes made)
+(18,812 real changes made)
 
              | fail_pre_p
              |  sorasis
         drug |         1 |     Total
 -------------+-----------+----------
-     control |     4,267 |     4,267 
-  sotrovimab |        85 |        85 
-    paxlovid |       101 |       101 
-molnupiravir |        97 |        97 
+     control |     5,748 |     5,748 
+  sotrovimab |        81 |        81 
+    paxlovid |        72 |        72 
+molnupiravir |        62 |        62 
 -------------+-----------+----------
-       Total |     4,550 |     4,550 
+       Total |     5,963 |     5,963 
 pre_psa
-  4,547
-  4,512
-  34
-(21,922 missing values generated)
+  6,075
+  6,010
+  58
+(18,700 missing values generated)
 
              |     fail_pre_psa
         drug |         1          . |     Total
 -------------+----------------------+----------
-     control |     4,275     20,564 |    24,839 
-  sotrovimab |        97        439 |       536 
-    paxlovid |        86        458 |       544 
-molnupiravir |        89        461 |       550 
+     control |     5,837     18,063 |    23,900 
+  sotrovimab |        76        232 |       308 
+    paxlovid |        94        199 |       293 
+molnupiravir |        68        206 |       274 
 -------------+----------------------+----------
-       Total |     4,547     21,922 |    26,469 
-(21,922 missing values generated)
-(21,922 real changes made)
+       Total |     6,075     18,700 |    24,775 
+(18,700 missing values generated)
+(5 real changes made)
+(18,700 real changes made)
 
              | fail_pre_p
              |     sa
         drug |         1 |     Total
 -------------+-----------+----------
-     control |     4,275 |     4,275 
-  sotrovimab |        97 |        97 
-    paxlovid |        86 |        86 
-molnupiravir |        89 |        89 
+     control |     5,837 |     5,837 
+  sotrovimab |        76 |        76 
+    paxlovid |        94 |        94 
+molnupiravir |        68 |        68 
 -------------+-----------+----------
-       Total |     4,547 |     4,547 
-pre_ankspon
-  4,443
-  4,408
-  33
-(22,026 missing values generated)
+       Total |     6,075 |     6,075 
+pre_axspa
+  6,228
+  6,181
+  43
+(18,547 missing values generated)
 
-             |   fail_pre_ankspon
+             |    fail_pre_axspa
         drug |         1          . |     Total
 -------------+----------------------+----------
-     control |     4,174     20,665 |    24,839 
-  sotrovimab |        87        449 |       536 
-    paxlovid |        77        467 |       544 
-molnupiravir |       105        445 |       550 
+     control |     6,023     17,877 |    23,900 
+  sotrovimab |        71        237 |       308 
+    paxlovid |        62        231 |       293 
+molnupiravir |        72        202 |       274 
 -------------+----------------------+----------
-       Total |     4,443     22,026 |    26,469 
-(22,026 missing values generated)
-(22,026 real changes made)
+       Total |     6,228     18,547 |    24,775 
+(18,547 missing values generated)
+(8 real changes made)
+(18,547 real changes made)
 
              | fail_pre_a
-             |   nkspon
+             |    xspa
         drug |         1 |     Total
 -------------+-----------+----------
-     control |     4,174 |     4,174 
-  sotrovimab |        87 |        87 
-    paxlovid |        77 |        77 
-molnupiravir |       105 |       105 
+     control |     6,023 |     6,023 
+  sotrovimab |        71 |        71 
+    paxlovid |        62 |        62 
+molnupiravir |        72 |        72 
 -------------+-----------+----------
-       Total |     4,443 |     4,443 
+       Total |     6,228 |     6,228 
 pre_ibd
-  15,214
-  15,214
   0
-(11,255 missing values generated)
-
-             |     fail_pre_ibd
-        drug |         1          . |     Total
--------------+----------------------+----------
-     control |    14,293     10,546 |    24,839 
-  sotrovimab |       299        237 |       536 
-    paxlovid |       317        227 |       544 
-molnupiravir |       305        245 |       550 
--------------+----------------------+----------
-       Total |    15,214     11,255 |    26,469 
-(11,255 missing values generated)
-(11,255 real changes made)
+  0
+  0
+(24,775 missing values generated)
 
              | fail_pre_i
              |     bd
-        drug |         1 |     Total
+        drug |         . |     Total
 -------------+-----------+----------
-     control |    14,293 |    14,293 
-  sotrovimab |       299 |       299 
-    paxlovid |       317 |       317 
-molnupiravir |       305 |       305 
+     control |    23,900 |    23,900 
+  sotrovimab |       308 |       308 
+    paxlovid |       293 |       293 
+molnupiravir |       274 |       274 
 -------------+-----------+----------
-       Total |    15,214 |    15,214 
+       Total |    24,775 |    24,775 
+(24,775 missing values generated)
+(0 real changes made)
+(24,775 real changes made)
+no observations
 
 . 
-end of do-file
-
-. do "C:\Users\k1635179\AppData\Local\Temp\STD5f0_000000.tmp"
-
 . tempname comparator
 
 . postfile `comparator' str20(failure) ///
@@ -642,1515 +705,1323 @@ end of do-file
 >         ptime_sot events_sot rate_sot ///
 >         ptime_pax events_pax rate_pax ///
 >         ptime_mol events_mol rate_mol ///
->         using "$projectdir/output/tables/comparator_rate_summary", replace      
+>         using "$projectdir/output/tables/comparator_rate_summary", replace   
+>    
 
 .                                                  
 . * Failures over 1 years - convert into 28 day rate
 . foreach fail in $pre_ae_group $pre_ae_disease {
   2.                                                          
-.         stset stop_`fail', id(patient_id) origin(time start_comparator) enter(time start_comparator) failure(fail_`fail'==1)    
+.         stset stop_`fail', id(patient_id) origin(time start_comparator) enter
+> (time start_comparator) failure(fail_`fail'==1)    
   3.                 stptime 
   4.                                         local rate_all = `r(rate)'
   5.                                         local ptime_all = `r(ptime)'
   6.                                         local events_all .
-  7.                                                 if `r(failures)' == 0 | `r(failures)' > 5 local events_all `r(failures)'
+  7.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 5 local events_all `r(failures)'
   8.                 
 .                 stptime if drug == 0
   9.                                         local rate_control = `r(rate)'
  10.                                         local ptime_control = `r(ptime)'
  11.                                         local events_control .
- 12.                                                 if `r(failures)' == 0 | `r(failures)' > 5 local events_control `r(failures)'
+ 12.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 5 local events_control `r(failures)'
  13.                 display "no drug"
  14. 
 .                 stptime if drug == 1
  15.                                         local rate_sot = `r(rate)'
  16.                                         local ptime_sot = `r(ptime)'
  17.                                         local events_sot .
- 18.                                                 if `r(failures)' == 0 | `r(failures)' > 5 local events_sot `r(failures)'
+ 18.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 5 local events_sot `r(failures)'
  19.                 display "sotrovimab"
  20.                 
 .                 stptime if drug == 2
  21.                                         local rate_pax = `r(rate)'
  22.                                         local ptime_pax = `r(ptime)'
  23.                                         local events_pax .
- 24.                                                 if `r(failures)' == 0 | `r(failures)' > 5 local events_pax `r(failures)'
+ 24.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 5 local events_pax `r(failures)'
  25.                 display "paxlovid"
  26.                 
 .                 stptime if drug == 3
  27.                                         local rate_mol = `r(rate)'
  28.                                         local ptime_mol = `r(ptime)'
  29.                                         local events_mol .
- 30.                                                 if `r(failures)' == 0 | `r(failures)' > 5 local events_mol `r(failures)'
+ 30.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 5 local events_mol `r(failures)'
  31.                 display "molnupavir"
  32.                                                 
-.                 post `comparator' ("`fail'") (`ptime_all') (`events_all') (`rate_all') ///
->                                         (`ptime_control') (`events_control') (`rate_control') ///
->                                         (`ptime_sot') (`events_sot') (`rate_sot') ///
->                                         (`ptime_pax') (`events_pax') (`rate_pax') ///
->                                         (`ptime_mol') (`events_mol') (`rate_mol') 
+.                 post `comparator' ("`fail'") (`ptime_all') (`events_all') (`r
+> ate_all') ///
+>                                         (`ptime_control') (`events_control') 
+> (`rate_control') ///
+>                                         (`ptime_sot') (`events_sot') (`rate_s
+> ot') ///
+>                                         (`ptime_pax') (`events_pax') (`rate_p
+> ax') ///
+>                                         (`ptime_mol') (`events_mol') (`rate_m
+> ol') 
  33.                                         
 . }
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_spc_all == 1
+obs. time interval:  (stop_pre_spc_all[_n-1], stop_pre_spc_all]
+ enter on or after:  time start_comparator
+ exit on or before:  failure
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_spc_all==1
-Observed time interval: (stop_pre_spc_all[_n-1], stop_pre_spc_all]
-     Enter on or after: time start_comparator
-     Exit on or before: failure
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
+------------------------------------------------------------------------------
+     24,775  total observations
+      2,340  observations end on or before enter()
+------------------------------------------------------------------------------
+     22,435  observations remaining, representing
+     22,435  subjects
+     11,744  failures in single-failure-per-subject data
+   10656921  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =     2,041
 
---------------------------------------------------------------------------
-     26,469  total observations
-      1,880  observations end on or before enter()
---------------------------------------------------------------------------
-     24,589  observations remaining, representing
-     24,589  subjects
-     10,584  failures in single-failure-per-subject data
-   10225652  total analysis time at risk and under observation
-                                                At risk from t =         0
-                                     Earliest observed entry t =         0
-                                          Last observed exit t =     2,041
+         failure _d:  fail_pre_spc_all == 1
+   analysis time _t:  (stop_pre_spc_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-         Failure _d: fail_pre_spc_all==1
-   Analysis time _t: (stop_pre_spc_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |     10225652      10584   .00103504   .0010155     .001055
+     total |     10656921      11744   .00110201   .0010823    .0011221
 
-         Failure _d: fail_pre_spc_all==1
-   Analysis time _t: (stop_pre_spc_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_spc_all == 1
+   analysis time _t:  (stop_pre_spc_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |      9612218       9948   .00103493   .0010148    .0010555
+     total |     10285091      11339   .00110247   .0010824    .0011229
 no drug
 
-         Failure _d: fail_pre_spc_all==1
-   Analysis time _t: (stop_pre_spc_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_spc_all == 1
+   analysis time _t:  (stop_pre_spc_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       203213        199   .00097927   .0008522    .0011252
+     total |       138802        150   .00108068   .0009209    .0012682
 sotrovimab
 
-         Failure _d: fail_pre_spc_all==1
-   Analysis time _t: (stop_pre_spc_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_spc_all == 1
+   analysis time _t:  (stop_pre_spc_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       199428        220   .00110316   .0009666     .001259
+     total |       119781        134   .00111871   .0009445    .0013251
 paxlovid
 
-         Failure _d: fail_pre_spc_all==1
-   Analysis time _t: (stop_pre_spc_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_spc_all == 1
+   analysis time _t:  (stop_pre_spc_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       210793        217   .00102945   .0009012    .0011759
+     total |       113247        121   .00106846   .0008941    .0012769
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_drug_all == 1
+obs. time interval:  (stop_pre_drug_all[_n-1], stop_pre_drug_all]
+ enter on or after:  time start_comparator
+ exit on or before:  failure
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_drug_all==1
-Observed time interval: (stop_pre_drug_all[_n-1], stop_pre_drug_all]
-     Enter on or after: time start_comparator
-     Exit on or before: failure
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
+------------------------------------------------------------------------------
+     24,775  total observations
+      2,624  observations end on or before enter()
+------------------------------------------------------------------------------
+     22,151  observations remaining, representing
+     22,151  subjects
+     15,195  failures in single-failure-per-subject data
+   14773394  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =     2,053
 
---------------------------------------------------------------------------
-     26,469  total observations
-      1,136  observations end on or before enter()
---------------------------------------------------------------------------
-     25,333  observations remaining, representing
-     25,333  subjects
-     11,233  failures in single-failure-per-subject data
-   13304204  total analysis time at risk and under observation
-                                                At risk from t =         0
-                                     Earliest observed entry t =         0
-                                          Last observed exit t =     2,042
+         failure _d:  fail_pre_drug_all == 1
+   analysis time _t:  (stop_pre_drug_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-         Failure _d: fail_pre_drug_all==1
-   Analysis time _t: (stop_pre_drug_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |     13304204      11233   .00084432   .0008288    .0008601
+     total |     14773394      15195   .00102854   .0010123     .001045
 
-         Failure _d: fail_pre_drug_all==1
-   Analysis time _t: (stop_pre_drug_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_drug_all == 1
+   analysis time _t:  (stop_pre_drug_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |     12452489      10517   .00084457   .0008286    .0008609
+     total |     14276188      14670   .00102759   .0010111    .0010443
 no drug
 
-         Failure _d: fail_pre_drug_all==1
-   Analysis time _t: (stop_pre_drug_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_drug_all == 1
+   analysis time _t:  (stop_pre_drug_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       276818        238   .00085977   .0007572    .0009762
+     total |       177391        183   .00103162   .0008925    .0011925
 sotrovimab
 
-         Failure _d: fail_pre_drug_all==1
-   Analysis time _t: (stop_pre_drug_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_drug_all == 1
+   analysis time _t:  (stop_pre_drug_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       281465        229    .0008136   .0007148    .0009261
+     total |       164015        168    .0010243   .0008806    .0011915
 paxlovid
 
-         Failure _d: fail_pre_drug_all==1
-   Analysis time _t: (stop_pre_drug_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_drug_all == 1
+   analysis time _t:  (stop_pre_drug_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       293432        249   .00084858   .0007495    .0009608
+     total |       155800        174   .00111682   .0009626    .0012957
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_imae_all == 1
+obs. time interval:  (stop_pre_imae_all[_n-1], stop_pre_imae_all]
+ enter on or after:  time start_comparator
+ exit on or before:  failure
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_imae_all==1
-Observed time interval: (stop_pre_imae_all[_n-1], stop_pre_imae_all]
-     Enter on or after: time start_comparator
-     Exit on or before: failure
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
+------------------------------------------------------------------------------
+     24,775  total observations
+      3,013  observations end on or before enter()
+------------------------------------------------------------------------------
+     21,762  observations remaining, representing
+     21,762  subjects
+     15,724  failures in single-failure-per-subject data
+   14833103  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =     2,051
 
---------------------------------------------------------------------------
-     26,469  total observations
-      2,128  observations end on or before enter()
---------------------------------------------------------------------------
-     24,341  observations remaining, representing
-     24,341  subjects
-     20,531  failures in single-failure-per-subject data
-   23075051  total analysis time at risk and under observation
-                                                At risk from t =         0
-                                     Earliest observed entry t =         0
-                                          Last observed exit t =     2,046
+         failure _d:  fail_pre_imae_all == 1
+   analysis time _t:  (stop_pre_imae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-         Failure _d: fail_pre_imae_all==1
-   Analysis time _t: (stop_pre_imae_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |     23075051      20531   .00088975   .0008777     .000902
+     total |     14833103      15724   .00106006   .0010436    .0010768
 
-         Failure _d: fail_pre_imae_all==1
-   Analysis time _t: (stop_pre_imae_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_imae_all == 1
+   analysis time _t:  (stop_pre_imae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |     21681506      19302   .00089025   .0008778    .0009029
+     total |     14284920      15152    .0010607   .0010439    .0010777
 no drug
 
-         Failure _d: fail_pre_imae_all==1
-   Analysis time _t: (stop_pre_imae_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_imae_all == 1
+   analysis time _t:  (stop_pre_imae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |     468957.5        401   .00085509   .0007754     .000943
+     total |       183132        193   .00105388   .0009152    .0012136
 sotrovimab
 
-         Failure _d: fail_pre_imae_all==1
-   Analysis time _t: (stop_pre_imae_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_imae_all == 1
+   analysis time _t:  (stop_pre_imae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       448569        405   .00090287   .0008191    .0009952
+     total |       197094        202   .00102489   .0008929    .0011764
 paxlovid
 
-         Failure _d: fail_pre_imae_all==1
-   Analysis time _t: (stop_pre_imae_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_imae_all == 1
+   analysis time _t:  (stop_pre_imae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       476019        423   .00088862   .0008078    .0009775
+     total |       167957        177   .00105384   .0009095    .0012211
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_ae_all == 1
+obs. time interval:  (stop_pre_ae_all[_n-1], stop_pre_ae_all]
+ enter on or after:  time start_comparator
+ exit on or before:  failure
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_ae_all==1
-Observed time interval: (stop_pre_ae_all[_n-1], stop_pre_ae_all]
-     Enter on or after: time start_comparator
-     Exit on or before: failure
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
+------------------------------------------------------------------------------
+     24,775  total observations
+      6,961  observations end on or before enter()
+------------------------------------------------------------------------------
+     17,814  observations remaining, representing
+     17,814  subjects
+     17,097  failures in single-failure-per-subject data
+   11282632  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =     2,036
 
---------------------------------------------------------------------------
-     26,469  total observations
-          0  exclusions
---------------------------------------------------------------------------
-     26,469  observations remaining, representing
-     26,469  subjects
-          0  failures in single-failure-per-subject data
-    767,601  total analysis time at risk and under observation
-                                                At risk from t =         0
-                                     Earliest observed entry t =         0
-                                          Last observed exit t =        29
+         failure _d:  fail_pre_ae_all == 1
+   analysis time _t:  (stop_pre_ae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-         Failure _d: fail_pre_ae_all==1
-   Analysis time _t: (stop_pre_ae_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       767601          0           0          .           .
+     total |     11282632      17097   .00151534   .0014928    .0015382
 
-         Failure _d: fail_pre_ae_all==1
-   Analysis time _t: (stop_pre_ae_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_ae_all == 1
+   analysis time _t:  (stop_pre_ae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       720331          0           0          .           .
+     total |     10880152      16491    .0015157   .0014927     .001539
 no drug
 
-         Failure _d: fail_pre_ae_all==1
-   Analysis time _t: (stop_pre_ae_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_ae_all == 1
+   analysis time _t:  (stop_pre_ae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |        15544          0           0          .           .
+     total |       140711        209   .00148531    .001297     .001701
 sotrovimab
 
-         Failure _d: fail_pre_ae_all==1
-   Analysis time _t: (stop_pre_ae_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_ae_all == 1
+   analysis time _t:  (stop_pre_ae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |        15776          0           0          .           .
+     total |       132735        197   .00148416   .0012907    .0017066
 paxlovid
 
-         Failure _d: fail_pre_ae_all==1
-   Analysis time _t: (stop_pre_ae_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_ae_all == 1
+   analysis time _t:  (stop_pre_ae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |        15950          0           0          .           .
+     total |       129034        200   .00154998   .0013494    .0017804
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_diverticulitis == 1
+obs. time interval:  (stop_pre_diverticulitis[_n-1], stop_pre_diverticulitis]
+ enter on or after:  time start_comparator
+ exit on or before:  failure
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_diverticulitis==1
-Observed time interval: (stop_pre_diverticulitis[_n-1], stop_pre_diverticulitis]
-     Enter on or after: time start_comparator
-     Exit on or before: failure
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
+------------------------------------------------------------------------------
+     24,775  total observations
+        639  observations end on or before enter()
+------------------------------------------------------------------------------
+     24,136  observations remaining, representing
+     24,136  subjects
+      6,036  failures in single-failure-per-subject data
+  7,058,475  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =     2,041
 
---------------------------------------------------------------------------
-     26,469  total observations
-        772  observations end on or before enter()
---------------------------------------------------------------------------
-     25,697  observations remaining, representing
-     25,697  subjects
-      6,484  failures in single-failure-per-subject data
-  7,532,751  total analysis time at risk and under observation
-                                                At risk from t =         0
-                                     Earliest observed entry t =         0
-                                          Last observed exit t =     2,041
+         failure _d:  fail_pre_diverticulitis == 1
+   analysis time _t:  (stop_pre_diverticulitis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-         Failure _d: fail_pre_diverticulitis==1
-   Analysis time _t: (stop_pre_diverticulitis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |      7532751       6484   .00086077   .0008401     .000882
+     total |      7058475       6036   .00085514   .0008338     .000877
 
-         Failure _d: fail_pre_diverticulitis==1
-   Analysis time _t: (stop_pre_diverticulitis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_diverticulitis == 1
+   analysis time _t:  (stop_pre_diverticulitis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |      7073295       6099   .00086226   .0008409    .0008842
+     total |      6806448       5817   .00085463   .0008329    .0008769
 no drug
 
-         Failure _d: fail_pre_diverticulitis==1
-   Analysis time _t: (stop_pre_diverticulitis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_diverticulitis == 1
+   analysis time _t:  (stop_pre_diverticulitis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       145193        117   .00080582   .0006723    .0009659
+     total |        84050         76   .00090422   .0007222    .0011322
 sotrovimab
 
-         Failure _d: fail_pre_diverticulitis==1
-   Analysis time _t: (stop_pre_diverticulitis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_diverticulitis == 1
+   analysis time _t:  (stop_pre_diverticulitis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       151808        135   .00088928   .0007512    .0010527
+     total |        92299         78   .00084508   .0006769    .0010551
 paxlovid
 
-         Failure _d: fail_pre_diverticulitis==1
-   Analysis time _t: (stop_pre_diverticulitis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_diverticulitis == 1
+   analysis time _t:  (stop_pre_diverticulitis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       162455        133   .00081869   .0006907    .0009703
+     total |        75678         65    .0008589   .0006735    .0010953
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_diarrhoea == 1
+obs. time interval:  (stop_pre_diarrhoea[_n-1], stop_pre_diarrhoea]
+ enter on or after:  time start_comparator
+ exit on or before:  failure
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_diarrhoea==1
-Observed time interval: (stop_pre_diarrhoea[_n-1], stop_pre_diarrhoea]
-     Enter on or after: time start_comparator
-     Exit on or before: failure
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
+------------------------------------------------------------------------------
+     24,775  total observations
+      1,110  observations end on or before enter()
+------------------------------------------------------------------------------
+     23,665  observations remaining, representing
+     23,665  subjects
+      5,611  failures in single-failure-per-subject data
+  5,403,406  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =     2,057
 
---------------------------------------------------------------------------
-     26,469  total observations
-        391  observations end on or before enter()
---------------------------------------------------------------------------
-     26,078  observations remaining, representing
-     26,078  subjects
-      2,232  failures in single-failure-per-subject data
-  2,654,393  total analysis time at risk and under observation
-                                                At risk from t =         0
-                                     Earliest observed entry t =         0
-                                          Last observed exit t =     2,039
+         failure _d:  fail_pre_diarrhoea == 1
+   analysis time _t:  (stop_pre_diarrhoea-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-         Failure _d: fail_pre_diarrhoea==1
-   Analysis time _t: (stop_pre_diarrhoea-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |      2654393       2232   .00084087   .0008067    .0008765
+     total |      5403406       5611   .00103842   .0010116    .0010659
 
-         Failure _d: fail_pre_diarrhoea==1
-   Analysis time _t: (stop_pre_diarrhoea-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_diarrhoea == 1
+   analysis time _t:  (stop_pre_diarrhoea-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |      2485900       2094   .00084235    .000807    .0008792
+     total |      5221290       5419   .00103787   .0010106    .0010659
 no drug
 
-         Failure _d: fail_pre_diarrhoea==1
-   Analysis time _t: (stop_pre_diarrhoea-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_diarrhoea == 1
+   analysis time _t:  (stop_pre_diarrhoea-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |        44553         33   .00074069   .0005266    .0010419
+     total |        62084         69    .0011114   .0008778    .0014072
 sotrovimab
 
-         Failure _d: fail_pre_diarrhoea==1
-   Analysis time _t: (stop_pre_diarrhoea-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_diarrhoea == 1
+   analysis time _t:  (stop_pre_diarrhoea-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |        66667         56      .00084   .0006464    .0010915
+     total |        63599         65   .00102203   .0008015    .0013033
 paxlovid
 
-         Failure _d: fail_pre_diarrhoea==1
-   Analysis time _t: (stop_pre_diarrhoea-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_diarrhoea == 1
+   analysis time _t:  (stop_pre_diarrhoea-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |        57273         49   .00085555   .0006466     .001132
+     total |        56433         58   .00102777   .0007946    .0013294
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_taste == 1
+obs. time interval:  (stop_pre_taste[_n-1], stop_pre_taste]
+ enter on or after:  time start_comparator
+ exit on or before:  failure
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_taste==1
-Observed time interval: (stop_pre_taste[_n-1], stop_pre_taste]
-     Enter on or after: time start_comparator
-     Exit on or before: failure
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
+------------------------------------------------------------------------------
+     24,775  total observations
+        697  observations end on or before enter()
+------------------------------------------------------------------------------
+     24,078  observations remaining, representing
+     24,078  subjects
+      4,025  failures in single-failure-per-subject data
+  4,080,687  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =     2,039
 
---------------------------------------------------------------------------
-     26,469  total observations
-        772  observations end on or before enter()
---------------------------------------------------------------------------
-     25,697  observations remaining, representing
-     25,697  subjects
-      4,306  failures in single-failure-per-subject data
-  4,375,256  total analysis time at risk and under observation
-                                                At risk from t =         0
-                                     Earliest observed entry t =         0
-                                          Last observed exit t =     2,037
+         failure _d:  fail_pre_taste == 1
+   analysis time _t:  (stop_pre_taste-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-         Failure _d: fail_pre_taste==1
-   Analysis time _t: (stop_pre_taste-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |      4375256       4306   .00098417   .0009552     .001014
+     total |      4080687       4025   .00098635   .0009563    .0010173
 
-         Failure _d: fail_pre_taste==1
-   Analysis time _t: (stop_pre_taste-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_taste == 1
+   analysis time _t:  (stop_pre_taste-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |      4094686       4029   .00098396    .000954    .0010148
+     total |      3934226       3890   .00098876   .0009582    .0010203
 no drug
 
-         Failure _d: fail_pre_taste==1
-   Analysis time _t: (stop_pre_taste-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_taste == 1
+   analysis time _t:  (stop_pre_taste-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       102988         96   .00093215   .0007631    .0011386
+     total |        59827         52   .00086917   .0006623    .0011406
 sotrovimab
 
-         Failure _d: fail_pre_taste==1
-   Analysis time _t: (stop_pre_taste-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_taste == 1
+   analysis time _t:  (stop_pre_taste-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |        88510         90   .00101683    .000827    .0012502
+     total |        48397         48    .0009918   .0007474    .0013161
 paxlovid
 
-         Failure _d: fail_pre_taste==1
-   Analysis time _t: (stop_pre_taste-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_taste == 1
+   analysis time _t:  (stop_pre_taste-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |        89072         91   .00102165   .0008319    .0012547
+     total |        38237         35   .00091534   .0006572    .0012749
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_anaphylaxis == 1
+obs. time interval:  (stop_pre_anaphylaxis[_n-1], stop_pre_anaphylaxis]
+ enter on or after:  time start_comparator
+ exit on or before:  failure
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_anaphylaxis==1
-Observed time interval: (stop_pre_anaphylaxis[_n-1], stop_pre_anaphylaxis]
-     Enter on or after: time start_comparator
-     Exit on or before: failure
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
+------------------------------------------------------------------------------
+     24,775  total observations
+        682  observations end on or before enter()
+------------------------------------------------------------------------------
+     24,093  observations remaining, representing
+     24,093  subjects
+      6,033  failures in single-failure-per-subject data
+  6,998,711  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =     2,050
 
---------------------------------------------------------------------------
-     26,469  total observations
-        748  observations end on or before enter()
---------------------------------------------------------------------------
-     25,721  observations remaining, representing
-     25,721  subjects
-      6,409  failures in single-failure-per-subject data
-  7,483,187  total analysis time at risk and under observation
-                                                At risk from t =         0
-                                     Earliest observed entry t =         0
-                                          Last observed exit t =     2,044
+         failure _d:  fail_pre_anaphylaxis == 1
+   analysis time _t:  (stop_pre_anaphylaxis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-         Failure _d: fail_pre_anaphylaxis==1
-   Analysis time _t: (stop_pre_anaphylaxis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |      7483187       6409   .00085645   .0008357    .0008777
+     total |      6998711       6033   .00086202   .0008405     .000884
 
-         Failure _d: fail_pre_anaphylaxis==1
-   Analysis time _t: (stop_pre_anaphylaxis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_anaphylaxis == 1
+   analysis time _t:  (stop_pre_anaphylaxis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |      7006752       6008   .00085746    .000836    .0008794
+     total |      6748092       5812   .00086128   .0008394    .0008837
 no drug
 
-         Failure _d: fail_pre_anaphylaxis==1
-   Analysis time _t: (stop_pre_anaphylaxis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_anaphylaxis == 1
+   analysis time _t:  (stop_pre_anaphylaxis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       166261        138   .00083002   .0007025    .0009807
+     total |        92002         80   .00086955   .0006984    .0010826
 sotrovimab
 
-         Failure _d: fail_pre_anaphylaxis==1
-   Analysis time _t: (stop_pre_anaphylaxis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_anaphylaxis == 1
+   analysis time _t:  (stop_pre_anaphylaxis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       156404        129   .00082479   .0006941    .0009801
+     total |        83947         70   .00083386   .0006597     .001054
 paxlovid
 
-         Failure _d: fail_pre_anaphylaxis==1
-   Analysis time _t: (stop_pre_anaphylaxis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_anaphylaxis == 1
+   analysis time _t:  (stop_pre_anaphylaxis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       153770        134   .00087143   .0007357    .0010322
+     total |        74670         71   .00095085   .0007535    .0011999
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_rash == 1
+obs. time interval:  (stop_pre_rash[_n-1], stop_pre_rash]
+ enter on or after:  time start_comparator
+ exit on or before:  failure
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_rash==1
-Observed time interval: (stop_pre_rash[_n-1], stop_pre_rash]
-     Enter on or after: time start_comparator
-     Exit on or before: failure
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
+------------------------------------------------------------------------------
+     24,775  total observations
+        693  observations end on or before enter()
+------------------------------------------------------------------------------
+     24,082  observations remaining, representing
+     24,082  subjects
+      5,979  failures in single-failure-per-subject data
+  7,040,197  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =     2,053
 
---------------------------------------------------------------------------
-     26,469  total observations
-        403  observations end on or before enter()
---------------------------------------------------------------------------
-     26,066  observations remaining, representing
-     26,066  subjects
-      2,235  failures in single-failure-per-subject data
-  2,653,747  total analysis time at risk and under observation
-                                                At risk from t =         0
-                                     Earliest observed entry t =         0
-                                          Last observed exit t =     1,998
+         failure _d:  fail_pre_rash == 1
+   analysis time _t:  (stop_pre_rash-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-         Failure _d: fail_pre_rash==1
-   Analysis time _t: (stop_pre_rash-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |      2653747       2235   .00084221    .000808    .0008779
+     total |      7040197       5979   .00084927    .000828    .0008711
 
-         Failure _d: fail_pre_rash==1
-   Analysis time _t: (stop_pre_rash-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_rash == 1
+   analysis time _t:  (stop_pre_rash-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |      2494821       2095   .00083974   .0008045    .0008765
+     total |      6785592       5761     .000849   .0008274    .0008712
 no drug
 
-         Failure _d: fail_pre_rash==1
-   Analysis time _t: (stop_pre_rash-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_rash == 1
+   analysis time _t:  (stop_pre_rash-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |        50627         50   .00098762   .0007485    .0013031
+     total |        95008         79   .00083151    .000667    .0010367
 sotrovimab
 
-         Failure _d: fail_pre_rash==1
-   Analysis time _t: (stop_pre_rash-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_rash == 1
+   analysis time _t:  (stop_pre_rash-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |        56228         43   .00076474   .0005672    .0010312
+     total |        87137         71   .00081481   .0006457    .0010282
 paxlovid
 
-         Failure _d: fail_pre_rash==1
-   Analysis time _t: (stop_pre_rash-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_rash == 1
+   analysis time _t:  (stop_pre_rash-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |        52071         47   .00090261   .0006782    .0012013
+     total |        72460         68   .00093845   .0007399    .0011902
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_severe_drug == 1
+obs. time interval:  (stop_pre_severe_drug[_n-1], stop_pre_severe_drug]
+ enter on or after:  time start_comparator
+ exit on or before:  failure
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_drug==1
-Observed time interval: (stop_pre_drug[_n-1], stop_pre_drug]
-     Enter on or after: time start_comparator
-     Exit on or before: failure
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
+------------------------------------------------------------------------------
+     24,775  total observations
+      1,022  observations end on or before enter()
+------------------------------------------------------------------------------
+     23,753  observations remaining, representing
+     23,753  subjects
+      7,503  failures in single-failure-per-subject data
+  8,031,136  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =     2,046
 
---------------------------------------------------------------------------
-     26,469  total observations
-          0  exclusions
---------------------------------------------------------------------------
-     26,469  observations remaining, representing
-     26,469  subjects
-      2,635  failures in single-failure-per-subject data
-  4,633,876  total analysis time at risk and under observation
-                                                At risk from t =         0
-                                     Earliest observed entry t =         0
-                                          Last observed exit t =     2,042
+         failure _d:  fail_pre_severe_drug == 1
+   analysis time _t:  (stop_pre_severe_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-         Failure _d: fail_pre_drug==1
-   Analysis time _t: (stop_pre_drug-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |      4633876       2635   .00056864   .0005473    .0005908
+     total |      8031136       7503   .00093424   .0009133    .0009556
 
-         Failure _d: fail_pre_drug==1
-   Analysis time _t: (stop_pre_drug-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_severe_drug == 1
+   analysis time _t:  (stop_pre_severe_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |      4329589       2460   .00056818   .0005462    .0005911
+     total |      7770317       7261   .00093445   .0009132    .0009562
 no drug
 
-         Failure _d: fail_pre_drug==1
-   Analysis time _t: (stop_pre_drug-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_severe_drug == 1
+   analysis time _t:  (stop_pre_severe_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |        97127         54   .00055597   .0004258    .0007259
+     total |        91153         79   .00086667   .0006952    .0010805
 sotrovimab
 
-         Failure _d: fail_pre_drug==1
-   Analysis time _t: (stop_pre_drug-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_severe_drug == 1
+   analysis time _t:  (stop_pre_severe_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |        96525         56   .00058016   .0004465    .0007539
+     total |        80984         78   .00096315   .0007715    .0012025
 paxlovid
 
-         Failure _d: fail_pre_drug==1
-   Analysis time _t: (stop_pre_drug-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_severe_drug == 1
+   analysis time _t:  (stop_pre_severe_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       110635         65   .00058752   .0004607    .0007492
+     total |        88682         85   .00095848   .0007749    .0011855
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_nonsevere_drug == 1
+obs. time interval:  (stop_pre_nonsevere_drug[_n-1], stop_pre_nonsevere_drug]
+ enter on or after:  time start_comparator
+ exit on or before:  failure
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_allergic==1
-Observed time interval: (stop_pre_allergic[_n-1], stop_pre_allergic]
-     Enter on or after: time start_comparator
-     Exit on or before: failure
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
---------------------------------------------------------------------------
-     26,469  total observations
-          0  exclusions
---------------------------------------------------------------------------
-     26,469  observations remaining, representing
-     26,469  subjects
-      2,654  failures in single-failure-per-subject data
-  4,677,674  total analysis time at risk and under observation
-                                                At risk from t =         0
-                                     Earliest observed entry t =         0
-                                          Last observed exit t =     2,029
-
-         Failure _d: fail_pre_allergic==1
-   Analysis time _t: (stop_pre_allergic-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |      4677674       2654   .00056738   .0005462    .0005894
-
-         Failure _d: fail_pre_allergic==1
-   Analysis time _t: (stop_pre_allergic-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |      4365917       2476   .00056712   .0005452    .0005899
-no drug
-
-         Failure _d: fail_pre_allergic==1
-   Analysis time _t: (stop_pre_allergic-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |       104130         61   .00058581   .0004558    .0007529
-sotrovimab
-
-         Failure _d: fail_pre_allergic==1
-   Analysis time _t: (stop_pre_allergic-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |        97172         53   .00054542   .0004167    .0007139
-paxlovid
-
-         Failure _d: fail_pre_allergic==1
-   Analysis time _t: (stop_pre_allergic-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |       110455         64   .00057942   .0004535    .0007403
-molnupavir
-
-Survival-time data settings
-
-           ID variable: patient_id
-         Failure event: fail_pre_ra==1
-Observed time interval: (stop_pre_ra[_n-1], stop_pre_ra]
-     Enter on or after: time start_comparator
-     Exit on or before: failure
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
---------------------------------------------------------------------------
-     26,469  total observations
-        601  observations end on or before enter()
---------------------------------------------------------------------------
-     25,868  observations remaining, representing
-     25,868  subjects
-      5,298  failures in single-failure-per-subject data
-  6,342,982  total analysis time at risk and under observation
-                                                At risk from t =         0
-                                     Earliest observed entry t =         0
-                                          Last observed exit t =     2,035
-
-         Failure _d: fail_pre_ra==1
-   Analysis time _t: (stop_pre_ra-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |      6342982       5298   .00083525   .0008131    .0008581
-
-         Failure _d: fail_pre_ra==1
-   Analysis time _t: (stop_pre_ra-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |      5968504       4992   .00083639   .0008135    .0008599
-no drug
-
-         Failure _d: fail_pre_ra==1
-   Analysis time _t: (stop_pre_ra-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |       124044         92   .00074167   .0006046    .0009098
-sotrovimab
-
-         Failure _d: fail_pre_ra==1
-   Analysis time _t: (stop_pre_ra-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |       124011        109   .00087895   .0007285    .0010605
-paxlovid
-
-         Failure _d: fail_pre_ra==1
-   Analysis time _t: (stop_pre_ra-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |       126423        105   .00083055    .000686    .0010056
-molnupavir
-
-Survival-time data settings
-
-           ID variable: patient_id
-         Failure event: fail_pre_sle==1
-Observed time interval: (stop_pre_sle[_n-1], stop_pre_sle]
-     Enter on or after: time start_comparator
-     Exit on or before: failure
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
---------------------------------------------------------------------------
-     26,469  total observations
-        590  observations end on or before enter()
---------------------------------------------------------------------------
-     25,879  observations remaining, representing
-     25,879  subjects
-      5,218  failures in single-failure-per-subject data
-  6,238,073  total analysis time at risk and under observation
-                                                At risk from t =         0
-                                     Earliest observed entry t =         0
-                                          Last observed exit t =     2,046
-
-         Failure _d: fail_pre_sle==1
-   Analysis time _t: (stop_pre_sle-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |      6238073       5218   .00083648   .0008141    .0008595
-
-         Failure _d: fail_pre_sle==1
-   Analysis time _t: (stop_pre_sle-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |      5871777       4908   .00083586   .0008128    .0008596
-no drug
-
-         Failure _d: fail_pre_sle==1
-   Analysis time _t: (stop_pre_sle-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |       110915         96   .00086553   .0007086    .0010572
-sotrovimab
-
-         Failure _d: fail_pre_sle==1
-   Analysis time _t: (stop_pre_sle-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |       119515        102   .00085345   .0007029    .0010362
-paxlovid
-
-         Failure _d: fail_pre_sle==1
-   Analysis time _t: (stop_pre_sle-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
------------+-----------------------------------------------------------
-     Total |       135866        112   .00082434    .000685    .0009921
-molnupavir
-
-Survival-time data settings
-
-           ID variable: patient_id
-         Failure event: fail_pre_psorasis==1
-Observed time interval: (stop_pre_psorasis[_n-1], stop_pre_psorasis]
-     Enter on or after: time start_comparator
-     Exit on or before: failure
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
---------------------------------------------------------------------------
-     26,469  total observations
+------------------------------------------------------------------------------
+     24,775  total observations
         358  observations end on or before enter()
---------------------------------------------------------------------------
-     26,111  observations remaining, representing
-     26,111  subjects
-      4,192  failures in single-failure-per-subject data
-  5,648,157  total analysis time at risk and under observation
-                                                At risk from t =         0
-                                     Earliest observed entry t =         0
-                                          Last observed exit t =     2,023
+------------------------------------------------------------------------------
+     24,417  observations remaining, representing
+     24,417  subjects
+      4,384  failures in single-failure-per-subject data
+  5,869,298  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =     2,052
 
-         Failure _d: fail_pre_psorasis==1
-   Analysis time _t: (stop_pre_psorasis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_nonsevere_drug == 1
+   analysis time _t:  (stop_pre_nonsevere_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |      5648157       4192   .00074219   .0007201     .000765
+     total |      5869298       4384   .00074694   .0007252    .0007694
 
-         Failure _d: fail_pre_psorasis==1
-   Analysis time _t: (stop_pre_psorasis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_nonsevere_drug == 1
+   analysis time _t:  (stop_pre_nonsevere_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |      5305214       3938   .00074229   .0007195    .0007658
+     total |      5671048       4235   .00074678   .0007246    .0007696
 no drug
 
-         Failure _d: fail_pre_psorasis==1
-   Analysis time _t: (stop_pre_psorasis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_nonsevere_drug == 1
+   analysis time _t:  (stop_pre_nonsevere_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       107904         77    .0007136   .0005708    .0008922
+     total |        74418         58   .00077938   .0006025    .0010081
 sotrovimab
 
-         Failure _d: fail_pre_psorasis==1
-   Analysis time _t: (stop_pre_psorasis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_nonsevere_drug == 1
+   analysis time _t:  (stop_pre_nonsevere_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       113030         86   .00076086   .0006159    .0009399
+     total |        63735         49   .00076881   .0005811    .0010172
 paxlovid
 
-         Failure _d: fail_pre_psorasis==1
-   Analysis time _t: (stop_pre_psorasis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_nonsevere_drug == 1
+   analysis time _t:  (stop_pre_nonsevere_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       122009         91   .00074585   .0006073     .000916
+     total |        60097         42   .00069887   .0005165    .0009457
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_ra == 1
+obs. time interval:  (stop_pre_ra[_n-1], stop_pre_ra]
+ enter on or after:  time start_comparator
+ exit on or before:  failure
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_psa==1
-Observed time interval: (stop_pre_psa[_n-1], stop_pre_psa]
-     Enter on or after: time start_comparator
-     Exit on or before: failure
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
+------------------------------------------------------------------------------
+     24,775  total observations
+        655  observations end on or before enter()
+------------------------------------------------------------------------------
+     24,120  observations remaining, representing
+     24,120  subjects
+      5,501  failures in single-failure-per-subject data
+  6,455,120  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =     2,049
 
---------------------------------------------------------------------------
-     26,469  total observations
-        344  observations end on or before enter()
---------------------------------------------------------------------------
-     26,125  observations remaining, representing
-     26,125  subjects
-      4,203  failures in single-failure-per-subject data
-  5,680,882  total analysis time at risk and under observation
-                                                At risk from t =         0
-                                     Earliest observed entry t =         0
-                                          Last observed exit t =     2,036
+         failure _d:  fail_pre_ra == 1
+   analysis time _t:  (stop_pre_ra-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-         Failure _d: fail_pre_psa==1
-   Analysis time _t: (stop_pre_psa-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |      5680882       4203   .00073985   .0007178    .0007626
+     total |      6455120       5501   .00085219     .00083     .000875
 
-         Failure _d: fail_pre_psa==1
-   Analysis time _t: (stop_pre_psa-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_ra == 1
+   analysis time _t:  (stop_pre_ra-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |      5340103       3949    .0007395   .0007168    .0007629
+     total |      6232721       5308   .00085163    .000829    .0008749
 no drug
 
-         Failure _d: fail_pre_psa==1
-   Analysis time _t: (stop_pre_psa-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_ra == 1
+   analysis time _t:  (stop_pre_ra-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       124199         93    .0007488   .0006111    .0009176
+     total |        72345         67   .00092612   .0007289    .0011767
 sotrovimab
 
-         Failure _d: fail_pre_psa==1
-   Analysis time _t: (stop_pre_psa-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_ra == 1
+   analysis time _t:  (stop_pre_ra-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       101493         78   .00076853   .0006156    .0009595
+     total |        87949         74    .0008414     .00067    .0010567
 paxlovid
 
-         Failure _d: fail_pre_psa==1
-   Analysis time _t: (stop_pre_psa-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_ra == 1
+   analysis time _t:  (stop_pre_ra-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       115087         83   .00072119   .0005816    .0008943
+     total |        62105         52   .00083729    .000638    .0010988
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_sle == 1
+obs. time interval:  (stop_pre_sle[_n-1], stop_pre_sle]
+ enter on or after:  time start_comparator
+ exit on or before:  failure
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_ankspon==1
-Observed time interval: (stop_pre_ankspon[_n-1], stop_pre_ankspon]
-     Enter on or after: time start_comparator
-     Exit on or before: failure
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
+------------------------------------------------------------------------------
+     24,775  total observations
+        648  observations end on or before enter()
+------------------------------------------------------------------------------
+     24,127  observations remaining, representing
+     24,127  subjects
+      5,390  failures in single-failure-per-subject data
+  6,400,872  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =     2,057
 
---------------------------------------------------------------------------
-     26,469  total observations
-        335  observations end on or before enter()
---------------------------------------------------------------------------
-     26,134  observations remaining, representing
-     26,134  subjects
-      4,108  failures in single-failure-per-subject data
-  5,541,429  total analysis time at risk and under observation
-                                                At risk from t =         0
-                                     Earliest observed entry t =         0
-                                          Last observed exit t =     2,046
+         failure _d:  fail_pre_sle == 1
+   analysis time _t:  (stop_pre_sle-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-         Failure _d: fail_pre_ankspon==1
-   Analysis time _t: (stop_pre_ankspon-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |      5541429       4108   .00074133    .000719    .0007643
+     total |      6400872       5390   .00084207   .0008199    .0008649
 
-         Failure _d: fail_pre_ankspon==1
-   Analysis time _t: (stop_pre_ankspon-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_sle == 1
+   analysis time _t:  (stop_pre_sle-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |      5222359       3873   .00074162   .0007186    .0007653
+     total |      6167998       5192   .00084176   .0008192     .000865
 no drug
 
-         Failure _d: fail_pre_ankspon==1
-   Analysis time _t: (stop_pre_ankspon-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_sle == 1
+   analysis time _t:  (stop_pre_sle-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       105041         74   .00070449   .0005609    .0008848
+     total |        76318         69   .00090411   .0007141    .0011447
 sotrovimab
 
-         Failure _d: fail_pre_ankspon==1
-   Analysis time _t: (stop_pre_ankspon-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_sle == 1
+   analysis time _t:  (stop_pre_sle-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |        91402         65   .00071114   .0005577    .0009069
+     total |        82899         65   .00078409   .0006149    .0009999
 paxlovid
 
-         Failure _d: fail_pre_ankspon==1
-   Analysis time _t: (stop_pre_ankspon-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_sle == 1
+   analysis time _t:  (stop_pre_sle-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       122627         96   .00078286   .0006409    .0009562
+     total |        73657         64   .00086889   .0006801    .0011101
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_psorasis == 1
+obs. time interval:  (stop_pre_psorasis[_n-1], stop_pre_psorasis]
+ enter on or after:  time start_comparator
+ exit on or before:  failure
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_ibd==1
-Observed time interval: (stop_pre_ibd[_n-1], stop_pre_ibd]
-     Enter on or after: time start_comparator
-     Exit on or before: failure
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
+------------------------------------------------------------------------------
+     24,775  total observations
+        618  observations end on or before enter()
+------------------------------------------------------------------------------
+     24,157  observations remaining, representing
+     24,157  subjects
+      5,345  failures in single-failure-per-subject data
+  6,328,140  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =     2,057
 
---------------------------------------------------------------------------
-     26,469  total observations
+         failure _d:  fail_pre_psorasis == 1
+   analysis time _t:  (stop_pre_psorasis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |      6328140       5345   .00084464   .0008223    .0008676
+
+         failure _d:  fail_pre_psorasis == 1
+   analysis time _t:  (stop_pre_psorasis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |      6107195       5152    .0008436   .0008209    .0008669
+no drug
+
+         failure _d:  fail_pre_psorasis == 1
+   analysis time _t:  (stop_pre_psorasis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |        83092         73   .00087854   .0006985    .0011051
+sotrovimab
+
+         failure _d:  fail_pre_psorasis == 1
+   analysis time _t:  (stop_pre_psorasis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |        75261         62    .0008238   .0006423    .0010566
+paxlovid
+
+         failure _d:  fail_pre_psorasis == 1
+   analysis time _t:  (stop_pre_psorasis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |        62592         58   .00092664   .0007164    .0011986
+molnupavir
+
+                id:  patient_id
+     failure event:  fail_pre_psa == 1
+obs. time interval:  (stop_pre_psa[_n-1], stop_pre_psa]
+ enter on or after:  time start_comparator
+ exit on or before:  failure
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,775  total observations
+        663  observations end on or before enter()
+------------------------------------------------------------------------------
+     24,112  observations remaining, representing
+     24,112  subjects
+      5,412  failures in single-failure-per-subject data
+  6,392,383  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =     2,053
+
+         failure _d:  fail_pre_psa == 1
+   analysis time _t:  (stop_pre_psa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |      6392383       5412   .00084663   .0008244    .0008695
+
+         failure _d:  fail_pre_psa == 1
+   analysis time _t:  (stop_pre_psa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |      6152020       5204    .0008459   .0008232    .0008692
+no drug
+
+         failure _d:  fail_pre_psa == 1
+   analysis time _t:  (stop_pre_psa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |        82843         66   .00079669   .0006259    .0010141
+sotrovimab
+
+         failure _d:  fail_pre_psa == 1
+   analysis time _t:  (stop_pre_psa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |        91096         81   .00088917   .0007152    .0011055
+paxlovid
+
+         failure _d:  fail_pre_psa == 1
+   analysis time _t:  (stop_pre_psa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |        66424         61   .00091834   .0007145    .0011803
+molnupavir
+
+                id:  patient_id
+     failure event:  fail_pre_axspa == 1
+obs. time interval:  (stop_pre_axspa[_n-1], stop_pre_axspa]
+ enter on or after:  time start_comparator
+ exit on or before:  failure
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,775  total observations
+        656  observations end on or before enter()
+------------------------------------------------------------------------------
+     24,119  observations remaining, representing
+     24,119  subjects
+      5,572  failures in single-failure-per-subject data
+  6,553,133  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =     2,044
+
+         failure _d:  fail_pre_axspa == 1
+   analysis time _t:  (stop_pre_axspa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |      6553133       5572   .00085028   .0008282    .0008729
+
+         failure _d:  fail_pre_axspa == 1
+   analysis time _t:  (stop_pre_axspa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |      6329800       5388   .00085121   .0008288    .0008742
+no drug
+
+         failure _d:  fail_pre_axspa == 1
+   analysis time _t:  (stop_pre_axspa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |        79258         61   .00076964   .0005988    .0009892
+sotrovimab
+
+         failure _d:  fail_pre_axspa == 1
+   analysis time _t:  (stop_pre_axspa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |        66416         57   .00085823    .000662    .0011126
+paxlovid
+
+         failure _d:  fail_pre_axspa == 1
+   analysis time _t:  (stop_pre_axspa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |        77659         66   .00084987   .0006677    .0010818
+molnupavir
+
+                id:  patient_id
+     failure event:  fail_pre_ibd == 1
+obs. time interval:  (stop_pre_ibd[_n-1], stop_pre_ibd]
+ enter on or after:  time start_comparator
+ exit on or before:  failure
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,775  total observations
           0  exclusions
---------------------------------------------------------------------------
-     26,469  observations remaining, representing
-     26,469  subjects
-     15,214  failures in single-failure-per-subject data
- 22223003.5  total analysis time at risk and under observation
-                                                At risk from t =         0
-                                     Earliest observed entry t =         0
-                                          Last observed exit t =     2,042
+------------------------------------------------------------------------------
+     24,775  observations remaining, representing
+     24,775  subjects
+          0  failures in single-failure-per-subject data
+    718,475  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-         Failure _d: fail_pre_ibd==1
-   Analysis time _t: (stop_pre_ibd-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_ibd == 1
+   analysis time _t:  (stop_pre_ibd-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |     22223004      15214   .00068461   .0006738    .0006956
+     total |       718475          0           0          .           .
 
-         Failure _d: fail_pre_ibd==1
-   Analysis time _t: (stop_pre_ibd-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_ibd == 1
+   analysis time _t:  (stop_pre_ibd-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |     20879900      14293   .00068453   .0006734    .0006958
+     total |       693100          0           0          .           .
 no drug
 
-         Failure _d: fail_pre_ibd==1
-   Analysis time _t: (stop_pre_ibd-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_ibd == 1
+   analysis time _t:  (stop_pre_ibd-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       435455        299   .00068664   .0006131     .000769
+     total |         8932          0           0          .           .
 sotrovimab
 
-         Failure _d: fail_pre_ibd==1
-   Analysis time _t: (stop_pre_ibd-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_ibd == 1
+   analysis time _t:  (stop_pre_ibd-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |     464036.5        317   .00068314   .0006119    .0007626
+     total |         8497          0           0          .           .
 paxlovid
 
-         Failure _d: fail_pre_ibd==1
-   Analysis time _t: (stop_pre_ibd-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-        ID variable: patient_id
+         failure _d:  fail_pre_ibd == 1
+   analysis time _t:  (stop_pre_ibd-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. interval]
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
 -----------+-----------------------------------------------------------
-     Total |       443612        305   .00068754   .0006145    .0007692
+     total |         7946          0           0          .           .
 molnupavir
 
 . 
@@ -2158,15 +2029,17 @@ molnupavir
 
 . use "$projectdir/output/tables/comparator_rate_summary", replace
 
-. export delimited using "$projectdir/output/tables/comparator_rate_summary_csv.csv", replace
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/comparator_rate_summary_csv.csv saved
+. export delimited using "$projectdir/output/tables/comparator_rate_summary_csv
+> .csv", replace
+(note: file /workspace/output/tables/comparator_rate_summary_csv.csv not found)
+file /workspace/output/tables/comparator_rate_summary_csv.csv saved
 
 . 
 . 
 . 
 . log close
       name:  <unnamed>
-       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/logs/preceed_rate.log
+       log:  /workspace/logs/preceed_rate.log
   log type:  text
- closed on:   1 Aug 2023, 14:24:16
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ closed on:   8 Aug 2023, 14:49:47
+-------------------------------------------------------------------------------
