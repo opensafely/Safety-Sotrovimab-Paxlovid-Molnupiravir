@@ -56,6 +56,19 @@ actions:
         survrisk_covid_hosp_date: output/figures/survrisk_covid_hosp_date.svg
         survrisk_all_hosp_date: output/figures/survrisk_all_hosp_date.svg
         survrisk_died_date_ons: output/figures/survrisk_died_date_ons.svg
+        survrisk_ae_diverticulitis: output/figures/survrisk_ae_diverticulitis.svg
+        survrisk_ae_diarrhoea: output/figures/survrisk_ae_diarrhoea.svg
+        survrisk_ae_taste: output/figures/survrisk_ae_taste.svg
+        survrisk_ae_rash: output/figures/survrisk_ae_rash.svg
+        survrisk_ae_anaphylaxis: output/figures/survrisk_ae_anaphylaxis.svg
+        survrisk_ae_severe_drug: output/figures/survrisk_ae_severe_drug.svg
+        survrisk_ae_nonsevere_drug: output/figures/survrisk_ae_nonsevere_drug.svg
+        survrisk_ae_ra: output/figures/survrisk_ae_ra.svg
+        survrisk_ae_sle: output/figures/survrisk_ae_sle.svg
+        survrisk_ae_psorasis: output/figures/survrisk_ae_psorasis.svg
+        survrisk_ae_psa: output/figures/survrisk_ae_psa.svg
+        survrisk_ae_axspa: output/figures/survrisk_ae_axspa.svg
+        survrisk_ae_ibd: output/figures/survrisk_ae_ibd.svg
         survcur_ae_spc_all: output/figures/survcur_ae_spc_all.svg
         survcur_ae_drug_all: output/figures/survcur_ae_drug_all.svg
         survcur_ae_imae_all: output/figures/survcur_ae_imae_all.svg
@@ -64,6 +77,19 @@ actions:
         survcur_covid_hosp_date: output/figures/survcur_covid_hosp_date.svg
         survcur_all_hosp_date: output/figures/survcur_all_hosp_date.svg
         survcur_died_date_ons: output/figures/survcur_died_date_ons.svg
+        survcur_ae_diverticulitis: output/figures/survcur_ae_diverticulitis.svg
+        survcur_ae_diarrhoea: output/figures/survcur_ae_diarrhoea.svg
+        survcur_ae_taste: output/figures/survcur_ae_taste.svg
+        survcur_ae_rash: output/figures/survcur_ae_rash.svg
+        survcur_ae_anaphylaxis: output/figures/survcur_ae_anaphylaxis.svg
+        survcur_ae_severe_drug: output/figures/survcur_ae_severe_drug.svg
+        survcur_ae_nonsevere_drug: output/figures/survcur_ae_nonsevere_drug.svg
+        survcur_ae_ra: output/figures/survcur_ae_ra.svg
+        survcur_ae_sle: output/figures/survcur_ae_sle.svg
+        survcur_ae_psorasis: output/figures/survcur_ae_psorasis.svg
+        survcur_ae_psa: output/figures/survcur_ae_psa.svg
+        survcur_ae_axspa: output/figures/survcur_ae_axspa.svg
+        survcur_ae_ibd: output/figures/survcur_ae_ibd.svg
         
   PS_model:
     run: stata-mp:latest analysis/300_ps_model.do
@@ -78,6 +104,8 @@ actions:
         histogram_fulladj2: output/figures/histogram_fulladj2.svg
         match_agesex: output/figures/match_agesex.svg
         match_adj: output/figures/match_adj.svg
+        match_fulladj1: output/figures/match_fulladj1.svg
+        match_fulladj2: output/figures/match_fulladj2.svg
   
   preceed_rate:
     run: stata-mp:latest analysis/400_preceeding_rate.do
@@ -93,5 +121,7 @@ actions:
     outputs:
       moderately_sensitive:
         log1: logs/redacted_table.log   
-        doc1: output/tables/baseline_table_redact_bydrug.csv   
-        doc2: output/tables/baseline_table_redact_mean.csv
+        data: output/tables/baseline_table_redact_bydrug.csv   
+        data1: output/tables/baseline_table_redact_mean.csv
+
+

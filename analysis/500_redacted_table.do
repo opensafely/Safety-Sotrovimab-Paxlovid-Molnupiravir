@@ -159,7 +159,7 @@ export excel "$projectdir/output/tables/baseline_table_redact_bydrug.xls", sheet
 	
 *Output tables as CSVs		 
 import excel "$projectdir/output/tables/baseline_table_redact_bydrug.xls", clear
-export delimited using "$projectdir/output/tables/baseline_table_redact_bydrug.csv" , novarnames  replace		
+export delimited using "$projectdir/output/tables/baseline_table_redact_bydrug.csv" , replace		
 	
 **2. Continous variables
 clear *
@@ -211,11 +211,9 @@ foreach var of varlist bmi age {
 }	
 use "$projectdir/output/tables/baseline_table_redact_mean.dta", clear
 save "$projectdir/output/tables/baseline_table_redact_mean.dta", replace
-export excel  "$projectdir/output/tables/baseline_table_redact_mean.dta", replace
-export delimited using "$projectdir/output/tables/baseline_table_redact_mean.csv" , novarnames  replace		
+export delimited using "$projectdir/output/tables/baseline_table_redact_mean.csv", replace		
 
 log close
-
 
 
 
