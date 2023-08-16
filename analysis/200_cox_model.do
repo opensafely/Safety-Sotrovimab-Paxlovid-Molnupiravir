@@ -142,7 +142,7 @@ foreach fail in $ae_group $ae_disease {
 postclose `coxoutput'
 
 
-foreach fail in $ae_group {
+foreach fail in $ae_group $ae_disease {
 
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 								
@@ -151,10 +151,11 @@ foreach fail in $ae_group {
 			risktable(,title(" ")order(1 "Control     " 2 "Sotrovimab     " 3 "Paxlovid     " 4 "Molnupiravir     ") ///
 			size(small)justification(left) rowtitle(,size(small)justification(right))) ///
 			legend(order(1 "Control" 2 "Sotrovimab" 3 "Paxlovid" 4 "Molnupiravir") symxsize(*0.4) size(small)) ///
-			xtitle("Analysis time (years)") ylabel(,angle(horizontal)) plotregion(color(white)) graphregion(color(white)) ///
+			xtitle("Analysis time (years)")  ylabel(0.9(.025)1) ylabel(,angle(horizontal)) plotregion(color(white)) graphregion(color(white)) ///
 			ytitle("Survival Probability" ) xtitle("Time (Days)") saving("$projectdir/output/figures/survrisk_`fail'", replace)
 
 			graph export "$projectdir/output/figures/survrisk_`fail'.svg", as(svg) replace
+
 			
 			stcurve, survival at1(drug=0) at2(drug=1) at3(drug=2) at4(drug=3) title("") ///
 			range(0 28) xtitle("Analysis time (years)") ///

@@ -1,9 +1,8 @@
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/logs/redacted_table
-> .log
+       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/logs/redacted_table.log
   log type:  text
- opened on:   8 Aug 2023, 15:23:47
+ opened on:  15 Aug 2023, 15:39:44
 
 . 
 . *Set Ado file path
@@ -14,9 +13,7 @@
   [4]  (PERSONAL)  "C:\users\PUBLIC\documents/"
   [5]  (PLUS)      "C:\users\PUBLIC\documents/"
   [6]  (OLDPLACE)  "c:\ado/"
-  [7]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/analysis/ado"
-  [8]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/analysis/ado
-> "
+  [7]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/analysis/ado"
 
 . 
 . **Baseline table redacted and rounded 
@@ -24,17 +21,15 @@
 
 . save "$projectdir/output/tables/baseline_table_redact_all.dta", replace emptyok
 (dataset contains 0 observations)
-(file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/output/tables/baseline_table_redact_all.dta not found)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/output/tables/baseline_table_redact_all.dta could not be opened
+(file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/output/tables/baseline_table_redact_all.dta not found)
+file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/output/tables/baseline_table_redact_all.dta could not be opened
 r(603);
 
 end of do-file
 
 r(603);
 
-. do "C:\Users\k1635179\AppData\Local\Temp\STD394c_000000.tmp"
+. do "C:\Users\k1635179\AppData\Local\Temp\STD412c_000000.tmp"
 
 . ********************************************************************************
 . *

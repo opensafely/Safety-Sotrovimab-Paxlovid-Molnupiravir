@@ -54,9 +54,9 @@ gen new_pre_psa_snomed = pre_psa_snomed	if pre_psa_snomed_new==0
 gen new_pre_axspa_icd = pre_axspa_icd_prim if pre_axspa_ctv_new==0
 gen new_pre_axspa_ctv = pre_axspa_ctv if pre_axspa_ctv_new==0 
 gen new_pre_axspa_ae = pre_axspa_ae if pre_axspa_ctv_new==0
-gen new_pre_ibd_icd = pre_ibd_icd_prim if pre_ibd_ctv==0
-gen new_pre_ibd_ctv = pre_ibd_ctv if pre_ibd_ctv==0
-gen new_pre_ibd_ae = pre_ibd_ae if pre_ibd_ctv==0
+gen new_pre_ibd_icd = pre_ibd_icd_prim if pre_ibd_ctv_new==0
+gen new_pre_ibd_ctv = pre_ibd_ctv if pre_ibd_ctv_new==0
+gen new_pre_ibd_ae = pre_ibd_ae if pre_ibd_ctv_new==0
 
 *** combined ae from GP, hosp and A&E
 egen pre_diverticulitis = rmin(pre_diverticulitis_icd_prim pre_diverticulitis_snomed pre_diverticulitis_ae)	 
@@ -70,7 +70,7 @@ egen pre_ra = rmin(new_pre_ra_icd new_pre_ra_ae new_pre_ra_snomed )
 egen pre_sle = rmin(new_pre_sle_icd new_pre_sle_ctv new_pre_sle_ae)
 egen pre_psorasis = rmin(new_pre_psoriasis_icd new_pre_psoriasis_snomed  new_pre_psoriasis_ae)
 egen pre_psa = rmin(new_pre_psa_icd new_pre_psa_ae new_pre_psa_snomed)
-egen pre_axspa = rmin(new_pre_axspa_icd  new_pre_axspa_ae pre_axspa_ctv)
+egen pre_axspa = rmin(new_pre_axspa_icd  new_pre_axspa_ae new_pre_axspa_ctv)
 egen pre_ibd = rmin(new_pre_ibd_icd new_pre_ibd_ctv new_pre_ibd_ae)
 egen pre_spc_all = rmin(pre_diverticulitis pre_diarrhoea pre_taste) 
 egen pre_drug_all = rmin(pre_anaphylaxis pre_rash pre_severe_drug pre_nonsevere_drug)
@@ -112,6 +112,14 @@ foreach x in $pre_ae_group $pre_ae_disease {
 		tab drug fail_`x' if stop_`x'!=.
 		format %td stop_`x'
 }
+
+* Follow-up time
+stset stop_pre_ae_all, id(patient_id) origin(time start_comparator) enter(time start_comparator) exit(time start_comparator_28) failure(fail_pre_ae_all==1) 
+tab _st  // keep if _st==1 -> removes observations that end on or before enter 
+count if start_comparator>=stop_pre_ae_all & _st==0
+count if start_comparator==stop_pre_ae_all & _st==0
+tab _t,m
+
 
 tempname comparator
 postfile `comparator' str20(failure) ///

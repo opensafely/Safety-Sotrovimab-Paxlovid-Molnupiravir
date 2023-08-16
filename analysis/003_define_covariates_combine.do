@@ -404,7 +404,7 @@ count if dataset==0 & (start_date-pre_covid_hosp_discharge<5) & (start_date-pre_
 count if dataset==0 & pre_covid_hosp_date!=. & pre_covid_hosp_discharge==. 
 count if dataset==0 & pre_covid_hosp_date!=. & pre_covid_hosp_discharge==. & (start_date-pre_covid_hosp_date<29)
 count if dataset==0 & pre_covid_hosp_date!=. & pre_covid_hosp_discharge==. & (start_date-pre_covid_hosp_date<366)
-// control patient, hospitalised without discharged date (discharge date preceed admission)
+// control patient, hospitalised and discharge date preceed admission
 count if dataset==0 & pre_covid_hosp_date>pre_covid_hosp_discharge & pre_covid_hosp_date!=. & pre_covid_hosp_discharge!=.
 count if dataset==0 & pre_covid_hosp_date>pre_covid_hosp_discharge & pre_covid_hosp_date!=. & pre_covid_hosp_discharge!=. & (start_date-pre_covid_hosp_date<29)
 count if dataset==0 & pre_covid_hosp_date>pre_covid_hosp_discharge & pre_covid_hosp_date!=. & pre_covid_hosp_discharge!=. & (start_date-pre_covid_hosp_date<366)
@@ -459,6 +459,7 @@ count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1
 count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 
 count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_on_drug==1
 count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_on_drug==1 &downs_syndrome==0 &solid_cancer==0 &haem_disease==0 &renal_disease==0 &liver_disease==0 &immunosupression==0 &hiv_aids==0 &organ_transplant==0 &rare_neuro==0
+count if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_on_drug==1 &downs_syndrome==0 &solid_cancer==0 &haem_disease==0 &renal_disease==0 &liver_disease==0 &immunosupression==0 &hiv_aids==0 &organ_transplant==0 &rare_neuro==0&dataset==0
 replace imid_drug=0 if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 &immunosuppresant==0 &methotrexate==0 &ciclosporin==0 &mycophenolate==0 &imid_on_drug==1 //ignore if steriods<4 scripts in 6m & not coded other imid drug 
 replace oral_steroid_drugs_nhsd=0 if oral_steroid_drug_nhsd_6m_count<4 &oral_steroid_drugs_nhsd==1 //ignore if steriods<4 scripts in 6m
 count if imid_on_drug==1 & imid_nhsd==1 & imid_drug==0 
@@ -503,9 +504,6 @@ replace drug=1 if sotrovimab_start==1
 replace drug=2 if paxlovid_start==1
 replace drug=3 if molnupiravir_start==1
 tab drug,m 
-replace drug=4 if sotrovimab==date_treated & sotrovimab_start==0 
-replace drug=5 if paxlovid==date_treated & paxlovid_start==0 
-replace drug=6 if molnupiravir==date_treated & molnupiravir_start==0 
 replace drug=9 if two_drugs!=.
 tab drug,m 
 replace drug=0 if drug==.
@@ -709,26 +707,26 @@ global ae_disease		ae_diverticulitis 				///
 						ae_ibd 					
 									
 *remove event if occurred before start
-foreach x in $ae_spc $ae_spc_icd $ae_spc_emerg $ae_drug $ae_drug_icd $ae_drug_emerg $ae_imae $ae_imae_icd $ae_imae_emerg $ae_disease{
+foreach x in $ae_spc_gp $ae_spc_icd $ae_spc_emerg $ae_drug_gp $ae_drug_icd $ae_drug_emerg $ae_imae_gp $ae_imae_icd $ae_imae_emerg $ae_disease{
 				display "`x'"
 				count if (`x' > start_date | `x' < start_date + 28) & `x'!=. 
 				count if (`x' < start_date | `x' > start_date + 28) & `x'!=. & drug==0
 				count if (`x' < start_date | `x' > start_date + 28) & `x'!=. & drug>0
 }
-egen ae_spc_gp = rmin($ae_spc)
+egen ae_spc_gp = rmin($ae_spc_gp)
 egen ae_spc_serious = rmin($ae_spc_icd)
 egen ae_spc_emerg = rmin($ae_spc_emerg)
-egen ae_spc_all = rmin($ae_spc $ae_spc_icd $ae_spc_emerg)
-egen ae_drug_gp = rmin($ae_drug)
+egen ae_spc_all = rmin(ae_spc_gp ae_spc_serious ae_spc_emerg)
+egen ae_drug_gp = rmin($ae_drug_gp)
 egen ae_drug_serious = rmin($ae_drug_icd)
 egen ae_drug_emerg = rmin($ae_drug_emerg)
-egen ae_drug_all = rmin($ae_drug $ae_drug_icd $ae_drug_emerg)
-egen ae_imae_gp = rmin($ae_imae)
+egen ae_drug_all = rmin(ae_drug_gp ae_drug_serious ae_drug_emerg)
+egen ae_imae_gp = rmin($ae_imae_gp)
 egen ae_imae_serious = rmin($ae_imae_icd)
 egen ae_imae_emerg = rmin($ae_imae_emerg)
-egen ae_imae_all = rmin($ae_imae $ae_imae_icd $ae_imae_emerg)	
-egen ae_all = rmin($ae_spc $ae_spc_icd $ae_spc_emerg $ae_drug $ae_drug_icd $ae_drug_emerg $ae_imae $ae_imae_icd $ae_imae_emerg)
-egen ae_all_serious = rmin($ae_spc_icd $ae_spc_emerg $ae_drug_icd $ae_drug_emerg $ae_imae_icd $ae_imae_emerg)
+egen ae_imae_all = rmin(ae_imae_gp ae_imae_serious ae_imae_emerg)	
+egen ae_all = rmin(ae_spc_all ae_drug_all ae_imae_all)
+egen ae_all_serious = rmin(ae_spc_serious ae_spc_emerg ae_drug_serious ae_drug_emerg ae_imae_serious ae_imae_emerg)
 by drug, sort: count if ae_spc_all!=.
 by drug, sort: count if ae_drug_all!=.
 by drug, sort: count if ae_imae_all!=.
@@ -1032,9 +1030,9 @@ global ae		ae_spc_all 				///
 
 * Generate failure 
 foreach x in	$ae $ae_disease ///
-				$ae_spc $ae_spc_icd $ae_spc_emerg ///
-				$ae_drug $ae_drug_icd $ae_drug_emerg ///
-				$ae_imae $ae_imae_icd $ae_imae_emerg ///
+				$ae_spc_gp $ae_spc_icd $ae_spc_emerg ///
+				$ae_drug_gp $ae_drug_icd $ae_drug_emerg ///
+				$ae_imae_gp $ae_imae_icd $ae_imae_emerg ///
 				{
 	display "`x'"
 	by drug, sort: count if `x'!=.
@@ -1049,9 +1047,9 @@ foreach x in	$ae $ae_disease ///
 
 * Add half-day buffer if outcome on indexdate
 foreach x in	$ae $ae_disease ///
-				$ae_spc $ae_spc_icd $ae_spc_emerg ///
-				$ae_drug $ae_drug_icd $ae_drug_emerg ///
-				$ae_imae $ae_imae_icd $ae_imae_emerg ///
+				$ae_spc_gp $ae_spc_icd $ae_spc_emerg ///
+				$ae_drug_gp $ae_drug_icd $ae_drug_emerg ///
+				$ae_imae_gp $ae_imae_icd $ae_imae_emerg ///
 				{
 	display "`x'"
 	replace `x'=`x'+0.75 if `x'==start_date
@@ -1059,9 +1057,9 @@ foreach x in	$ae $ae_disease ///
 
 *Generate censor date
 foreach x in	$ae $ae_disease ///
-				$ae_spc $ae_spc_icd $ae_spc_emerg ///
-				$ae_drug $ae_drug_icd $ae_drug_emerg ///
-				$ae_imae $ae_imae_icd $ae_imae_emerg ///
+				$ae_spc_gp $ae_spc_icd $ae_spc_emerg ///
+				$ae_drug_gp $ae_drug_icd $ae_drug_emerg ///
+				$ae_imae_gp $ae_imae_icd $ae_imae_emerg ///
 				{
 	gen stop_`x'=`x' if fail_`x'==1
 	replace stop_`x'=min(death_date,dereg_date,study_end_date,start_date_29,paxlovid,molnupiravir) if fail_`x'==0&drug==1
