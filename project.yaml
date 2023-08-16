@@ -121,5 +121,5 @@ actions:
     outputs:
       moderately_sensitive:
         log1: logs/redacted_table.log   
-        doc1: output/tables/baseline_table_redact_bydrug.csv   
-        doc2: output/tables/baseline_table_redact_mean.csv
+        data: output/tables/baseline_table_redact_bydrug_csv.csv   
+        data: output/tables/baseline_table_redact_mean_csv.csv
