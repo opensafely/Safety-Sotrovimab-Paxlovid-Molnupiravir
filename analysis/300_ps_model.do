@@ -91,7 +91,6 @@ global ae_disease		ae_diverticulitis 				///
 						ae_psa 							///
 						ae_axspa 						///
 						ae_ibd 														
-		
 	
 foreach model in agesex adj fulladj1 fulladj2 {
 		logistic no_drug $`model'

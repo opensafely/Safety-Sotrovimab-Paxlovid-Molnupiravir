@@ -92,7 +92,7 @@ actions:
         survcur_ae_ibd: output/figures/survcur_ae_ibd.svg
         
   PS_model:
-    run: stata-mp:latest analysis/300_ps_model.do
+    run: stata-mp:latest analysis/301_ps_model.do
     needs: [define_covariates_combine]
     outputs:
       moderately_sensitive:
@@ -102,11 +102,17 @@ actions:
         histogram_adj: output/figures/histogram_adj.svg
         histogram_fuladj1: output/figures/histogram_fulladj1.svg
         histogram_fulladj2: output/figures/histogram_fulladj2.svg
-        match_agesex: output/figures/match_agesex.svg
-        match_adj: output/figures/match_adj.svg
-        match_fulladj1: output/figures/match_fulladj1.svg
-        match_fulladj2: output/figures/match_fulladj2.svg
-  
+        match_drug1: output/figures/match_fulladj2_drug1.svg
+        match_drug2: output/figures/match_fulladj2_drug2.svg
+        match_drug3: output/figures/match_fulladj2_drug3.svg
+        histogram_common_agesex: output/figures/histogram_common_agesex.svg
+        histogram_common_adj: output/figures/histogram_common_adj.svg
+        histogram_common_fuladj1: output/figures/histogram_common_fulladj1.svg
+        histogram_common_fulladj2: output/figures/histogram_common__fulladj2.svg
+        match_common_drug1: output/figures/match_fulladj2_common_drug1.svg
+        match_common_drug2: output/figures/match_fulladj2_common_drug2.svg
+        match_common_drug3: output/figures/match_fulladj2_common_drug3.svg
+
   preceed_rate:
     run: stata-mp:latest analysis/400_preceeding_rate.do
     needs: [define_covariates_combine]
