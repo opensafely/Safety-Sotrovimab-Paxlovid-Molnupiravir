@@ -73,7 +73,7 @@ egen pre_psa = rmin(new_pre_psa_icd new_pre_psa_ae new_pre_psa_snomed)
 egen pre_axspa = rmin(new_pre_axspa_icd  new_pre_axspa_ae new_pre_axspa_ctv)
 egen pre_ibd = rmin(new_pre_ibd_icd new_pre_ibd_ctv new_pre_ibd_ae)
 egen pre_spc_all = rmin(pre_diverticulitis pre_diarrhoea pre_taste) 
-egen pre_drug_all = rmin(pre_anaphylaxis pre_rash pre_severe_drug pre_nonsevere_drug)
+egen pre_drug_all = rmin(pre_anaphylaxis pre_severe_drug pre_nonsevere_drug)
 egen pre_imae_all = rmin(pre_ra pre_sle pre_psorasis pre_psa pre_axspa pre_ibd)	
 egen pre_ae_all = rmin(pre_spc_all pre_drug_all pre_imae_all)
 

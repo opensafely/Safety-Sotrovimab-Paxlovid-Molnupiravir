@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  /workspace/logs/redacted_table.log
   log type:  text
- opened on:  16 Aug 2023, 09:49:06
+ opened on:  16 Aug 2023, 10:10:44
 
 . 
 . *Set Ado file path
@@ -3063,10 +3063,10 @@ file /workspace/output/tables/baseline_table_redact_bydrug.xls saved
 (22 vars, 81 obs)
 
 . export delimited using "$projectdir/output/tables/baseline_table_redact_bydru
-> g_csv.csv" , replace               
-(note: file /workspace/output/tables/baseline_table_redact_bydrug_csv.csv not f
-> ound)
-file /workspace/output/tables/baseline_table_redact_bydrug_csv.csv saved
+> g.csv" , replace           
+(note: file /workspace/output/tables/baseline_table_redact_bydrug.csv not found
+> )
+file /workspace/output/tables/baseline_table_redact_bydrug.csv saved
 
 .         
 . **2. Continous variables
@@ -3202,16 +3202,15 @@ file /workspace/output/tables/baseline_table_redact_mean.dta saved
 . save "$projectdir/output/tables/baseline_table_redact_mean.dta", replace
 file /workspace/output/tables/baseline_table_redact_mean.dta saved
 
-. export delimited using "$projectdir/output/tables/baseline_table_redact_mean_
-> csv.csv", replace          
-(note: file /workspace/output/tables/baseline_table_redact_mean_csv.csv not fou
-> nd)
-file /workspace/output/tables/baseline_table_redact_mean_csv.csv saved
+. export delimited using "$projectdir/output/tables/baseline_table_redact_mean.
+> csv", replace              
+(note: file /workspace/output/tables/baseline_table_redact_mean.csv not found)
+file /workspace/output/tables/baseline_table_redact_mean.csv saved
 
 . 
 . log close
       name:  <unnamed>
        log:  /workspace/logs/redacted_table.log
   log type:  text
- closed on:  16 Aug 2023, 09:49:16
+ closed on:  16 Aug 2023, 10:10:53
 -------------------------------------------------------------------------------
