@@ -97,22 +97,16 @@ actions:
     outputs:
       moderately_sensitive:
         log: logs/ps_model.log
-        data: output/tables/cox_model_propensity_csv.csv 
-        histogram_agesex: output/figures/histogram_agesex.svg
-        histogram_adj: output/figures/histogram_adj.svg
-        histogram_fuladj1: output/figures/histogram_fulladj1.svg
-        histogram_fulladj2: output/figures/histogram_fulladj2.svg
-        match_drug1: output/figures/match_fulladj2_drug1.svg
-        match_drug2: output/figures/match_fulladj2_drug2.svg
-        match_drug3: output/figures/match_fulladj2_drug3.svg
-        histogram_common_agesex: output/figures/histogram_common_agesex.svg
-        histogram_common_adj: output/figures/histogram_common_adj.svg
-        histogram_common_fuladj1: output/figures/histogram_common_fulladj1.svg
-        histogram_common_fulladj2: output/figures/histogram_common__fulladj2.svg
-        match_common_drug1: output/figures/match_fulladj2_common_drug1.svg
-        match_common_drug2: output/figures/match_fulladj2_common_drug2.svg
-        match_common_drug3: output/figures/match_fulladj2_common_drug3.svg
-
+        data: output/tables/cox_model_propensity.csv 
+        histogram_agesex: output/figures/histogram_agesex*.svg
+        histogram_adj: output/figures/histogram_adj*.svg
+        histogram_fuladj1: output/figures/histogram_fulladj1*.svg
+        histogram_fulladj2: output/figures/histogram_fulladj2*.svg
+        match_drug1: output/figures/match_fulladj2_drug1*.svg
+        match_drug2: output/figures/match_fulladj2_drug2*.svg
+        match_drug3: output/figures/match_fulladj2_drug3*.svg
+        data2: output/tables/cox_model_propensity_common.csv 
+        
   preceed_rate:
     run: stata-mp:latest analysis/400_preceeding_rate.do
     needs: [define_covariates_combine]

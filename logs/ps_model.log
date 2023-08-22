@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  /workspace/logs/ps_model.log
   log type:  text
- opened on:  17 Aug 2023, 15:38:51
+ opened on:  22 Aug 2023, 09:29:09
 
 . 
 . *Set Ado file path
@@ -144,7 +144,7 @@
 >                         (histogram p_drug3 if drug==3, color(green)), legend(
 > order(1 "No Drug" 2 "Molnupiravir")) name(histogram_mol_`model', replace)
  25.         graph combine histogram_sot_`model' histogram_pax_`model' histogra
-> m_mol_`model', name(histogram_combine_`model', replace) ///
+> m_mol_`model', name(histogram_`model', replace) ///
 >         saving("$projectdir/output/figures/histogram_`model'", replace)
  26.         graph export "$projectdir/output/figures/histogram_`model'.svg", a
 > s(svg) replace
@@ -162,8 +162,8 @@
 > ansplant rare_neuro vaccination_status imdq5 bmi_group ///
 >                 diabetes chronic_cardiac_disease chronic_respiratory_disease 
 > hypertension, wt(iptw`$model') graph 
- 30.                 graph save "$projectdir/output/figures/pbalchk_`var'", rep
-> lace
+ 30.                 graph save "$projectdir/output/figures/match_fulladj2_`var
+> '", replace
  31.                 }
  32.         graph export "$projectdir/output/figures/match_fulladj2_drug1.svg"
 > , as(svg) replace
@@ -328,7 +328,8 @@ chronic_re~e |            0.10               0.14               -0.114
 hypertension |            0.10               0.10               -0.006
 ----------------------------------------------------------------------
 
-(file /workspace/output/figures/pbalchk_drug1.gph saved)
+(note: file /workspace/output/figures/match_fulladj2_drug1.gph not found)
+(file /workspace/output/figures/match_fulladj2_drug1.gph saved)
 
                Mean in treated   Mean in Untreated   Standardised diff.
 ----------------------------------------------------------------------
@@ -381,7 +382,8 @@ chronic_re~e |            0.10               0.07                0.109
 hypertension |            0.10               0.06                0.135
 ----------------------------------------------------------------------
 
-(file /workspace/output/figures/pbalchk_drug2.gph saved)
+(note: file /workspace/output/figures/match_fulladj2_drug2.gph not found)
+(file /workspace/output/figures/match_fulladj2_drug2.gph saved)
 
                Mean in treated   Mean in Untreated   Standardised diff.
 ----------------------------------------------------------------------
@@ -434,7 +436,8 @@ chronic_re~e |            0.10               0.12               -0.065
 hypertension |            0.10               0.07                0.098
 ----------------------------------------------------------------------
 
-(file /workspace/output/figures/pbalchk_drug3.gph saved)
+(note: file /workspace/output/figures/match_fulladj2_drug3.gph not found)
+(file /workspace/output/figures/match_fulladj2_drug3.gph saved)
 (note: file /workspace/output/figures/match_fulladj2_drug1.svg not found)
 (file /workspace/output/figures/match_fulladj2_drug1.svg written in SVG format)
 (note: file /workspace/output/figures/match_fulladj2_drug2.svg not found)
@@ -1853,7 +1856,7 @@ chronic_re~e |            0.10               0.13               -0.083
 hypertension |            0.10               0.09                0.021
 ----------------------------------------------------------------------
 
-(file /workspace/output/figures/pbalchk_drug1.gph saved)
+(file /workspace/output/figures/match_fulladj2_drug1.gph saved)
 
                Mean in treated   Mean in Untreated   Standardised diff.
 ----------------------------------------------------------------------
@@ -1906,7 +1909,7 @@ chronic_re~e |            0.10               0.07                0.125
 hypertension |            0.10               0.07                0.120
 ----------------------------------------------------------------------
 
-(file /workspace/output/figures/pbalchk_drug2.gph saved)
+(file /workspace/output/figures/match_fulladj2_drug2.gph saved)
 
                Mean in treated   Mean in Untreated   Standardised diff.
 ----------------------------------------------------------------------
@@ -1959,7 +1962,7 @@ chronic_re~e |            0.10               0.12               -0.052
 hypertension |            0.10               0.07                0.094
 ----------------------------------------------------------------------
 
-(file /workspace/output/figures/pbalchk_drug3.gph saved)
+(file /workspace/output/figures/match_fulladj2_drug3.gph saved)
 (file /workspace/output/figures/match_fulladj2_drug1.svg written in SVG format)
 (file /workspace/output/figures/match_fulladj2_drug2.svg written in SVG format)
 (file /workspace/output/figures/match_fulladj2_drug3.svg written in SVG format)
@@ -3396,7 +3399,7 @@ chronic_re~e |            0.10               0.16               -0.195
 hypertension |            0.09               0.11               -0.054
 ----------------------------------------------------------------------
 
-(file /workspace/output/figures/pbalchk_drug1.gph saved)
+(file /workspace/output/figures/match_fulladj2_drug1.gph saved)
 
                Mean in treated   Mean in Untreated   Standardised diff.
 ----------------------------------------------------------------------
@@ -3449,7 +3452,7 @@ chronic_re~e |            0.10               0.08                0.085
 hypertension |            0.09               0.09                0.000
 ----------------------------------------------------------------------
 
-(file /workspace/output/figures/pbalchk_drug2.gph saved)
+(file /workspace/output/figures/match_fulladj2_drug2.gph saved)
 
                Mean in treated   Mean in Untreated   Standardised diff.
 ----------------------------------------------------------------------
@@ -3502,7 +3505,7 @@ chronic_re~e |            0.10               0.14               -0.138
 hypertension |            0.09               0.14               -0.149
 ----------------------------------------------------------------------
 
-(file /workspace/output/figures/pbalchk_drug3.gph saved)
+(file /workspace/output/figures/match_fulladj2_drug3.gph saved)
 (file /workspace/output/figures/match_fulladj2_drug1.svg written in SVG format)
 (file /workspace/output/figures/match_fulladj2_drug2.svg written in SVG format)
 (file /workspace/output/figures/match_fulladj2_drug3.svg written in SVG format)
@@ -5082,7 +5085,7 @@ chronic_re~e |            0.10               0.10                0.025
 hypertension |            0.09               0.08                0.033
 ----------------------------------------------------------------------
 
-(file /workspace/output/figures/pbalchk_drug1.gph saved)
+(file /workspace/output/figures/match_fulladj2_drug1.gph saved)
 
                Mean in treated   Mean in Untreated   Standardised diff.
 ----------------------------------------------------------------------
@@ -5135,7 +5138,7 @@ chronic_re~e |            0.10               0.10                0.006
 hypertension |            0.09               0.10               -0.038
 ----------------------------------------------------------------------
 
-(file /workspace/output/figures/pbalchk_drug2.gph saved)
+(file /workspace/output/figures/match_fulladj2_drug2.gph saved)
 
                Mean in treated   Mean in Untreated   Standardised diff.
 ----------------------------------------------------------------------
@@ -5188,7 +5191,7 @@ chronic_re~e |            0.10               0.13               -0.098
 hypertension |            0.09               0.10               -0.015
 ----------------------------------------------------------------------
 
-(file /workspace/output/figures/pbalchk_drug3.gph saved)
+(file /workspace/output/figures/match_fulladj2_drug3.gph saved)
 (file /workspace/output/figures/match_fulladj2_drug1.svg written in SVG format)
 (file /workspace/output/figures/match_fulladj2_drug2.svg written in SVG format)
 (file /workspace/output/figures/match_fulladj2_drug3.svg written in SVG format)
@@ -6618,9 +6621,9 @@ molnupira~r  |   .5158933   .2772411    -1.23   0.218     .1799385    1.479094
 > ram_pax_`model' histogram_mol_`model', name(histogram_combine_`model', replac
 > e) ///
 >                                 saving("$projectdir/output/figures/histogram_
-> common_`model'", replace)
+> `model'_common", replace)
  44.                                 graph export "$projectdir/output/figures/h
-> istogram_common_`model'.svg", as(svg) replace
+> istogram_`model'_common.svg", as(svg) replace
  45.                                 
 .                                 foreach var of varlist drug1 drug2 drug3 {
  46.                                         pbalchk `var' age sex region_nhs p
@@ -6643,11 +6646,11 @@ molnupira~r  |   .5158933   .2772411    -1.23   0.218     .1799385    1.479094
 > ures/pbalchk_`var'", replace
  49.                                         }
  50.                                 graph export "$projectdir/output/figures/m
-> atch_fulladj2_common_drug1.svg", as(svg) replace
+> atch_fulladj2_drug1_common.svg", as(svg) replace
  51.                                 graph export "$projectdir/output/figures/m
-> atch_fulladj2_common_drug2.svg", as(svg) replace
+> atch_fulladj2_drug2_common.svg", as(svg) replace
  52.                                 graph export "$projectdir/output/figures/m
-> atch_fulladj2_common_drug3.svg", as(svg) replace      
+> atch_fulladj2_drug3_common.svg", as(svg) replace      
  53.                                 
 .                                 foreach fail in $ae_group $ae_disease {
  54.                                         stset stop_`fail' [pw=iptw`$model'
@@ -6842,18 +6845,17 @@ common_supp |
 . 
 . use "$projectdir/output/tables/cox_model_propensity", replace
 
-. export delimited using "$projectdir/output/tables/cox_model_propensity_csv.cs
-> v", replace
-(note: file /workspace/output/tables/cox_model_propensity_csv.csv not found)
-file /workspace/output/tables/cox_model_propensity_csv.csv saved
+. export delimited using "$projectdir/output/tables/cox_model_propensity.csv", 
+> replace
+(note: file /workspace/output/tables/cox_model_propensity.csv not found)
+file /workspace/output/tables/cox_model_propensity.csv saved
 
-. use "$projectdir/output/tables/cox_model_propensity", replace
+. use "$projectdir/output/tables/cox_model_propensity_common", replace
 
-. export delimited using "$projectdir/output/tables/cox_model_propensity__commo
-> n.csv", replace
-(note: file /workspace/output/tables/cox_model_propensity__common.csv not found
-> )
-file /workspace/output/tables/cox_model_propensity__common.csv saved
+. export delimited using "$projectdir/output/tables/cox_model_propensity_common
+> .csv", replace
+(note: file /workspace/output/tables/cox_model_propensity_common.csv not found)
+file /workspace/output/tables/cox_model_propensity_common.csv saved
 
 . 
 . 
@@ -6861,5 +6863,5 @@ file /workspace/output/tables/cox_model_propensity__common.csv saved
       name:  <unnamed>
        log:  /workspace/logs/ps_model.log
   log type:  text
- closed on:  17 Aug 2023, 15:40:32
+ closed on:  22 Aug 2023, 09:30:47
 -------------------------------------------------------------------------------

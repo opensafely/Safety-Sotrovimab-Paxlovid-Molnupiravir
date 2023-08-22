@@ -109,7 +109,7 @@ foreach model in agesex adj fulladj1 fulladj2  {
 			(histogram p_drug2 if drug==2, color(green)), legend(order(1 "No Drug" 2 "Paxlovid")) name(histogram_pax_`model', replace)	
 	twoway 	(histogram p_control if drug==0, fcolor(none) lcolor(black)) ///
 			(histogram p_drug3 if drug==3, color(green)), legend(order(1 "No Drug" 2 "Molnupiravir")) name(histogram_mol_`model', replace)
-	graph combine histogram_sot_`model' histogram_pax_`model' histogram_mol_`model', name(histogram_combine_`model', replace) ///
+	graph combine histogram_sot_`model' histogram_pax_`model' histogram_mol_`model', name(histogram_`model', replace) ///
 	saving("$projectdir/output/figures/histogram_`model'", replace)
 	graph export "$projectdir/output/figures/histogram_`model'.svg", as(svg) replace
 	
@@ -120,7 +120,7 @@ foreach model in agesex adj fulladj1 fulladj2  {
 		pbalchk `var' age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease ///
 		liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 bmi_group ///
 		diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension, wt(iptw`$model') graph 
-		graph save "$projectdir/output/figures/pbalchk_`var'", replace
+		graph save "$projectdir/output/figures/match_fulladj2_`var'", replace
 		}
 	graph export "$projectdir/output/figures/match_fulladj2_drug1.svg", as(svg) replace
 	graph export "$projectdir/output/figures/match_fulladj2_drug2.svg", as(svg) replace
@@ -207,8 +207,8 @@ foreach model in agesex  {
 				twoway 	(histogram p_control if drug==0, fcolor(none) lcolor(black)) ///
 						(histogram p_drug3 if drug==3, color(green)), legend(order(1 "No Drug" 2 "Molnupiravir")) name(histogram_mol_`model', replace)
 				graph combine histogram_sot_`model' histogram_pax_`model' histogram_mol_`model', name(histogram_combine_`model', replace) ///
-				saving("$projectdir/output/figures/histogram_common_`model'", replace)
-				graph export "$projectdir/output/figures/histogram_common_`model'.svg", as(svg) replace
+				saving("$projectdir/output/figures/histogram_`model'_common", replace)
+				graph export "$projectdir/output/figures/histogram_`model'_common.svg", as(svg) replace
 				
 				foreach var of varlist drug1 drug2 drug3 {
 					pbalchk `var' age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease ///
@@ -219,9 +219,9 @@ foreach model in agesex  {
 					diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension, wt(iptw`$model') graph 
 					graph save "$projectdir/output/figures/pbalchk_`var'", replace
 					}
-				graph export "$projectdir/output/figures/match_fulladj2_common_drug1.svg", as(svg) replace
-				graph export "$projectdir/output/figures/match_fulladj2_common_drug2.svg", as(svg) replace
-				graph export "$projectdir/output/figures/match_fulladj2_common_drug3.svg", as(svg) replace	
+				graph export "$projectdir/output/figures/match_fulladj2_drug1_common.svg", as(svg) replace
+				graph export "$projectdir/output/figures/match_fulladj2_drug2_common.svg", as(svg) replace
+				graph export "$projectdir/output/figures/match_fulladj2_drug3_common.svg", as(svg) replace	
 				
 				foreach fail in $ae_group $ae_disease {
 					stset stop_`fail' [pw=iptw`$model'], id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
@@ -248,9 +248,9 @@ postclose `coxoutput_propensity_common'
 *******************************************************************************
 
 use "$projectdir/output/tables/cox_model_propensity", replace
-export delimited using "$projectdir/output/tables/cox_model_propensity_csv.csv", replace
-use "$projectdir/output/tables/cox_model_propensity", replace
-export delimited using "$projectdir/output/tables/cox_model_propensity__common.csv", replace
+export delimited using "$projectdir/output/tables/cox_model_propensity.csv", replace
+use "$projectdir/output/tables/cox_model_propensity_common", replace
+export delimited using "$projectdir/output/tables/cox_model_propensity_common.csv", replace
 
 
 log close
