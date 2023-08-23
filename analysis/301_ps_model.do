@@ -154,7 +154,7 @@ postfile `coxoutput_propensity_common' str20(model) str20(fail)   ///
 hr_sot lc_sot uc_sot hr_pax lc_pax uc_pax hr_mol lc_mol uc_mol ///
 using "$projectdir/output/tables/cox_model_propensity_common", replace
 	
-foreach model in adj fulladj1 fulladj2  {	
+foreach model in fulladj2  {	
 	* control V all drug
 	gen control = 1 if drug==0
 	replace control = 0 if drug>0
