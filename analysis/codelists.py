@@ -447,3 +447,33 @@ spondyloarthropathy_icd_codes = codelist_from_csv(
 severe_drug_icd_codes_sjs = codelist(
   ["D72.12", "L51.1", "L51.2", "L51.3"], system="icd10",
 )
+spondyloarthropathy_icd_codes = codelist_from_csv(
+  "codelists/user-katiebechman-seronegative-spondyloarthropathy.csv", system = "icd10",  column = "code",
+)
+bronchospasm_snomed_codes = codelist_from_csv(
+  "codelists/user-katiebechman-bronchospasm-snomed.csv", system = "snomed",  column = "code",
+)
+contact_dermatitis_snomed_codes = codelist_from_csv(
+  "codelists/user-katiebechman-contact-dermatitis-snomed.csv", system = "snomed",  column = "code",
+)
+contact_dermatitis_icd_codes = codelist_from_csv(
+  "codelists/user-katiebechman-contact-dermatitis-icd10.csv", system = "icd10",  column = "code",
+)
+dizziness_icd_codes = codelist_from_csv(
+  "codelists/user-katiebechman-dizziness-icd10.csv", system = "icd10",  column = "code",
+)
+dizziness_snomed_codes = codelist_from_csv(
+  "codelists/user-katiebechman-dizziness-snomed.csv", system = "snomed",  column = "code",
+)
+nausea_vomiting_icd_codes = codelist_from_csv(
+  "codelists/user-katiebechman-nausea-and-vomiting-icd10.csv", system = "icd10",  column = "code",
+)
+nausea_vomiting_snomed_codes = codelist_from_csv(
+  "codelists/user-katiebechman-nausea-and-vomiting-snomed.csv", system = "snomed",  column = "code",
+)
+headache_icd_codes = codelist_from_csv(
+  "codelists/user-katiebechman-headache-icd10.csv", system = "icd10",  column = "code",
+)
+headache_snomed_codes = codelist_from_csv(
+  "codelists/opensafely-symptoms-headache.csv", system = "snomed",  column = "code",
+)

@@ -558,6 +558,12 @@
       "downloaded_at": "2023-06-01 11:35:34.324471Z",
       "sha": "b4f30abf8d6f7763f06a27d2aefa49a2d019c793"
     },
+    "opensafely-symptoms-headache.csv": {
+      "id": "opensafely/symptoms-headache/4930920c",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/symptoms-headache/4930920c/",
+      "downloaded_at": "2023-08-29 14:17:52.516146Z",
+      "sha": "d8d35c1d0035124c154a0efb2818df6888f9b656"
+    },
     "user-katiebechman-abnormal-taste-icd10.csv": {
       "id": "user/katiebechman/abnormal-taste-icd10/73eb1a29",
       "url": "https://codelists.opensafely.org/codelist/user/katiebechman/abnormal-taste-icd10/73eb1a29/",
@@ -625,8 +631,8 @@
       "sha": "7cd991ea7e754e14ca804ea62c5546ea45c8c17f"
     },
     "user-katiebechman-non-severe-drug-reaction-snomed.csv": {
-      "id": "user/katiebechman/non-severe-drug-reaction-snomed/67de8682",
-      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/non-severe-drug-reaction-snomed/67de8682/",
+      "id": "user/katiebechman/non-severe-drug-reaction-snomed/5abf6bfd",
+      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/non-severe-drug-reaction-snomed/5abf6bfd/",
       "downloaded_at": "2023-08-07 11:07:37.543818Z",
       "sha": "ac0722a7afa7b8fc793504b0c50d2027a2293a8f"
     },
@@ -653,6 +659,54 @@
       "url": "https://codelists.opensafely.org/codelist/user/katiebechman/seronegative-spondyloarthropathy/62790696/",
       "downloaded_at": "2023-08-07 11:07:38.360862Z",
       "sha": "528ffd1859ce20572e22ec7b8ddf7f74475d6373"
+    },
+    "user-katiebechman-bronchospasm-snomed.csv": {
+      "id": "user/katiebechman/bronchospasm-snomed/3efd38d2",
+      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/bronchospasm-snomed/3efd38d2/",
+      "downloaded_at": "2023-08-29 14:17:56.687247Z",
+      "sha": "758d98bbe289309d4b90f2ff60bcc28cc727d72a"
+    },
+    "user-katiebechman-contact-dermatitis-snomed.csv": {
+      "id": "user/katiebechman/contact-dermatitis-snomed/41aff8c8",
+      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/contact-dermatitis-snomed/41aff8c8/",
+      "downloaded_at": "2023-08-29 14:17:56.957454Z",
+      "sha": "f7f5b995556f1a5a1bf5de6bac06de0594ebbf90"
+    },
+    "user-katiebechman-contact-dermatitis-icd10.csv": {
+      "id": "user/katiebechman/contact-dermatitis-icd10/28a08593",
+      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/contact-dermatitis-icd10/28a08593/",
+      "downloaded_at": "2023-08-29 14:17:57.172847Z",
+      "sha": "9e61131acf3dd330084bd1ce005de4cce31595c9"
+    },
+    "user-katiebechman-dizziness-icd10.csv": {
+      "id": "user/katiebechman/dizziness-icd10/76819f28",
+      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/dizziness-icd10/76819f28/",
+      "downloaded_at": "2023-08-29 14:17:57.353848Z",
+      "sha": "e89cc459cb140dfc63b9a0d10f5a34b2dee9fb30"
+    },
+    "user-katiebechman-dizziness-snomed.csv": {
+      "id": "user/katiebechman/dizziness-snomed/0f91125e",
+      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/dizziness-snomed/0f91125e/",
+      "downloaded_at": "2023-08-29 14:17:57.552377Z",
+      "sha": "c1f1c9c17ea6d12460a29236ff03ba2507749d96"
+    },
+    "user-katiebechman-nausea-and-vomiting-icd10.csv": {
+      "id": "user/katiebechman/nausea-and-vomiting-icd10/1243d254",
+      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/nausea-and-vomiting-icd10/1243d254/",
+      "downloaded_at": "2023-08-29 14:17:57.780534Z",
+      "sha": "d4c64b5e38377808ada6d4aca79314b48a8faea8"
+    },
+    "user-katiebechman-nausea-and-vomiting-snomed.csv": {
+      "id": "user/katiebechman/nausea-and-vomiting-snomed/2b534589",
+      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/nausea-and-vomiting-snomed/2b534589/",
+      "downloaded_at": "2023-08-29 14:17:58.128505Z",
+      "sha": "7e240ff17f78e42b15578fd9022cc7119c3149a6"
+    },
+    "user-katiebechman-headache-icd10.csv": {
+      "id": "user/katiebechman/headache-icd10/79345f1e",
+      "url": "https://codelists.opensafely.org/codelist/user/katiebechman/headache-icd10/79345f1e/",
+      "downloaded_at": "2023-08-29 14:17:58.346747Z",
+      "sha": "e77c6f0895ce1881c794e3bbaaa1a42cd2a6b2bd"
     }
   }
 }

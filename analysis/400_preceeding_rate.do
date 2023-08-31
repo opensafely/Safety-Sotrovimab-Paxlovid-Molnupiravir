@@ -12,7 +12,7 @@
 
 ****************************************************************************************************************
 **Set filepaths
-//global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+// global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
 global projectdir `c(pwd)'
 di "$projectdir"
 capture mkdir "$projectdir/output/data"
@@ -63,6 +63,11 @@ egen pre_diverticulitis = rmin(pre_diverticulitis_icd_prim pre_diverticulitis_sn
 egen pre_diarrhoea = rmin(pre_diarrhoea_icd_prim pre_diarrhoea_snomed  pre_diarrhoeal_icd_prim)
 egen pre_taste = rmin(pre_taste_icd_prim pre_taste_snomed )
 egen pre_rash = rmin(pre_rash_icd_prim pre_rash_snomed pre_rash_ae)
+egen pre_bronchospasm = rmin(pre_bronchospasm_snomed)
+egen pre_contactderm = rmin(pre_contactderm_snomed pre_contactderm_icd_prim pre_contactderm_ae)
+egen pre_dizziness = rmin(pre_dizziness_snomed pre_dizziness_ae pre_dizziness_icd_prim)
+egen pre_nausea_vomit = rmin(pre_nausea_vomit_snomed pre_nausea_vomit_icd_prim)
+egen pre_headache = rmin(pre_headache_snomed pre_headache_ae pre_headache_icd_prim)
 egen pre_anaphylaxis = rmin(pre_anaphylaxis_icd_prim pre_anaphylaxis_snomed	pre_anaphlaxis_ae)
 egen pre_severe_drug = rmin(pre_severedrug_icd_prim pre_severedrug_sjs_icd_prim pre_severedrug_snomed pre_severedrug_ae)
 egen pre_nonsevere_drug = rmin(pre_nonsevere_drug_snomed pre_nonsevere_drug_ae)
@@ -84,8 +89,13 @@ global pre_ae_group			pre_spc_all 					///
 global pre_ae_disease		pre_diverticulitis 				///
 							pre_diarrhoea					///
 							pre_taste 						///
-							pre_anaphylaxis 				///
 							pre_rash 						///
+							pre_bronchospasm				///
+							pre_contactderm					///
+							pre_dizziness					///
+							pre_nausea_vomit				///
+							pre_headache					///
+							pre_anaphylaxis 				///
 							pre_severe_drug					///
 							pre_nonsevere_drug				///
 							pre_ra 							///

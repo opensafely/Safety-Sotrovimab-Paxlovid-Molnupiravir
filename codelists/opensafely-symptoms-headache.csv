@@ -1,0 +1,200 @@
+code,term
+103006007,Unilateral headache
+103007003,Headache due to external compression of head
+103010005,Headache associated with sexual activity
+103011009,Benign exertional headache
+1119294003,Unilateral headache on left side of head
+1119295002,Unilateral headache on right side of head
+121021000119105,New daily persistent headache
+122711000119109,Hypnic headache
+122731000119104,Primary thunderclap headache
+124001000119104,Status migrainosus co-occurrent and due to migraine without aura
+124081000119107,Menstrual status migrainosus
+124171000119105,Chronic intractable migraine without aura
+128187005,Vascular headache
+139490008,Headache
+139568005,Headache site
+139570001,Generalised headache
+139571002,Unilateral headache
+139572009,Bilateral headache
+139573004,Frontal headache
+139574005,Occipital headache
+139575006,Parietal headache
+139576007,Temporal headache
+139577003,Headache site NOS
+139578008,Headache character
+139579000,Aching headache
+139580002,Throbbing headache
+139581003,Shooting headache
+139583000,Headache character NOS
+145611000119107,Allergic migraine
+154931007,Tension-type headache
+155046006,Migraine
+155047002,Migraine with aura
+155048007,(Cluster headaches) or (migrainous neuralgia) or (migraine NOS)
+158296002,[D]Headache
+158298001,[D]Pain in head NOS
+162209005,Headache (& [C/O])
+162210000,Sinus headache
+162211001,Viral headache
+162297001,Headache site
+162299003,Generalized headache
+162300006,Unilateral headache
+162301005,Bilateral headache
+162302003,(Frontal headache) or (pain in sinuses)
+162304002,Parietal headache
+162305001,Headache site NOS
+162306000,Headache character
+162307009,Aching headache
+162308004,Throbbing headache
+162309007,Shooting headache
+162310002,Morning headache
+162312005,Headache character NOS
+17300000,Cervicocranial syndrome
+192028000,Headache: [muscular] or [tension]
+192435004,[X] Somatoform pain disorder (& [persistent] or [psychalgia] or [psychogenic backache] or [psychogenic headache])
+193027003,Atypical migraine
+193028008,Sick headache
+193029000,Common migraine NOS
+193030005,Migraine variants
+193031009,Cluster headache syndrome
+193032002,Cluster headache syndrome
+193033007,Ophthalmic migraine
+193034001,Cluster headache syndrome
+193035000,Tension-type headache
+193036004,Migraine variant NOS
+193037008,Other forms of migraine
+193038003,Status migrainosus
+193039006,Complicated migraine
+193041007,Migraine NOS
+193085009,"[X]Vascular headache, not elsewhere classified"
+194493009,[X]Other migraine
+194494003,[X]Other specified headache syndromes
+194500004,"[X]Vascular headache, not elsewhere classified"
+198407008,(Premenstrual tension syndrome) or (migraine - menstrual)
+198438009,Menopausal headache
+203861000000109,Medication overuse headache
+206946005,[D]Headache
+206948006,([D]Pain: (in head NOS) or (jaw))
+211591000000104,Medication overuse headache
+230461009,Headache disorder
+230462002,Migraine with typical aura
+230463007,Migraine with prolonged aura
+230464001,Non-familial hemiplegic migraine
+230465000,Migraine aura without headache
+230467008,Status migrainosus
+230468003,Migraine with ischemic complication
+230469006,Tension-type headache
+230470007,Episodic tension-type headache
+230471006,Chronic tension-type headache
+230472004,Episodic cluster headache
+230473009,Chronic cluster headache
+230474003,Chronic cluster headache unremitting from onset
+230475002,Chronic cluster headache evolved from episodic cluster headache
+230476001,Atypical cluster headache
+230478000,Low pressure headache
+230481005,Idiopathic stabbing headache
+23096007,Cranial neuralgia
+23186000,Menstrual migraine
+232284007,Migrainous vertigo
+248661000000105,Increased frequency of headaches
+25064002,Headache
+26150009,Lower half migraine
+267096005,Frontal headache
+267699004,(Cluster headaches) or (migrainous neuralgia) or (migraine NOS)
+271329006,[D]Pain in head NOS
+272027003,Complaining of a headache
+279016001,Cervicogenic headache
+290531000119102,Intractable chronic tension headache
+294031000119103,Episodic paroxysmal hemicrania
+301365009,Pain of head and neck region
+301401001,Tenderness of head and neck region
+330007,Occipital headache
+338091000000104,Benign coital headache
+364627004,Characteristics of pain of head and neck region
+364628009,Characteristic of headache
+364760007,Finding of headache character
+366967004,Sinus headache
+367191001,Sinus headache
+37796009,Migraine
+38823002,Aural headache
+395602009,Headache disorder
+395603004,Benign coital headache
+395688005,Benign coital headache
+398057008,Tension-type headache
+398126006,Muscular headache
+400601000000103,[D]Pain in head NOS
+414001000000101,[X] Somatoform pain disorder (& [persistent] or [psychalgia] or [psychogenic backache] or [psychogenic headache])
+41413006,Temporal headache
+423279000,Refractory migraine without aura
+423683008,Refractory migraine with aura
+423894005,Refractory migraine
+424699007,"Migraine variants, not intractable"
+425007008,"Migraine without aura, not refractory"
+425365009,Refractory migraine variants
+425936006,Intractable ophthalmic migraine
+427419006,Transformed migraine
+429051000000106,[D]Pain in head NOS
+431237007,Chronic headache disorder
+43242008,Drug withdrawal headache
+443094001,Paroxysmal hemicrania
+443095000,Hemicrania continua
+443341000000106,([D]Pain: (in head NOS) or (jaw))
+444251000000103,[X]Other migraine
+4448006,Allergic headache
+445322004,Migraine variant with headache
+44538002,Nasal headache
+445511002,Orthostatic headache
+4473006,Migraine with aura
+456201000000105,[X]Other specified headache syndromes
+466441000000100,"[X]Vascular headache, not elsewhere classified"
+467691000000105,"[X]Vascular headache, not elsewhere classified"
+48780006,Cranial neuritis
+49605003,Ophthalmoplegic migraine
+4969004,Sinus headache
+497101000000107,[D]Headache
+508421000000101,Chronic headache disorder
+509691000000108,Cervicogenic headache
+510201000000105,Chronic headache disorder
+538741000000109,Headache character NOS
+55865003,Cluster headache
+56097005,Migraine without aura
+571000119103,Daily headache
+583651000000101,Migraine NOS
+585561000000103,Headache site NOS
+59292006,Hemiplegic migraine
+603711000000104,Common migraine NOS
+603721000000105,Migraine variant NOS
+644011000000107,Other forms of migraine
+66551002,Psychogenic headache
+698803006,Medication overuse headache
+699314009,Migraine with persistent visual aura
+712826000,Intermittent headache
+712831003,Frequent headache
+722981005,Infrequent episodic tension-type headache
+722982003,Frequent episodic tension-type headache
+724429004,Stroke co-occurrent with migraine
+735938006,Acute headache
+756661000000103,Chronic paroxysmal hemicrania
+762592003,Chronic primary headache
+784541000000101,Infrequent episodic tension-type headache
+785021000000100,Paroxysmal hemicrania
+785471000000105,Frequent episodic tension-type headache
+79267007,Retinal migraine
+808291000000103,Infrequent episodic tension-type headache
+808321000000108,Frequent episodic tension-type headache
+808331000000105,Chronic tension-type headache
+808351000000103,Paroxysmal hemicrania
+808361000000100,Benign cough headache
+808371000000107,Benign exertion headache
+808511000000105,Headache associated with sexual activity
+83351003,Basilar migraine
+85641006,Hemianencephaly
+86925001,Ocular headache
+95653008,Acute confusional migraine
+95654002,Chronic paroxysmal hemicrania
+95655001,Ophthalmic migraine
+95656000,Familial hemiplegic migraine
+95657009,Chronic mixed headache syndrome
+95658004,Cough headache syndrome
+95660002,Thunderclap headache
