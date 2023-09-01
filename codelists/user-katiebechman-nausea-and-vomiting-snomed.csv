@@ -1,0 +1,247 @@
+code,term
+103301009,"Vertigo, acute onset with vomiting and inability to stand"
+11047881000119101,Cannabis hyperemesis syndrome co-occurrent and due to cannabis abuse
+11048011000119103,Cannabis hyperemesis syndrome co-occurrent and due to cannabis dependence
+1137417006,Able to communicate about nausea
+11767005,Bilious vomiting following gastrointestinal surgery
+1197717008,Functional vomiting in childhood
+1217125005,Assessment of nausea
+122572000,Vomitus specimen
+1260191006,Acute radiation syndrome
+134021000119105,Vomiting fecal matter
+139330007,Nausea
+139332004,Nausea present
+139333009,Morning nausea
+139334003,Nausea NOS
+139335002,(Vomiting (& [C/O] or [symptoms])) or (rumination)
+139337005,Vomiting
+139338000,Projectile vomiting
+139339008,Blood in vomit: [symptom] or [fresh blood]
+139340005,Vomiting blood - coffee ground
+139341009,Vomiting - bile stained
+139342002,Vomiting NOS
+139385006,Diarrhoea symptom: [NOS] or [& vomiting]
+139386007,Diarrhoea and vomiting
+145048004,Vomit examination
+145049007,Vomit examination - general
+145050007,Vomit sent for examination
+145051006,Vomit examination normal
+145052004,Vomit examination abnormal
+145053009,Vomit exam. general NOS
+145054003,Vomit appearance
+145055002,Vomit appearance - normal
+145056001,Vomit appearance - abnormal
+145057005,Vomit: blood present &/or frank
+145058000,Vomit contains coffee grounds
+145059008,Vomit: bilious (& O/E)
+145060003,Vomit: faeculant (& O/E)
+145061004,Vomit: mucous present
+145063001,Vomit: undigested food present
+145066009,Vomit: appearance NOS
+145067000,Vomit odour
+145068005,Vomit odour normal
+145069002,Vomit odour offensive
+145070001,Vomit odour faeculant
+145071002,Vomit odour NOS
+145072009,Vomit pH
+145073004,Vomit pH normal
+145074005,Vomit: excessive acidity
+145075006,Vomit: excessive alkalinity
+145076007,Vomit pH NOS
+145077003,Vomit occult blood
+145078008,Vomit occult blood positive
+145079000,Vomit occult blood negative
+145080002,Vomit occult blood NOS
+145081003,Vomit toxicology
+145082005,Vomit sent for toxicology
+145083000,Vomit toxicology: nil found
+145084006,Vomit toxicology: positive
+145085007,Vomit toxicology NOS
+145086008,Vomit examination NOS
+146291000119108,Vomiting without nausea
+15387003,Vomiting
+158420004,[D]Nausea and vomiting
+158421000,[D]Nausea
+158422007,[D]Vomiting
+158424008,[D]Nausea and vomiting NOS
+162055004,Nausea
+162057007,Nausea present
+162058002,Morning nausea
+162060000,Nausea NOS
+162061001,(Vomiting (& [C/O] or [symptoms])) or (rumination)
+162063003,(Vomiting) or (bilious attack) or (throwing up)
+162064009,Blood in vomit: [symptom] or [fresh blood]
+162065005,Vomiting - bile stained
+162067002,Vomiting NOS
+162108007,Diarrhoea symptom: [NOS] or [& vomiting]
+162109004,Diarrhoea and vomiting
+167820005,Vomit examination
+167821009,Vomit examination - general
+167822002,Vomit sent for examination
+167823007,Vomit examination normal
+167824001,Vomit examination abnormal
+167825000,Vomit examination general NOS
+167826004,Vomit appearance
+167827008,Vomit appearance - normal
+167828003,Vomit appearance - abnormal
+167829006,Vomit: blood present &/or frank
+167830001,Vomit contains coffee grounds
+167831002,Vomit: bilious (& O/E)
+167832009,Vomit: faeculant (& O/E)
+167833004,Vomit: mucous present
+167835006,Vomit: undigested food present
+167838008,Vomit: appearance NOS
+167839000,Odor of vomit
+167840003,Vomit odor normal
+167841004,Vomit odor offensive
+167842006,Vomit odor feculent
+167843001,Vomit odor NOS
+167844007,Measurement of vomit pH
+167845008,Vomit pH within reference range
+167846009,Vomit pH more acidic than reference range
+167847000,Vomit pH more alkaline than reference range
+167848005,Vomit pH NOS
+167849002,Vomit occult blood
+167850002,Vomit occult blood positive
+167851003,Vomit occult blood negative
+167852005,Vomit occult blood NOS
+167853000,Vomit toxicology
+167854006,Vomit sent for toxicology
+167855007,Vomit toxicology: nil found
+167856008,Vomit toxicology: positive
+167857004,Vomit toxicology NOS
+167858009,Vomit examination NOS
+16932000,Nausea and vomiting
+18773000,Cyclical vomiting syndrome
+191970005,Psychogenic cyclical vomiting
+196746003,Persistent vomiting
+196749005,Persistent vomiting NOS
+197130009,Vomiting after gastrointestinal tract surgery
+1985008,Vomitus
+206406008,Perinatal hematemesis
+206423004,Neonatal hematemesis
+207110008,[D]Nausea and vomiting
+207111007,[D]Nausea
+207112000,[D]Vomiting
+207114004,[D]Drug-induced vomiting
+207115003,[D]Projectile vomiting
+207116002,[D]Nausea and vomiting NOS
+21609003,Gastric vomitus
+225586007,Vomiting food
+236082001,Vomiting disorder
+236083006,Intermittent vomiting
+23971007,Acute vomiting
+242041000000101,Vomit present in airway
+249497008,Vomiting symptom
+249499006,Bloodstained vomit
+249500002,Effortless vomiting
+249519007,Diarrhea and vomiting
+2648004,Bile vomitus
+267051003,Vomiting blood - fresh
+269908006,Vomit: frank blood present
+271352005,Bilious vomit
+271353000,Vomit: feculant
+272043005,Nausea
+272044004,Complaining of vomiting
+275297005,"Diarrhea and vomiting, symptom"
+275371002,Black vomit
+275744000,Bilious vomit on examination
+275745004,Feculent vomit on examination
+275786006,Blood in vomit on examination
+281102003,Blood in vomit - symptom
+288199005,Diarrhea and vomiting after gastrointestinal tract surgery
+2919008,"Nausea, vomiting and diarrhea"
+294001000119105,Intractable cyclical vomiting syndrome
+300359004,Finding of vomiting
+300360009,Finding of vomit
+300361008,Vomit contains blood
+300362001,Vomit contains fresh blood
+300363006,Vomitus with coffee ground appearance
+300364000,Vomit contains old blood
+300365004,Vomit contains food
+300366003,Vomit contains feces
+300367007,Finding of measures of vomit
+300368002,Vomit volume
+300576004,Finding of nausea
+301790009,Vomited meal
+308151006,[D]Projectile vomiting
+308636003,Vomit: blood present
+308904008,Hematemesis - cause unknown
+3094009,Vomiting in infants AND/OR children
+332982000,Uncontrollable vomiting
+33841007,Decreased nausea and vomiting
+33888006,Persistent vomiting
+34591007,Drug-induced nausea AND/OR vomiting
+34923007,Self-induced vomiting
+364693005,Vomit observable
+364694004,Measure of vomit
+365442000,Finding of vomit pH
+365660005,Finding of vomit appearance
+365671006,Finding of vomit odor
+370402009,Radiation sickness
+37224001,Psychogenic vomiting
+386368005,Nausea care
+386495004,Vomiting management
+38685005,Concealed vomiting
+400471000000109,[D]Nausea and vomiting NOS
+405165006,Nausea and vomiting status: disruptive effects
+405166007,Nausea and vomiting status
+40835002,Coffee ground vomiting
+408880004,Nausea care assessment
+408881000,Nausea care education
+408882007,Nausea care management
+415709002,Tendency to nausea and vomiting
+419219000,Drug-induced nausea and vomiting
+422400008,Vomiting
+422587007,Nausea
+424580008,Post-tussive vomiting
+425721000000101,[D]Nausea and vomiting NOS
+442030001,Evaluation of vomitus specimen
+442620006,Finding related to evaluation of vomitus specimen
+444673007,Hyperemesis
+45941008,Chronic radiation sickness
+45994004,Erotic vomiting
+46425005,Intestinal vomitus
+48000002,Vomiting in newborn
+49206006,Habit vomiting
+498391000000103,[D]Nausea and vomiting
+498401000000100,[D]Nausea
+498411000000103,[D]Vomiting
+498431000000106,[D]Drug-induced vomiting
+502651000000107,[D]Projectile vomiting
+535721000000105,Vomit odor NOS
+535731000000107,Vomit occult blood NOS
+535741000000103,Vomit toxicology NOS
+546941000000106,Vomit pH NOS
+546971000000100,Vomit examination NOS
+56471005,Colonic vomitus
+565981000000104,Vomit examination general NOS
+565991000000102,Vomit: appearance NOS
+582741000000100,Nausea NOS
+582751000000102,Vomiting NOS
+607801000000103,Persistent vomiting NOS
+608945008,Microscopic examination of vomitus specimen
+608996005,Microscopic examination of bacterial smear of vomitus specimen
+63722008,Chronic vomiting
+698317008,Blood in vomit of newborn due to swallowed maternal blood
+698861005,Intractable nausea and vomiting
+700471003,Level of nausea
+71419002,Bilious vomiting
+72245005,Postoperative vomiting
+722933003,Bilious vomiting of newborn
+723489005,Hematopoietic subsyndrome of acute radiation syndrome
+723975009,Nausea and vomiting following administration of anesthetic agent
+73335002,Increased nausea and vomiting
+73879007,Nausea
+765480005,Vomiting co-occurrent and due to infectious disease
+773471000000102,Nausea and vomiting care management
+84480002,Retching
+8579004,Projectile vomiting
+866121000000105,Frequency of vomiting
+866131000000107,Frequency of vomiting 
+866231000000104,Time since last episode of vomiting
+866241000000108,Time since last episode of vomiting 
+8765009,Hematemesis
+912171000000100,Symptom Assessment Scale - nausea score
+9814003,Violent retching
+992361000000108,Vomit pH

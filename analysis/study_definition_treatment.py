@@ -733,24 +733,39 @@ study = StudyDefinition(
   ),  
    
   ## OUTCOME  
-  ## Time to outcome - coded in stata [28 days after +covid or 28day after Tx]
-  ## 1) Adverse events of interest SPC (diarrhoea, diverticulitis, altered taste)
+  ## 1) Adverse events of interest SPC 
   ae_diverticulitis_icd=adverse_outcome_icd(diverticulitis_icd_codes),
   ae_diverticulitis_icd_prim=adverse_outcome_icd_prim(diverticulitis_icd_codes),
   ae_diverticulitis_snomed=adverse_outcome_snomed(diverticulitis_snomed_codes),
   ae_diverticulitis_AE=adverse_outcome_AE(codelist(["397881000"], system="snomed")),
   ae_diarrhoea_snomed=adverse_outcome_snomed(diarrhoea_snomed_codes), 
   ae_diarrhoea_icd=adverse_outcome_icd(diarrhoea_icd_codes),
-  ae_diarrhoea_icd_prim=adverse_outcome_icd(diarrhoea_icd_codes),
+  ae_diarrhoea_icd_prim=adverse_outcome_icd_prim(diarrhoea_icd_codes),
   ae_diarrhoeal_icd=adverse_outcome_icd(diarrhoeal_icd_codes),
-  ae_diarrhoeal_icd_prim=adverse_outcome_icd(diarrhoeal_icd_codes),
+  ae_diarrhoeal_icd_prim=adverse_outcome_icd_prim(diarrhoeal_icd_codes),
   ae_taste_snomed=adverse_outcome_snomed(taste_snomed_codes),
   ae_taste_icd=adverse_outcome_icd(taste_icd_codes),
   ae_taste_icd_prim=adverse_outcome_icd_prim(taste_icd_codes),
   ae_rash_snomed=adverse_outcome_snomed(rash_snomed_codes),
   ae_rash_icd=adverse_outcome_icd(rash_icd_codes),
-  ae_rash_icd_prim=adverse_outcome_icd(rash_icd_codes),
-  ae_rash_AE=adverse_outcome_AE(codelist(["126485001", "89322006",  "36715001", "7231009", "32861005", "40275004"], system="snomed")),
+  ae_rash_icd_prim=adverse_outcome_icd_prim(rash_icd_codes),
+  ae_rash_AE=adverse_outcome_AE(codelist(["126485001", "89322006",  "36715001", "7231009", "32861005"], system="snomed")),
+  ae_bronchospasm_snomed=adverse_outcome_snomed(bronchospasm_snomed_codes),
+  ae_contactderm_snomed=adverse_outcome_snomed(contact_dermatitis_snomed_codes),
+  ae_contactderm_icd=adverse_outcome_icd(contact_dermatitis_icd_codes),
+  ae_contactderm_icd_prim=adverse_outcome_icd_prim(contact_dermatitis_icd_codes),
+  ae_contactderm_AE=adverse_outcome_AE(codelist(["40275004"], system="snomed")),
+  ae_dizziness_snomed=adverse_outcome_snomed(dizziness_snomed_codes),
+  ae_dizziness_icd=adverse_outcome_icd(dizziness_icd_codes),
+  ae_dizziness_icd_prim=adverse_outcome_icd_prim(dizziness_icd_codes),
+  ae_dizziness_AE=adverse_outcome_AE(codelist(["23919004", "186738001", "111541001", "13445001"], system="snomed")),
+  ae_nausea_vomit_snomed=adverse_outcome_snomed(nausea_vomiting_snomed_codes),
+  ae_nausea_vomit_icd=adverse_outcome_icd(nausea_vomiting_icd_codes),
+  ae_nausea_vomit_icd_prim=adverse_outcome_icd_prim(nausea_vomiting_icd_codes),
+  ae_headache_snomed=adverse_outcome_snomed(headache_snomed_codes),
+  ae_headache_icd=adverse_outcome_icd(headache_icd_codes),
+  ae_headache_icd_prim=adverse_outcome_icd_prim(headache_icd_codes),
+  ae_headache_AE=adverse_outcome_AE(codelist(["398057008", "37796009", "193031009"], system="snomed")),
 
   ## 2) Drug reactions / allergy   
   ae_anaphylaxis_icd=adverse_outcome_icd(anaphylaxis_icd_codes),
@@ -794,7 +809,7 @@ study = StudyDefinition(
 
   ## Adverse outcome in year 3-4 prior to start date for comparative rate by person years  
   ## 1 
-    pre_diverticulitis_icd=adverse_outcome_icd_pre(diverticulitis_icd_codes),
+  pre_diverticulitis_icd=adverse_outcome_icd_pre(diverticulitis_icd_codes),
   pre_diverticulitis_icd_prim=adverse_outcome_icd_pre_primary(diverticulitis_icd_codes),
   pre_diverticulitis_snomed=adverse_outcome_snomed_pre(diverticulitis_snomed_codes),
   pre_diverticulitis_AE=adverse_outcome_AE_pre(codelist(["397881000"], system="snomed")),
@@ -808,9 +823,25 @@ study = StudyDefinition(
   pre_taste_snomed=adverse_outcome_snomed_pre(taste_snomed_codes),
   pre_rash_snomed=adverse_outcome_snomed_pre(rash_snomed_codes),
   pre_rash_icd=adverse_outcome_icd_pre(rash_icd_codes),
-  pre_rash_icd_prim=adverse_outcome_icd_pre_primary(rash_icd_codes),
-  pre_rash_AE=adverse_outcome_AE_pre(codelist(["126485001", "89322006",  "36715001", "7231009", "32861005", "40275004"], system="snomed")),
-
+  pre_rash_icd_prim=adverse_outcome_icd_pre_primary(rash_icd_codes),  
+  pre_rash_AE=adverse_outcome_AE_pre(codelist(["126485001", "89322006",  "36715001", "7231009", "32861005"], system="snomed")),
+  pre_bronchospasm_snomed=adverse_outcome_snomed_pre(bronchospasm_snomed_codes),
+  pre_contactderm_snomed=adverse_outcome_snomed_pre(contact_dermatitis_snomed_codes),
+  pre_contactderm_icd=adverse_outcome_icd_pre(contact_dermatitis_icd_codes),
+  pre_contactderm_icd_prim=adverse_outcome_icd_pre_primary(contact_dermatitis_icd_codes),
+  pre_contactderm_AE=adverse_outcome_AE_pre(codelist(["40275004"], system="snomed")),
+  pre_dizziness_snomed=adverse_outcome_snomed_pre(dizziness_snomed_codes),
+  pre_dizziness_icd=adverse_outcome_icd_pre(dizziness_icd_codes),
+  pre_dizziness_icd_prim=adverse_outcome_icd_pre_primary(dizziness_icd_codes),
+  pre_dizziness_AE=adverse_outcome_AE_pre(codelist(["23919004", "186738001", "111541001", "13445001"], system="snomed")),
+  pre_nausea_vomit_snomed=adverse_outcome_snomed_pre(nausea_vomiting_snomed_codes),
+  pre_nausea_vomit_icd=adverse_outcome_icd_pre(nausea_vomiting_icd_codes),
+  pre_nausea_vomit_icd_prim=adverse_outcome_icd_pre_primary(nausea_vomiting_icd_codes),
+  pre_headache_snomed=adverse_outcome_snomed_pre(headache_snomed_codes),
+  pre_headache_icd=adverse_outcome_icd_pre(headache_icd_codes),
+  pre_headache_icd_prim=adverse_outcome_icd_pre_primary(headache_icd_codes),
+  pre_headache_AE=adverse_outcome_AE_pre(codelist(["398057008", "37796009", "193031009"], system="snomed")),
+  
   ## 2
   pre_anaphylaxis_icd=adverse_outcome_icd_pre(anaphylaxis_icd_codes),
   pre_anaphylaxis_icd_prim=adverse_outcome_icd_pre_primary(anaphylaxis_icd_codes),
@@ -824,6 +855,7 @@ study = StudyDefinition(
   pre_severedrug_AE=adverse_outcome_AE_pre(codelist(["73442001"], system="snomed")),
   pre_nonsevere_drug_snomed=adverse_outcome_snomed_pre(non_severe_drug_snomed_codes),
   pre_nonsevere_drug_AE=adverse_outcome_AE_pre(codelist(["609328004","62014003"], system="snomed")),
+  
   ## 3
   pre_rheumatoid_arthritis_icd=adverse_outcome_icd_pre(rheumatoid_arthritis_icd10),
   pre_rheumatoid_icd_prim=adverse_outcome_icd_pre_primary(rheumatoid_arthritis_icd10),  
@@ -848,8 +880,8 @@ study = StudyDefinition(
   pre_IBD_icd=adverse_outcome_icd_pre(inflam_bowel_icd_codes), 
   pre_IBD_icd_prim=adverse_outcome_icd_pre_primary(inflam_bowel_icd_codes), 
   pre_IBD_ctv=adverse_outcome_snomed_pre(IBD_ctv3),  
-  pre_IBD_AE=adverse_outcome_AE_pre(codelist(["34000006", "64766004"], system="snomed")),
-     
+  pre_IBD_AE=adverse_outcome_AE_pre(codelist(["34000006", "64766004"], system="snomed")),     
+  
   ## Ensure is a new diagnosis of adverse outcome 3-4 prior to start date 
   pre_ra_snomed_new=comorbidity_snomed_pre(rheumatoid_arthritis_snowmed),
   pre_SLE_ctv_new=comorbidity_snomed_pre(SLE_ctv),

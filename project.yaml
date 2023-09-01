@@ -60,6 +60,11 @@ actions:
         survrisk_ae_diarrhoea: output/figures/survrisk_ae_diarrhoea.svg
         survrisk_ae_taste: output/figures/survrisk_ae_taste.svg
         survrisk_ae_rash: output/figures/survrisk_ae_rash.svg
+        survrisk_ae_bronchospasm: output/figures/survrisk_ae_bronchospasm.svg
+        survrisk_ae_contactderm: output/figures/survrisk_ae_contactderm.svg
+        survrisk_ae_dizziness: output/figures/survrisk_ae_dizziness.svg
+        survrisk_ae_nausea_vomit: output/figures/survrisk_ae_nausea_vomit.svg
+        survrisk_ae_headache: output/figures/survrisk_ae_headache.svg
         survrisk_ae_anaphylaxis: output/figures/survrisk_ae_anaphylaxis.svg
         survrisk_ae_severe_drug: output/figures/survrisk_ae_severe_drug.svg
         survrisk_ae_nonsevere_drug: output/figures/survrisk_ae_nonsevere_drug.svg
@@ -81,6 +86,11 @@ actions:
         survcur_ae_diarrhoea: output/figures/survcur_ae_diarrhoea.svg
         survcur_ae_taste: output/figures/survcur_ae_taste.svg
         survcur_ae_rash: output/figures/survcur_ae_rash.svg
+        survcur_ae_bronchospasm: output/figures/survcur_ae_bronchospasm.svg
+        survcur_ae_contactderm: output/figures/survcur_ae_contactderm.svg
+        survcur_ae_dizziness: output/figures/survcur_ae_dizziness.svg
+        survcur_ae_nausea_vomit: output/figures/survcur_ae_nausea_vomit.svg
+        survcur_ae_headache: output/figures/survcur_ae_headache.svg
         survcur_ae_anaphylaxis: output/figures/survcur_ae_anaphylaxis.svg
         survcur_ae_severe_drug: output/figures/survcur_ae_severe_drug.svg
         survcur_ae_nonsevere_drug: output/figures/survcur_ae_nonsevere_drug.svg

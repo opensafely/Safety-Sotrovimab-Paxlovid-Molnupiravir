@@ -56,16 +56,21 @@ global ae_group			ae_spc_all 					///
 global ae_disease		ae_diverticulitis 				///
 						ae_diarrhoea					///
 						ae_taste 						///
-						ae_rash							///
+						ae_rash 						///
+						ae_bronchospasm					///
+						ae_contactderm					///
+						ae_dizziness					///
+						ae_nausea_vomit					///
+						ae_headache						///
 						ae_anaphylaxis 					///
-						ae_severe_drug					///
+						ae_severe_drug 					///
 						ae_nonsevere_drug				///
 						ae_ra 							///
 						ae_sle 							///
 						ae_psorasis 					///
 						ae_psa 							///
 						ae_axspa 						///
-						ae_ibd 								
+						ae_ibd 											
 
 ****************************************************************************************************************
 *1. Individual drug V No Drug

@@ -21,6 +21,7 @@ capture mkdir "$projectdir/output/figures"
 capture mkdir "$projectdir/output/tables"
 global logdir "$projectdir/logs"
 di "$logdir"
+
 * Open a log file
 cap log close
 log using "$logdir/cleaning_dataset_combine.log", replace
@@ -73,7 +74,23 @@ foreach var of varlist 	 pre_covid_hosp_date					///
 						 ae_rash_snomed							///
 						 ae_rash_ae								///
 						 ae_rash_icd							///
-						 ae_rash_icd_prim						///
+						 ae_rash_icd_prim						///		 
+						 ae_bronchospasm_snomed					///
+						 ae_contactderm_snomed					///
+						 ae_contactderm_icd						///
+						 ae_contactderm_icd_prim				///
+						 ae_contactderm_ae						///
+						 ae_dizziness_snomed					///
+						 ae_dizziness_icd						///
+						 ae_dizziness_icd_prim					///
+						 ae_dizziness_ae						///
+						 ae_nausea_vomit_snomed					///
+						 ae_nausea_vomit_icd					///
+						 ae_nausea_vomit_icd_prim				///
+						 ae_headache_snomed						///
+						 ae_headache_icd						///
+						 ae_headache_icd_prim					///
+						 ae_headache_ae							///
 						 ae_anaphylaxis_icd						///
 					     ae_anaphylaxis_icd_prim				///
 					     ae_anaphylaxis_snomed					///
@@ -127,6 +144,22 @@ foreach var of varlist 	 pre_covid_hosp_date					///
 						 pre_rash_ae							///
 						 pre_rash_icd							///
 						 pre_rash_icd_prim 						///
+						 pre_bronchospasm_snomed				///
+						 pre_contactderm_snomed					///
+						 pre_contactderm_icd					///
+						 pre_contactderm_icd_prim				///
+						 pre_contactderm_ae						///
+						 pre_dizziness_snomed					///
+						 pre_dizziness_icd						///
+						 pre_dizziness_icd_prim					///
+						 pre_dizziness_ae						///
+						 pre_nausea_vomit_snomed				///
+						 pre_nausea_vomit_icd					///
+						 pre_nausea_vomit_icd_prim				///
+						 pre_headache_snomed					///
+						 pre_headache_icd						///
+						 pre_headache_icd_prim					///
+						 pre_headache_ae						///
 						 pre_anaphylaxis_icd_prim				///
 						 pre_anaphylaxis_icd					///
 						 pre_anaphylaxis_snomed					///						 
@@ -244,7 +277,23 @@ foreach var of varlist 	 pre_covid_hosp_date					///
 						 ae_rash_snomed							///
 						 ae_rash_ae								///
 						 ae_rash_icd							///
-						 ae_rash_icd_prim						///
+						 ae_rash_icd_prim						///		 
+						 ae_bronchospasm_snomed					///
+						 ae_contactderm_snomed					///
+						 ae_contactderm_icd						///
+						 ae_contactderm_icd_prim				///
+						 ae_contactderm_ae						///
+						 ae_dizziness_snomed					///
+						 ae_dizziness_icd						///
+						 ae_dizziness_icd_prim					///
+						 ae_dizziness_ae						///
+						 ae_nausea_vomit_snomed					///
+						 ae_nausea_vomit_icd					///
+						 ae_nausea_vomit_icd_prim				///
+						 ae_headache_snomed						///
+						 ae_headache_icd						///
+						 ae_headache_icd_prim					///
+						 ae_headache_ae							///
 						 ae_anaphylaxis_icd						///
 					     ae_anaphylaxis_icd_prim				///
 					     ae_anaphylaxis_snomed					///
@@ -298,6 +347,22 @@ foreach var of varlist 	 pre_covid_hosp_date					///
 						 pre_rash_ae							///
 						 pre_rash_icd							///
 						 pre_rash_icd_prim 						///
+						 pre_bronchospasm_snomed				///
+						 pre_contactderm_snomed					///
+						 pre_contactderm_icd					///
+						 pre_contactderm_icd_prim				///
+						 pre_contactderm_ae						///
+						 pre_dizziness_snomed					///
+						 pre_dizziness_icd						///
+						 pre_dizziness_icd_prim					///
+						 pre_dizziness_ae						///
+						 pre_nausea_vomit_snomed				///
+						 pre_nausea_vomit_icd					///
+						 pre_nausea_vomit_icd_prim				///
+						 pre_headache_snomed					///
+						 pre_headache_icd						///
+						 pre_headache_icd_prim					///
+						 pre_headache_ae						///
 						 pre_anaphylaxis_icd_prim				///
 						 pre_anaphylaxis_icd					///
 						 pre_anaphylaxis_snomed					///						 
@@ -398,8 +463,12 @@ count if start_date>death_date & start_date!=.
 drop if start_date>death_date | start_date>dereg_date
 
 ** hospitalised and control cohort
-// control patient, discharged<5 days prior to covid test
-count if dataset==0 & (start_date-pre_covid_hosp_discharge<5) & (start_date-pre_covid_hosp_discharge>=0)
+// control patient, covid test is admission date or discharge date
+count if dataset==0 & start_date==pre_covid_hosp_date
+count if dataset==0 & covid_test_positive_date==pre_covid_hosp_date
+count if dataset==0 & start_date==pre_covid_hosp_discharge
+// control patient, covid test is 1 day after discharge date
+count if dataset==0 & (start_date-pre_covid_hosp_discharge<=1) & (start_date-pre_covid_hosp_discharge>=0)
 // control patient, hospitalised without discharged date
 count if dataset==0 & pre_covid_hosp_date!=. & pre_covid_hosp_discharge==. 
 count if dataset==0 & pre_covid_hosp_date!=. & pre_covid_hosp_discharge==. & (start_date-pre_covid_hosp_date<29)
@@ -408,14 +477,11 @@ count if dataset==0 & pre_covid_hosp_date!=. & pre_covid_hosp_discharge==. & (st
 count if dataset==0 & pre_covid_hosp_date>pre_covid_hosp_discharge & pre_covid_hosp_date!=. & pre_covid_hosp_discharge!=.
 count if dataset==0 & pre_covid_hosp_date>pre_covid_hosp_discharge & pre_covid_hosp_date!=. & pre_covid_hosp_discharge!=. & (start_date-pre_covid_hosp_date<29)
 count if dataset==0 & pre_covid_hosp_date>pre_covid_hosp_discharge & pre_covid_hosp_date!=. & pre_covid_hosp_discharge!=. & (start_date-pre_covid_hosp_date<366)
-// control patient, hospitalised on same day at covid test
-count if dataset==0 & pre_covid_hosp_date==start_date
-count if dataset==0 & pre_covid_hosp_date==covid_test_positive_date
 // remove these hospitalised patients from control group
-drop if dataset==0 & (start_date-pre_covid_hosp_discharge<5) & (start_date-pre_covid_hosp_discharge>=0)
+drop if dataset==0 & start_date==pre_covid_hosp_date
+drop if dataset==0 & (start_date-pre_covid_hosp_discharge<=1) & (start_date-pre_covid_hosp_discharge>=0)
 drop if dataset==0 & pre_covid_hosp_date!=. & pre_covid_hosp_discharge==. & (start_date-pre_covid_hosp_date<366)
 drop if dataset==0 & pre_covid_hosp_date>pre_covid_hosp_discharge & pre_covid_hosp_date!=. & pre_covid_hosp_discharge!=. & (start_date-pre_covid_hosp_date<366)
-drop if dataset==0 & pre_covid_hosp_date==start_date
 
 ** high risk cohort from blueteq therapeutics datafor drug arms
 tab high_risk_cohort_therapeutics dataset,m //should be 0 in control group
@@ -630,7 +696,15 @@ count if ae_rash_icd_prim!=.
 count if ae_diarrhoea_icd!=.					
 count if ae_diarrhoea_icd_prim!=.					
 count if ae_diarrhoeal_icd!=.					
-count if ae_diarrhoeal_icd_prim!=.	
+count if ae_diarrhoeal_icd_prim!=.
+count if ae_contactderm_icd!=.	
+count if ae_contactderm_icd_prim!=.
+count if ae_dizziness_icd!=.
+count if ae_dizziness_icd_prim!=.
+count if ae_nausea_vomit_icd!=.
+count if ae_nausea_vomit_icd_prim!=.
+count if ae_headache_icd!=.
+count if ae_headache_icd_prim!=.
 count if ae_anaphylaxis_icd!=.
 count if ae_anaphylaxis_icd_prim!=.
 count if ae_severedrug_icd!=.
@@ -639,10 +713,15 @@ count if ae_severedrug_sjs_icd!=.
 count if ae_severedrug_sjs_icd_prim!=.
 
 *** combined ae from GP, hosp and A&E
-egen ae_diverticulitis = rmin(ae_diverticulitis_snomed ae_diverticulitis_icd_prim ae_diverticulitis_ae)
+egen ae_diverticulitis = rmin(ae_diverticulitis_snomed ae_diverticulitis_ae ae_diverticulitis_icd_prim)
 egen ae_diarrhoea = rmin(ae_diarrhoea_snomed ae_diarrhoea_icd_prim ae_diarrhoeal_icd_prim)
 egen ae_taste = rmin(ae_taste_snomed ae_taste_icd_prim)
-egen ae_rash = rmin(ae_rash_snomed ae_rash_icd_prim ae_rash_ae)
+egen ae_rash = rmin(ae_rash_snomed ae_rash_ae ae_rash_icd_prim)
+egen ae_bronchospasm = rmin(ae_bronchospasm_snomed)
+egen ae_contactderm = rmin(ae_contactderm_snomed ae_contactderm_icd_prim ae_contactderm_ae)
+egen ae_dizziness = rmin(ae_dizziness_snomed ae_dizziness_ae ae_dizziness_icd_prim)
+egen ae_nausea_vomit = rmin(ae_nausea_vomit_snomed ae_nausea_vomit_icd_prim)
+egen ae_headache = rmin(ae_headache_snomed ae_headache_ae ae_headache_icd_prim)
 egen ae_anaphylaxis = rmin(ae_anaphylaxis_snomed ae_anaphlaxis_ae ae_anaphylaxis_icd_prim)
 egen ae_severe_drug = rmin(ae_severedrug_icd_prim ae_severedrug_sjs_icd_prim ae_severedrug_snomed ae_severedrug_ae)
 egen ae_nonsevere_drug = rmin(ae_nonsevere_drug_snomed ae_nonsevere_drug_ae)
@@ -657,14 +736,26 @@ egen ae_ibd = rmin(new_ae_ibd_icd_prim new_ae_ibd_ctv new_ae_ibd_ae)
 global ae_spc_gp		ae_diverticulitis_snomed		///
 						ae_diarrhoea_snomed				///
 						ae_taste_snomed					///		
-						ae_rash_snomed						
+						ae_rash_snomed					///
+						ae_bronchospasm_snomed			///
+						ae_contactderm_snomed			///
+						ae_dizziness_snomed				///
+						ae_nausea_vomit_snomed			///
+						ae_headache_snomed				
 global ae_spc_icd		ae_diverticulitis_icd_prim		///
 						ae_taste_icd_prim				///
 						ae_rash_icd_prim				///
 						ae_diarrhoea_icd_prim			///
-						ae_diarrhoeal_icd_prim
+						ae_diarrhoeal_icd_prim			///
+						ae_contactderm_icd_prim			///
+						ae_dizziness_icd_prim			///
+						ae_nausea_vomit_icd_prim		///
+						ae_headache_icd_prim
 global ae_spc_emerg		ae_diverticulitis_ae			///
-						ae_rash_ae								
+						ae_rash_ae						///
+						ae_contactderm_ae				///
+						ae_dizziness_ae					///
+						ae_headache_ae
 global ae_drug_gp 		ae_anaphylaxis_snomed			///	
 						ae_severedrug_snomed			///
 						ae_nonsevere_drug_snomed				
@@ -696,6 +787,11 @@ global ae_disease		ae_diverticulitis 				///
 						ae_diarrhoea					///
 						ae_taste 						///
 						ae_rash 						///
+						ae_bronchospasm					///
+						ae_contactderm					///
+						ae_dizziness					///
+						ae_nausea_vomit					///
+						ae_headache						///
 						ae_anaphylaxis 					///
 						ae_severe_drug 					///
 						ae_nonsevere_drug				///
@@ -704,8 +800,8 @@ global ae_disease		ae_diverticulitis 				///
 						ae_psorasis 					///
 						ae_psa 							///
 						ae_axspa 						///
-						ae_ibd 					
-									
+						ae_ibd 						
+		
 *remove event if occurred before start
 foreach x in $ae_spc_gp $ae_spc_icd $ae_spc_emerg $ae_drug_gp $ae_drug_icd $ae_drug_emerg $ae_imae_gp $ae_imae_icd $ae_imae_emerg $ae_disease{
 				display "`x'"
