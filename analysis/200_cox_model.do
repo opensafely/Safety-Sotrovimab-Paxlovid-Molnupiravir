@@ -37,14 +37,13 @@ use "$projectdir/output/data/main", clear
 * Models
 global crude 	i.drug 
 global agesex 	i.drug age i.sex
-global adj 		i.drug age i.sex i.region_nhs paxlovid_contraindicated ///
+global adj 		i.drug age i.sex i.region_nhs imdq5 White 1b.bmi_group ///
+				paxlovid_contraindicated vaccination_status diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension //
 			    downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro  
-global fulladj1 i.drug age i.sex i.region_nhs paxlovid_contraindicated ///
-			    downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro  ///
-				vaccination_status imdq5 White 
-global fulladj2 i.drug age i.sex i.region_nhs paxlovid_contraindicated ///
-			    downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro  ///
-				vaccination_status imdq5 White 1b.bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension
+global adj2 	i.drug age i.sex i.region_nhs imdq5 White 1b.bmi_group 
+global adj3 	i.drug age i.sex i.region_nhs imdq5 White 1b.bmi_group ///
+				paxlovid_contraindicated vaccination_status diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension 
+
 * Outcome
 global ae_group			ae_spc_all 					///
 						ae_drug_all					///		
@@ -87,7 +86,7 @@ foreach fail in $ae_group $ae_disease {
 
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 						
-	foreach model in crude agesex adj fulladj1 fulladj2{
+	foreach model in crude agesex adj adj2 adj3 {
 				
 		stcox $`model', vce(robust)
 					matrix b = r(table)

@@ -1,0 +1,1080 @@
+-------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /workspace/logs/preceed_rate.log
+  log type:  text
+ opened on:   6 Sep 2023, 11:59:11
+
+. 
+. *Set Ado file path
+. adopath + "$projectdir/analysis/ado"
+  [1]  (BASE)      "/usr/local/stata/ado/base/"
+  [2]  (SITE)      "/usr/local/ado/"
+  [3]              "."
+  [4]  (PERSONAL)  "~/ado/personal/"
+  [5]  (PLUS)      "~/ado/plus/"
+  [6]  (OLDPLACE)  "~/ado/"
+  [7]              "/workspace/analysis/ado"
+
+. 
+. * SET Index date 
+. global indexdate                        = "01/03/2020"
+
+. 
+. use "$projectdir/output/data/main", clear
+
+. 
+. /* 
+> ===========================================================*/
+. 
+. *       COMPARATOR RATE         
+. ****************************
+. **generate rate for adverse outcome in year 3-4 prior to start date for compa
+> rative rate by person years 
+. *ensure not established diagnosis for some of the condition 4 year prior
+. gen new_pre_ra_icd = pre_rheumatoid_icd_prim if pre_ra_snomed_new==0 
+(22,480 missing values generated)
+
+. gen new_pre_ra_ae = pre_rheumatoid_arthritis_ae if pre_ra_snomed_new==0 
+(22,396 missing values generated)
+
+. gen new_pre_ra_snomed = pre_rheumatoid_arthritis_snomed if pre_ra_snomed_new=
+> =0 
+(22,386 missing values generated)
+
+. gen new_pre_sle_ctv = pre_sle_ctv if pre_sle_ctv_new==0 
+(22,440 missing values generated)
+
+. gen new_pre_sle_icd = pre_sle_icd_prim if pre_sle_ctv_new==0 
+(22,437 missing values generated)
+
+. gen new_pre_sle_ae = pre_sle_ae if pre_sle_ctv_new==0 
+(22,450 missing values generated)
+
+. gen new_pre_psoriasis_icd = pre_psoriasis_icd_prim if pre_psoriasis_snomed_ne
+> w==0 
+(22,402 missing values generated)
+
+. gen new_pre_psoriasis_snomed = pre_psoriasis_snomed if pre_psoriasis_snomed_n
+> ew==0 
+(22,390 missing values generated)
+
+. gen new_pre_psoriasis_ae = pre_psoriasis_ae if pre_psoriasis_snomed_new==0
+(22,415 missing values generated)
+
+. gen new_pre_psa_icd = pre_psa_icd_prim if pre_psa_snomed_new==0
+(22,533 missing values generated)
+
+. gen new_pre_psa_ae = pre_psa_ae if pre_psa_snomed_new==0 
+(22,395 missing values generated)
+
+. gen new_pre_psa_snomed = pre_psa_snomed if pre_psa_snomed_new==0 
+(22,472 missing values generated)
+
+. gen new_pre_axspa_icd = pre_axspa_icd_prim if pre_axspa_ctv_new==0
+(22,437 missing values generated)
+
+. gen new_pre_axspa_ctv = pre_axspa_ctv if pre_axspa_ctv_new==0 
+(22,468 missing values generated)
+
+. gen new_pre_axspa_ae = pre_axspa_ae if pre_axspa_ctv_new==0
+(22,378 missing values generated)
+
+. gen new_pre_ibd_icd = pre_ibd_icd_prim if pre_ibd_ctv_new==0
+(22,449 missing values generated)
+
+. gen new_pre_ibd_ctv = pre_ibd_ctv if pre_ibd_ctv_new==0
+(22,430 missing values generated)
+
+. gen new_pre_ibd_ae = pre_ibd_ae if pre_ibd_ctv_new==0
+(22,401 missing values generated)
+
+. 
+. *** combined ae from GP, hosp and A&E
+. egen pre_diverticulitis = rmin(pre_diverticulitis_icd_prim pre_diverticulitis
+> _snomed pre_diverticulitis_ae)      
+(17951 missing values generated)
+
+. egen pre_diarrhoea = rmin(pre_diarrhoea_icd_prim pre_diarrhoea_snomed  pre_di
+> arrhoeal_icd_prim)
+(17963 missing values generated)
+
+. egen pre_taste = rmin(pre_taste_icd_prim pre_taste_snomed )
+(19893 missing values generated)
+
+. egen pre_rash = rmin(pre_rash_icd_prim pre_rash_snomed pre_rash_ae)
+(18026 missing values generated)
+
+. egen pre_bronchospasm = rmin(pre_bronchospasm_snomed)
+(22147 missing values generated)
+
+. egen pre_contactderm = rmin(pre_contactderm_snomed pre_contactderm_icd_prim p
+> re_contactderm_ae)
+(17856 missing values generated)
+
+. egen pre_dizziness = rmin(pre_dizziness_snomed pre_dizziness_ae pre_dizziness
+> _icd_prim)
+(18009 missing values generated)
+
+. egen pre_nausea_vomit = rmin(pre_nausea_vomit_snomed pre_nausea_vomit_icd_pri
+> m)
+(20031 missing values generated)
+
+. egen pre_headache = rmin(pre_headache_snomed pre_headache_ae pre_headache_icd
+> _prim)
+(18021 missing values generated)
+
+. egen pre_anaphylaxis = rmin(pre_anaphylaxis_icd_prim pre_anaphylaxis_snomed  
+>    pre_anaphlaxis_ae)
+(17999 missing values generated)
+
+. egen pre_severe_drug = rmin(pre_severedrug_icd_prim pre_severedrug_sjs_icd_pr
+> im pre_severedrug_snomed pre_severedrug_ae)
+(16094 missing values generated)
+
+. egen pre_nonsevere_drug = rmin(pre_nonsevere_drug_snomed pre_nonsevere_drug_a
+> e)
+(19965 missing values generated)
+
+. egen pre_ra = rmin(new_pre_ra_icd new_pre_ra_ae new_pre_ra_snomed )
+(18628 missing values generated)
+
+. egen pre_sle = rmin(new_pre_sle_icd new_pre_sle_ctv new_pre_sle_ae)
+(18697 missing values generated)
+
+. egen pre_psorasis = rmin(new_pre_psoriasis_icd new_pre_psoriasis_snomed  new_
+> pre_psoriasis_ae)
+(18555 missing values generated)
+
+. egen pre_psa = rmin(new_pre_psa_icd new_pre_psa_ae new_pre_psa_snomed)
+(18696 missing values generated)
+
+. egen pre_axspa = rmin(new_pre_axspa_icd  new_pre_axspa_ae new_pre_axspa_ctv)
+(18633 missing values generated)
+
+. egen pre_ibd = rmin(new_pre_ibd_icd new_pre_ibd_ctv new_pre_ibd_ae)
+(18623 missing values generated)
+
+. egen pre_spc_all = rmin(pre_diverticulitis pre_diarrhoea pre_taste) 
+(10513 missing values generated)
+
+. egen pre_drug_all = rmin(pre_anaphylaxis pre_severe_drug pre_nonsevere_drug)
+(9513 missing values generated)
+
+. egen pre_imae_all = rmin(pre_ra pre_sle pre_psorasis pre_psa pre_axspa pre_ib
+> d) 
+(4559 missing values generated)
+
+. egen pre_ae_all = rmin(pre_spc_all pre_drug_all pre_imae_all)
+(774 missing values generated)
+
+. 
+. global pre_ae_group                     pre_spc_all                          
+>            ///
+>                                                         pre_drug_all         
+>                            ///             
+>                                                         pre_imae_all         
+>                            ///                             
+>                                                         pre_ae_all
+
+. global pre_ae_disease           pre_diverticulitis                           
+>    ///
+>                                                         pre_diarrhoea        
+>                            ///
+>                                                         pre_taste            
+>                                    ///
+>                                                         pre_rash             
+>                                    ///
+>                                                         pre_bronchospasm     
+>                            ///
+>                                                         pre_contactderm      
+>                            ///
+>                                                         pre_dizziness        
+>                            ///
+>                                                         pre_nausea_vomit     
+>                            ///
+>                                                         pre_headache         
+>                            ///
+>                                                         pre_anaphylaxis      
+>                            ///
+>                                                         pre_severe_drug      
+>                            ///
+>                                                         pre_nonsevere_drug   
+>                            ///
+>                                                         pre_ra               
+>                                    ///
+>                                                         pre_sle              
+>                                    ///
+>                                                         pre_psorasis         
+>                            ///
+>                                                         pre_psa              
+>                                    ///
+>                                                         pre_axspa            
+>                                    ///
+>                                                         pre_ibd              
+>    
+
+. 
+. *gen start date for comparator rate
+. gen start_comparator = start_date-1460
+
+. gen start_comparator_28 = start_date - 1431
+
+. *remove if occurred outside of window, gen failure and stop date: 
+. foreach x in $pre_ae_group $pre_ae_disease {
+  2.                 display "`x'"
+  3.                 count if `x'!=. 
+  4.                 count if (`x'<start_comparator | `x'>start_comparator_28) 
+> & `x'!=.  // event outside windown - should be 0 
+  5.                 count if (`x'>start_comparator & `x'<start_comparator_28) 
+> & `x'!=.  // event 4-3 years prior to start
+  6.                 gen fail_`x'=1 if `x'!=.
+  7.                 tab drug fail_`x', m
+  8.                 gen stop_`x'=`x' if fail_`x'==1
+  9.                 replace `x'=`x'+0.75 if `x'==start_date
+ 10.                 replace stop_`x'= start_comparator_28 if fail_`x'==.
+ 11.                 tab drug fail_`x' if stop_`x'!=.
+ 12.                 format %td stop_`x'
+ 13. }
+pre_spc_all
+  14,142
+  13,895
+  233
+(10,513 missing values generated)
+
+             |   fail_pre_spc_all
+        drug |         1          . |     Total
+-------------+----------------------+----------
+     control |    13,649     10,145 |    23,794 
+  sotrovimab |       144        132 |       276 
+    paxlovid |       172        134 |       306 
+molnupiravir |       177        102 |       279 
+-------------+----------------------+----------
+       Total |    14,142     10,513 |    24,655 
+(10,513 missing values generated)
+(8 real changes made)
+(10,513 real changes made)
+
+             | fail_pre_s
+             |   pc_all
+        drug |         1 |     Total
+-------------+-----------+----------
+     control |    13,649 |    13,649 
+  sotrovimab |       144 |       144 
+    paxlovid |       172 |       172 
+molnupiravir |       177 |       177 
+-------------+-----------+----------
+       Total |    14,142 |    14,142 
+pre_drug_all
+  15,142
+  14,944
+  188
+(9,513 missing values generated)
+
+             |   fail_pre_drug_all
+        drug |         1          . |     Total
+-------------+----------------------+----------
+     control |    14,613      9,181 |    23,794 
+  sotrovimab |       165        111 |       276 
+    paxlovid |       196        110 |       306 
+molnupiravir |       168        111 |       279 
+-------------+----------------------+----------
+       Total |    15,142      9,513 |    24,655 
+(9,513 missing values generated)
+(15 real changes made)
+(9,513 real changes made)
+
+             | fail_pre_d
+             |  rug_all
+        drug |         1 |     Total
+-------------+-----------+----------
+     control |    14,613 |    14,613 
+  sotrovimab |       165 |       165 
+    paxlovid |       196 |       196 
+molnupiravir |       168 |       168 
+-------------+-----------+----------
+       Total |    15,142 |    15,142 
+pre_imae_all
+  20,096
+  19,771
+  302
+(4,559 missing values generated)
+
+             |   fail_pre_imae_all
+        drug |         1          . |     Total
+-------------+----------------------+----------
+     control |    19,394      4,400 |    23,794 
+  sotrovimab |       215         61 |       276 
+    paxlovid |       251         55 |       306 
+molnupiravir |       236         43 |       279 
+-------------+----------------------+----------
+       Total |    20,096      4,559 |    24,655 
+(4,559 missing values generated)
+(5 real changes made)
+(4,559 real changes made)
+
+             | fail_pre_i
+             |  mae_all
+        drug |         1 |     Total
+-------------+-----------+----------
+     control |    19,394 |    19,394 
+  sotrovimab |       215 |       215 
+    paxlovid |       251 |       251 
+molnupiravir |       236 |       236 
+-------------+-----------+----------
+       Total |    20,096 |    20,096 
+pre_ae_all
+  23,881
+  23,283
+  563
+(774 missing values generated)
+
+             |    fail_pre_ae_all
+        drug |         1          . |     Total
+-------------+----------------------+----------
+     control |    23,050        744 |    23,794 
+  sotrovimab |       264         12 |       276 
+    paxlovid |       296         10 |       306 
+molnupiravir |       271          8 |       279 
+-------------+----------------------+----------
+       Total |    23,881        774 |    24,655 
+(774 missing values generated)
+(9 real changes made)
+(774 real changes made)
+
+             | fail_pre_a
+             |   e_all
+        drug |         1 |     Total
+-------------+-----------+----------
+     control |    23,050 |    23,050 
+  sotrovimab |       264 |       264 
+    paxlovid |       296 |       296 
+molnupiravir |       271 |       271 
+-------------+-----------+----------
+       Total |    23,881 |    23,881 
+pre_diverticulitis
+  6,704
+  6,632
+  66
+(17,951 missing values generated)
+
+             | fail_pre_diverticulit
+             |          is
+        drug |         1          . |     Total
+-------------+----------------------+----------
+     control |     6,479     17,315 |    23,794 
+  sotrovimab |        66        210 |       276 
+    paxlovid |        83        223 |       306 
+molnupiravir |        76        203 |       279 
+-------------+----------------------+----------
+       Total |     6,704     17,951 |    24,655 
+(17,951 missing values generated)
+(7 real changes made)
+(17,951 real changes made)
+
+             | fail_pre_d
+             | iverticuli
+             |    tis
+        drug |         1 |     Total
+-------------+-----------+----------
+     control |     6,479 |     6,479 
+  sotrovimab |        66 |        66 
+    paxlovid |        83 |        83 
+molnupiravir |        76 |        76 
+-------------+-----------+----------
+       Total |     6,704 |     6,704 
+pre_diarrhoea
+  6,692
+  6,572
+  113
+(17,963 missing values generated)
+
+             |  fail_pre_diarrhoea
+        drug |         1          . |     Total
+-------------+----------------------+----------
+     control |     6,440     17,354 |    23,794 
+  sotrovimab |        67        209 |       276 
+    paxlovid |        89        217 |       306 
+molnupiravir |        96        183 |       279 
+-------------+----------------------+----------
+       Total |     6,692     17,963 |    24,655 
+(17,963 missing values generated)
+(3 real changes made)
+(17,963 real changes made)
+
+             | fail_pre_d
+             |  iarrhoea
+        drug |         1 |     Total
+-------------+-----------+----------
+     control |     6,440 |     6,440 
+  sotrovimab |        67 |        67 
+    paxlovid |        89 |        89 
+molnupiravir |        96 |        96 
+-------------+-----------+----------
+       Total |     6,692 |     6,692 
+pre_taste
+  4,762
+  4,693
+  68
+(19,893 missing values generated)
+
+             |    fail_pre_taste
+        drug |         1          . |     Total
+-------------+----------------------+----------
+     control |     4,603     19,191 |    23,794 
+  sotrovimab |        55        221 |       276 
+    paxlovid |        50        256 |       306 
+molnupiravir |        54        225 |       279 
+-------------+----------------------+----------
+       Total |     4,762     19,893 |    24,655 
+(19,893 missing values generated)
+(0 real changes made)
+(19,893 real changes made)
+
+             | fail_pre_t
+             |    aste
+        drug |         1 |     Total
+-------------+-----------+----------
+     control |     4,603 |     4,603 
+  sotrovimab |        55 |        55 
+    paxlovid |        50 |        50 
+molnupiravir |        54 |        54 
+-------------+-----------+----------
+       Total |     4,762 |     4,762 
+pre_rash
+  6,629
+  6,556
+  69
+(18,026 missing values generated)
+
+             |     fail_pre_rash
+        drug |         1          . |     Total
+-------------+----------------------+----------
+     control |     6,405     17,389 |    23,794 
+  sotrovimab |        67        209 |       276 
+    paxlovid |        70        236 |       306 
+molnupiravir |        87        192 |       279 
+-------------+----------------------+----------
+       Total |     6,629     18,026 |    24,655 
+(18,026 missing values generated)
+(4 real changes made)
+(18,026 real changes made)
+
+             | fail_pre_r
+             |    ash
+        drug |         1 |     Total
+-------------+-----------+----------
+     control |     6,405 |     6,405 
+  sotrovimab |        67 |        67 
+    paxlovid |        70 |        70 
+molnupiravir |        87 |        87 
+-------------+-----------+----------
+       Total |     6,629 |     6,629 
+pre_bronchospasm
+  2,508
+  2,477
+  29
+(22,147 missing values generated)
+
+             | fail_pre_bronchospasm
+        drug |         1          . |     Total
+-------------+----------------------+----------
+     control |     2,406     21,388 |    23,794 
+  sotrovimab |        26        250 |       276 
+    paxlovid |        34        272 |       306 
+molnupiravir |        42        237 |       279 
+-------------+----------------------+----------
+       Total |     2,508     22,147 |    24,655 
+(22,147 missing values generated)
+(1 real change made)
+(22,147 real changes made)
+
+             | fail_pre_b
+             | ronchospas
+             |     m
+        drug |         1 |     Total
+-------------+-----------+----------
+     control |     2,406 |     2,406 
+  sotrovimab |        26 |        26 
+    paxlovid |        34 |        34 
+molnupiravir |        42 |        42 
+-------------+-----------+----------
+       Total |     2,508 |     2,508 
+pre_contactderm
+  6,799
+  6,730
+  65
+(17,856 missing values generated)
+
+             | fail_pre_contactderm
+        drug |         1          . |     Total
+-------------+----------------------+----------
+     control |     6,547     17,247 |    23,794 
+  sotrovimab |        76        200 |       276 
+    paxlovid |        95        211 |       306 
+molnupiravir |        81        198 |       279 
+-------------+----------------------+----------
+       Total |     6,799     17,856 |    24,655 
+(17,856 missing values generated)
+(4 real changes made)
+(17,856 real changes made)
+
+             | fail_pre_c
+             | ontactderm
+        drug |         1 |     Total
+-------------+-----------+----------
+     control |     6,547 |     6,547 
+  sotrovimab |        76 |        76 
+    paxlovid |        95 |        95 
+molnupiravir |        81 |        81 
+-------------+-----------+----------
+       Total |     6,799 |     6,799 
+pre_dizziness
+  6,646
+  6,581
+  60
+(18,009 missing values generated)
+
+             |  fail_pre_dizziness
+        drug |         1          . |     Total
+-------------+----------------------+----------
+     control |     6,438     17,356 |    23,794 
+  sotrovimab |        71        205 |       276 
+    paxlovid |        74        232 |       306 
+molnupiravir |        63        216 |       279 
+-------------+----------------------+----------
+       Total |     6,646     18,009 |    24,655 
+(18,009 missing values generated)
+(8 real changes made)
+(18,009 real changes made)
+
+             | fail_pre_d
+             |  izziness
+        drug |         1 |     Total
+-------------+-----------+----------
+     control |     6,438 |     6,438 
+  sotrovimab |        71 |        71 
+    paxlovid |        74 |        74 
+molnupiravir |        63 |        63 
+-------------+-----------+----------
+       Total |     6,646 |     6,646 
+pre_nausea_vomit
+  4,624
+  4,546
+  75
+(20,031 missing values generated)
+
+             | fail_pre_nausea_vomit
+        drug |         1          . |     Total
+-------------+----------------------+----------
+     control |     4,475     19,319 |    23,794 
+  sotrovimab |        54        222 |       276 
+    paxlovid |        48        258 |       306 
+molnupiravir |        47        232 |       279 
+-------------+----------------------+----------
+       Total |     4,624     20,031 |    24,655 
+(20,031 missing values generated)
+(2 real changes made)
+(20,031 real changes made)
+
+             | fail_pre_n
+             | ausea_vomi
+             |     t
+        drug |         1 |     Total
+-------------+-----------+----------
+     control |     4,475 |     4,475 
+  sotrovimab |        54 |        54 
+    paxlovid |        48 |        48 
+molnupiravir |        47 |        47 
+-------------+-----------+----------
+       Total |     4,624 |     4,624 
+pre_headache
+  6,634
+  6,569
+  63
+(18,021 missing values generated)
+
+             |   fail_pre_headache
+        drug |         1          . |     Total
+-------------+----------------------+----------
+     control |     6,390     17,404 |    23,794 
+  sotrovimab |        79        197 |       276 
+    paxlovid |        82        224 |       306 
+molnupiravir |        83        196 |       279 
+-------------+----------------------+----------
+       Total |     6,634     18,021 |    24,655 
+(18,021 missing values generated)
+(3 real changes made)
+(18,021 real changes made)
+
+             | fail_pre_h
+             |  eadache
+        drug |         1 |     Total
+-------------+-----------+----------
+     control |     6,390 |     6,390 
+  sotrovimab |        79 |        79 
+    paxlovid |        82 |        82 
+molnupiravir |        83 |        83 
+-------------+-----------+----------
+       Total |     6,634 |     6,634 
+pre_anaphylaxis
+  6,656
+  6,591
+  60
+(17,999 missing values generated)
+
+             | fail_pre_anaphylaxis
+        drug |         1          . |     Total
+-------------+----------------------+----------
+     control |     6,431     17,363 |    23,794 
+  sotrovimab |        70        206 |       276 
+    paxlovid |        77        229 |       306 
+molnupiravir |        78        201 |       279 
+-------------+----------------------+----------
+       Total |     6,656     17,999 |    24,655 
+(17,999 missing values generated)
+(7 real changes made)
+(17,999 real changes made)
+
+             | fail_pre_a
+             | naphylaxis
+        drug |         1 |     Total
+-------------+-----------+----------
+     control |     6,431 |     6,431 
+  sotrovimab |        70 |        70 
+    paxlovid |        77 |        77 
+molnupiravir |        78 |        78 
+-------------+-----------+----------
+       Total |     6,656 |     6,656 
+pre_severe_drug
+  8,561
+  8,453
+  101
+(16,094 missing values generated)
+
+             | fail_pre_severe_drug
+        drug |         1          . |     Total
+-------------+----------------------+----------
+     control |     8,278     15,516 |    23,794 
+  sotrovimab |        87        189 |       276 
+    paxlovid |       109        197 |       306 
+molnupiravir |        87        192 |       279 
+-------------+----------------------+----------
+       Total |     8,561     16,094 |    24,655 
+(16,094 missing values generated)
+(10 real changes made)
+(16,094 real changes made)
+
+             | fail_pre_s
+             | evere_drug
+        drug |         1 |     Total
+-------------+-----------+----------
+     control |     8,278 |     8,278 
+  sotrovimab |        87 |        87 
+    paxlovid |       109 |       109 
+molnupiravir |        87 |        87 
+-------------+-----------+----------
+       Total |     8,561 |     8,561 
+pre_nonsevere_drug
+  4,690
+  4,652
+  36
+(19,965 missing values generated)
+
+             | fail_pre_nonsevere_dr
+             |          ug
+        drug |         1          . |     Total
+-------------+----------------------+----------
+     control |     4,520     19,274 |    23,794 
+  sotrovimab |        53        223 |       276 
+    paxlovid |        58        248 |       306 
+molnupiravir |        59        220 |       279 
+-------------+----------------------+----------
+       Total |     4,690     19,965 |    24,655 
+(19,965 missing values generated)
+(3 real changes made)
+(19,965 real changes made)
+
+             | fail_pre_n
+             | onsevere_d
+             |    rug
+        drug |         1 |     Total
+-------------+-----------+----------
+     control |     4,520 |     4,520 
+  sotrovimab |        53 |        53 
+    paxlovid |        58 |        58 
+molnupiravir |        59 |        59 
+-------------+-----------+----------
+       Total |     4,690 |     4,690 
+pre_ra
+  6,027
+  5,974
+  51
+(18,628 missing values generated)
+
+             |      fail_pre_ra
+        drug |         1          . |     Total
+-------------+----------------------+----------
+     control |     5,832     17,962 |    23,794 
+  sotrovimab |        61        215 |       276 
+    paxlovid |        77        229 |       306 
+molnupiravir |        57        222 |       279 
+-------------+----------------------+----------
+       Total |     6,027     18,628 |    24,655 
+(18,628 missing values generated)
+(3 real changes made)
+(18,628 real changes made)
+
+             | fail_pre_r
+             |     a
+        drug |         1 |     Total
+-------------+-----------+----------
+     control |     5,832 |     5,832 
+  sotrovimab |        61 |        61 
+    paxlovid |        77 |        77 
+molnupiravir |        57 |        57 
+-------------+-----------+----------
+       Total |     6,027 |     6,027 
+pre_sle
+  5,958
+  5,899
+  53
+(18,697 missing values generated)
+
+             |     fail_pre_sle
+        drug |         1          . |     Total
+-------------+----------------------+----------
+     control |     5,775     18,019 |    23,794 
+  sotrovimab |        55        221 |       276 
+    paxlovid |        65        241 |       306 
+molnupiravir |        63        216 |       279 
+-------------+----------------------+----------
+       Total |     5,958     18,697 |    24,655 
+(18,697 missing values generated)
+(3 real changes made)
+(18,697 real changes made)
+
+             | fail_pre_s
+             |     le
+        drug |         1 |     Total
+-------------+-----------+----------
+     control |     5,775 |     5,775 
+  sotrovimab |        55 |        55 
+    paxlovid |        65 |        65 
+molnupiravir |        63 |        63 
+-------------+-----------+----------
+       Total |     5,958 |     5,958 
+pre_psorasis
+  6,100
+  6,036
+  61
+(18,555 missing values generated)
+
+             |   fail_pre_psorasis
+        drug |         1          . |     Total
+-------------+----------------------+----------
+     control |     5,886     17,908 |    23,794 
+  sotrovimab |        71        205 |       276 
+    paxlovid |        79        227 |       306 
+molnupiravir |        64        215 |       279 
+-------------+----------------------+----------
+       Total |     6,100     18,555 |    24,655 
+(18,555 missing values generated)
+(4 real changes made)
+(18,555 real changes made)
+
+             | fail_pre_p
+             |  sorasis
+        drug |         1 |     Total
+-------------+-----------+----------
+     control |     5,886 |     5,886 
+  sotrovimab |        71 |        71 
+    paxlovid |        79 |        79 
+molnupiravir |        64 |        64 
+-------------+-----------+----------
+       Total |     6,100 |     6,100 
+pre_psa
+  5,959
+  5,877
+  76
+(18,696 missing values generated)
+
+             |     fail_pre_psa
+        drug |         1          . |     Total
+-------------+----------------------+----------
+     control |     5,764     18,030 |    23,794 
+  sotrovimab |        55        221 |       276 
+    paxlovid |        66        240 |       306 
+molnupiravir |        74        205 |       279 
+-------------+----------------------+----------
+       Total |     5,959     18,696 |    24,655 
+(18,696 missing values generated)
+(3 real changes made)
+(18,696 real changes made)
+
+             | fail_pre_p
+             |     sa
+        drug |         1 |     Total
+-------------+-----------+----------
+     control |     5,764 |     5,764 
+  sotrovimab |        55 |        55 
+    paxlovid |        66 |        66 
+molnupiravir |        74 |        74 
+-------------+-----------+----------
+       Total |     5,959 |     5,959 
+pre_axspa
+  6,022
+  5,970
+  46
+(18,633 missing values generated)
+
+             |    fail_pre_axspa
+        drug |         1          . |     Total
+-------------+----------------------+----------
+     control |     5,816     17,978 |    23,794 
+  sotrovimab |        64        212 |       276 
+    paxlovid |        59        247 |       306 
+molnupiravir |        83        196 |       279 
+-------------+----------------------+----------
+       Total |     6,022     18,633 |    24,655 
+(18,633 missing values generated)
+(4 real changes made)
+(18,633 real changes made)
+
+             | fail_pre_a
+             |    xspa
+        drug |         1 |     Total
+-------------+-----------+----------
+     control |     5,816 |     5,816 
+  sotrovimab |        64 |        64 
+    paxlovid |        59 |        59 
+molnupiravir |        83 |        83 
+-------------+-----------+----------
+       Total |     6,022 |     6,022 
+pre_ibd
+  6,032
+  5,970
+  57
+(18,623 missing values generated)
+
+             |     fail_pre_ibd
+        drug |         1          . |     Total
+-------------+----------------------+----------
+     control |     5,817     17,977 |    23,794 
+  sotrovimab |        59        217 |       276 
+    paxlovid |        87        219 |       306 
+molnupiravir |        69        210 |       279 
+-------------+----------------------+----------
+       Total |     6,032     18,623 |    24,655 
+(18,623 missing values generated)
+(4 real changes made)
+(18,623 real changes made)
+
+             | fail_pre_i
+             |     bd
+        drug |         1 |     Total
+-------------+-----------+----------
+     control |     5,817 |     5,817 
+  sotrovimab |        59 |        59 
+    paxlovid |        87 |        87 
+molnupiravir |        69 |        69 
+-------------+-----------+----------
+       Total |     6,032 |     6,032 
+
+. 
+. * Follow-up time
+. stset stop_pre_ae_all, id(patient_id) origin(time start_comparator) enter(tim
+> e start_comparator) exit(time start_comparator_28) failure(fail_pre_ae_all==1
+> ) 
+
+                id:  patient_id
+     failure event:  fail_pre_ae_all == 1
+obs. time interval:  (stop_pre_ae_all[_n-1], stop_pre_ae_all]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,655  total observations
+      6,979  observations end on or before enter()
+------------------------------------------------------------------------------
+     17,676  observations remaining, representing
+     17,676  subjects
+        577  failures in single-failure-per-subject data
+    504,479  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
+
+. tab _st  // keep if _st==1 -> removes observations that end on or before ente
+> r 
+
+1 if record |
+   is to be |
+    used; 0 |
+  otherwise |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |      6,979       28.31       28.31
+          1 |     17,676       71.69      100.00
+------------+-----------------------------------
+      Total |     24,655      100.00
+
+. count if start_comparator>=stop_pre_ae_all & _st==0
+  6,979
+
+. count if start_comparator==stop_pre_ae_all & _st==0
+  21
+
+. tab _t,m
+
+   analysis |
+  time when |
+record ends |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |         15        0.06        0.06
+          2 |         22        0.09        0.15
+          3 |         17        0.07        0.22
+          4 |         20        0.08        0.30
+          5 |         24        0.10        0.40
+          6 |         24        0.10        0.49
+          7 |         26        0.11        0.60
+          8 |         20        0.08        0.68
+          9 |         16        0.06        0.75
+         10 |         17        0.07        0.82
+         11 |         13        0.05        0.87
+         12 |         24        0.10        0.97
+         13 |         15        0.06        1.03
+         14 |         26        0.11        1.13
+         15 |         14        0.06        1.19
+         16 |         25        0.10        1.29
+         17 |         17        0.07        1.36
+         18 |         17        0.07        1.43
+         19 |         30        0.12        1.55
+         20 |         20        0.08        1.63
+         21 |         18        0.07        1.70
+         22 |         24        0.10        1.80
+         23 |         22        0.09        1.89
+         24 |         21        0.09        1.98
+         25 |         16        0.06        2.04
+         26 |         26        0.11        2.15
+         27 |         17        0.07        2.21
+         28 |         17        0.07        2.28
+         29 |     17,113       69.41       71.69
+          . |      6,979       28.31      100.00
+------------+-----------------------------------
+      Total |     24,655      100.00
+
+. 
+. 
+. ** Rates of events 
+. tempname comparator_rates
+
+. postfile `comparator_rates' str20(failure) ///
+>                 ptime_all events_all rate_all lci_all uci_all ///
+>                 ptime_control events_control rate_control lci_control uci_con
+> trol ///
+>                 ptime_sot events_sot rate_sot lci_sot uci_sot ///
+>                 ptime_pax events_pax rate_pax lci_pax uci_pax ///
+>                 ptime_mol events_mol rate_mol lci_mol uci_mol ///
+>                 using "$projectdir/output/tables/comparator_rates", replace  
+>                                                     
+
+. foreach fail in $ae_group $ae_disease {
+  2.         stset stop_`fail', id(patient_id) origin(time start_date) enter(ti
+> me start_date) failure(fail_`fail'==1)                        
+  3.                 stptime 
+  4.                                         local rate_all = `r(rate)'
+  5.                                         local ptime_all = `r(ptime)'
+  6.                                         local lci_all = `r(lb)'
+  7.                                         local uci_all = `r(ub)'
+  8.                                         local events_all .
+  9.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local events_all `r(failures)'
+ 10.                 stptime if drug == 0
+ 11.                                         local rate_control = `r(rate)'
+ 12.                                         local ptime_control = `r(ptime)'
+ 13.                                         local lci_control = `r(lb)'
+ 14.                                         local uci_control = `r(ub)'
+ 15.                                         local events_control .
+ 16.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local events_control `r(failures)'
+ 17.                 display "no drug"
+ 18.                 stptime if drug == 1
+ 19.                                         local rate_sot = `r(rate)'
+ 20.                                         local ptime_sot = `r(ptime)'
+ 21.                                         local lci_sot = `r(lb)'
+ 22.                                         local uci_sot = `r(ub)'
+ 23.                                         local events_sot .
+ 24.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local events_sot `r(failures)'
+ 25.                 display "sotrovimab"
+ 26.                 stptime if drug == 2
+ 27.                                         local rate_pax = `r(rate)'
+ 28.                                         local ptime_pax = `r(ptime)'
+ 29.                                         local lci_pax = `r(lb)'
+ 30.                                         local uci_pax = `r(ub)'
+ 31.                                         local events_pax .
+ 32.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local events_pax `r(failures)'
+ 33.                 display "paxlovid"
+ 34.                 stptime if drug == 3
+ 35.                                         local rate_mol = `r(rate)'
+ 36.                                         local ptime_mol = `r(ptime)'
+ 37.                                         local lci_mol = `r(lb)'
+ 38.                                         local uci_mol = `r(ub)'
+ 39.                                         local events_mol .
+ 40.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local events_mol `r(failures)'
+ 41.                 display "molnupavir"                    
+ 42.                 post `comparator_rates' ("`fail'") (`ptime_all') (`events_
+> all') (`rate_all') (`lci_all') (`uci_all') ///
+>                                         (`ptime_control') (`events_control') 
+> (`rate_control') (`lci_control') (`uci_control') ///
+>                                         (`ptime_sot') (`events_sot') (`rate_s
+> ot') (`lci_sot') (`uci_sot') ///
+>                                         (`ptime_pax') (`events_pax') (`rate_p
+> ax') (`lci_pax') (`uci_pax') ///
+>                                         (`ptime_mol') (`events_mol') (`rate_m
+> ol') (`lci_mol') (`uci_mol') ///
+>                                         
+ 43. }
+
+. postclose `comparator_rates'
+
+. 
+. use "$projectdir/output/tables/comparator_rates", clear 
+
+. foreach var of varlist rate* lci* uci* {
+  2.         
+. gen `var'_per = `var'*1000      
+  3. format `var'_per %3.2f
+  4. drop `var'      
+  5. rename  `var'_per `var'                         
+  6. }
+
+. order   failure ptime_all events_all rate_all lci_all uci_all ///
+>                 ptime_control events_control rate_control lci_control uci_con
+> trol ///
+>                 ptime_sot events_sot rate_sot lci_sot uci_sot ///
+>                 ptime_pax events_pax rate_pax lci_pax uci_pax ///
+>                 ptime_mol events_mol rate_mol lci_mol uci_mol
+
+. save "$projectdir/output/tables/comparator_rates", replace
+(note: dataset contains 0 observations)
+file /workspace/output/tables/comparator_rates.dta saved
+
+. 
+. use "$projectdir/output/tables/comparator_rates", replace
+
+. export delimited using "$projectdir/output/tables/comparator_rates.csv", repl
+> ace
+(note: file /workspace/output/tables/comparator_rates.csv not found)
+file /workspace/output/tables/comparator_rates.csv saved
+
+. 
+. log close
+      name:  <unnamed>
+       log:  /workspace/logs/preceed_rate.log
+  log type:  text
+ closed on:   6 Sep 2023, 11:59:13
+-------------------------------------------------------------------------------

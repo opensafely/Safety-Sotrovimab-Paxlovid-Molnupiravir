@@ -12,7 +12,7 @@
 
 ****************************************************************************************************************
 **Set filepaths
-//global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+// global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
 global projectdir `c(pwd)'
 
 di "$projectdir"
@@ -35,13 +35,13 @@ use "$projectdir/output/data/main", clear
 set type double
 
 ** labeling 
-foreach var of varlist downs_syndrome_comb solid_cancer_comb haem_disease_comb liver_disease_comb renal_disease_comb imid_on_drug_comb immunosupression_comb hiv_aids_comb organ_transplant_comb rare_neuro_comb diabetes chronic_cardiac_disease hypertension chronic_respiratory_disease prior_covid paxlovid_contraindicated egfr_30{
+foreach var of varlist downs_syndrome_comb solid_cancer_comb haem_disease_comb liver_disease_comb renal_disease_comb imid_on_drug_comb immunosupression_comb hiv_aids_comb organ_transplant_comb rare_neuro_comb diabetes chronic_cardiac_disease hypertension chronic_respiratory_disease prior_covid paxlovid_contraindicated {
 	recode `var' . = 0
 	label define `var'  1 "yes" 0 "no", replace
 	label values `var'  `var' 
 }
 
-foreach var of varlist organ_transplant_comb hiv_aids_comb immunosupression_comb imid_on_drug_comb rare_neuro_comb renal_disease_comb liver_disease_comb haem_disease_comb solid_cancer_comb downs_syndrome_comb hypertension diabetes egfr_30 chronic_respiratory_disease chronic_cardiac_disease paxlovid_contraindicated  prior_covid vaccination_status region_covid_therapeutics region_nhs imdq5 bmi_group ethnicity_with_missing ethnicity sex age_group{ 
+foreach var of varlist organ_transplant_comb hiv_aids_comb immunosupression_comb imid_on_drug_comb rare_neuro_comb renal_disease_comb liver_disease_comb haem_disease_comb solid_cancer_comb downs_syndrome_comb hypertension diabetes chronic_respiratory_disease chronic_cardiac_disease paxlovid_contraindicated  prior_covid vaccination_status region_nhs imdq5 bmi_group  ethnicity sex age_group{ 
 	preserve
 	contract `var'	
 	gen variable = `"`var'"'
@@ -112,12 +112,12 @@ foreach i of local levels {
 
 use "$projectdir/output/data/main", clear
 decode drug, gen(drug_str)
-foreach var of varlist downs_syndrome_comb solid_cancer_comb haem_disease_comb liver_disease_comb renal_disease_comb imid_on_drug_comb immunosupression_comb hiv_aids_comb organ_transplant_comb rare_neuro_comb diabetes chronic_cardiac_disease hypertension chronic_respiratory_disease prior_covid paxlovid_contraindicated egfr_30{
+foreach var of varlist downs_syndrome_comb solid_cancer_comb haem_disease_comb liver_disease_comb renal_disease_comb imid_on_drug_comb immunosupression_comb hiv_aids_comb organ_transplant_comb rare_neuro_comb diabetes chronic_cardiac_disease hypertension chronic_respiratory_disease prior_covid paxlovid_contraindicated {
 	recode `var' . = 0
 	label define `var'  1 "yes" 0 "no", replace
 	label values `var'  `var' 
 }
-foreach var of varlist organ_transplant_comb hiv_aids_comb immunosupression_comb imid_on_drug_comb rare_neuro_comb renal_disease_comb liver_disease_comb haem_disease_comb solid_cancer_comb downs_syndrome_comb hypertension diabetes egfr_30 chronic_respiratory_disease chronic_cardiac_disease paxlovid_contraindicated  prior_covid vaccination_status region_covid_therapeutics region_nhs imdq5 bmi_group ethnicity_with_missing ethnicity sex age_group{ 
+foreach var of varlist organ_transplant_comb hiv_aids_comb immunosupression_comb imid_on_drug_comb rare_neuro_comb renal_disease_comb liver_disease_comb haem_disease_comb solid_cancer_comb downs_syndrome_comb hypertension diabetes chronic_respiratory_disease chronic_cardiac_disease paxlovid_contraindicated  prior_covid vaccination_status region_nhs imdq5 bmi_group ethnicity sex age_group{ 
 	preserve
 	keep if drug_str=="`i'"
 	contract `var'	
@@ -166,7 +166,7 @@ clear *
 save "$projectdir/output/tables/baseline_table_redact_mean.dta", replace emptyok
 use "$projectdir/output/data/main", clear
 decode drug, gen(drug_str)
-foreach var of varlist bmi age {
+foreach var of varlist age {
 	preserve
 	collapse (count) "`var'_count"=`var' (mean) mean=`var' (sd) stdev=`var', by(drug_str)
 	gen variable = "`var'"
