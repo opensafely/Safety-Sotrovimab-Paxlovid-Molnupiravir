@@ -61,10 +61,10 @@ postfile `coxoutput_propensity' str20(model) str20(fail)   ///
 global agesex 	age i.sex
 global adj 		age i.sex i.region_nhs paxlovid_contraindicated ///
 				downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro  
-global fulladj1 age i.sex i.region_nhs paxlovid_contraindicated ///
+global adj1 age i.sex i.region_nhs paxlovid_contraindicated ///
 				downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro  ///
 				vaccination_status imdq5 White 
-global fulladj2 age i.sex i.region_nhs paxlovid_contraindicated ///
+global adj2 age i.sex i.region_nhs paxlovid_contraindicated ///
 				downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro  ///
 				vaccination_status imdq5 White 1b.bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension
 								
@@ -134,14 +134,14 @@ graph export "$projectdir/output/figures/match_adj.svg", as(svg) replace
 pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 
 pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5, ///
 wt(iptw_fulladj1) graph
-graph export "$projectdir/output/figures/match_fulladj1.svg", as(svg) replace
+graph export "$projectdir/output/figures/match_adj1.svg", as(svg) replace
 
 pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 ///
 bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension	
 pbalchk no_drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 ///
 bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension, ///
 wt(iptw_fulladj2) graph
-graph export "$projectdir/output/figures/match_fulladj2.svg", as(svg) replace
+graph export "$projectdir/output/figures/match_adj2.svg", as(svg) replace
 
 use "$projectdir/output/tables/cox_model_propensity", replace
 export delimited using "$projectdir/output/tables/cox_model_propensity_csv.csv", replace

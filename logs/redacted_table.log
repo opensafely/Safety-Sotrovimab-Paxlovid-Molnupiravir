@@ -1,34 +1,28 @@
----------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/logs/redacte
-> d_table.log
+       log:  /workspace/logs/redacted_table.log
   log type:  text
- opened on:   6 Sep 2023, 11:38:29
+ opened on:   6 Sep 2023, 12:04:22
 
 . 
 . *Set Ado file path
 . adopath + "$projectdir/analysis/ado"
-  [1]  (BASE)      "C:\Program Files\Stata17\ado\base/"
-  [2]  (SITE)      "C:\Program Files\Stata17\ado\site/"
+  [1]  (BASE)      "/usr/local/stata/ado/base/"
+  [2]  (SITE)      "/usr/local/ado/"
   [3]              "."
-  [4]  (PERSONAL)  "C:\users\PUBLIC\documents/"
-  [5]  (PLUS)      "C:\users\PUBLIC\documents/"
-  [6]  (OLDPLACE)  "c:\ado/"
-  [7]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analy
-> sis/analysis/ado"
-  [8]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/analy
-> sis/ado"
+  [4]  (PERSONAL)  "~/ado/personal/"
+  [5]  (PLUS)      "~/ado/plus/"
+  [6]  (OLDPLACE)  "~/ado/"
+  [7]              "/workspace/analysis/ado"
 
 . 
 . **Baseline table redacted and rounded 
 . clear *
 
-. save "$projectdir/output/tables/baseline_table_redact_all.dta", replace emptyok
-(dataset contains 0 observations)
-(file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta not found)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta saved
+. save "$projectdir/output/tables/baseline_table_redact_all.dta", replace empty
+> ok
+(note: dataset contains 0 observations)
+file /workspace/output/tables/baseline_table_redact_all.dta saved
 
 . use "$projectdir/output/data/main", clear
 
@@ -36,34 +30,39 @@ file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety 
 
 . 
 . ** labeling 
-. foreach var of varlist downs_syndrome_comb solid_cancer_comb haem_disease_comb liver_disease_comb renal_disease_comb imid_on_drug_comb immunosupression_comb 
-> hiv_aids_comb organ_transplant_comb rare_neuro_comb diabetes chronic_cardiac_disease hypertension chronic_respiratory_disease prior_covid paxlovid_contraindi
-> cated {
+. foreach var of varlist downs_syndrome_comb solid_cancer_comb haem_disease_com
+> b liver_disease_comb renal_disease_comb imid_on_drug_comb immunosupression_co
+> mb hiv_aids_comb organ_transplant_comb rare_neuro_comb diabetes chronic_cardi
+> ac_disease hypertension chronic_respiratory_disease prior_covid paxlovid_cont
+> raindicated {
   2.         recode `var' . = 0
   3.         label define `var'  1 "yes" 0 "no", replace
   4.         label values `var'  `var' 
   5. }
-(0 changes made to downs_syndrome_comb)
-(0 changes made to solid_cancer_comb)
-(0 changes made to haem_disease_comb)
-(0 changes made to liver_disease_comb)
-(0 changes made to renal_disease_comb)
-(0 changes made to imid_on_drug_comb)
-(0 changes made to immunosupression_comb)
-(0 changes made to hiv_aids_comb)
-(0 changes made to organ_transplant_comb)
-(0 changes made to rare_neuro_comb)
-(0 changes made to diabetes)
-(0 changes made to chronic_cardiac_disease)
-(0 changes made to hypertension)
-(0 changes made to chronic_respiratory_disease)
-(0 changes made to prior_covid)
-(0 changes made to paxlovid_contraindicated)
+(downs_syndrome_comb: 0 changes made)
+(solid_cancer_comb: 0 changes made)
+(haem_disease_comb: 0 changes made)
+(liver_disease_comb: 0 changes made)
+(renal_disease_comb: 0 changes made)
+(imid_on_drug_comb: 0 changes made)
+(immunosupression_comb: 0 changes made)
+(hiv_aids_comb: 0 changes made)
+(organ_transplant_comb: 0 changes made)
+(rare_neuro_comb: 0 changes made)
+(diabetes: 0 changes made)
+(chronic_cardiac_disease: 0 changes made)
+(hypertension: 0 changes made)
+(chronic_respiratory_disease: 0 changes made)
+(prior_covid: 0 changes made)
+(paxlovid_contraindicated: 0 changes made)
 
 . 
-. foreach var of varlist organ_transplant_comb hiv_aids_comb immunosupression_comb imid_on_drug_comb rare_neuro_comb renal_disease_comb liver_disease_comb haem
-> _disease_comb solid_cancer_comb downs_syndrome_comb hypertension diabetes chronic_respiratory_disease chronic_cardiac_disease paxlovid_contraindicated  prior
-> _covid vaccination_status region_nhs imdq5 bmi_group  ethnicity sex age_group{ 
+. foreach var of varlist organ_transplant_comb hiv_aids_comb immunosupression_c
+> omb imid_on_drug_comb rare_neuro_comb renal_disease_comb liver_disease_comb h
+> aem_disease_comb solid_cancer_comb downs_syndrome_comb hypertension diabetes 
+> chronic_respiratory_disease chronic_cardiac_disease paxlovid_contraindicated 
+>  prior_covid vaccination_status region_nhs imdq5 bmi_group  ethnicity sex age
+> _group{ 
   2.         preserve
   3.         contract `var'  
   4.         gen variable = `"`var'"'
@@ -92,8 +91,10 @@ file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety 
  27.         list variable `var' count percent total missing
  28.         keep variable categories count percent total missing
  29.         order variable categories count percent total missing
- 30.         append using "$projectdir/output/tables/baseline_table_redact_all.dta"
- 31.         save "$projectdir/output/tables/baseline_table_redact_all.dta", replace
+ 30.         append using "$projectdir/output/tables/baseline_table_redact_all.
+> dta"
+ 31.         save "$projectdir/output/tables/baseline_table_redact_all.dta", re
+> place
  32.         restore
  33. }
 (0 observations deleted)
@@ -105,14 +106,22 @@ percentstr was forced to string; some loss of information
 (0 real changes made)
 (0 real changes made)
 
-     +------------------------------------------------------------------------------+
-     |              variable   organ_~b   count_~l   percen~l   total_~l   missin~l |
-     |------------------------------------------------------------------------------|
-  1. | organ_transplant_comb         no      14980       60.8      24655          0 |
-  2. | organ_transplant_comb        yes       9675       39.2      24655          0 |
-     +------------------------------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta saved
+     +-------------------------------------------------------------------+
+  1. |              variable | organ_~b | count_~l | percen~l | total_~l |
+     | organ_transplant_comb |       no |    14980 |     60.8 |    24655 |
+     |-------------------------------------------------------------------|
+     |                             missin~l                              |
+     |                                    0                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+  2. |              variable | organ_~b | count_~l | percen~l | total_~l |
+     | organ_transplant_comb |      yes |     9675 |     39.2 |    24655 |
+     |-------------------------------------------------------------------|
+     |                             missin~l                              |
+     |                                    0                              |
+     +-------------------------------------------------------------------+
+file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
 (0 real changes made)
 percentstr generated as str4
@@ -128,9 +137,9 @@ percentstr was forced to string; some loss of information
   1. | hiv_aids_comb         no      18805       76.3      24655          0 |
   2. | hiv_aids_comb        yes       5850       23.7      24655          0 |
      +----------------------------------------------------------------------+
-(variable variable was str13, now str21 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta saved
+(note: variable variable was str13, now str21 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
 (0 real changes made)
 percentstr generated as str4
@@ -139,14 +148,22 @@ percentstr generated as str4
 (0 real changes made)
 (0 real changes made)
 
-     +------------------------------------------------------------------------------+
-     |              variable   immuno~b   count_~l   percen~l   total_~l   missin~l |
-     |------------------------------------------------------------------------------|
-  1. | immunosupression_comb         no      19940       80.9      24655          0 |
-  2. | immunosupression_comb        yes       4715       19.1      24655          0 |
-     +------------------------------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta saved
+     +-------------------------------------------------------------------+
+  1. |              variable | immuno~b | count_~l | percen~l | total_~l |
+     | immunosupression_comb |       no |    19940 |     80.9 |    24655 |
+     |-------------------------------------------------------------------|
+     |                             missin~l                              |
+     |                                    0                              |
+     +-------------------------------------------------------------------+
+
+     +-------------------------------------------------------------------+
+  2. |              variable | immuno~b | count_~l | percen~l | total_~l |
+     | immunosupression_comb |      yes |     4715 |     19.1 |    24655 |
+     |-------------------------------------------------------------------|
+     |                             missin~l                              |
+     |                                    0                              |
+     +-------------------------------------------------------------------+
+file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
 (0 real changes made)
 percentstr generated as str4
@@ -156,15 +173,24 @@ percentstr was forced to string; some loss of information
 (0 real changes made)
 (0 real changes made)
 
-     +--------------------------------------------------------------------------+
-     |          variable   imid_o~b   count_~l   percen~l   total_~l   missin~l |
-     |--------------------------------------------------------------------------|
-  1. | imid_on_drug_comb         no      15120       61.3      24655          0 |
-  2. | imid_on_drug_comb        yes       9535       38.7      24655          0 |
-     +--------------------------------------------------------------------------+
-(variable variable was str17, now str21 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta saved
+     +---------------------------------------------------------------+
+  1. |          variable | imid_o~b | count_~l | percen~l | total_~l |
+     | imid_on_drug_comb |       no |    15120 |     61.3 |    24655 |
+     |---------------------------------------------------------------|
+     |                           missin~l                            |
+     |                                  0                            |
+     +---------------------------------------------------------------+
+
+     +---------------------------------------------------------------+
+  2. |          variable | imid_o~b | count_~l | percen~l | total_~l |
+     | imid_on_drug_comb |      yes |     9535 |     38.7 |    24655 |
+     |---------------------------------------------------------------|
+     |                           missin~l                            |
+     |                                  0                            |
+     +---------------------------------------------------------------+
+(note: variable variable was str17, now str21 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
 (0 real changes made)
 percentstr generated as str4
@@ -179,9 +205,9 @@ percentstr generated as str4
   1. | rare_neuro_comb         no       9095       36.9      24655          0 |
   2. | rare_neuro_comb        yes      15560       63.1      24655          0 |
      +------------------------------------------------------------------------+
-(variable variable was str15, now str21 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta saved
+(note: variable variable was str15, now str21 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
 (0 real changes made)
 percentstr generated as str4
@@ -190,15 +216,24 @@ percentstr generated as str4
 (0 real changes made)
 (0 real changes made)
 
-     +---------------------------------------------------------------------------+
-     |           variable   renal_~b   count_~l   percen~l   total_~l   missin~l |
-     |---------------------------------------------------------------------------|
-  1. | renal_disease_comb         no      14170       57.5      24655          0 |
-  2. | renal_disease_comb        yes      10485       42.5      24655          0 |
-     +---------------------------------------------------------------------------+
-(variable variable was str18, now str21 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta saved
+     +----------------------------------------------------------------+
+  1. |           variable | renal_~b | count_~l | percen~l | total_~l |
+     | renal_disease_comb |       no |    14170 |     57.5 |    24655 |
+     |----------------------------------------------------------------|
+     |                            missin~l                            |
+     |                                   0                            |
+     +----------------------------------------------------------------+
+
+     +----------------------------------------------------------------+
+  2. |           variable | renal_~b | count_~l | percen~l | total_~l |
+     | renal_disease_comb |      yes |    10485 |     42.5 |    24655 |
+     |----------------------------------------------------------------|
+     |                            missin~l                            |
+     |                                   0                            |
+     +----------------------------------------------------------------+
+(note: variable variable was str18, now str21 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
 (0 real changes made)
 percentstr generated as str4
@@ -207,15 +242,24 @@ percentstr generated as str4
 (0 real changes made)
 (0 real changes made)
 
-     +---------------------------------------------------------------------------+
-     |           variable   liver_~b   count_~l   percen~l   total_~l   missin~l |
-     |---------------------------------------------------------------------------|
-  1. | liver_disease_comb         no      18710       75.9      24655          0 |
-  2. | liver_disease_comb        yes       5945       24.1      24655          0 |
-     +---------------------------------------------------------------------------+
-(variable variable was str18, now str21 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta saved
+     +----------------------------------------------------------------+
+  1. |           variable | liver_~b | count_~l | percen~l | total_~l |
+     | liver_disease_comb |       no |    18710 |     75.9 |    24655 |
+     |----------------------------------------------------------------|
+     |                            missin~l                            |
+     |                                   0                            |
+     +----------------------------------------------------------------+
+
+     +----------------------------------------------------------------+
+  2. |           variable | liver_~b | count_~l | percen~l | total_~l |
+     | liver_disease_comb |      yes |     5945 |     24.1 |    24655 |
+     |----------------------------------------------------------------|
+     |                            missin~l                            |
+     |                                   0                            |
+     +----------------------------------------------------------------+
+(note: variable variable was str18, now str21 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
 (0 real changes made)
 percentstr generated as str4
@@ -225,15 +269,24 @@ percentstr was forced to string; some loss of information
 (0 real changes made)
 (0 real changes made)
 
-     +--------------------------------------------------------------------------+
-     |          variable   haem_d~b   count_~l   percen~l   total_~l   missin~l |
-     |--------------------------------------------------------------------------|
-  1. | haem_disease_comb         no       9395       38.1      24655          0 |
-  2. | haem_disease_comb        yes      15260       61.9      24655          0 |
-     +--------------------------------------------------------------------------+
-(variable variable was str17, now str21 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta saved
+     +---------------------------------------------------------------+
+  1. |          variable | haem_d~b | count_~l | percen~l | total_~l |
+     | haem_disease_comb |       no |     9395 |     38.1 |    24655 |
+     |---------------------------------------------------------------|
+     |                           missin~l                            |
+     |                                  0                            |
+     +---------------------------------------------------------------+
+
+     +---------------------------------------------------------------+
+  2. |          variable | haem_d~b | count_~l | percen~l | total_~l |
+     | haem_disease_comb |      yes |    15260 |     61.9 |    24655 |
+     |---------------------------------------------------------------|
+     |                           missin~l                            |
+     |                                  0                            |
+     +---------------------------------------------------------------+
+(note: variable variable was str17, now str21 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
 (0 real changes made)
 percentstr generated as str4
@@ -242,15 +295,24 @@ percentstr generated as str4
 (0 real changes made)
 (0 real changes made)
 
-     +--------------------------------------------------------------------------+
-     |          variable   solid_~b   count_~l   percen~l   total_~l   missin~l |
-     |--------------------------------------------------------------------------|
-  1. | solid_cancer_comb         no      17740       72.0      24655          0 |
-  2. | solid_cancer_comb        yes       6915       28.0      24655          0 |
-     +--------------------------------------------------------------------------+
-(variable variable was str17, now str21 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta saved
+     +---------------------------------------------------------------+
+  1. |          variable | solid_~b | count_~l | percen~l | total_~l |
+     | solid_cancer_comb |       no |    17740 |     72.0 |    24655 |
+     |---------------------------------------------------------------|
+     |                           missin~l                            |
+     |                                  0                            |
+     +---------------------------------------------------------------+
+
+     +---------------------------------------------------------------+
+  2. |          variable | solid_~b | count_~l | percen~l | total_~l |
+     | solid_cancer_comb |      yes |     6915 |     28.0 |    24655 |
+     |---------------------------------------------------------------|
+     |                           missin~l                            |
+     |                                  0                            |
+     +---------------------------------------------------------------+
+(note: variable variable was str17, now str21 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
 (0 real changes made)
 percentstr generated as str4
@@ -259,15 +321,24 @@ percentstr generated as str4
 (0 real changes made)
 (0 real changes made)
 
-     +----------------------------------------------------------------------------+
-     |            variable   downs_~b   count_~l   percen~l   total_~l   missin~l |
-     |----------------------------------------------------------------------------|
-  1. | downs_syndrome_comb         no      17805       72.2      24655          0 |
-  2. | downs_syndrome_comb        yes       6850       27.8      24655          0 |
-     +----------------------------------------------------------------------------+
-(variable variable was str19, now str21 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta saved
+     +-----------------------------------------------------------------+
+  1. |            variable | downs_~b | count_~l | percen~l | total_~l |
+     | downs_syndrome_comb |       no |    17805 |     72.2 |    24655 |
+     |-----------------------------------------------------------------|
+     |                            missin~l                             |
+     |                                   0                             |
+     +-----------------------------------------------------------------+
+
+     +-----------------------------------------------------------------+
+  2. |            variable | downs_~b | count_~l | percen~l | total_~l |
+     | downs_syndrome_comb |      yes |     6850 |     27.8 |    24655 |
+     |-----------------------------------------------------------------|
+     |                            missin~l                             |
+     |                                   0                             |
+     +-----------------------------------------------------------------+
+(note: variable variable was str19, now str21 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
 (0 real changes made)
 percentstr generated as str4
@@ -283,9 +354,9 @@ percentstr was forced to string; some loss of information
   1. | hypertension         no      22165       89.9      24655          0 |
   2. | hypertension        yes       2490       10.1      24655          0 |
      +---------------------------------------------------------------------+
-(variable variable was str12, now str21 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta saved
+(note: variable variable was str12, now str21 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
 (0 real changes made)
 percentstr generated as str4
@@ -301,9 +372,9 @@ percentstr was forced to string; some loss of information
   1. | diabetes         no      22275       90.3      24655          0 |
   2. | diabetes        yes       2380        9.7      24655          0 |
      +-----------------------------------------------------------------+
-(variable variable was str8, now str21 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta saved
+(note: variable variable was str8, now str21 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
 (0 real changes made)
 percentstr generated as str4
@@ -312,32 +383,22 @@ percentstr generated as str4
 (0 real changes made)
 (0 real changes made)
 
-     +------------------------------------------------------------------------------------+
-     |                    variable   chroni~e   count_~l   percen~l   total_~l   missin~l |
-     |------------------------------------------------------------------------------------|
-  1. | chronic_respiratory_disease         no      22185       90.0      24655          0 |
-  2. | chronic_respiratory_disease        yes       2470       10.0      24655          0 |
-     +------------------------------------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta saved
-(0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
+     +--------------------------------------------------------------+
+  1. |                    variable | chroni~e | count_~l | percen~l |
+     | chronic_respiratory_disease |       no |    22185 |     90.0 |
+     |--------------------------------------------------------------|
+     |           total_~l           |           missin~l            |
+     |              24655           |                  0            |
+     +--------------------------------------------------------------+
 
-     +--------------------------------------------------------------------------------+
-     |                variable   chroni~e   count_~l   percen~l   total_~l   missin~l |
-     |--------------------------------------------------------------------------------|
-  1. | chronic_cardiac_disease         no      22205       90.1      24655          0 |
-  2. | chronic_cardiac_disease        yes       2450        9.9      24655          0 |
-     +--------------------------------------------------------------------------------+
-(variable variable was str23, now str27 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta saved
+     +--------------------------------------------------------------+
+  2. |                    variable | chroni~e | count_~l | percen~l |
+     | chronic_respiratory_disease |      yes |     2470 |     10.0 |
+     |--------------------------------------------------------------|
+     |           total_~l           |           missin~l            |
+     |              24655           |                  0            |
+     +--------------------------------------------------------------+
+file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
 (0 real changes made)
 percentstr generated as str4
@@ -347,15 +408,51 @@ percentstr was forced to string; some loss of information
 (0 real changes made)
 (0 real changes made)
 
-     +---------------------------------------------------------------------------------+
-     |                 variable   paxlov~d   count_~l   percen~l   total_~l   missin~l |
-     |---------------------------------------------------------------------------------|
-  1. | paxlovid_contraindicated         no      11435       46.4      24655          0 |
-  2. | paxlovid_contraindicated        yes      13220       53.6      24655          0 |
-     +---------------------------------------------------------------------------------+
-(variable variable was str24, now str27 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta saved
+     +---------------------------------------------------------------------+
+  1. |                variable | chroni~e | count_~l | percen~l | total_~l |
+     | chronic_cardiac_disease |       no |    22205 |     90.1 |    24655 |
+     |---------------------------------------------------------------------|
+     |                              missin~l                               |
+     |                                     0                               |
+     +---------------------------------------------------------------------+
+
+     +---------------------------------------------------------------------+
+  2. |                variable | chroni~e | count_~l | percen~l | total_~l |
+     | chronic_cardiac_disease |      yes |     2450 |      9.9 |    24655 |
+     |---------------------------------------------------------------------|
+     |                              missin~l                               |
+     |                                     0                               |
+     +---------------------------------------------------------------------+
+(note: variable variable was str23, now str27 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_all.dta saved
+(0 observations deleted)
+(0 real changes made)
+percentstr generated as str4
+percentstr was forced to string; some loss of information
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+
+     +----------------------------------------------------------------------+
+  1. |                 variable | paxlov~d | count_~l | percen~l | total_~l |
+     | paxlovid_contraindicated |       no |    11435 |     46.4 |    24655 |
+     |----------------------------------------------------------------------|
+     |                               missin~l                               |
+     |                                      0                               |
+     +----------------------------------------------------------------------+
+
+     +----------------------------------------------------------------------+
+  2. |                 variable | paxlov~d | count_~l | percen~l | total_~l |
+     | paxlovid_contraindicated |      yes |    13220 |     53.6 |    24655 |
+     |----------------------------------------------------------------------|
+     |                               missin~l                               |
+     |                                      0                               |
+     +----------------------------------------------------------------------+
+(note: variable variable was str24, now str27 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
 (0 real changes made)
 percentstr generated as str4
@@ -371,9 +468,9 @@ percentstr was forced to string; some loss of information
   1. | prior_covid         no      17280       70.1      24655          0 |
   2. | prior_covid        yes       7375       29.9      24655          0 |
      +--------------------------------------------------------------------+
-(variable variable was str11, now str27 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta saved
+(note: variable variable was str11, now str27 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
 (0 real changes made)
 percentstr generated as str4
@@ -383,18 +480,48 @@ percentstr was forced to string; some loss of information
 (0 real changes made)
 (0 real changes made)
 
-     +--------------------------------------------------------------------------------------------+
-     |           variable          vaccination_status   count_~l   percen~l   total_~l   missin~l |
-     |--------------------------------------------------------------------------------------------|
-  1. | vaccination_status               Un-vaccinated       4875       19.8      24655          0 |
-  2. | vaccination_status             One vaccination       2470       10.0      24655          0 |
-  3. | vaccination_status            Two vaccinations       2410        9.8      24655          0 |
-  4. | vaccination_status          Three vaccinations      12515       50.8      24655          0 |
-  5. | vaccination_status   Four or more vaccinations       2385        9.7      24655          0 |
-     +--------------------------------------------------------------------------------------------+
-(variable variable was str18, now str27 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta saved
+     +----------------------------------------------------------------------+
+  1. |           variable |        vaccination_status | count_~l | percen~l |
+     | vaccination_status |             Un-vaccinated |     4875 |     19.8 |
+     |----------------------------------------------------------------------|
+     |             total_~l             |             missin~l              |
+     |                24655             |                    0              |
+     +----------------------------------------------------------------------+
+
+     +----------------------------------------------------------------------+
+  2. |           variable |        vaccination_status | count_~l | percen~l |
+     | vaccination_status |           One vaccination |     2470 |     10.0 |
+     |----------------------------------------------------------------------|
+     |             total_~l             |             missin~l              |
+     |                24655             |                    0              |
+     +----------------------------------------------------------------------+
+
+     +----------------------------------------------------------------------+
+  3. |           variable |        vaccination_status | count_~l | percen~l |
+     | vaccination_status |          Two vaccinations |     2410 |      9.8 |
+     |----------------------------------------------------------------------|
+     |             total_~l             |             missin~l              |
+     |                24655             |                    0              |
+     +----------------------------------------------------------------------+
+
+     +----------------------------------------------------------------------+
+  4. |           variable |        vaccination_status | count_~l | percen~l |
+     | vaccination_status |        Three vaccinations |    12515 |     50.8 |
+     |----------------------------------------------------------------------|
+     |             total_~l             |             missin~l              |
+     |                24655             |                    0              |
+     +----------------------------------------------------------------------+
+
+     +----------------------------------------------------------------------+
+  5. |           variable |        vaccination_status | count_~l | percen~l |
+     | vaccination_status | Four or more vaccinations |     2385 |      9.7 |
+     |----------------------------------------------------------------------|
+     |             total_~l             |             missin~l              |
+     |                24655             |                    0              |
+     +----------------------------------------------------------------------+
+(note: variable variable was str18, now str27 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
 (0 real changes made)
 percentstr generated as str4
@@ -404,25 +531,84 @@ percentstr was forced to string; some loss of information
 (0 real changes made)
 (0 real changes made)
 
-     +-----------------------------------------------------------------------------------+
-     |   variable                 region_nhs   count_~l   percen~l   total_~l   missin~l |
-     |-----------------------------------------------------------------------------------|
-  1. | region_nhs                       East       2450        9.9      24660          0 |
-  2. | region_nhs              East Midlands       2540       10.3      24660          0 |
-  3. | region_nhs                     London       4990       20.2      24660          0 |
-  4. | region_nhs                 North East       2490       10.1      24660          0 |
-  5. | region_nhs                 North West       2495       10.1      24660          0 |
-     |-----------------------------------------------------------------------------------|
-  6. | region_nhs                 South East       2345        9.5      24660          0 |
-  7. | region_nhs                 South West       2415        9.8      24660          0 |
-  8. | region_nhs              West Midlands       2440        9.9      24660          0 |
-  9. | region_nhs   Yorkshire and The Humber       2495       10.1      24660          0 |
-     +-----------------------------------------------------------------------------------+
-(variable variable was str10, now str27 to accommodate using data's values)
-(variable categories was str24, now str25 to accommodate using data's values)
-(variable count_all was str4, now str5 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta saved
+     +------------------------------------------------------------------------+
+  1. |   variable |               region_nhs | count_~l | percen~l | total_~l |
+     | region_nhs |                     East |     2450 |      9.9 |    24660 |
+     |------------------------------------------------------------------------|
+     |                                missin~l                                |
+     |                                       0                                |
+     +------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------+
+  2. |   variable |               region_nhs | count_~l | percen~l | total_~l |
+     | region_nhs |            East Midlands |     2540 |     10.3 |    24660 |
+     |------------------------------------------------------------------------|
+     |                                missin~l                                |
+     |                                       0                                |
+     +------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------+
+  3. |   variable |               region_nhs | count_~l | percen~l | total_~l |
+     | region_nhs |                   London |     4990 |     20.2 |    24660 |
+     |------------------------------------------------------------------------|
+     |                                missin~l                                |
+     |                                       0                                |
+     +------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------+
+  4. |   variable |               region_nhs | count_~l | percen~l | total_~l |
+     | region_nhs |               North East |     2490 |     10.1 |    24660 |
+     |------------------------------------------------------------------------|
+     |                                missin~l                                |
+     |                                       0                                |
+     +------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------+
+  5. |   variable |               region_nhs | count_~l | percen~l | total_~l |
+     | region_nhs |               North West |     2495 |     10.1 |    24660 |
+     |------------------------------------------------------------------------|
+     |                                missin~l                                |
+     |                                       0                                |
+     +------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------+
+  6. |   variable |               region_nhs | count_~l | percen~l | total_~l |
+     | region_nhs |               South East |     2345 |      9.5 |    24660 |
+     |------------------------------------------------------------------------|
+     |                                missin~l                                |
+     |                                       0                                |
+     +------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------+
+  7. |   variable |               region_nhs | count_~l | percen~l | total_~l |
+     | region_nhs |               South West |     2415 |      9.8 |    24660 |
+     |------------------------------------------------------------------------|
+     |                                missin~l                                |
+     |                                       0                                |
+     +------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------+
+  8. |   variable |               region_nhs | count_~l | percen~l | total_~l |
+     | region_nhs |            West Midlands |     2440 |      9.9 |    24660 |
+     |------------------------------------------------------------------------|
+     |                                missin~l                                |
+     |                                       0                                |
+     +------------------------------------------------------------------------+
+
+     +------------------------------------------------------------------------+
+  9. |   variable |               region_nhs | count_~l | percen~l | total_~l |
+     | region_nhs | Yorkshire and The Humber |     2495 |     10.1 |    24660 |
+     |------------------------------------------------------------------------|
+     |                                missin~l                                |
+     |                                       0                                |
+     +------------------------------------------------------------------------+
+(note: variable variable was str10, now str27 to accommodate using data's
+       values)
+(note: variable categories was str24, now str25 to accommodate using data's
+       values)
+(note: variable count_all was str4, now str5 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_all.dta saved
 (1 missing value generated)
 (1 observation deleted)
 (0 real changes made)
@@ -433,20 +619,52 @@ percentstr was forced to string; some loss of information
 (0 real changes made)
 (0 real changes made)
 
-     +-------------------------------------------------------------------------+
-     | variable              imdq5   count_~l   percen~l   total_~l   missin~l |
-     |-------------------------------------------------------------------------|
-  1. |    imdq5   1 least deprived       4825       19.8      24660        245 |
-  2. |    imdq5                  2       4830       19.8      24660        245 |
-  3. |    imdq5                  3       4935       20.2      24660        245 |
-  4. |    imdq5                  4       4905       20.1      24660        245 |
-  5. |    imdq5    5 most deprived       4920       20.2      24660        245 |
-     +-------------------------------------------------------------------------+
-(variable variable was str5, now str27 to accommodate using data's values)
-(variable categories was str16, now str25 to accommodate using data's values)
-(variable count_all was str4, now str5 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta saved
+     +--------------------------------------------------------------+
+  1. | variable |            imdq5 | count_~l | percen~l | total_~l |
+     |    imdq5 | 1 least deprived |     4825 |     19.8 |    24660 |
+     |--------------------------------------------------------------|
+     |                           missin~l                           |
+     |                                245                           |
+     +--------------------------------------------------------------+
+
+     +--------------------------------------------------------------+
+  2. | variable |            imdq5 | count_~l | percen~l | total_~l |
+     |    imdq5 |                2 |     4830 |     19.8 |    24660 |
+     |--------------------------------------------------------------|
+     |                           missin~l                           |
+     |                                245                           |
+     +--------------------------------------------------------------+
+
+     +--------------------------------------------------------------+
+  3. | variable |            imdq5 | count_~l | percen~l | total_~l |
+     |    imdq5 |                3 |     4935 |     20.2 |    24660 |
+     |--------------------------------------------------------------|
+     |                           missin~l                           |
+     |                                245                           |
+     +--------------------------------------------------------------+
+
+     +--------------------------------------------------------------+
+  4. | variable |            imdq5 | count_~l | percen~l | total_~l |
+     |    imdq5 |                4 |     4905 |     20.1 |    24660 |
+     |--------------------------------------------------------------|
+     |                           missin~l                           |
+     |                                245                           |
+     +--------------------------------------------------------------+
+
+     +--------------------------------------------------------------+
+  5. | variable |            imdq5 | count_~l | percen~l | total_~l |
+     |    imdq5 |  5 most deprived |     4920 |     20.2 |    24660 |
+     |--------------------------------------------------------------|
+     |                           missin~l                           |
+     |                                245                           |
+     +--------------------------------------------------------------+
+(note: variable variable was str5, now str27 to accommodate using data's
+       values)
+(note: variable categories was str16, now str25 to accommodate using data's
+       values)
+(note: variable count_all was str4, now str5 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_all.dta saved
 (1 missing value generated)
 (1 observation deleted)
 (0 real changes made)
@@ -465,11 +683,13 @@ percentstr was forced to string; some loss of information
   3. | bmi_group    overweight       5775       24.9      24655       1475 |
   4. | bmi_group         obese       9365       40.4      24655       1475 |
      +---------------------------------------------------------------------+
-(variable variable was str9, now str27 to accommodate using data's values)
-(variable categories was str11, now str25 to accommodate using data's values)
-(variable count_all was str4, now str5 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta saved
+(note: variable variable was str9, now str27 to accommodate using data's
+       values)
+(note: variable categories was str11, now str25 to accommodate using data's
+       values)
+(note: variable count_all was str4, now str5 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_all.dta saved
 (1 missing value generated)
 (1 observation deleted)
 (0 real changes made)
@@ -487,11 +707,13 @@ percentstr generated as str4
   3. | ethnicity   South Asian        980       11.0      24655      15740 |
   4. | ethnicity         White       5910       66.3      24655      15740 |
      +---------------------------------------------------------------------+
-(variable variable was str9, now str27 to accommodate using data's values)
-(variable categories was str11, now str25 to accommodate using data's values)
-(variable count_all was str4, now str5 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta saved
+(note: variable variable was str9, now str27 to accommodate using data's
+       values)
+(note: variable categories was str11, now str25 to accommodate using data's
+       values)
+(note: variable count_all was str4, now str5 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
 (0 real changes made)
 percentstr generated as str4
@@ -506,11 +728,13 @@ percentstr generated as str4
   1. |      sex     Male      12090       49.0      24655          0 |
   2. |      sex   Female      12565       51.0      24655          0 |
      +---------------------------------------------------------------+
-(variable variable was str3, now str27 to accommodate using data's values)
-(variable categories was str6, now str25 to accommodate using data's values)
-(variable missing_all was str1, now str5 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta saved
+(note: variable variable was str3, now str27 to accommodate using data's
+       values)
+(note: variable categories was str6, now str25 to accommodate using data's
+       values)
+(note: variable missing_all was str1, now str5 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
 (0 real changes made)
 percentstr generated as str4
@@ -527,19 +751,22 @@ percentstr was forced to string; some loss of information
   2. | age_group      40-59       8160       33.1      24655          0 |
   3. | age_group       >=60       7490       30.4      24655          0 |
      +------------------------------------------------------------------+
-(variable variable was str9, now str27 to accommodate using data's values)
-(variable categories was str5, now str25 to accommodate using data's values)
-(variable count_all was str4, now str5 to accommodate using data's values)
-(variable missing_all was str1, now str5 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_all.dta saved
+(note: variable variable was str9, now str27 to accommodate using data's
+       values)
+(note: variable categories was str5, now str25 to accommodate using data's
+       values)
+(note: variable count_all was str4, now str5 to accommodate using data's
+       values)
+(note: variable missing_all was str1, now str5 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_all.dta saved
 
 . 
 . use "$projectdir/output/tables/baseline_table_redact_all.dta", clear
 
-. export excel "$projectdir/output/tables/baseline_table_redact_bydrug.xls", replace sheet("overall") keepcellfmt firstrow(variables)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseli
-> ne_table_redact_bydrug.xls saved
+. export excel "$projectdir/output/tables/baseline_table_redact_bydrug.xls", re
+> place sheet("overall") keepcellfmt firstrow(variables)
+file /workspace/output/tables/baseline_table_redact_bydrug.xls saved
 
 . 
 . **Catergorical table by drug subdiagnoses - tagged to above excel
@@ -554,7 +781,8 @@ file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety 
 
 . foreach i of local levels {
   2.         clear *
-  3.         save "$projectdir/output/tables/baseline_table_redact_`i'.dta", replace emptyok
+  3.         save "$projectdir/output/tables/baseline_table_redact_`i'.dta", re
+> place emptyok
   4.         di `index'
   5.         if `index'==0 {
   6.                 local col = word("`c(ALPHA)'", `index'+7)
@@ -581,16 +809,21 @@ file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety 
  27. 
 . use "$projectdir/output/data/main", clear
  28. decode drug, gen(drug_str)
- 29. foreach var of varlist downs_syndrome_comb solid_cancer_comb haem_disease_comb liver_disease_comb renal_disease_comb imid_on_drug_comb immunosupression_co
-> mb hiv_aids_comb organ_transplant_comb rare_neuro_comb diabetes chronic_cardiac_disease hypertension chronic_respiratory_disease prior_covid paxlovid_contrai
-> ndicated {
+ 29. foreach var of varlist downs_syndrome_comb solid_cancer_comb haem_disease_
+> comb liver_disease_comb renal_disease_comb imid_on_drug_comb immunosupression
+> _comb hiv_aids_comb organ_transplant_comb rare_neuro_comb diabetes chronic_ca
+> rdiac_disease hypertension chronic_respiratory_disease prior_covid paxlovid_c
+> ontraindicated {
  30.         recode `var' . = 0
  31.         label define `var'  1 "yes" 0 "no", replace
  32.         label values `var'  `var' 
  33. }
- 34. foreach var of varlist organ_transplant_comb hiv_aids_comb immunosupression_comb imid_on_drug_comb rare_neuro_comb renal_disease_comb liver_disease_comb h
-> aem_disease_comb solid_cancer_comb downs_syndrome_comb hypertension diabetes chronic_respiratory_disease chronic_cardiac_disease paxlovid_contraindicated  pr
-> ior_covid vaccination_status region_nhs imdq5 bmi_group ethnicity sex age_group{ 
+ 34. foreach var of varlist organ_transplant_comb hiv_aids_comb immunosupressio
+> n_comb imid_on_drug_comb rare_neuro_comb renal_disease_comb liver_disease_com
+> b haem_disease_comb solid_cancer_comb downs_syndrome_comb hypertension diabet
+> es chronic_respiratory_disease chronic_cardiac_disease paxlovid_contraindicat
+> ed  prior_covid vaccination_status region_nhs imdq5 bmi_group ethnicity sex a
+> ge_group{ 
  35.         preserve
  36.         keep if drug_str=="`i'"
  37.         contract `var'  
@@ -620,39 +853,39 @@ file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety 
  61.         list `var' count percent total missing
  62.         keep count percent total missing
  63.         order(count), first
- 64.         append using "$projectdir/output/tables/baseline_table_redact_`i'.dta"
- 65.         save "$projectdir/output/tables/baseline_table_redact_`i'.dta", replace
+ 64.         append using "$projectdir/output/tables/baseline_table_redact_`i'.
+> dta"
+ 65.         save "$projectdir/output/tables/baseline_table_redact_`i'.dta", re
+> place
  66.         restore
  67. }
  68. display `index'
  69. display "`col'"
  70. use "$projectdir/output/tables/baseline_table_redact_`i'.dta", clear
- 71. export excel "$projectdir/output/tables/baseline_table_redact_bydrug.xls", sheet("Overall", modify) cell("`col'1") keepcellfmt firstrow(variables)
+ 71. export excel "$projectdir/output/tables/baseline_table_redact_bydrug.xls",
+>  sheet("Overall", modify) cell("`col'1") keepcellfmt firstrow(variables)
  72. }
-(dataset contains 0 observations)
-(file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta not found)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta saved
+(note: dataset contains 0 observations)
+file /workspace/output/tables/baseline_table_redact_control.dta saved
 0
 G
 6
-(0 changes made to downs_syndrome_comb)
-(0 changes made to solid_cancer_comb)
-(0 changes made to haem_disease_comb)
-(0 changes made to liver_disease_comb)
-(0 changes made to renal_disease_comb)
-(0 changes made to imid_on_drug_comb)
-(0 changes made to immunosupression_comb)
-(0 changes made to hiv_aids_comb)
-(0 changes made to organ_transplant_comb)
-(0 changes made to rare_neuro_comb)
-(0 changes made to diabetes)
-(0 changes made to chronic_cardiac_disease)
-(0 changes made to hypertension)
-(0 changes made to chronic_respiratory_disease)
-(0 changes made to prior_covid)
-(0 changes made to paxlovid_contraindicated)
+(downs_syndrome_comb: 0 changes made)
+(solid_cancer_comb: 0 changes made)
+(haem_disease_comb: 0 changes made)
+(liver_disease_comb: 0 changes made)
+(renal_disease_comb: 0 changes made)
+(imid_on_drug_comb: 0 changes made)
+(immunosupression_comb: 0 changes made)
+(hiv_aids_comb: 0 changes made)
+(organ_transplant_comb: 0 changes made)
+(rare_neuro_comb: 0 changes made)
+(diabetes: 0 changes made)
+(chronic_cardiac_disease: 0 changes made)
+(hypertension: 0 changes made)
+(chronic_respiratory_disease: 0 changes made)
+(prior_covid: 0 changes made)
+(paxlovid_contraindicated: 0 changes made)
 (861 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -669,8 +902,7 @@ percentstr was forced to string; some loss of information
   1. |       no      14430       60.6      23795          0 |
   2. |      yes       9365       39.4      23795          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta saved
+file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -686,8 +918,7 @@ percentstr generated as str4
   1. |       no      18140       76.2      23795          0 |
   2. |      yes       5655       23.8      23795          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta saved
+file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -704,8 +935,7 @@ percentstr was forced to string; some loss of information
   1. |       no      19230       80.8      23795          0 |
   2. |      yes       4565       19.2      23795          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta saved
+file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -722,8 +952,7 @@ percentstr was forced to string; some loss of information
   1. |       no      14615       61.4      23795          0 |
   2. |      yes       9180       38.6      23795          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta saved
+file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -739,8 +968,7 @@ percentstr generated as str4
   1. |       no       8780       36.9      23790          0 |
   2. |      yes      15010       63.1      23790          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta saved
+file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -757,8 +985,7 @@ percentstr was forced to string; some loss of information
   1. |       no      13655       57.4      23795          0 |
   2. |      yes      10140       42.6      23795          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta saved
+file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -774,8 +1001,7 @@ percentstr generated as str4
   1. |       no      18065       75.9      23795          0 |
   2. |      yes       5730       24.1      23795          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta saved
+file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -791,8 +1017,7 @@ percentstr generated as str4
   1. |       no       9050       38.0      23790          0 |
   2. |      yes      14740       62.0      23790          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta saved
+file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -809,8 +1034,7 @@ percentstr was forced to string; some loss of information
   1. |       no      17160       72.1      23795          0 |
   2. |      yes       6635       27.9      23795          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta saved
+file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -827,8 +1051,7 @@ percentstr was forced to string; some loss of information
   1. |       no      17195       72.3      23790          0 |
   2. |      yes       6595       27.7      23790          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta saved
+file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -844,8 +1067,7 @@ percentstr generated as str4
   1. |       no      21405       90.0      23795          0 |
   2. |      yes       2390       10.0      23795          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta saved
+file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -862,8 +1084,7 @@ percentstr was forced to string; some loss of information
   1. |       no      21495       90.3      23795          0 |
   2. |      yes       2300        9.7      23795          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta saved
+file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -879,8 +1100,7 @@ percentstr generated as str4
   1. |       no      21410       90.0      23795          0 |
   2. |      yes       2385       10.0      23795          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta saved
+file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -897,8 +1117,7 @@ percentstr was forced to string; some loss of information
   1. |       no      21440       90.1      23795          0 |
   2. |      yes       2355        9.9      23795          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta saved
+file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -915,8 +1134,7 @@ percentstr was forced to string; some loss of information
   1. |       no      11015       46.3      23795          0 |
   2. |      yes      12780       53.7      23795          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta saved
+file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -933,8 +1151,7 @@ percentstr was forced to string; some loss of information
   1. |       no      16670       70.1      23795          0 |
   2. |      yes       7125       29.9      23795          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta saved
+file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -954,8 +1171,7 @@ percentstr was forced to string; some loss of information
   4. |        Three vaccinations      12070       50.7      23795          0 |
   5. | Four or more vaccinations       2310        9.7      23795          0 |
      +-----------------------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta saved
+file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -980,9 +1196,9 @@ percentstr was forced to string; some loss of information
   8. |            West Midlands       2360        9.9      23795          0 |
   9. | Yorkshire and The Humber       2400       10.1      23795          0 |
      +----------------------------------------------------------------------+
-(variable count_control was str4, now str5 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta saved
+(note: variable count_control was str4, now str5 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (1 missing value generated)
 (1 observation deleted)
@@ -1003,9 +1219,9 @@ percentstr was forced to string; some loss of information
   4. |                4       4725       20.0      23800        230 |
   5. |  5 most deprived       4745       20.1      23800        230 |
      +--------------------------------------------------------------+
-(variable count_control was str4, now str5 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta saved
+(note: variable count_control was str4, now str5 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (1 missing value generated)
 (1 observation deleted)
@@ -1025,9 +1241,9 @@ percentstr was forced to string; some loss of information
   3. |  overweight       5595       25.0      23795       1420 |
   4. |       obese       9035       40.4      23795       1420 |
      +---------------------------------------------------------+
-(variable count_control was str4, now str5 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta saved
+(note: variable count_control was str4, now str5 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (1 missing value generated)
 (1 observation deleted)
@@ -1046,9 +1262,9 @@ percentstr generated as str4
   3. | South Asian        945       11.0      23795      15225 |
   4. |       White       5690       66.4      23795      15225 |
      +---------------------------------------------------------+
-(variable count_control was str4, now str5 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta saved
+(note: variable count_control was str4, now str5 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1064,9 +1280,9 @@ percentstr generated as str4
   1. |   Male      11665       49.0      23795          0 |
   2. | Female      12130       51.0      23795          0 |
      +----------------------------------------------------+
-(variable missing_control was str1, now str5 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta saved
+(note: variable missing_control was str1, now str5 to accommodate using
+       data's values)
+file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1084,38 +1300,35 @@ percentstr was forced to string; some loss of information
   2. |    40-59       7890       33.2      23795          0 |
   3. |     >=60       7195       30.2      23795          0 |
      +------------------------------------------------------+
-(variable count_control was str4, now str5 to accommodate using data's values)
-(variable missing_control was str1, now str5 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_control.dta saved
+(note: variable count_control was str4, now str5 to accommodate using data's
+       values)
+(note: variable missing_control was str1, now str5 to accommodate using
+       data's values)
+file /workspace/output/tables/baseline_table_redact_control.dta saved
 6
 G
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseli
-> ne_table_redact_bydrug.xls saved
-(dataset contains 0 observations)
-(file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta not found)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta saved
+file /workspace/output/tables/baseline_table_redact_bydrug.xls saved
+(note: dataset contains 0 observations)
+file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 6
 K
 10
-(0 changes made to downs_syndrome_comb)
-(0 changes made to solid_cancer_comb)
-(0 changes made to haem_disease_comb)
-(0 changes made to liver_disease_comb)
-(0 changes made to renal_disease_comb)
-(0 changes made to imid_on_drug_comb)
-(0 changes made to immunosupression_comb)
-(0 changes made to hiv_aids_comb)
-(0 changes made to organ_transplant_comb)
-(0 changes made to rare_neuro_comb)
-(0 changes made to diabetes)
-(0 changes made to chronic_cardiac_disease)
-(0 changes made to hypertension)
-(0 changes made to chronic_respiratory_disease)
-(0 changes made to prior_covid)
-(0 changes made to paxlovid_contraindicated)
+(downs_syndrome_comb: 0 changes made)
+(solid_cancer_comb: 0 changes made)
+(haem_disease_comb: 0 changes made)
+(liver_disease_comb: 0 changes made)
+(renal_disease_comb: 0 changes made)
+(imid_on_drug_comb: 0 changes made)
+(immunosupression_comb: 0 changes made)
+(hiv_aids_comb: 0 changes made)
+(organ_transplant_comb: 0 changes made)
+(rare_neuro_comb: 0 changes made)
+(diabetes: 0 changes made)
+(chronic_cardiac_disease: 0 changes made)
+(hypertension: 0 changes made)
+(chronic_respiratory_disease: 0 changes made)
+(prior_covid: 0 changes made)
+(paxlovid_contraindicated: 0 changes made)
 (24,376 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1131,8 +1344,7 @@ percentstr generated as str4
   1. |       no        175       62.5        280          0 |
   2. |      yes        105       37.5        280          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta saved
+file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1149,8 +1361,7 @@ percentstr was forced to string; some loss of information
   1. |       no        215       76.8        280          0 |
   2. |      yes         65       23.2        280          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta saved
+file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1167,8 +1378,7 @@ percentstr was forced to string; some loss of information
   1. |       no        215       76.8        280          0 |
   2. |      yes         65       23.2        280          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta saved
+file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1185,8 +1395,7 @@ percentstr was forced to string; some loss of information
   1. |       no        170       60.7        280          0 |
   2. |      yes        110       39.3        280          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta saved
+file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1202,8 +1411,7 @@ percentstr generated as str4
   1. |       no         95       34.5        275          0 |
   2. |      yes        180       65.5        275          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta saved
+file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1220,8 +1428,7 @@ percentstr was forced to string; some loss of information
   1. |       no        160       57.1        280          0 |
   2. |      yes        120       42.9        280          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta saved
+file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1238,8 +1445,7 @@ percentstr was forced to string; some loss of information
   1. |       no        215       76.8        280          0 |
   2. |      yes         65       23.2        280          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta saved
+file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1256,8 +1462,7 @@ percentstr was forced to string; some loss of information
   1. |       no        110       39.3        280          0 |
   2. |      yes        170       60.7        280          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta saved
+file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1273,8 +1478,7 @@ percentstr generated as str4
   1. |       no        190       67.9        280          0 |
   2. |      yes         90       32.1        280          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta saved
+file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1290,8 +1494,7 @@ percentstr generated as str4
   1. |       no        205       73.2        280          0 |
   2. |      yes         75       26.8        280          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta saved
+file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1308,8 +1511,7 @@ percentstr was forced to string; some loss of information
   1. |       no        250       89.3        280          0 |
   2. |      yes         30       10.7        280          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta saved
+file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1326,8 +1528,7 @@ percentstr was forced to string; some loss of information
   1. |       no        250       89.3        280          0 |
   2. |      yes         30       10.7        280          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta saved
+file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1343,8 +1544,7 @@ percentstr generated as str4
   1. |       no        245       87.5        280          0 |
   2. |      yes         35       12.5        280          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta saved
+file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1360,8 +1560,7 @@ percentstr generated as str4
   1. |       no        245       87.5        280          0 |
   2. |      yes         35       12.5        280          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta saved
+file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1378,8 +1577,7 @@ percentstr was forced to string; some loss of information
   1. |       no        135       48.2        280          0 |
   2. |      yes        145       51.8        280          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta saved
+file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1395,8 +1593,7 @@ percentstr generated as str4
   1. |       no        205       73.2        280          0 |
   2. |      yes         75       26.8        280          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta saved
+file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1415,8 +1612,7 @@ percentstr generated as str4
   4. |        Three vaccinations        140       49.1        285          0 |
   5. | Four or more vaccinations         25        8.8        285          0 |
      +-----------------------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta saved
+file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1441,9 +1637,9 @@ percentstr was forced to string; some loss of information
   8. |            West Midlands         25        8.9        280          0 |
   9. | Yorkshire and The Humber         40       14.3        280          0 |
      +----------------------------------------------------------------------+
-(variable count_molnupiravir was str2, now str3 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta saved
+(note: variable count_molnupiravir was str2, now str3 to accommodate using
+       data's values)
+file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (1 missing value generated)
 (1 observation deleted)
@@ -1464,9 +1660,9 @@ percentstr was forced to string; some loss of information
   4. |                4         60       21.4        285          - |
   5. |  5 most deprived         50       17.9        285          - |
      +--------------------------------------------------------------+
-(variable count_molnupiravir was str2, now str3 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta saved
+(note: variable count_molnupiravir was str2, now str3 to accommodate using
+       data's values)
+file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (1 missing value generated)
 (1 observation deleted)
@@ -1485,9 +1681,9 @@ percentstr generated as str4
   3. |  overweight         60       23.1        280         20 |
   4. |       obese         95       36.5        280         20 |
      +---------------------------------------------------------+
-(variable count_molnupiravir was str2, now str3 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta saved
+(note: variable count_molnupiravir was str2, now str3 to accommodate using
+       data's values)
+file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (1 missing value generated)
 (1 observation deleted)
@@ -1506,9 +1702,9 @@ percentstr generated as str4
   3. | South Asian         15       12.0        275        150 |
   4. |       White         80       64.0        275        150 |
      +---------------------------------------------------------+
-(variable count_molnupiravir was str2, now str3 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta saved
+(note: variable count_molnupiravir was str2, now str3 to accommodate using
+       data's values)
+file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1525,9 +1721,9 @@ percentstr was forced to string; some loss of information
   1. |   Male        135       48.2        280          0 |
   2. | Female        145       51.8        280          0 |
      +----------------------------------------------------+
-(variable missing_molnupiravir was str1, now str3 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta saved
+(note: variable missing_molnupiravir was str1, now str3 to accommodate using
+       data's values)
+file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1545,37 +1741,33 @@ percentstr was forced to string; some loss of information
   2. |    40-59         80       28.6        280          0 |
   3. |     >=60        110       39.3        280          0 |
      +------------------------------------------------------+
-(variable missing_molnupiravir was str1, now str3 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_molnupiravir.dta saved
+(note: variable missing_molnupiravir was str1, now str3 to accommodate using
+       data's values)
+file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 10
 K
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseli
-> ne_table_redact_bydrug.xls saved
-(dataset contains 0 observations)
-(file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta not found)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta saved
+file /workspace/output/tables/baseline_table_redact_bydrug.xls saved
+(note: dataset contains 0 observations)
+file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 10
 O
 14
-(0 changes made to downs_syndrome_comb)
-(0 changes made to solid_cancer_comb)
-(0 changes made to haem_disease_comb)
-(0 changes made to liver_disease_comb)
-(0 changes made to renal_disease_comb)
-(0 changes made to imid_on_drug_comb)
-(0 changes made to immunosupression_comb)
-(0 changes made to hiv_aids_comb)
-(0 changes made to organ_transplant_comb)
-(0 changes made to rare_neuro_comb)
-(0 changes made to diabetes)
-(0 changes made to chronic_cardiac_disease)
-(0 changes made to hypertension)
-(0 changes made to chronic_respiratory_disease)
-(0 changes made to prior_covid)
-(0 changes made to paxlovid_contraindicated)
+(downs_syndrome_comb: 0 changes made)
+(solid_cancer_comb: 0 changes made)
+(haem_disease_comb: 0 changes made)
+(liver_disease_comb: 0 changes made)
+(renal_disease_comb: 0 changes made)
+(imid_on_drug_comb: 0 changes made)
+(immunosupression_comb: 0 changes made)
+(hiv_aids_comb: 0 changes made)
+(organ_transplant_comb: 0 changes made)
+(rare_neuro_comb: 0 changes made)
+(diabetes: 0 changes made)
+(chronic_cardiac_disease: 0 changes made)
+(hypertension: 0 changes made)
+(chronic_respiratory_disease: 0 changes made)
+(prior_covid: 0 changes made)
+(paxlovid_contraindicated: 0 changes made)
 (24,349 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1592,8 +1784,7 @@ percentstr was forced to string; some loss of information
   1. |       no        200       65.6        305          0 |
   2. |      yes        105       34.4        305          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta saved
+file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1609,8 +1800,7 @@ percentstr generated as str4
   1. |       no        235       77.0        305          0 |
   2. |      yes         70       23.0        305          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta saved
+file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1626,8 +1816,7 @@ percentstr generated as str4
   1. |       no        260       85.2        305          0 |
   2. |      yes         45       14.8        305          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta saved
+file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1644,8 +1833,7 @@ percentstr was forced to string; some loss of information
   1. |       no        170       55.7        305          0 |
   2. |      yes        135       44.3        305          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta saved
+file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1662,8 +1850,7 @@ percentstr was forced to string; some loss of information
   1. |       no        120       38.7        310          0 |
   2. |      yes        190       61.3        310          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta saved
+file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1680,8 +1867,7 @@ percentstr was forced to string; some loss of information
   1. |       no        195       63.9        305          0 |
   2. |      yes        110       36.1        305          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta saved
+file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1697,8 +1883,7 @@ percentstr generated as str4
   1. |       no        230       75.4        305          0 |
   2. |      yes         75       24.6        305          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta saved
+file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1715,8 +1900,7 @@ percentstr was forced to string; some loss of information
   1. |       no        135       44.3        305          0 |
   2. |      yes        170       55.7        305          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta saved
+file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1733,8 +1917,7 @@ percentstr was forced to string; some loss of information
   1. |       no        195       63.9        305          0 |
   2. |      yes        110       36.1        305          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta saved
+file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1751,8 +1934,7 @@ percentstr was forced to string; some loss of information
   1. |       no        220       72.1        305          0 |
   2. |      yes         85       27.9        305          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta saved
+file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1768,8 +1950,7 @@ percentstr generated as str4
   1. |       no        270       88.5        305          0 |
   2. |      yes         35       11.5        305          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta saved
+file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1786,8 +1967,7 @@ percentstr was forced to string; some loss of information
   1. |       no        280       91.8        305          0 |
   2. |      yes         25        8.2        305          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta saved
+file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1804,8 +1984,7 @@ percentstr was forced to string; some loss of information
   1. |       no        285       93.4        305          0 |
   2. |      yes         20        6.6        305          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta saved
+file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1822,8 +2001,7 @@ percentstr was forced to string; some loss of information
   1. |       no        280       91.8        305          0 |
   2. |      yes         25        8.2        305          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta saved
+file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1839,8 +2017,7 @@ percentstr generated as str4
   1. |       no        160       52.5        305          0 |
   2. |      yes        145       47.5        305          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta saved
+file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1856,8 +2033,7 @@ percentstr generated as str4
   1. |       no        210       68.9        305          0 |
   2. |      yes         95       31.1        305          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta saved
+file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1877,8 +2053,7 @@ percentstr was forced to string; some loss of information
   4. |        Three vaccinations        160       51.6        310          0 |
   5. | Four or more vaccinations         30        9.7        310          0 |
      +-----------------------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta saved
+file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1903,9 +2078,9 @@ percentstr was forced to string; some loss of information
   8. |            West Midlands         25        8.2        305          0 |
   9. | Yorkshire and The Humber         35       11.5        305          0 |
      +----------------------------------------------------------------------+
-(variable count_paxlovid was str2, now str3 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta saved
+(note: variable count_paxlovid was str2, now str3 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (1 missing value generated)
 (1 observation deleted)
@@ -1926,9 +2101,9 @@ percentstr was forced to string; some loss of information
   4. |                4         60       19.7        310          - |
   5. |  5 most deprived         60       19.7        310          - |
      +--------------------------------------------------------------+
-(variable count_paxlovid was str2, now str3 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta saved
+(note: variable count_paxlovid was str2, now str3 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (1 missing value generated)
 (1 observation deleted)
@@ -1947,8 +2122,7 @@ percentstr generated as str4
   3. |  overweight         65       22.8        305         20 |
   4. |       obese        120       42.1        305         20 |
      +---------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta saved
+file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (1 missing value generated)
 (1 observation deleted)
@@ -1967,9 +2141,9 @@ percentstr generated as str4
   3. | South Asian         10        8.0        305        180 |
   4. |       White         85       68.0        305        180 |
      +---------------------------------------------------------+
-(variable count_paxlovid was str2, now str3 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta saved
+(note: variable count_paxlovid was str2, now str3 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -1986,9 +2160,9 @@ percentstr was forced to string; some loss of information
   1. |   Male        150       49.2        305          0 |
   2. | Female        155       50.8        305          0 |
      +----------------------------------------------------+
-(variable missing_paxlovid was str1, now str3 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta saved
+(note: variable missing_paxlovid was str1, now str3 to accommodate using
+       data's values)
+file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -2005,37 +2179,33 @@ percentstr generated as str4
   2. |    40-59        105       34.4        305          0 |
   3. |     >=60         95       31.1        305          0 |
      +------------------------------------------------------+
-(variable missing_paxlovid was str1, now str3 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_paxlovid.dta saved
+(note: variable missing_paxlovid was str1, now str3 to accommodate using
+       data's values)
+file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 14
 O
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseli
-> ne_table_redact_bydrug.xls saved
-(dataset contains 0 observations)
-(file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta not found)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta saved
+file /workspace/output/tables/baseline_table_redact_bydrug.xls saved
+(note: dataset contains 0 observations)
+file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 14
 S
 18
-(0 changes made to downs_syndrome_comb)
-(0 changes made to solid_cancer_comb)
-(0 changes made to haem_disease_comb)
-(0 changes made to liver_disease_comb)
-(0 changes made to renal_disease_comb)
-(0 changes made to imid_on_drug_comb)
-(0 changes made to immunosupression_comb)
-(0 changes made to hiv_aids_comb)
-(0 changes made to organ_transplant_comb)
-(0 changes made to rare_neuro_comb)
-(0 changes made to diabetes)
-(0 changes made to chronic_cardiac_disease)
-(0 changes made to hypertension)
-(0 changes made to chronic_respiratory_disease)
-(0 changes made to prior_covid)
-(0 changes made to paxlovid_contraindicated)
+(downs_syndrome_comb: 0 changes made)
+(solid_cancer_comb: 0 changes made)
+(haem_disease_comb: 0 changes made)
+(liver_disease_comb: 0 changes made)
+(renal_disease_comb: 0 changes made)
+(imid_on_drug_comb: 0 changes made)
+(immunosupression_comb: 0 changes made)
+(hiv_aids_comb: 0 changes made)
+(organ_transplant_comb: 0 changes made)
+(rare_neuro_comb: 0 changes made)
+(diabetes: 0 changes made)
+(chronic_cardiac_disease: 0 changes made)
+(hypertension: 0 changes made)
+(chronic_respiratory_disease: 0 changes made)
+(prior_covid: 0 changes made)
+(paxlovid_contraindicated: 0 changes made)
 (24,379 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -2051,8 +2221,7 @@ percentstr generated as str4
   1. |       no        175       63.6        275          0 |
   2. |      yes        100       36.4        275          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta saved
+file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -2069,8 +2238,7 @@ percentstr was forced to string; some loss of information
   1. |       no        220       78.6        280          0 |
   2. |      yes         60       21.4        280          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta saved
+file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -2086,8 +2254,7 @@ percentstr generated as str4
   1. |       no        235       83.9        280          0 |
   2. |      yes         45       16.1        280          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta saved
+file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -2104,8 +2271,7 @@ percentstr was forced to string; some loss of information
   1. |       no        160       58.2        275          0 |
   2. |      yes        115       41.8        275          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta saved
+file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -2121,8 +2287,7 @@ percentstr generated as str4
   1. |       no         95       34.5        275          0 |
   2. |      yes        180       65.5        275          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta saved
+file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -2139,8 +2304,7 @@ percentstr was forced to string; some loss of information
   1. |       no        160       57.1        280          0 |
   2. |      yes        120       42.9        280          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta saved
+file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -2156,8 +2320,7 @@ percentstr generated as str4
   1. |       no        200       72.7        275          0 |
   2. |      yes         75       27.3        275          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta saved
+file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -2173,8 +2336,7 @@ percentstr generated as str4
   1. |       no        100       35.7        280          0 |
   2. |      yes        180       64.3        280          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta saved
+file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -2190,8 +2352,7 @@ percentstr generated as str4
   1. |       no        195       70.9        275          0 |
   2. |      yes         80       29.1        275          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta saved
+file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -2207,8 +2368,7 @@ percentstr generated as str4
   1. |       no        185       67.3        275          0 |
   2. |      yes         90       32.7        275          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta saved
+file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -2225,8 +2385,7 @@ percentstr was forced to string; some loss of information
   1. |       no        240       87.3        275          0 |
   2. |      yes         35       12.7        275          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta saved
+file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -2242,8 +2401,7 @@ percentstr generated as str4
   1. |       no        250       90.9        275          0 |
   2. |      yes         25        9.1        275          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta saved
+file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -2260,8 +2418,7 @@ percentstr was forced to string; some loss of information
   1. |       no        245       89.1        275          0 |
   2. |      yes         30       10.9        275          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta saved
+file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -2278,8 +2435,7 @@ percentstr was forced to string; some loss of information
   1. |       no        245       89.1        275          0 |
   2. |      yes         30       10.9        275          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta saved
+file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -2295,8 +2451,7 @@ percentstr generated as str4
   1. |       no        125       45.5        275          0 |
   2. |      yes        150       54.5        275          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta saved
+file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -2313,8 +2468,7 @@ percentstr was forced to string; some loss of information
   1. |       no        190       69.1        275          0 |
   2. |      yes         85       30.9        275          0 |
      +------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta saved
+file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -2334,8 +2488,7 @@ percentstr was forced to string; some loss of information
   4. |        Three vaccinations        145       52.7        275          0 |
   5. | Four or more vaccinations         30       10.9        275          0 |
      +-----------------------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta saved
+file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -2360,9 +2513,9 @@ percentstr was forced to string; some loss of information
   8. |            West Midlands         35       12.7        275          0 |
   9. | Yorkshire and The Humber         20        7.3        275          0 |
      +----------------------------------------------------------------------+
-(variable count_sotrovimab was str2, now str3 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta saved
+(note: variable count_sotrovimab was str2, now str3 to accommodate using
+       data's values)
+file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (1 missing value generated)
 (1 observation deleted)
@@ -2383,9 +2536,9 @@ percentstr was forced to string; some loss of information
   4. |                4         60       22.2        275          - |
   5. |  5 most deprived         65       24.1        275          - |
      +--------------------------------------------------------------+
-(variable count_sotrovimab was str2, now str3 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta saved
+(note: variable count_sotrovimab was str2, now str3 to accommodate using
+       data's values)
+file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (1 missing value generated)
 (1 observation deleted)
@@ -2405,8 +2558,7 @@ percentstr was forced to string; some loss of information
   3. |  overweight         55       21.2        275         15 |
   4. |       obese        115       44.2        275         15 |
      +---------------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta saved
+file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (1 missing value generated)
 (1 observation deleted)
@@ -2426,9 +2578,9 @@ percentstr was forced to string; some loss of information
   3. | South Asian         10       11.1        275        185 |
   4. |       White         55       61.1        275        185 |
      +---------------------------------------------------------+
-(variable count_sotrovimab was str2, now str3 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta saved
+(note: variable count_sotrovimab was str2, now str3 to accommodate using
+       data's values)
+file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -2445,9 +2597,9 @@ percentstr was forced to string; some loss of information
   1. |   Male        145       51.8        280          0 |
   2. | Female        135       48.2        280          0 |
      +----------------------------------------------------+
-(variable missing_sotrovimab was str1, now str3 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta saved
+(note: variable missing_sotrovimab was str1, now str3 to accommodate using
+       data's values)
+file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
 (0 real changes made)
@@ -2465,35 +2617,33 @@ percentstr was forced to string; some loss of information
   2. |    40-59         85       30.4        280          0 |
   3. |     >=60         95       33.9        280          0 |
      +------------------------------------------------------+
-(variable missing_sotrovimab was str1, now str3 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_sotrovimab.dta saved
+(note: variable missing_sotrovimab was str1, now str3 to accommodate using
+       data's values)
+file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 18
 S
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseli
-> ne_table_redact_bydrug.xls saved
+file /workspace/output/tables/baseline_table_redact_bydrug.xls saved
 
 .         
 . *Output tables as CSVs           
-. import excel "$projectdir/output/tables/baseline_table_redact_bydrug.xls", clear
+. import excel "$projectdir/output/tables/baseline_table_redact_bydrug.xls", cl
+> ear
 (22 vars, 65 obs)
 
-. export delimited using "$projectdir/output/tables/baseline_table_redact_bydrug.csv" , replace           
-(file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_bydrug.csv not found)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseli
-> ne_table_redact_bydrug.csv saved
+. export delimited using "$projectdir/output/tables/baseline_table_redact_bydru
+> g.csv" , replace           
+(note: file /workspace/output/tables/baseline_table_redact_bydrug.csv not found
+> )
+file /workspace/output/tables/baseline_table_redact_bydrug.csv saved
 
 .         
 . **2. Continous variables
 . clear *
 
-. save "$projectdir/output/tables/baseline_table_redact_mean.dta", replace emptyok
-(dataset contains 0 observations)
-(file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_mean.dta not found)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_mean.dta saved
+. save "$projectdir/output/tables/baseline_table_redact_mean.dta", replace empt
+> yok
+(note: dataset contains 0 observations)
+file /workspace/output/tables/baseline_table_redact_mean.dta saved
 
 . use "$projectdir/output/data/main", clear
 
@@ -2501,7 +2651,8 @@ file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety 
 
 . foreach var of varlist age {
   2.         preserve
-  3.         collapse (count) "`var'_count"=`var' (mean) mean=`var' (sd) stdev=`var', by(drug_str)
+  3.         collapse (count) "`var'_count"=`var' (mean) mean=`var' (sd) stdev=
+> `var', by(drug_str)
   4.         gen variable = "`var'"
   5.         rename *count freq
   6.         gen count = round(freq, 5)
@@ -2517,11 +2668,14 @@ file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety 
  16.         rename stdevstr stdev
  17.     order variable drug_str count mean stdev
  18.         list variable drug_str count mean stdev
- 19.         append using "$projectdir/output/tables/baseline_table_redact_mean.dta"
- 20.         save "$projectdir/output/tables/baseline_table_redact_mean.dta", replace
+ 19.         append using "$projectdir/output/tables/baseline_table_redact_mean
+> .dta"
+ 20.         save "$projectdir/output/tables/baseline_table_redact_mean.dta", r
+> eplace
  21.         restore
  22.         preserve
- 23.         collapse (count) "`var'_count"=`var' (mean) mean=`var' (sd) stdev=`var'
+ 23.         collapse (count) "`var'_count"=`var' (mean) mean=`var' (sd) stdev=
+> `var'
  24.         gen variable = "`var'"
  25.         rename *count freq
  26.         gen count = round(freq, 5)
@@ -2538,8 +2692,10 @@ file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety 
  37.         gen drug_str = "all"
  38.     order variable drug_str count mean stdev
  39.         list variable drug_str count mean stdev
- 40.         append using "$projectdir/output/tables/baseline_table_redact_mean.dta"
- 41.         save "$projectdir/output/tables/baseline_table_redact_mean.dta", replace
+ 40.         append using "$projectdir/output/tables/baseline_table_redact_mean
+> .dta"
+ 41.         save "$projectdir/output/tables/baseline_table_redact_mean.dta", r
+> eplace
  42.         restore
  43. }       
 (0 real changes made)
@@ -2558,8 +2714,7 @@ stdevstr was forced to string; some loss of information
   3. |      age       paxlovid     305   49.4    19.1 |
   4. |      age     sotrovimab     275   49.3    19.1 |
      +------------------------------------------------+
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_mean.dta saved
+file /workspace/output/tables/baseline_table_redact_mean.dta saved
 (0 real changes made)
 meanstr generated as str4
 meanstr was forced to string; some loss of information
@@ -2573,27 +2728,24 @@ stdevstr was forced to string; some loss of information
      |--------------------------------------------|
   1. |      age        all   24655   48.9    19.1 |
      +--------------------------------------------+
-(variable drug_str was str3, now str12 to accommodate using data's values)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_mean.dta saved
+(note: variable drug_str was str3, now str12 to accommodate using data's
+       values)
+file /workspace/output/tables/baseline_table_redact_mean.dta saved
 
 . use "$projectdir/output/tables/baseline_table_redact_mean.dta", clear
 
 . save "$projectdir/output/tables/baseline_table_redact_mean.dta", replace
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_mean.dta saved
+file /workspace/output/tables/baseline_table_redact_mean.dta saved
 
-. export delimited using "$projectdir/output/tables/baseline_table_redact_mean.csv", replace              
-(file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseline_table_redact_mean.csv not found)
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/tables/baseli
-> ne_table_redact_mean.csv saved
+. export delimited using "$projectdir/output/tables/baseline_table_redact_mean.
+> csv", replace              
+(note: file /workspace/output/tables/baseline_table_redact_mean.csv not found)
+file /workspace/output/tables/baseline_table_redact_mean.csv saved
 
 . 
 . log close
       name:  <unnamed>
-       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/logs/redacte
-> d_table.log
+       log:  /workspace/logs/redacted_table.log
   log type:  text
- closed on:   6 Sep 2023, 11:38:55
----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ closed on:   6 Sep 2023, 12:04:32
+-------------------------------------------------------------------------------

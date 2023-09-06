@@ -112,11 +112,11 @@ actions:
         data: output/tables/cox_propensity.csv 
         histogram_agesex: output/figures/histogram_agesex.svg
         histogram_adj: output/figures/histogram_adj*.svg
-        histogram_adj2: output/figures/histogram_fulladj1*.svg
-        histogram_adj3: output/figures/histogram_fulladj2*.svg
-        match_drug1: output/figures/match_fulladj2_drug1*.svg
-        match_drug2: output/figures/match_fulladj2_drug2*.svg
-        match_drug3: output/figures/match_fulladj2_drug3*.svg
+        histogram_adj2: output/figures/histogram_adj2*.svg
+        histogram_adj3: output/figures/histogram_adj3*.svg
+        match_drug1: output/figures/match_adj_drug1*.svg
+        match_drug2: output/figures/match_adj_drug2*.svg
+        match_drug3: output/figures/match_adj_drug3*.svg
         data2: output/tables/cox_propensity_common.csv 
         
   preceed_rate:

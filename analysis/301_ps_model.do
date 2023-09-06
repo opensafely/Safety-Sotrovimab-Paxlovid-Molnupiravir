@@ -82,7 +82,7 @@ hr_sot lc_sot uc_sot hr_pax lc_pax uc_pax hr_mol lc_mol uc_mol ///
 using "$projectdir/output/tables/cox_propensity", replace	
 	
 
-foreach model in agesex adj adj2 adj3  {	
+foreach model in agesex adj2 adj3 adj {	
 	* control V all drug
 	gen control = 1 if drug==0
 	replace control = 0 if drug>0
