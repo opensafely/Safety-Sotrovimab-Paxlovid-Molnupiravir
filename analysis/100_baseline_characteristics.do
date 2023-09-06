@@ -12,7 +12,7 @@
 
 ****************************************************************************************************************
 **Set filepaths
-//global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+// global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
 global projectdir `c(pwd)'
 di "$projectdir"
 capture mkdir "$projectdir/output/data"
@@ -36,14 +36,11 @@ use "$projectdir/output/data/main", clear
 table1_mc, by(drug) total(before) mis onecol iqrmiddle(",")  ///
 		vars(age contn %5.1f \ ///
 			age_group cat %5.1f \ ///	
-			bmi contn %5.1f \	///		
 			bmi_group cat %5.1f \ ///	
 		    sex cat %5.1f \ ///
 			ethnicity cat %5.1f \ ///
-			ethnicity_with_missing cat %5.1f \ ///
 			imdq5 cat %5.1f \ ///
 			region_nhs cat %5.1f \ ///
-			region_covid_therapeutics cat %5.1f \ ///
 			downs_syndrome_comb bin %5.1f \ ///
 			solid_cancer_comb bin %5.1f \ ///
 			haem_disease_comb bin %5.1f \ ///
@@ -60,7 +57,6 @@ table1_mc, by(drug) total(before) mis onecol iqrmiddle(",")  ///
 			chronic_respiratory_disease bin %5.1f \ ///
 			vaccination_status cat %5.1f \ ///
 			prior_covid  bin %5.1f \ ///
-			egfr_30 bin %5.1f \ ///
 			paxlovid_contraindicated bin %5.1f)  saving("$projectdir/output/tables/baseline_allpts.xls", replace)
 		 
 import excel "$projectdir/output/tables/baseline_allpts.xls", clear

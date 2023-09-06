@@ -42,12 +42,14 @@ actions:
         data: output/tables/baseline_allpts.csv      
 
   cox_model:
-    run: stata-mp:latest analysis/200_cox_model.do
+    run: stata-mp:latest analysis/201_cox_model.do
     needs: [define_covariates_combine]
     outputs:
       moderately_sensitive:
         log: logs/cox_model.log 
-        data: output/tables/cox_model_summary_csv.csv 
+        data: output/tables/cox_model_summary.csv 
+        data1: output/tables/cox_model_disease.csv 
+        data2: output/tables/cox_model_rates.csv 
         survrisk_ae_spc_all: output/figures/survrisk_ae_spc_all.svg
         survrisk_ae_drug_all: output/figures/survrisk_ae_drug_all.svg
         survrisk_ae_imae_all: output/figures/survrisk_ae_imae_all.svg
@@ -107,15 +109,15 @@ actions:
     outputs:
       moderately_sensitive:
         log: logs/ps_model.log
-        data: output/tables/cox_model_propensity.csv 
+        data: output/tables/cox_propensity.csv 
         histogram_agesex: output/figures/histogram_agesex.svg
         histogram_adj: output/figures/histogram_adj*.svg
-        histogram_fuladj1: output/figures/histogram_fulladj1*.svg
-        histogram_fulladj2: output/figures/histogram_fulladj2*.svg
+        histogram_adj2: output/figures/histogram_fulladj1*.svg
+        histogram_adj3: output/figures/histogram_fulladj2*.svg
         match_drug1: output/figures/match_fulladj2_drug1*.svg
         match_drug2: output/figures/match_fulladj2_drug2*.svg
         match_drug3: output/figures/match_fulladj2_drug3*.svg
-        data2: output/tables/cox_model_propensity_common.csv 
+        data2: output/tables/cox_propensity_common.csv 
         
   preceed_rate:
     run: stata-mp:latest analysis/400_preceeding_rate.do
@@ -123,7 +125,7 @@ actions:
     outputs:
       moderately_sensitive:
         log: logs/preceed_rate.log 
-        data: output/tables/comparator_rate_summary_csv.csv 
+        data: output/tables/comparator_rates.csv 
   
   redacted_table:
     run: stata-mp:latest analysis/500_redacted_table.do

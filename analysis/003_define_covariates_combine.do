@@ -12,7 +12,7 @@
 
 ****************************************************************************************************************
 **Set filepaths
-//global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+// global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
 global projectdir `c(pwd)'
 
 di "$projectdir"
@@ -469,7 +469,11 @@ count if dataset==0 & covid_test_positive_date==pre_covid_hosp_date
 count if dataset==0 & start_date==pre_covid_hosp_discharge
 // control patient, covid test is 1 day after discharge date
 count if dataset==0 & (start_date-pre_covid_hosp_discharge<=1) & (start_date-pre_covid_hosp_discharge>=0)
-// control patient, hospitalised without discharged date
+// control patient hospitalised 
+count if dataset==0 & pre_covid_hosp_date!=. 
+count if dataset==0 & pre_covid_hosp_date!=. & start_date-pre_covid_hosp_date<29
+count if dataset==0 & pre_covid_hosp_date!=. & pre_covid_hosp_discharge==. 
+// control patient hospitalised & not discharged
 count if dataset==0 & pre_covid_hosp_date!=. & pre_covid_hosp_discharge==. 
 count if dataset==0 & pre_covid_hosp_date!=. & pre_covid_hosp_discharge==. & (start_date-pre_covid_hosp_date<29)
 count if dataset==0 & pre_covid_hosp_date!=. & pre_covid_hosp_discharge==. & (start_date-pre_covid_hosp_date<366)
@@ -579,6 +583,7 @@ tab drug, m
 bys dataset: tab drug,m
 drop if drug>3
 drop if drug>0 & dataset==0
+drop if drug==0 & dataset==1
 
 ** start date is date treatment for treatment arms and date of covid test for control arm 
 count if start_date==. //should be 0

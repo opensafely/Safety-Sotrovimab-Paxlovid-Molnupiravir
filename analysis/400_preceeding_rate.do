@@ -131,66 +131,82 @@ count if start_comparator==stop_pre_ae_all & _st==0
 tab _t,m
 
 
-tempname comparator
-postfile `comparator' str20(failure) ///
-	ptime_all events_all rate_all /// 
-	ptime_control events_control rate_control /// 
-	ptime_sot events_sot rate_sot ///
-	ptime_pax events_pax rate_pax ///
-	ptime_mol events_mol rate_mol ///
-	using "$projectdir/output/tables/comparator_rate_summary", replace	
-						 
-* Failures over 1 years - convert into 28 day rate
-foreach fail in $pre_ae_group $pre_ae_disease {
-							 
-	stset stop_`fail', id(patient_id) origin(time start_comparator) enter(time start_comparator) failure(fail_`fail'==1)	
+** Rates of events 
+tempname comparator_rates
+postfile `comparator_rates' str20(failure) ///
+		ptime_all events_all rate_all lci_all uci_all ///
+		ptime_control events_control rate_control lci_control uci_control ///
+		ptime_sot events_sot rate_sot lci_sot uci_sot ///
+		ptime_pax events_pax rate_pax lci_pax uci_pax ///
+		ptime_mol events_mol rate_mol lci_mol uci_mol ///
+		using "$projectdir/output/tables/comparator_rates", replace							 
+foreach fail in $ae_group $ae_disease {
+	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 			
 		stptime 
 					local rate_all = `r(rate)'
 					local ptime_all = `r(ptime)'
+					local lci_all = `r(lb)'
+					local uci_all = `r(ub)'
 					local events_all .
-						if `r(failures)' == 0 | `r(failures)' > 5 local events_all `r(failures)'
-		
+						if `r(failures)' == 0 | `r(failures)' > 7 local events_all `r(failures)'
 		stptime if drug == 0
 					local rate_control = `r(rate)'
 					local ptime_control = `r(ptime)'
+					local lci_control = `r(lb)'
+					local uci_control = `r(ub)'
 					local events_control .
-						if `r(failures)' == 0 | `r(failures)' > 5 local events_control `r(failures)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local events_control `r(failures)'
 		display "no drug"
-
 		stptime if drug == 1
 					local rate_sot = `r(rate)'
 					local ptime_sot = `r(ptime)'
+					local lci_sot = `r(lb)'
+					local uci_sot = `r(ub)'
 					local events_sot .
-						if `r(failures)' == 0 | `r(failures)' > 5 local events_sot `r(failures)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local events_sot `r(failures)'
 		display "sotrovimab"
-		
 		stptime if drug == 2
 					local rate_pax = `r(rate)'
 					local ptime_pax = `r(ptime)'
+					local lci_pax = `r(lb)'
+					local uci_pax = `r(ub)'
 					local events_pax .
-						if `r(failures)' == 0 | `r(failures)' > 5 local events_pax `r(failures)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local events_pax `r(failures)'
 		display "paxlovid"
-		
 		stptime if drug == 3
 					local rate_mol = `r(rate)'
 					local ptime_mol = `r(ptime)'
+					local lci_mol = `r(lb)'
+					local uci_mol = `r(ub)'
 					local events_mol .
-						if `r(failures)' == 0 | `r(failures)' > 5 local events_mol `r(failures)'
-		display "molnupavir"
-						
-		post `comparator' ("`fail'") (`ptime_all') (`events_all') (`rate_all') ///
-					(`ptime_control') (`events_control') (`rate_control') ///
-					(`ptime_sot') (`events_sot') (`rate_sot') ///
-					(`ptime_pax') (`events_pax') (`rate_pax') ///
-					(`ptime_mol') (`events_mol') (`rate_mol') 
+						if `r(failures)' == 0 | `r(failures)' > 7 local events_mol `r(failures)'
+		display "molnupavir"			
+		post `comparator_rates' ("`fail'") (`ptime_all') (`events_all') (`rate_all') (`lci_all') (`uci_all') ///
+					(`ptime_control') (`events_control') (`rate_control') (`lci_control') (`uci_control') ///
+					(`ptime_sot') (`events_sot') (`rate_sot') (`lci_sot') (`uci_sot') ///
+					(`ptime_pax') (`events_pax') (`rate_pax') (`lci_pax') (`uci_pax') ///
+					(`ptime_mol') (`events_mol') (`rate_mol') (`lci_mol') (`uci_mol') ///
 					
 }
+postclose `comparator_rates'
 
-postclose `comparator'
-use "$projectdir/output/tables/comparator_rate_summary", replace
-export delimited using "$projectdir/output/tables/comparator_rate_summary_csv.csv", replace
+use "$projectdir/output/tables/comparator_rates", clear	
+foreach var of varlist rate* lci* uci* {
+	
+gen `var'_per = `var'*1000	
+format `var'_per %3.2f
+drop `var'	
+rename 	`var'_per `var'				
+}
+order  	failure ptime_all events_all rate_all lci_all uci_all ///
+		ptime_control events_control rate_control lci_control uci_control ///
+		ptime_sot events_sot rate_sot lci_sot uci_sot ///
+		ptime_pax events_pax rate_pax lci_pax uci_pax ///
+		ptime_mol events_mol rate_mol lci_mol uci_mol
+save "$projectdir/output/tables/comparator_rates", replace
 
-
+use "$projectdir/output/tables/comparator_rates", replace
+export delimited using "$projectdir/output/tables/comparator_rates.csv", replace
 
 log close
 

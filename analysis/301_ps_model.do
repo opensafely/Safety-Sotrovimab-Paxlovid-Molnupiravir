@@ -12,7 +12,7 @@
 
 ****************************************************************************************************************
 **Set filepaths
-//global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+// global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
 global projectdir `c(pwd)'
 di "$projectdir"
 capture mkdir "$projectdir/output/data"
@@ -35,16 +35,14 @@ use "$projectdir/output/data/main", clear
 
 * Models
 global agesex 	age i.sex
-global adj 		age i.sex i.region_nhs paxlovid_contraindicated ///
-				downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro  
-global fulladj1 age i.sex i.region_nhs paxlovid_contraindicated ///
-				downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro  ///
-				vaccination_status imdq5 White 
-global fulladj2 age i.sex i.region_nhs paxlovid_contraindicated ///
-				downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro  ///
-				vaccination_status imdq5 White 1b.bmi_group diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension
-											
-* Failures
+global adj 		age i.sex i.region_nhs imdq5 White 1b.bmi_group ///
+				paxlovid_contraindicated vaccination_status diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension ///
+			    downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro  
+global adj2 	age i.sex i.region_nhs imdq5 White 1b.bmi_group 
+global adj3 	age i.sex i.region_nhs imdq5 White 1b.bmi_group ///
+				paxlovid_contraindicated vaccination_status diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension 
+
+* Outcome
 global ae_group			ae_spc_all 					///
 						ae_drug_all					///		
 						ae_imae_all 				///				
@@ -53,6 +51,7 @@ global ae_group			ae_spc_all 					///
 						covid_hosp_date				///
 						all_hosp_date				///
 						died_date_ons
+						
 global ae_disease		ae_diverticulitis 				///
 						ae_diarrhoea					///
 						ae_taste 						///
@@ -70,8 +69,9 @@ global ae_disease		ae_diverticulitis 				///
 						ae_psorasis 					///
 						ae_psa 							///
 						ae_axspa 						///
-						ae_ibd 											
+						ae_ibd 									
 
+** Hazard of events										
 ****************************************************************************************************************
 *1. Individual drug V No Drug
 									
@@ -79,10 +79,10 @@ tempname coxoutput_propensity
 
 postfile `coxoutput_propensity' str20(model) str20(fail)   ///
 hr_sot lc_sot uc_sot hr_pax lc_pax uc_pax hr_mol lc_mol uc_mol ///
-using "$projectdir/output/tables/cox_model_propensity", replace	
+using "$projectdir/output/tables/cox_propensity", replace	
 	
 
-foreach model in agesex adj fulladj1 fulladj2  {	
+foreach model in agesex adj adj2 adj3  {	
 	* control V all drug
 	gen control = 1 if drug==0
 	replace control = 0 if drug>0
@@ -125,13 +125,13 @@ foreach model in agesex adj fulladj1 fulladj2  {
 		pbalchk `var' age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease ///
 		liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 bmi_group ///
 		diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension, wt(iptw`$model') graph 
-		graph save "$projectdir/output/figures/match_fulladj2_`var'", replace
+		graph save "$projectdir/output/figures/match_adj_`var'", replace
 		}
-	graph export "$projectdir/output/figures/match_fulladj2_drug1.svg", as(svg) replace
-	graph export "$projectdir/output/figures/match_fulladj2_drug2.svg", as(svg) replace
-	graph export "$projectdir/output/figures/match_fulladj2_drug3.svg", as(svg) replace	
+	graph export "$projectdir/output/figures/match_adj_drug1.svg", as(svg) replace
+	graph export "$projectdir/output/figures/match_adj_drug2.svg", as(svg) replace
+	graph export "$projectdir/output/figures/match_adj_drug3.svg", as(svg) replace	
 	
-	foreach fail in $ae_group $ae_disease {
+	foreach fail in $ae_group  {
 		stset stop_`fail' [pw=iptw`$model'], id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 		stcox i.drug, vce(robust)
 						matrix b = r(table)
@@ -157,9 +157,9 @@ tempname coxoutput_propensity_common
 
 postfile `coxoutput_propensity_common' str20(model) str20(fail)   ///
 hr_sot lc_sot uc_sot hr_pax lc_pax uc_pax hr_mol lc_mol uc_mol ///
-using "$projectdir/output/tables/cox_model_propensity_common", replace
+using "$projectdir/output/tables/cox_propensity_common", replace
 	
-foreach model in fulladj2  {	
+foreach model in adj {	
 	* control V all drug
 	gen control = 1 if drug==0
 	replace control = 0 if drug>0
@@ -224,11 +224,11 @@ foreach model in fulladj2  {
 					diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension, wt(iptw`$model') graph 
 					graph save "$projectdir/output/figures/pbalchk_`var'", replace
 					}
-				graph export "$projectdir/output/figures/match_fulladj2_drug1_common.svg", as(svg) replace
-				graph export "$projectdir/output/figures/match_fulladj2_drug2_common.svg", as(svg) replace
-				graph export "$projectdir/output/figures/match_fulladj2_drug3_common.svg", as(svg) replace	
+				graph export "$projectdir/output/figures/match_adj_drug1_common.svg", as(svg) replace
+				graph export "$projectdir/output/figures/match_adj_drug2_common.svg", as(svg) replace
+				graph export "$projectdir/output/figures/match_adj_drug3_common.svg", as(svg) replace	
 				
-				foreach fail in $ae_group $ae_disease {
+				foreach fail in $ae_group {
 					stset stop_`fail' [pw=iptw`$model'], id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 					stcox i.drug, vce(robust)
 									matrix b = r(table)
@@ -252,10 +252,19 @@ postclose `coxoutput_propensity_common'
 
 *******************************************************************************
 
-use "$projectdir/output/tables/cox_model_propensity", replace
-export delimited using "$projectdir/output/tables/cox_model_propensity.csv", replace
-use "$projectdir/output/tables/cox_model_propensity_common", replace
-export delimited using "$projectdir/output/tables/cox_model_propensity_common.csv", replace
+use "$projectdir/output/tables/cox_propensity", clear
+foreach var of varlist hr* lc* uc* {
+	format `var' %3.2f			
+}	
+save "$projectdir/output/tables/cox_propensity", replace
+export delimited using "$projectdir/output/tables/cox_propensity.csv", replace
+
+use "$projectdir/output/tables/cox_propensity_common", clear
+foreach var of varlist hr* lc* uc* {
+	format `var' %3.2f			
+}	
+save "$projectdir/output/tables/cox_propensity_common", replace
+export delimited using "$projectdir/output/tables/cox_propensity_common.csv", replace
 
 
 log close
