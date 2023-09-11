@@ -87,7 +87,8 @@ foreach model in agesex adj{
 	predict p_drug_`model'	
 	
 	twoway 	(histogram p_drug_`model' if drug==1, color(green)) (histogram p_drug_`model' if drug==0, fcolor(none) lcolor(black)), ///
-			legend(order(1 "No Drug" 2 "Sotrovimab")) name(histogram_sot_prop_`model', replace)
+			legend(order(1 "No Drug" 2 "Sotrovimab")) name(histogram_sot_prop_`model', replace) saving("$projectdir/output/figures/histogram_sot_`model'", replace)
+	graph export "$projectdir/output/figures/histogram_sot_`model'.svg", as(svg) replace
 			
 	gen iptw_`model' = 1/p_drug_`model' if drug==1
 	replace iptw_`model'  = 1/(1-p_drug_`model') if drug==0
@@ -99,6 +100,7 @@ foreach model in agesex adj{
 	liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 bmi_group ///
 	diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension, wt(iptw`$model') graph 
 	graph save "$projectdir/output/figures/sot_match_adj", replace
+	graph export "$projectdir/output/figures/sot_match_adj.svg", as(svg) replace
 	
 	foreach fail in $ae_group $ae_disease {
 			stset stop_`fail' [pw=iptw_`model'], id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
@@ -129,7 +131,8 @@ foreach model in agesex adj {
 	predict p_drug_`model'	
 	
 	twoway 	(histogram p_drug_`model' if drug==1, color(green)) (histogram p_drug_`model' if drug==0, fcolor(none) lcolor(black)), ///
-			legend(order(1 "No Drug" 2 "Paxlovid")) name(histogram_pax_`model', replace)
+			legend(order(1 "No Drug" 2 "Paxlovid")) name(histogram_pax_`model', replace) saving("$projectdir/output/figures/histogram_pax_`model'", replace)
+	graph export "$projectdir/output/figures/histogram_pax_`model'.svg", as(svg) replace
 			
 	gen iptw_`model' = 1/p_drug_`model' if drug==1
 	replace iptw_`model'  = 1/(1-p_drug_`model') if drug==0
@@ -141,6 +144,7 @@ foreach model in agesex adj {
 	liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 bmi_group ///
 	diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension, wt(iptw`$model') graph 
 	graph save "$projectdir/output/figures/pax_match_adj", replace
+	graph export "$projectdir/output/figures/pax_match_adj.svg", as(svg) replace
 	
 	foreach fail in $ae_group $ae_disease {
 			stset stop_`fail' [pw=iptw_`model'], id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
@@ -171,7 +175,8 @@ foreach model in agesex adj {
 	predict p_drug_`model'	
 	
 	twoway 	(histogram p_drug_`model' if drug==1, color(green)) (histogram p_drug_`model' if drug==0, fcolor(none) lcolor(black)), ///
-			legend(order(1 "No Drug" 2 "Molnupavir")) name(histogram_mol_`model', replace)
+			legend(order(1 "No Drug" 2 "Molnupavir")) name(histogram_mol_`model', replace) saving("$projectdir/output/figures/histogram_mol_`model'", replace)
+	graph export "$projectdir/output/figures/histogram_mol_`model'.svg", as(svg) replace
 			
 	gen iptw_`model' = 1/p_drug_`model' if drug==1
 	replace iptw_`model'  = 1/(1-p_drug_`model') if drug==0
@@ -183,7 +188,8 @@ foreach model in agesex adj {
 	liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 bmi_group ///
 	diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension, wt(iptw`$model') graph 
 	graph save "$projectdir/output/figures/mol_match_adj", replace
-	
+	graph export "$projectdir/output/figures/mol_match_adj.svg", as(svg) replace
+
 	foreach fail in $ae_group $ae_disease {
 			stset stop_`fail' [pw=iptw_`model'], id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 			stcox i.drug, vce(robust)
