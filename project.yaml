@@ -104,20 +104,22 @@ actions:
         survcur_ae_ibd: output/figures/survcur_ae_ibd.svg
         
   PS_model:
-    run: stata-mp:latest analysis/301_ps_model.do
+    run: stata-mp:latest analysis/302_ps_model.do
     needs: [define_covariates_combine]
     outputs:
       moderately_sensitive:
         log: logs/ps_model.log
         data: output/tables/cox_propensity.csv 
-        histogram_agesex: output/figures/histogram_agesex.svg
-        histogram_adj: output/figures/histogram_adj*.svg
-        histogram_adj2: output/figures/histogram_adj2*.svg
-        histogram_adj3: output/figures/histogram_adj3*.svg
-        match_drug1: output/figures/match_adj_drug1*.svg
-        match_drug2: output/figures/match_adj_drug2*.svg
-        match_drug3: output/figures/match_adj_drug3*.svg
-        data2: output/tables/cox_propensity_common.csv 
+        histogram_sot_agesex: output/figures/histogram_sot_agesex.svg
+        histogram_pax_agesex: output/figures/histogram_pax_agesex.svg
+        histogram_mol_agesex: output/figures/histogram_mol_agesex.svg
+        histogram_sot_adj: output/figures/histogram_sot_adj.svg
+        histogram_pax_adj: output/figures/histogram_pax_adj.svg
+        histogram_mol_adj: output/figures/histogram_mol_adj.svg
+        match_sot: output/figures/sot_match_adj*.svg
+        match_pax: output/figures/pax_match_adj*.svg
+        match_mol: output/figures/mol_match_adj*.svg
+
         
   preceed_rate:
     run: stata-mp:latest analysis/400_preceeding_rate.do

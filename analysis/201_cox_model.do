@@ -37,12 +37,12 @@ use "$projectdir/output/data/main", clear
 * Models
 global crude 	i.drug 
 global agesex 	i.drug age i.sex
-global adj 		i.drug age i.sex i.region_nhs imdq5 White 1b.bmi_group ///
-				paxlovid_contraindicated vaccination_status diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension ///
+global adj 		i.drug age i.sex i.region_nhs i.imdq5 White 1b.bmi_group ///
+				paxlovid_contraindicated i.vaccination_status diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension ///
 			    downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro  
-global adj2 	i.drug age i.sex i.region_nhs imdq5 White 1b.bmi_group 
-global adj3 	i.drug age i.sex i.region_nhs imdq5 White 1b.bmi_group ///
-				paxlovid_contraindicated vaccination_status diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension 
+global adj2 	i.drug age i.sex i.region_nhs i.imdq5 White 1b.bmi_group 
+global adj3 	i.drug age i.sex i.region_nhs i.imdq5 White 1b.bmi_group ///
+				paxlovid_contraindicated i.vaccination_status diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension 
 
 * Outcome
 global ae_group			ae_spc_all 					///
@@ -77,7 +77,7 @@ global ae_disease		ae_diverticulitis 				///
 foreach fail in $ae_group $ae_disease {
 
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
-								
+			tab _st					
 			stcox i.drug 
 			sts graph, by(drug) tmax(28) ylabel(0(0.25)1) ylabel(,format(%4.3f)) xlabel(0(7)28) ///
 			risktable(,title(" ")order(1 "Control     " 2 "Sotrovimab     " 3 "Paxlovid     " 4 "Molnupiravir     ") ///
@@ -158,43 +158,58 @@ postfile `coxoutput_rates' str20(failure) ///
 foreach fail in $ae_group $ae_disease {
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 			
 		stptime 
-					local rate_all = `r(rate)'
+					local rate_all = .
 					local ptime_all = `r(ptime)'
-					local lci_all = `r(lb)'
-					local uci_all = `r(ub)'
+					local lci_all = .
+					local uci_all = .
 					local events_all .
 						if `r(failures)' == 0 | `r(failures)' > 7 local events_all `r(failures)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local rate_all `r(rate)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local lci_all `r(lb)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local uci_all `r(ub)'
 		stptime if drug == 0
-					local rate_control = `r(rate)'
+					local rate_control = .
 					local ptime_control = `r(ptime)'
-					local lci_control = `r(lb)'
-					local uci_control = `r(ub)'
+					local lci_control = .
+					local uci_control = .
 					local events_control .
 						if `r(failures)' == 0 | `r(failures)' > 7 local events_control `r(failures)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local rate_control `r(rate)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local lci_control `r(lb)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local uci_control `r(ub)'
 		display "no drug"
 		stptime if drug == 1
-					local rate_sot = `r(rate)'
+					local rate_sot = .
 					local ptime_sot = `r(ptime)'
-					local lci_sot = `r(lb)'
-					local uci_sot = `r(ub)'
+					local lci_sot = .
+					local uci_sot = .
 					local events_sot .
 						if `r(failures)' == 0 | `r(failures)' > 7 local events_sot `r(failures)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local rate_sot `r(rate)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local lci_sot `r(lb)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local uci_sot `r(ub)'		
 		display "sotrovimab"
 		stptime if drug == 2
-					local rate_pax = `r(rate)'
+					local rate_pax = .
 					local ptime_pax = `r(ptime)'
-					local lci_pax = `r(lb)'
-					local uci_pax = `r(ub)'
+					local lci_pax = .
+					local uci_pax = .
 					local events_pax .
 						if `r(failures)' == 0 | `r(failures)' > 7 local events_pax `r(failures)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local rate_pax `r(rate)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local lci_pax `r(lb)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local uci_pax `r(ub)'	
 		display "paxlovid"
 		stptime if drug == 3
-					local rate_mol = `r(rate)'
+					local rate_mol = .
 					local ptime_mol = `r(ptime)'
-					local lci_mol = `r(lb)'
-					local uci_mol = `r(ub)'
+					local lci_mol = . 
+					local uci_mol = .
 					local events_mol .
 						if `r(failures)' == 0 | `r(failures)' > 7 local events_mol `r(failures)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local rate_mol `r(rate)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local lci_mol `r(lb)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local uci_mol `r(ub)'	
 		display "molnupavir"			
 		post `coxoutput_rates' ("`fail'") (`ptime_all') (`events_all') (`rate_all') (`lci_all') (`uci_all') ///
 					(`ptime_control') (`events_control') (`rate_control') (`lci_control') (`uci_control') ///
