@@ -967,3 +967,38 @@ record ends |      Freq.     Percent        Cum.
 ------------+-----------------------------------
       Total |     24,005      100.00
 
+. do "C:\Users\k1635179\AppData\Local\Temp\STD7e4_000000.tmp"
+
+. ********************************************************************************
+. *
+. *       Do-file:                        propensity score cox model
+. *       Project:                        Sotrovimab-Paxlovid-Molnupiravir
+. *   Date:                               24/4/23
+. *       Programmed by:          Katie Bechman
+. *       Description:            create and run ps model
+. *       Data used:                      main.dta
+. *       Data created:           psoutput
+. *       Other output:           logfiles, printed to folder $Logdir
+. *       User installed ado: (place .ado file(s) in analysis folder)
+. 
+. ****************************************************************************************************************
+. **Set filepaths
+. global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+
+. // global projectdir `c(pwd)'
+. di "$projectdir"
+C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir
+
+. capture mkdir "$projectdir/output/data"
+
+. capture mkdir "$projectdir/output/figures"
+
+. capture mkdir "$projectdir/output/tables"
+
+. global logdir "$projectdir/logs"
+
+. di "$logdir"
+C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/logs
+
+. * Open a log file
+. cap log close
