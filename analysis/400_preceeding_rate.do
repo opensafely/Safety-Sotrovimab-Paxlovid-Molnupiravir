@@ -12,8 +12,8 @@
 
 ****************************************************************************************************************
 **Set filepaths
-// global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
-global projectdir `c(pwd)'
+global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+// global projectdir `c(pwd)'
 di "$projectdir"
 capture mkdir "$projectdir/output/data"
 capture mkdir "$projectdir/output/figures"
@@ -116,8 +116,8 @@ foreach x in $pre_ae_group $pre_ae_disease {
 		count if (`x'>start_comparator & `x'<start_comparator_28) & `x'!=.  // event 4-3 years prior to start
 		gen fail_`x'=1 if `x'!=.
 		tab drug fail_`x', m
+		replace `x'=`x'+0.75 if `x'==start_comparator
 		gen stop_`x'=`x' if fail_`x'==1
-		replace `x'=`x'+0.75 if `x'==start_date
 		replace stop_`x'= start_comparator_28 if fail_`x'==.
 		tab drug fail_`x' if stop_`x'!=.
 		format %td stop_`x'
@@ -133,53 +133,71 @@ tab _t,m
 
 ** Rates of events 
 tempname comparator_rates
+
 postfile `comparator_rates' str20(failure) ///
 		ptime_all events_all rate_all lci_all uci_all ///
 		ptime_control events_control rate_control lci_control uci_control ///
 		ptime_sot events_sot rate_sot lci_sot uci_sot ///
 		ptime_pax events_pax rate_pax lci_pax uci_pax ///
 		ptime_mol events_mol rate_mol lci_mol uci_mol ///
-		using "$projectdir/output/tables/comparator_rates", replace							 
-foreach fail in $ae_group $ae_disease {
-	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 			
+		using "$projectdir/output/tables/comparator_rates", replace	
+
+	
+foreach fail in $pre_ae_group $pre_ae_disease	  {
+	stset stop_`fail', id(patient_id) origin(time start_comparator) enter(time start_comparator) exit(time start_comparator_28) failure(fail_`fail'==1) 			
 		stptime 
-					local rate_all = `r(rate)'
+					local rate_all = .
 					local ptime_all = `r(ptime)'
-					local lci_all = `r(lb)'
-					local uci_all = `r(ub)'
+					local lci_all = .
+					local uci_all = .
 					local events_all .
 						if `r(failures)' == 0 | `r(failures)' > 7 local events_all `r(failures)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local rate_all `r(rate)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local lci_all `r(lb)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local uci_all `r(ub)'
 		stptime if drug == 0
-					local rate_control = `r(rate)'
+					local rate_control = .
 					local ptime_control = `r(ptime)'
-					local lci_control = `r(lb)'
-					local uci_control = `r(ub)'
+					local lci_control = .
+					local uci_control = .
 					local events_control .
 						if `r(failures)' == 0 | `r(failures)' > 7 local events_control `r(failures)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local rate_control `r(rate)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local lci_control `r(lb)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local uci_control `r(ub)'
 		display "no drug"
 		stptime if drug == 1
-					local rate_sot = `r(rate)'
+					local rate_sot = .
 					local ptime_sot = `r(ptime)'
-					local lci_sot = `r(lb)'
-					local uci_sot = `r(ub)'
+					local lci_sot = .
+					local uci_sot = .
 					local events_sot .
 						if `r(failures)' == 0 | `r(failures)' > 7 local events_sot `r(failures)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local rate_sot `r(rate)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local lci_sot `r(lb)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local uci_sot `r(ub)'		
 		display "sotrovimab"
 		stptime if drug == 2
-					local rate_pax = `r(rate)'
+					local rate_pax = .
 					local ptime_pax = `r(ptime)'
-					local lci_pax = `r(lb)'
-					local uci_pax = `r(ub)'
+					local lci_pax = .
+					local uci_pax = .
 					local events_pax .
 						if `r(failures)' == 0 | `r(failures)' > 7 local events_pax `r(failures)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local rate_pax `r(rate)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local lci_pax `r(lb)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local uci_pax `r(ub)'	
 		display "paxlovid"
 		stptime if drug == 3
-					local rate_mol = `r(rate)'
+					local rate_mol = .
 					local ptime_mol = `r(ptime)'
-					local lci_mol = `r(lb)'
-					local uci_mol = `r(ub)'
+					local lci_mol = . 
+					local uci_mol = .
 					local events_mol .
 						if `r(failures)' == 0 | `r(failures)' > 7 local events_mol `r(failures)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local rate_mol `r(rate)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local lci_mol `r(lb)'
+						if `r(failures)' == 0 | `r(failures)' > 7 local uci_mol `r(ub)'	
 		display "molnupavir"			
 		post `comparator_rates' ("`fail'") (`ptime_all') (`events_all') (`rate_all') (`lci_all') (`uci_all') ///
 					(`ptime_control') (`events_control') (`rate_control') (`lci_control') (`uci_control') ///
@@ -204,8 +222,6 @@ order  	failure ptime_all events_all rate_all lci_all uci_all ///
 		ptime_pax events_pax rate_pax lci_pax uci_pax ///
 		ptime_mol events_mol rate_mol lci_mol uci_mol
 save "$projectdir/output/tables/comparator_rates", replace
-
-use "$projectdir/output/tables/comparator_rates", replace
 export delimited using "$projectdir/output/tables/comparator_rates.csv", replace
 
 log close

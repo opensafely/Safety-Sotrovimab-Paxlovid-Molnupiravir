@@ -1,19 +1,19 @@
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  /workspace/logs/preceed_rate.log
+       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/logs/preceed_rate.log
   log type:  text
- opened on:   6 Sep 2023, 11:59:11
+ opened on:  11 Sep 2023, 11:06:38
 
 . 
 . *Set Ado file path
 . adopath + "$projectdir/analysis/ado"
-  [1]  (BASE)      "/usr/local/stata/ado/base/"
-  [2]  (SITE)      "/usr/local/ado/"
+  [1]  (BASE)      "C:\Program Files\Stata17\ado\base/"
+  [2]  (SITE)      "C:\Program Files\Stata17\ado\site/"
   [3]              "."
-  [4]  (PERSONAL)  "~/ado/personal/"
-  [5]  (PLUS)      "~/ado/plus/"
-  [6]  (OLDPLACE)  "~/ado/"
-  [7]              "/workspace/analysis/ado"
+  [4]  (PERSONAL)  "C:\users\PUBLIC\documents/"
+  [5]  (PLUS)      "C:\users\PUBLIC\documents/"
+  [6]  (OLDPLACE)  "c:\ado/"
+  [7]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/analysis/ado"
 
 . 
 . * SET Index date 
@@ -28,8 +28,7 @@
 . 
 . *       COMPARATOR RATE         
 . ****************************
-. **generate rate for adverse outcome in year 3-4 prior to start date for compa
-> rative rate by person years 
+. **generate rate for adverse outcome in year 3-4 prior to start date for comparative rate by person years 
 . *ensure not established diagnosis for some of the condition 4 year prior
 . gen new_pre_ra_icd = pre_rheumatoid_icd_prim if pre_ra_snomed_new==0 
 (22,480 missing values generated)
@@ -37,8 +36,7 @@
 . gen new_pre_ra_ae = pre_rheumatoid_arthritis_ae if pre_ra_snomed_new==0 
 (22,396 missing values generated)
 
-. gen new_pre_ra_snomed = pre_rheumatoid_arthritis_snomed if pre_ra_snomed_new=
-> =0 
+. gen new_pre_ra_snomed = pre_rheumatoid_arthritis_snomed if pre_ra_snomed_new==0 
 (22,386 missing values generated)
 
 . gen new_pre_sle_ctv = pre_sle_ctv if pre_sle_ctv_new==0 
@@ -50,12 +48,10 @@
 . gen new_pre_sle_ae = pre_sle_ae if pre_sle_ctv_new==0 
 (22,450 missing values generated)
 
-. gen new_pre_psoriasis_icd = pre_psoriasis_icd_prim if pre_psoriasis_snomed_ne
-> w==0 
+. gen new_pre_psoriasis_icd = pre_psoriasis_icd_prim if pre_psoriasis_snomed_new==0 
 (22,402 missing values generated)
 
-. gen new_pre_psoriasis_snomed = pre_psoriasis_snomed if pre_psoriasis_snomed_n
-> ew==0 
+. gen new_pre_psoriasis_snomed = pre_psoriasis_snomed if pre_psoriasis_snomed_new==0 
 (22,390 missing values generated)
 
 . gen new_pre_psoriasis_ae = pre_psoriasis_ae if pre_psoriasis_snomed_new==0
@@ -90,128 +86,96 @@
 
 . 
 . *** combined ae from GP, hosp and A&E
-. egen pre_diverticulitis = rmin(pre_diverticulitis_icd_prim pre_diverticulitis
-> _snomed pre_diverticulitis_ae)      
-(17951 missing values generated)
+. egen pre_diverticulitis = rmin(pre_diverticulitis_icd_prim pre_diverticulitis_snomed pre_diverticulitis_ae)      
+(17,951 missing values generated)
 
-. egen pre_diarrhoea = rmin(pre_diarrhoea_icd_prim pre_diarrhoea_snomed  pre_di
-> arrhoeal_icd_prim)
-(17963 missing values generated)
+. egen pre_diarrhoea = rmin(pre_diarrhoea_icd_prim pre_diarrhoea_snomed  pre_diarrhoeal_icd_prim)
+(17,963 missing values generated)
 
 . egen pre_taste = rmin(pre_taste_icd_prim pre_taste_snomed )
-(19893 missing values generated)
+(19,893 missing values generated)
 
 . egen pre_rash = rmin(pre_rash_icd_prim pre_rash_snomed pre_rash_ae)
-(18026 missing values generated)
+(18,026 missing values generated)
 
 . egen pre_bronchospasm = rmin(pre_bronchospasm_snomed)
-(22147 missing values generated)
+(22,147 missing values generated)
 
-. egen pre_contactderm = rmin(pre_contactderm_snomed pre_contactderm_icd_prim p
-> re_contactderm_ae)
-(17856 missing values generated)
+. egen pre_contactderm = rmin(pre_contactderm_snomed pre_contactderm_icd_prim pre_contactderm_ae)
+(17,856 missing values generated)
 
-. egen pre_dizziness = rmin(pre_dizziness_snomed pre_dizziness_ae pre_dizziness
-> _icd_prim)
-(18009 missing values generated)
+. egen pre_dizziness = rmin(pre_dizziness_snomed pre_dizziness_ae pre_dizziness_icd_prim)
+(18,009 missing values generated)
 
-. egen pre_nausea_vomit = rmin(pre_nausea_vomit_snomed pre_nausea_vomit_icd_pri
-> m)
-(20031 missing values generated)
+. egen pre_nausea_vomit = rmin(pre_nausea_vomit_snomed pre_nausea_vomit_icd_prim)
+(20,031 missing values generated)
 
-. egen pre_headache = rmin(pre_headache_snomed pre_headache_ae pre_headache_icd
-> _prim)
-(18021 missing values generated)
+. egen pre_headache = rmin(pre_headache_snomed pre_headache_ae pre_headache_icd_prim)
+(18,021 missing values generated)
 
-. egen pre_anaphylaxis = rmin(pre_anaphylaxis_icd_prim pre_anaphylaxis_snomed  
->    pre_anaphlaxis_ae)
-(17999 missing values generated)
+. egen pre_anaphylaxis = rmin(pre_anaphylaxis_icd_prim pre_anaphylaxis_snomed     pre_anaphlaxis_ae)
+(17,999 missing values generated)
 
-. egen pre_severe_drug = rmin(pre_severedrug_icd_prim pre_severedrug_sjs_icd_pr
-> im pre_severedrug_snomed pre_severedrug_ae)
-(16094 missing values generated)
+. egen pre_severe_drug = rmin(pre_severedrug_icd_prim pre_severedrug_sjs_icd_prim pre_severedrug_snomed pre_severedrug_ae)
+(16,094 missing values generated)
 
-. egen pre_nonsevere_drug = rmin(pre_nonsevere_drug_snomed pre_nonsevere_drug_a
-> e)
-(19965 missing values generated)
+. egen pre_nonsevere_drug = rmin(pre_nonsevere_drug_snomed pre_nonsevere_drug_ae)
+(19,965 missing values generated)
 
 . egen pre_ra = rmin(new_pre_ra_icd new_pre_ra_ae new_pre_ra_snomed )
-(18628 missing values generated)
+(18,628 missing values generated)
 
 . egen pre_sle = rmin(new_pre_sle_icd new_pre_sle_ctv new_pre_sle_ae)
-(18697 missing values generated)
+(18,697 missing values generated)
 
-. egen pre_psorasis = rmin(new_pre_psoriasis_icd new_pre_psoriasis_snomed  new_
-> pre_psoriasis_ae)
-(18555 missing values generated)
+. egen pre_psorasis = rmin(new_pre_psoriasis_icd new_pre_psoriasis_snomed  new_pre_psoriasis_ae)
+(18,555 missing values generated)
 
 . egen pre_psa = rmin(new_pre_psa_icd new_pre_psa_ae new_pre_psa_snomed)
-(18696 missing values generated)
+(18,696 missing values generated)
 
 . egen pre_axspa = rmin(new_pre_axspa_icd  new_pre_axspa_ae new_pre_axspa_ctv)
-(18633 missing values generated)
+(18,633 missing values generated)
 
 . egen pre_ibd = rmin(new_pre_ibd_icd new_pre_ibd_ctv new_pre_ibd_ae)
-(18623 missing values generated)
+(18,623 missing values generated)
 
 . egen pre_spc_all = rmin(pre_diverticulitis pre_diarrhoea pre_taste) 
-(10513 missing values generated)
+(10,513 missing values generated)
 
 . egen pre_drug_all = rmin(pre_anaphylaxis pre_severe_drug pre_nonsevere_drug)
-(9513 missing values generated)
+(9,513 missing values generated)
 
-. egen pre_imae_all = rmin(pre_ra pre_sle pre_psorasis pre_psa pre_axspa pre_ib
-> d) 
-(4559 missing values generated)
+. egen pre_imae_all = rmin(pre_ra pre_sle pre_psorasis pre_psa pre_axspa pre_ibd) 
+(4,559 missing values generated)
 
 . egen pre_ae_all = rmin(pre_spc_all pre_drug_all pre_imae_all)
 (774 missing values generated)
 
 . 
-. global pre_ae_group                     pre_spc_all                          
->            ///
->                                                         pre_drug_all         
->                            ///             
->                                                         pre_imae_all         
->                            ///                             
+. global pre_ae_group                     pre_spc_all                                     ///
+>                                                         pre_drug_all                                    ///             
+>                                                         pre_imae_all                                    ///                             
 >                                                         pre_ae_all
 
-. global pre_ae_disease           pre_diverticulitis                           
->    ///
->                                                         pre_diarrhoea        
->                            ///
->                                                         pre_taste            
->                                    ///
->                                                         pre_rash             
->                                    ///
->                                                         pre_bronchospasm     
->                            ///
->                                                         pre_contactderm      
->                            ///
->                                                         pre_dizziness        
->                            ///
->                                                         pre_nausea_vomit     
->                            ///
->                                                         pre_headache         
->                            ///
->                                                         pre_anaphylaxis      
->                            ///
->                                                         pre_severe_drug      
->                            ///
->                                                         pre_nonsevere_drug   
->                            ///
->                                                         pre_ra               
->                                    ///
->                                                         pre_sle              
->                                    ///
->                                                         pre_psorasis         
->                            ///
->                                                         pre_psa              
->                                    ///
->                                                         pre_axspa            
->                                    ///
->                                                         pre_ibd              
->    
+. global pre_ae_disease           pre_diverticulitis                              ///
+>                                                         pre_diarrhoea                                   ///
+>                                                         pre_taste                                               ///
+>                                                         pre_rash                                                ///
+>                                                         pre_bronchospasm                                ///
+>                                                         pre_contactderm                                 ///
+>                                                         pre_dizziness                                   ///
+>                                                         pre_nausea_vomit                                ///
+>                                                         pre_headache                                    ///
+>                                                         pre_anaphylaxis                                 ///
+>                                                         pre_severe_drug                                 ///
+>                                                         pre_nonsevere_drug                              ///
+>                                                         pre_ra                                                  ///
+>                                                         pre_sle                                                 ///
+>                                                         pre_psorasis                                    ///
+>                                                         pre_psa                                                 ///
+>                                                         pre_axspa                                               ///
+>                                                         pre_ibd                 
 
 . 
 . *gen start date for comparator rate
@@ -223,14 +187,12 @@
 . foreach x in $pre_ae_group $pre_ae_disease {
   2.                 display "`x'"
   3.                 count if `x'!=. 
-  4.                 count if (`x'<start_comparator | `x'>start_comparator_28) 
-> & `x'!=.  // event outside windown - should be 0 
-  5.                 count if (`x'>start_comparator & `x'<start_comparator_28) 
-> & `x'!=.  // event 4-3 years prior to start
+  4.                 count if (`x'<start_comparator | `x'>start_comparator_28) & `x'!=.  // event outside windown - should be 0 
+  5.                 count if (`x'>start_comparator & `x'<start_comparator_28) & `x'!=.  // event 4-3 years prior to start
   6.                 gen fail_`x'=1 if `x'!=.
   7.                 tab drug fail_`x', m
-  8.                 gen stop_`x'=`x' if fail_`x'==1
-  9.                 replace `x'=`x'+0.75 if `x'==start_date
+  8.                 replace `x'=`x'+0.75 if `x'==start_comparator
+  9.                 gen stop_`x'=`x' if fail_`x'==1
  10.                 replace stop_`x'= start_comparator_28 if fail_`x'==.
  11.                 tab drug fail_`x' if stop_`x'!=.
  12.                 format %td stop_`x'
@@ -250,8 +212,8 @@ pre_spc_all
 molnupiravir |       177        102 |       279 
 -------------+----------------------+----------
        Total |    14,142     10,513 |    24,655 
-(10,513 missing values generated)
 (8 real changes made)
+(10,513 missing values generated)
 (10,513 real changes made)
 
              | fail_pre_s
@@ -279,8 +241,8 @@ pre_drug_all
 molnupiravir |       168        111 |       279 
 -------------+----------------------+----------
        Total |    15,142      9,513 |    24,655 
+(5 real changes made)
 (9,513 missing values generated)
-(15 real changes made)
 (9,513 real changes made)
 
              | fail_pre_d
@@ -308,8 +270,8 @@ pre_imae_all
 molnupiravir |       236         43 |       279 
 -------------+----------------------+----------
        Total |    20,096      4,559 |    24,655 
+(15 real changes made)
 (4,559 missing values generated)
-(5 real changes made)
 (4,559 real changes made)
 
              | fail_pre_i
@@ -337,8 +299,8 @@ pre_ae_all
 molnupiravir |       271          8 |       279 
 -------------+----------------------+----------
        Total |    23,881        774 |    24,655 
+(21 real changes made)
 (774 missing values generated)
-(9 real changes made)
 (774 real changes made)
 
              | fail_pre_a
@@ -367,8 +329,8 @@ pre_diverticulitis
 molnupiravir |        76        203 |       279 
 -------------+----------------------+----------
        Total |     6,704     17,951 |    24,655 
+(3 real changes made)
 (17,951 missing values generated)
-(7 real changes made)
 (17,951 real changes made)
 
              | fail_pre_d
@@ -397,8 +359,8 @@ pre_diarrhoea
 molnupiravir |        96        183 |       279 
 -------------+----------------------+----------
        Total |     6,692     17,963 |    24,655 
+(4 real changes made)
 (17,963 missing values generated)
-(3 real changes made)
 (17,963 real changes made)
 
              | fail_pre_d
@@ -426,8 +388,8 @@ pre_taste
 molnupiravir |        54        225 |       279 
 -------------+----------------------+----------
        Total |     4,762     19,893 |    24,655 
+(1 real change made)
 (19,893 missing values generated)
-(0 real changes made)
 (19,893 real changes made)
 
              | fail_pre_t
@@ -455,8 +417,8 @@ pre_rash
 molnupiravir |        87        192 |       279 
 -------------+----------------------+----------
        Total |     6,629     18,026 |    24,655 
+(2 real changes made)
 (18,026 missing values generated)
-(4 real changes made)
 (18,026 real changes made)
 
              | fail_pre_r
@@ -484,8 +446,8 @@ pre_bronchospasm
 molnupiravir |        42        237 |       279 
 -------------+----------------------+----------
        Total |     2,508     22,147 |    24,655 
+(2 real changes made)
 (22,147 missing values generated)
-(1 real change made)
 (22,147 real changes made)
 
              | fail_pre_b
@@ -514,8 +476,8 @@ pre_contactderm
 molnupiravir |        81        198 |       279 
 -------------+----------------------+----------
        Total |     6,799     17,856 |    24,655 
+(1 real change made)
 (17,856 missing values generated)
-(4 real changes made)
 (17,856 real changes made)
 
              | fail_pre_c
@@ -543,8 +505,8 @@ pre_dizziness
 molnupiravir |        63        216 |       279 
 -------------+----------------------+----------
        Total |     6,646     18,009 |    24,655 
+(3 real changes made)
 (18,009 missing values generated)
-(8 real changes made)
 (18,009 real changes made)
 
              | fail_pre_d
@@ -572,8 +534,8 @@ pre_nausea_vomit
 molnupiravir |        47        232 |       279 
 -------------+----------------------+----------
        Total |     4,624     20,031 |    24,655 
+(1 real change made)
 (20,031 missing values generated)
-(2 real changes made)
 (20,031 real changes made)
 
              | fail_pre_n
@@ -602,8 +564,8 @@ pre_headache
 molnupiravir |        83        196 |       279 
 -------------+----------------------+----------
        Total |     6,634     18,021 |    24,655 
+(1 real change made)
 (18,021 missing values generated)
-(3 real changes made)
 (18,021 real changes made)
 
              | fail_pre_h
@@ -631,8 +593,8 @@ pre_anaphylaxis
 molnupiravir |        78        201 |       279 
 -------------+----------------------+----------
        Total |     6,656     17,999 |    24,655 
+(2 real changes made)
 (17,999 missing values generated)
-(7 real changes made)
 (17,999 real changes made)
 
              | fail_pre_a
@@ -660,8 +622,8 @@ pre_severe_drug
 molnupiravir |        87        192 |       279 
 -------------+----------------------+----------
        Total |     8,561     16,094 |    24,655 
+(4 real changes made)
 (16,094 missing values generated)
-(10 real changes made)
 (16,094 real changes made)
 
              | fail_pre_s
@@ -690,8 +652,8 @@ pre_nonsevere_drug
 molnupiravir |        59        220 |       279 
 -------------+----------------------+----------
        Total |     4,690     19,965 |    24,655 
+(1 real change made)
 (19,965 missing values generated)
-(3 real changes made)
 (19,965 real changes made)
 
              | fail_pre_n
@@ -720,8 +682,8 @@ pre_ra
 molnupiravir |        57        222 |       279 
 -------------+----------------------+----------
        Total |     6,027     18,628 |    24,655 
+(2 real changes made)
 (18,628 missing values generated)
-(3 real changes made)
 (18,628 real changes made)
 
              | fail_pre_r
@@ -749,8 +711,8 @@ pre_sle
 molnupiravir |        63        216 |       279 
 -------------+----------------------+----------
        Total |     5,958     18,697 |    24,655 
+(4 real changes made)
 (18,697 missing values generated)
-(3 real changes made)
 (18,697 real changes made)
 
              | fail_pre_s
@@ -778,8 +740,8 @@ pre_psorasis
 molnupiravir |        64        215 |       279 
 -------------+----------------------+----------
        Total |     6,100     18,555 |    24,655 
+(1 real change made)
 (18,555 missing values generated)
-(4 real changes made)
 (18,555 real changes made)
 
              | fail_pre_p
@@ -807,8 +769,8 @@ pre_psa
 molnupiravir |        74        205 |       279 
 -------------+----------------------+----------
        Total |     5,959     18,696 |    24,655 
-(18,696 missing values generated)
 (3 real changes made)
+(18,696 missing values generated)
 (18,696 real changes made)
 
              | fail_pre_p
@@ -836,8 +798,8 @@ pre_axspa
 molnupiravir |        83        196 |       279 
 -------------+----------------------+----------
        Total |     6,022     18,633 |    24,655 
-(18,633 missing values generated)
 (4 real changes made)
+(18,633 missing values generated)
 (18,633 real changes made)
 
              | fail_pre_a
@@ -865,8 +827,8 @@ pre_ibd
 molnupiravir |        69        210 |       279 
 -------------+----------------------+----------
        Total |     6,032     18,623 |    24,655 
+(3 real changes made)
 (18,623 missing values generated)
-(4 real changes made)
 (18,623 real changes made)
 
              | fail_pre_i
@@ -881,200 +843,127 @@ molnupiravir |        69 |        69
        Total |     6,032 |     6,032 
 
 . 
-. * Follow-up time
-. stset stop_pre_ae_all, id(patient_id) origin(time start_comparator) enter(tim
-> e start_comparator) exit(time start_comparator_28) failure(fail_pre_ae_all==1
-> ) 
+end of do-file
 
-                id:  patient_id
-     failure event:  fail_pre_ae_all == 1
-obs. time interval:  (stop_pre_ae_all[_n-1], stop_pre_ae_all]
- enter on or after:  time start_comparator
- exit on or before:  time start_comparator_28
-    t for analysis:  (time-origin)
-            origin:  time start_comparator
+. do "C:\Users\k1635179\AppData\Local\Temp\STD7e4_000000.tmp"
 
-------------------------------------------------------------------------------
+. stset stop_pre_ae_all, id(patient_id) origin(time start_comparator) enter(time start_comparator) exit(time start_comparator_28) failure(fail_pre_ae_all==1) 
+
+Survival-time data settings
+
+           ID variable: patient_id
+         Failure event: fail_pre_ae_all==1
+Observed time interval: (stop_pre_ae_all[_n-1], stop_pre_ae_all]
+     Enter on or after: time start_comparator
+     Exit on or before: time start_comparator_28
+     Time for analysis: (time-origin)
+                Origin: time start_comparator
+
+--------------------------------------------------------------------------
      24,655  total observations
-      6,979  observations end on or before enter()
-------------------------------------------------------------------------------
-     17,676  observations remaining, representing
-     17,676  subjects
-        577  failures in single-failure-per-subject data
-    504,479  total analysis time at risk and under observation
-                                                at risk from t =         0
-                                     earliest observed entry t =         0
-                                          last observed exit t =        29
+      6,958  observations end on or before enter()
+--------------------------------------------------------------------------
+     17,697  observations remaining, representing
+     17,697  subjects
+        598  failures in single-failure-per-subject data
+ 504,494.75  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =        29
 
-. tab _st  // keep if _st==1 -> removes observations that end on or before ente
-> r 
+. 
+end of do-file
 
-1 if record |
-   is to be |
-    used; 0 |
-  otherwise |      Freq.     Percent        Cum.
+. tab fail_pre_ae_all
+
+fail_pre_ae |
+       _all |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 |      6,979       28.31       28.31
-          1 |     17,676       71.69      100.00
+          1 |     23,881      100.00      100.00
+------------+-----------------------------------
+      Total |     23,881      100.00
+
+. tab fail_pre_ae_all,m
+
+fail_pre_ae |
+       _all |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |     23,881       96.86       96.86
+          . |        774        3.14      100.00
 ------------+-----------------------------------
       Total |     24,655      100.00
 
-. count if start_comparator>=stop_pre_ae_all & _st==0
-  6,979
+. stset stop_pre_ibd, id(patient_id) origin(time start_comparator) enter(time start_comparator) exit(time start_comparator_28) failure(fail_pre_ibd==1)
 
-. count if start_comparator==stop_pre_ae_all & _st==0
-  21
+Survival-time data settings
 
-. tab _t,m
+           ID variable: patient_id
+         Failure event: fail_pre_ibd==1
+Observed time interval: (stop_pre_ibd[_n-1], stop_pre_ibd]
+     Enter on or after: time start_comparator
+     Exit on or before: time start_comparator_28
+     Time for analysis: (time-origin)
+                Origin: time start_comparator
 
-   analysis |
+--------------------------------------------------------------------------
+     24,655  total observations
+        650  observations end on or before enter()
+--------------------------------------------------------------------------
+     24,005  observations remaining, representing
+     24,005  subjects
+         62  failures in single-failure-per-subject data
+ 695,333.25  total analysis time at risk and under observation
+                                                At risk from t =         0
+                                     Earliest observed entry t =         0
+                                          Last observed exit t =        29
+
+. tab fail_pre_ibd,m
+
+fail_pre_ib |
+          d |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |      6,032       24.47       24.47
+          . |     18,623       75.53      100.00
+------------+-----------------------------------
+      Total |     24,655      100.00
+
+. count if pre_ibd!=.
+  6,032
+
+. tab _t
+
+   Analysis |
   time when |
 record ends |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |         15        0.06        0.06
-          2 |         22        0.09        0.15
-          3 |         17        0.07        0.22
-          4 |         20        0.08        0.30
-          5 |         24        0.10        0.40
-          6 |         24        0.10        0.49
-          7 |         26        0.11        0.60
-          8 |         20        0.08        0.68
-          9 |         16        0.06        0.75
-         10 |         17        0.07        0.82
-         11 |         13        0.05        0.87
-         12 |         24        0.10        0.97
-         13 |         15        0.06        1.03
-         14 |         26        0.11        1.13
-         15 |         14        0.06        1.19
-         16 |         25        0.10        1.29
-         17 |         17        0.07        1.36
-         18 |         17        0.07        1.43
-         19 |         30        0.12        1.55
-         20 |         20        0.08        1.63
-         21 |         18        0.07        1.70
-         22 |         24        0.10        1.80
-         23 |         22        0.09        1.89
-         24 |         21        0.09        1.98
-         25 |         16        0.06        2.04
-         26 |         26        0.11        2.15
-         27 |         17        0.07        2.21
-         28 |         17        0.07        2.28
-         29 |     17,113       69.41       71.69
-          . |      6,979       28.31      100.00
+        .75 |          3        0.01        0.01
+          1 |          1        0.00        0.02
+          2 |          2        0.01        0.02
+          3 |          1        0.00        0.03
+          4 |          1        0.00        0.03
+          6 |          3        0.01        0.05
+          7 |          3        0.01        0.06
+          8 |          3        0.01        0.07
+          9 |          1        0.00        0.07
+         10 |          1        0.00        0.08
+         11 |          1        0.00        0.08
+         12 |          1        0.00        0.09
+         13 |          2        0.01        0.10
+         14 |          4        0.02        0.11
+         15 |          2        0.01        0.12
+         16 |          3        0.01        0.13
+         17 |          1        0.00        0.14
+         18 |          1        0.00        0.14
+         19 |          2        0.01        0.15
+         20 |          5        0.02        0.17
+         22 |          3        0.01        0.18
+         23 |          2        0.01        0.19
+         24 |          4        0.02        0.21
+         25 |          2        0.01        0.22
+         26 |          2        0.01        0.22
+         27 |          2        0.01        0.23
+         28 |          4        0.02        0.25
+         29 |     23,945       99.75      100.00
 ------------+-----------------------------------
-      Total |     24,655      100.00
+      Total |     24,005      100.00
 
-. 
-. 
-. ** Rates of events 
-. tempname comparator_rates
-
-. postfile `comparator_rates' str20(failure) ///
->                 ptime_all events_all rate_all lci_all uci_all ///
->                 ptime_control events_control rate_control lci_control uci_con
-> trol ///
->                 ptime_sot events_sot rate_sot lci_sot uci_sot ///
->                 ptime_pax events_pax rate_pax lci_pax uci_pax ///
->                 ptime_mol events_mol rate_mol lci_mol uci_mol ///
->                 using "$projectdir/output/tables/comparator_rates", replace  
->                                                     
-
-. foreach fail in $ae_group $ae_disease {
-  2.         stset stop_`fail', id(patient_id) origin(time start_date) enter(ti
-> me start_date) failure(fail_`fail'==1)                        
-  3.                 stptime 
-  4.                                         local rate_all = `r(rate)'
-  5.                                         local ptime_all = `r(ptime)'
-  6.                                         local lci_all = `r(lb)'
-  7.                                         local uci_all = `r(ub)'
-  8.                                         local events_all .
-  9.                                                 if `r(failures)' == 0 | `r
-> (failures)' > 7 local events_all `r(failures)'
- 10.                 stptime if drug == 0
- 11.                                         local rate_control = `r(rate)'
- 12.                                         local ptime_control = `r(ptime)'
- 13.                                         local lci_control = `r(lb)'
- 14.                                         local uci_control = `r(ub)'
- 15.                                         local events_control .
- 16.                                                 if `r(failures)' == 0 | `r
-> (failures)' > 7 local events_control `r(failures)'
- 17.                 display "no drug"
- 18.                 stptime if drug == 1
- 19.                                         local rate_sot = `r(rate)'
- 20.                                         local ptime_sot = `r(ptime)'
- 21.                                         local lci_sot = `r(lb)'
- 22.                                         local uci_sot = `r(ub)'
- 23.                                         local events_sot .
- 24.                                                 if `r(failures)' == 0 | `r
-> (failures)' > 7 local events_sot `r(failures)'
- 25.                 display "sotrovimab"
- 26.                 stptime if drug == 2
- 27.                                         local rate_pax = `r(rate)'
- 28.                                         local ptime_pax = `r(ptime)'
- 29.                                         local lci_pax = `r(lb)'
- 30.                                         local uci_pax = `r(ub)'
- 31.                                         local events_pax .
- 32.                                                 if `r(failures)' == 0 | `r
-> (failures)' > 7 local events_pax `r(failures)'
- 33.                 display "paxlovid"
- 34.                 stptime if drug == 3
- 35.                                         local rate_mol = `r(rate)'
- 36.                                         local ptime_mol = `r(ptime)'
- 37.                                         local lci_mol = `r(lb)'
- 38.                                         local uci_mol = `r(ub)'
- 39.                                         local events_mol .
- 40.                                                 if `r(failures)' == 0 | `r
-> (failures)' > 7 local events_mol `r(failures)'
- 41.                 display "molnupavir"                    
- 42.                 post `comparator_rates' ("`fail'") (`ptime_all') (`events_
-> all') (`rate_all') (`lci_all') (`uci_all') ///
->                                         (`ptime_control') (`events_control') 
-> (`rate_control') (`lci_control') (`uci_control') ///
->                                         (`ptime_sot') (`events_sot') (`rate_s
-> ot') (`lci_sot') (`uci_sot') ///
->                                         (`ptime_pax') (`events_pax') (`rate_p
-> ax') (`lci_pax') (`uci_pax') ///
->                                         (`ptime_mol') (`events_mol') (`rate_m
-> ol') (`lci_mol') (`uci_mol') ///
->                                         
- 43. }
-
-. postclose `comparator_rates'
-
-. 
-. use "$projectdir/output/tables/comparator_rates", clear 
-
-. foreach var of varlist rate* lci* uci* {
-  2.         
-. gen `var'_per = `var'*1000      
-  3. format `var'_per %3.2f
-  4. drop `var'      
-  5. rename  `var'_per `var'                         
-  6. }
-
-. order   failure ptime_all events_all rate_all lci_all uci_all ///
->                 ptime_control events_control rate_control lci_control uci_con
-> trol ///
->                 ptime_sot events_sot rate_sot lci_sot uci_sot ///
->                 ptime_pax events_pax rate_pax lci_pax uci_pax ///
->                 ptime_mol events_mol rate_mol lci_mol uci_mol
-
-. save "$projectdir/output/tables/comparator_rates", replace
-(note: dataset contains 0 observations)
-file /workspace/output/tables/comparator_rates.dta saved
-
-. 
-. use "$projectdir/output/tables/comparator_rates", replace
-
-. export delimited using "$projectdir/output/tables/comparator_rates.csv", repl
-> ace
-(note: file /workspace/output/tables/comparator_rates.csv not found)
-file /workspace/output/tables/comparator_rates.csv saved
-
-. 
-. log close
-      name:  <unnamed>
-       log:  /workspace/logs/preceed_rate.log
-  log type:  text
- closed on:   6 Sep 2023, 11:59:13
--------------------------------------------------------------------------------

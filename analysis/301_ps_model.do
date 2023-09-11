@@ -12,8 +12,8 @@
 
 ****************************************************************************************************************
 **Set filepaths
-// global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
-global projectdir `c(pwd)'
+global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+// global projectdir `c(pwd)'
 di "$projectdir"
 capture mkdir "$projectdir/output/data"
 capture mkdir "$projectdir/output/figures"
@@ -43,7 +43,10 @@ global adj3 	age i.sex i.region_nhs imdq5 White 1b.bmi_group ///
 				paxlovid_contraindicated vaccination_status diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension 
 
 * Outcome
-global ae_group			ae_spc_all 					///
+global ae_group			ae_spc_all 					
+
+
+///
 						ae_drug_all					///		
 						ae_imae_all 				///				
 						ae_all						///
@@ -75,13 +78,37 @@ global ae_disease		ae_diverticulitis 				///
 ****************************************************************************************************************
 *1. Individual drug V No Drug
 									
-tempname coxoutput_propensity
+tempname coxoutput_propensity_sot
 
-postfile `coxoutput_propensity' str20(model) str20(fail)   ///
-hr_sot lc_sot uc_sot hr_pax lc_pax uc_pax hr_mol lc_mol uc_mol ///
-using "$projectdir/output/tables/cox_propensity", replace	
+postfile `coxoutput_propensity_sot' str20(fail) hr_sot lc_sot uc_sot using "$projectdir/output/tables/cox_propensity_sot", replace	
+
+preserve
+keep if drug==0 | drug==1	
+logistic drug age sex 	
+predict p_drug
+twoway 	(histogram p_drug if drug==0, fcolor(none) lcolor(black)) ///
+		(histogram p_drug if drug==1, color(green)), legend(order(1 "No Drug" 2 "Sotrovimab")) name(histogram_sot_agesex, replace)
+gen iptw_agesex = 1/p_drug if drug==0
+replace iptw_agesex  = 1/(1-p_drug) if drug==1
+pbalchk drug age sex 
+pbalchk drug age sex , wt(iptw_agesex) graph
+graph save "$projectdir/output/figures/match_adj_sot", replace	
+foreach fail in $ae_group  {
+		stset stop_`fail' [pw=iptw_agesex], id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
+		stcox i.drug, vce(robust)
+						matrix b = r(table)
+						local hr_sot = b[1,2]
+						local lc_sot = b[5,2]
+						local uc_sot = b[6,2]
+	post `coxoutput_propensity_sot' ("`fail'") (`hr_sot') (`lc_sot') (`uc_sot') 
+}
+restore
+
+
+graph combine histogram_sot_agesex histogram_pax_agesex histogram_mol_agesex, name(histogram_agesex, replace) ///
+saving("$projectdir/output/figures/histogram_agesex", replace)
+graph export "$projectdir/output/figures/histogram_agesex.svg", as(svg) replace	
 	
-
 foreach model in agesex adj2 adj3 adj {	
 	* control V all drug
 	gen control = 1 if drug==0
