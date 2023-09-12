@@ -110,6 +110,7 @@ actions:
       moderately_sensitive:
         log: logs/ps_model.log
         data: output/tables/cox_propensity.csv 
+        data2: output/tables/cox_propensity_common.csv 
         histogram_sot_agesex: output/figures/histogram_sot_agesex.svg
         histogram_pax_agesex: output/figures/histogram_pax_agesex.svg
         histogram_mol_agesex: output/figures/histogram_mol_agesex.svg
@@ -119,6 +120,15 @@ actions:
         match_sot: output/figures/sot_match_adj*.svg
         match_pax: output/figures/pax_match_adj*.svg
         match_mol: output/figures/mol_match_adj*.svg
+        histogram_sot_agesex_common: output/figures/histogram_sot_common_agesex.svg
+        histogram_pax_agesex_common: output/figures/histogram_pax_common_agesex.svg
+        histogram_mol_agesex_common: output/figures/histogram_mol_common_agesex.svg
+        histogram_sot_adj_common: output/figures/histogram_sot_common_adj.svg
+        histogram_pax_adj_common: output/figures/histogram_pax_common_adj.svg
+        histogram_mol_adj_common: output/figures/histogram_mol_common_adj.svg
+        match_sot_common: output/figures/sot_match_common_adj*.svg
+        match_pax_common: output/figures/pax_match_common_adj*.svg
+        match_mol_common: output/figures/mol_match_common_adj*.svg
 
         
   preceed_rate:

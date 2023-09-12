@@ -1,9 +1,9 @@
----------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/log
-> s/ps_model.log
+       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/logs/ps_m
+> odel.log
   log type:  text
- opened on:   6 Sep 2023, 11:16:59
+ opened on:  12 Sep 2023, 14:39:54
 
 . 
 . *Set Ado file path
@@ -14,10 +14,8 @@
   [4]  (PERSONAL)  "C:\users\PUBLIC\documents/"
   [5]  (PLUS)      "C:\users\PUBLIC\documents/"
   [6]  (OLDPLACE)  "c:\ado/"
-  [7]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/analy
-> sis/ado"
-  [8]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analy
-> sis/analysis/ado"
+  [7]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/an
+> alysis/ado"
 
 . 
 . * SET Index date 
@@ -33,9 +31,8 @@ end of do-file
 
 r(601);
 
-. do "C:\Users\k1635179\AppData\Local\Temp\STD29d8_000000.tmp"
+. do "C:\Users\k1635179\AppData\Local\Temp\STD1944_000000.tmp"
 
-. ********************************************************************************
 . *
 . *       Do-file:                        propensity score cox model
 . *       Project:                        Sotrovimab-Paxlovid-Molnupiravir
