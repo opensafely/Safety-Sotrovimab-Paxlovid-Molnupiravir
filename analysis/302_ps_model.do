@@ -12,7 +12,7 @@
 
 ****************************************************************************************************************
 **Set filepaths
-// global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+//global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
 global projectdir `c(pwd)'
 di "$projectdir"
 capture mkdir "$projectdir/output/data"
@@ -204,6 +204,175 @@ foreach model in agesex adj {
 postclose `coxoutput_propensity_mol'
 
 
+
+
+
+** Common Support					
+****************************************************************************************************************
+*1. Individual drug V No Drug
+	
+// SOTROVIMAB
+tempname coxoutput_propensity_sot_common
+postfile `coxoutput_propensity_sot_common' str20(model) str20(fail)  ///
+									hr_sot lc_sot uc_sot ///
+									using "$projectdir/output/tables/cox_propensity_sot_common", replace	
+
+foreach model in agesex adj{
+	preserve
+	keep if drug==0 | drug==1
+	logistic drug $`model'	 	
+	predict p_drug_`model'	
+	
+	summarize p_drug_`model' if drug == 0, detail
+	gen min_p_control = r(min)
+	gen max_p_control = r(max)
+	summarize p_drug_`model' if drug ==1, detail
+	gen min_p_drug = r(min)
+	gen max_p_drug = r(max)
+	gen common_min = max(min_p_control , min_p_drug)
+	gen common_max = min(max_p_control, max_p_drug)
+	gen common_support = (p_drug_`model' >= common_min & p_drug_`model' <=common_max)
+	keep if common_support==1
+	
+	twoway 	(histogram p_drug_`model' if drug==1, color(green)) (histogram p_drug_`model' if drug==0, fcolor(none) lcolor(black)), ///
+			legend(order(1 "No Drug" 2 "Sotrovimab")) name(histogram_sot_`model'_common, replace) saving("$projectdir/output/figures/histogram_sot_common_`model'", replace)
+	graph export "$projectdir/output/figures/histogram_sot_common_`model'.svg", as(svg) replace
+			
+	gen iptw_`model' = 1/p_drug_`model' if drug==1
+	replace iptw_`model'  = 1/(1-p_drug_`model') if drug==0
+	
+	pbalchk drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease ///
+	liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 bmi_group ///
+	diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension	
+	pbalchk drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease ///
+	liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 bmi_group ///
+	diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension, wt(iptw`$model') graph 
+	graph save "$projectdir/output/figures/sot_match_common_adj", replace
+	graph export "$projectdir/output/figures/sot_match_common_adj.svg", as(svg) replace
+	
+	foreach fail in $ae_group $ae_disease {
+			stset stop_`fail' [pw=iptw_`model'], id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
+			stcox i.drug, vce(robust)
+							matrix b = r(table)
+							local hr_sot = b[1,2]
+							local lc_sot = b[5,2]
+							local uc_sot = b[6,2]
+			post `coxoutput_propensity_sot_common' ("`fail'") ("`model'") (`hr_sot') (`lc_sot') (`uc_sot') 
+}
+restore		
+}
+
+postclose `coxoutput_propensity_sot_common'
+
+// PAXLOVID
+tempname coxoutput_propensity_pax_common
+postfile `coxoutput_propensity_pax_common' str20(model) str20(fail)  ///
+									hr_pax lc_pax uc_pax ///
+									using "$projectdir/output/tables/cox_propensity_pax_common", replace									
+foreach model in agesex adj {
+	preserve
+	keep if drug==0 | drug==2
+	replace drug=1 if drug==2
+	lab define drug 0 "Control" 1 "Paxlovid", replace
+	label values drug drug
+	logistic drug $`model'	 	
+	predict p_drug_`model'	
+	
+	summarize p_drug_`model' if drug == 0, detail
+	gen min_p_control = r(min)
+	gen max_p_control = r(max)
+	summarize p_drug_`model' if drug ==1, detail
+	gen min_p_drug = r(min)
+	gen max_p_drug = r(max)
+	gen common_min = max(min_p_control , min_p_drug)
+	gen common_max = min(max_p_control, max_p_drug)
+	gen common_support = (p_drug_`model' >= common_min & p_drug_`model' <=common_max)
+	keep if common_support==1
+		
+	twoway 	(histogram p_drug_`model' if drug==1, color(green)) (histogram p_drug_`model' if drug==0, fcolor(none) lcolor(black)), ///
+			legend(order(1 "No Drug" 2 "Paxlovid")) name(histogram_pax_`model'_common, replace) saving("$projectdir/output/figures/histogram_pax_common_`model'", replace)
+	graph export "$projectdir/output/figures/histogram_pax_common_`model'.svg", as(svg) replace
+			
+	gen iptw_`model' = 1/p_drug_`model' if drug==1
+	replace iptw_`model'  = 1/(1-p_drug_`model') if drug==0
+
+	pbalchk drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease ///
+	liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 bmi_group ///
+	diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension	
+	pbalchk drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease ///
+	liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 bmi_group ///
+	diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension, wt(iptw`$model') graph 
+	graph save "$projectdir/output/figures/pax_match_common_adj", replace
+	graph export "$projectdir/output/figures/pax_match_common_adj.svg", as(svg) replace
+	
+	foreach fail in $ae_group $ae_disease {
+			stset stop_`fail' [pw=iptw_`model'], id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
+			stcox i.drug, vce(robust)
+							matrix b = r(table)
+							local hr_pax = b[1,2]
+							local lc_pax = b[5,2]
+							local uc_pax = b[6,2]
+			post `coxoutput_propensity_pax_common' ("`fail'") ("`model'") (`hr_pax') (`lc_pax') (`uc_pax') 
+}		
+	restore
+}
+postclose `coxoutput_propensity_pax_common'
+
+
+// MOLNUPAVIR
+tempname coxoutput_propensity_mol_common
+postfile `coxoutput_propensity_mol_common' str20(model) str20(fail)  ///
+									hr_mol lc_mol uc_mol ///
+									using "$projectdir/output/tables/cox_propensity_mol_common", replace									
+foreach model in agesex adj {
+	preserve
+	keep if drug==0 | drug==3
+	replace drug=1 if drug==3
+	lab define drug 0 "Control" 1 "Molnupavir", replace
+	label values drug drug
+	logistic drug $`model'	 	
+	predict p_drug_`model'	
+	
+	summarize p_drug_`model' if drug == 0, detail
+	gen min_p_control = r(min)
+	gen max_p_control = r(max)
+	summarize p_drug_`model' if drug ==1, detail
+	gen min_p_drug = r(min)
+	gen max_p_drug = r(max)
+	gen common_min = max(min_p_control , min_p_drug)
+	gen common_max = min(max_p_control, max_p_drug)
+	gen common_support = (p_drug_`model' >= common_min & p_drug_`model' <=common_max)
+	keep if common_support==1
+	
+	twoway 	(histogram p_drug_`model' if drug==1, color(green)) (histogram p_drug_`model' if drug==0, fcolor(none) lcolor(black)), ///
+			legend(order(1 "No Drug" 2 "Molnupavir")) name(histogram_mol_`model'_common, replace) saving("$projectdir/output/figures/histogram_mol_common_`model'", replace)
+	graph export "$projectdir/output/figures/histogram_mol_common_`model'.svg", as(svg) replace
+			
+	gen iptw_`model' = 1/p_drug_`model' if drug==1
+	replace iptw_`model'  = 1/(1-p_drug_`model') if drug==0
+
+	pbalchk drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease ///
+	liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 bmi_group ///
+	diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension	
+	pbalchk drug age sex region_nhs paxlovid_contraindicated downs_syndrome solid_cancer haem_disease renal_disease ///
+	liver_disease imid_on_drug immunosupression hiv_aids organ_transplant rare_neuro vaccination_status imdq5 bmi_group ///
+	diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension, wt(iptw`$model') graph 
+	graph save "$projectdir/output/figures/mol_match_common_adj", replace
+	graph export "$projectdir/output/figures/mol_match_common_adj.svg", as(svg) replace
+
+	foreach fail in $ae_group $ae_disease {
+			stset stop_`fail' [pw=iptw_`model'], id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
+			stcox i.drug, vce(robust)
+							matrix b = r(table)
+							local hr_mol = b[1,2]
+							local lc_mol = b[5,2]
+							local uc_mol = b[6,2]
+			post `coxoutput_propensity_mol_common' ("`fail'") ("`model'") (`hr_mol') (`lc_mol') (`uc_mol') 
+}		
+	restore
+}
+postclose `coxoutput_propensity_mol_common'
+
 *******************************************************************************
 use "$projectdir/output/tables/cox_propensity_sot", clear
 merge 1:1 model fail using "$projectdir/output/tables/cox_propensity_pax", nogenerate 
@@ -213,6 +382,16 @@ foreach var of varlist hr* lc* uc* {
 }	
 save "$projectdir/output/tables/cox_propensity", replace
 export delimited using "$projectdir/output/tables/cox_propensity.csv", replace
+
+use "$projectdir/output/tables/cox_propensity_sot_common", clear
+merge 1:1 model fail using "$projectdir/output/tables/cox_propensity_pax_common", nogenerate 
+merge 1:1 model fail using "$projectdir/output/tables/cox_propensity_mol_common", nogenerate
+foreach var of varlist hr* lc* uc* {
+	format `var' %3.2f			
+}	
+save "$projectdir/output/tables/cox_propensity_common", replace
+export delimited using "$projectdir/output/tables/cox_propensity_common.csv", replace
+
 
 log close
 
