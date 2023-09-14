@@ -1,9 +1,10 @@
----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/logs/ps_m
-> odel.log
+       log:  C:\Users\k1635179\OneDrive - King's College London\K
+> atie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Pax
+> lovid-Molnupiravir\analysis/logs/ps_model.log
   log type:  text
- opened on:  12 Sep 2023, 14:39:54
+ opened on:  14 Sep 2023, 09:12:10
 
 . 
 . *Set Ado file path
@@ -14,8 +15,9 @@
   [4]  (PERSONAL)  "C:\users\PUBLIC\documents/"
   [5]  (PLUS)      "C:\users\PUBLIC\documents/"
   [6]  (OLDPLACE)  "c:\ado/"
-  [7]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/an
-> alysis/ado"
+  [7]              "C:\Users\k1635179\OneDrive - King's College L
+> ondon\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovi
+> mab-Paxlovid-Molnupiravir\analysis/analysis/ado"
 
 . 
 . * SET Index date 
@@ -23,34 +25,30 @@
 
 . 
 . use "$projectdir/output/data/main", clear
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/output/data/main.dta not found
+file C:\Users\k1635179\OneDrive - King's College
+    London\Katie\OpenSafely\Safety mAB and
+    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis
+    > /output/data/main.dta not found
 r(601);
 
 end of do-file
 
 r(601);
 
-. do "C:\Users\k1635179\AppData\Local\Temp\STD1944_000000.tmp"
+. do "C:\Users\k1635179\AppData\Local\Temp\STD5508_000000.tmp"
 
-. *
-. *       Do-file:                        propensity score cox model
-. *       Project:                        Sotrovimab-Paxlovid-Molnupiravir
-. *   Date:                               24/4/23
-. *       Programmed by:          Katie Bechman
-. *       Description:            create and run ps model
-. *       Data used:                      main.dta
-. *       Data created:           psoutput
-. *       Other output:           logfiles, printed to folder $Logdir
-. *       User installed ado: (place .ado file(s) in analysis folder)
-. 
-. ****************************************************************************************************************
+. ***************************************************************
+> *************************************************
 . **Set filepaths
-. global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+. global projectdir "C:\Users\k1635179\OneDrive - King's College 
+> London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrov
+> imab-Paxlovid-Molnupiravir"
 
 . // global projectdir `c(pwd)'
 . di "$projectdir"
-C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir
+C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafe
+> ly\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupi
+> ravir
 
 . capture mkdir "$projectdir/output/data"
 
@@ -61,7 +59,9 @@ C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB a
 . global logdir "$projectdir/logs"
 
 . di "$logdir"
-C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/logs
+C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafe
+> ly\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupi
+> ravir/logs
 
 . * Open a log file
 . cap log close
