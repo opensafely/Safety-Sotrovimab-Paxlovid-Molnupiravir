@@ -50,6 +50,7 @@ actions:
         data: output/tables/cox_model_summary.csv 
         data1: output/tables/cox_model_disease.csv 
         data2: output/tables/cox_model_rates.csv 
+        data3: output/tables/cox_model_rates_round.csv 
         survrisk_ae_spc_all: output/figures/survrisk_ae_spc_all.svg
         survrisk_ae_drug_all: output/figures/survrisk_ae_drug_all.svg
         survrisk_ae_imae_all: output/figures/survrisk_ae_imae_all.svg
@@ -162,12 +163,13 @@ actions:
 
         
   preceed_rate:
-    run: stata-mp:latest analysis/400_preceeding_rate.do
+    run: stata-mp:latest analysis/401_preceeding_rate.do
     needs: [define_covariates_combine]
     outputs:
       moderately_sensitive:
         log: logs/preceed_rate.log 
         data: output/tables/comparator_rates.csv 
+        data1: output/tables/comparator_rates_round.csv 
   
   redacted_table:
     run: stata-mp:latest analysis/500_redacted_table.do
