@@ -1,19 +1,19 @@
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/logs/preceed_rate.log
+       log:  /workspace/logs/preceed_rate.log
   log type:  text
- opened on:  11 Sep 2023, 11:06:38
+ opened on:  20 Sep 2023, 16:19:23
 
 . 
 . *Set Ado file path
 . adopath + "$projectdir/analysis/ado"
-  [1]  (BASE)      "C:\Program Files\Stata17\ado\base/"
-  [2]  (SITE)      "C:\Program Files\Stata17\ado\site/"
+  [1]  (BASE)      "/usr/local/stata/ado/base/"
+  [2]  (SITE)      "/usr/local/ado/"
   [3]              "."
-  [4]  (PERSONAL)  "C:\users\PUBLIC\documents/"
-  [5]  (PLUS)      "C:\users\PUBLIC\documents/"
-  [6]  (OLDPLACE)  "c:\ado/"
-  [7]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/analysis/ado"
+  [4]  (PERSONAL)  "~/ado/personal/"
+  [5]  (PLUS)      "~/ado/plus/"
+  [6]  (OLDPLACE)  "~/ado/"
+  [7]              "/workspace/analysis/ado"
 
 . 
 . * SET Index date 
@@ -28,7 +28,8 @@
 . 
 . *       COMPARATOR RATE         
 . ****************************
-. **generate rate for adverse outcome in year 3-4 prior to start date for comparative rate by person years 
+. **generate rate for adverse outcome in year 3-4 prior to start date for compa
+> rative rate by person years 
 . *ensure not established diagnosis for some of the condition 4 year prior
 . gen new_pre_ra_icd = pre_rheumatoid_icd_prim if pre_ra_snomed_new==0 
 (22,480 missing values generated)
@@ -36,7 +37,8 @@
 . gen new_pre_ra_ae = pre_rheumatoid_arthritis_ae if pre_ra_snomed_new==0 
 (22,396 missing values generated)
 
-. gen new_pre_ra_snomed = pre_rheumatoid_arthritis_snomed if pre_ra_snomed_new==0 
+. gen new_pre_ra_snomed = pre_rheumatoid_arthritis_snomed if pre_ra_snomed_new=
+> =0 
 (22,386 missing values generated)
 
 . gen new_pre_sle_ctv = pre_sle_ctv if pre_sle_ctv_new==0 
@@ -48,10 +50,12 @@
 . gen new_pre_sle_ae = pre_sle_ae if pre_sle_ctv_new==0 
 (22,450 missing values generated)
 
-. gen new_pre_psoriasis_icd = pre_psoriasis_icd_prim if pre_psoriasis_snomed_new==0 
+. gen new_pre_psoriasis_icd = pre_psoriasis_icd_prim if pre_psoriasis_snomed_ne
+> w==0 
 (22,402 missing values generated)
 
-. gen new_pre_psoriasis_snomed = pre_psoriasis_snomed if pre_psoriasis_snomed_new==0 
+. gen new_pre_psoriasis_snomed = pre_psoriasis_snomed if pre_psoriasis_snomed_n
+> ew==0 
 (22,390 missing values generated)
 
 . gen new_pre_psoriasis_ae = pre_psoriasis_ae if pre_psoriasis_snomed_new==0
@@ -86,96 +90,128 @@
 
 . 
 . *** combined ae from GP, hosp and A&E
-. egen pre_diverticulitis = rmin(pre_diverticulitis_icd_prim pre_diverticulitis_snomed pre_diverticulitis_ae)      
-(17,951 missing values generated)
+. egen pre_diverticulitis = rmin(pre_diverticulitis_icd_prim pre_diverticulitis
+> _snomed pre_diverticulitis_ae)      
+(17951 missing values generated)
 
-. egen pre_diarrhoea = rmin(pre_diarrhoea_icd_prim pre_diarrhoea_snomed  pre_diarrhoeal_icd_prim)
-(17,963 missing values generated)
+. egen pre_diarrhoea = rmin(pre_diarrhoea_icd_prim pre_diarrhoea_snomed  pre_di
+> arrhoeal_icd_prim)
+(17963 missing values generated)
 
 . egen pre_taste = rmin(pre_taste_icd_prim pre_taste_snomed )
-(19,893 missing values generated)
+(19893 missing values generated)
 
 . egen pre_rash = rmin(pre_rash_icd_prim pre_rash_snomed pre_rash_ae)
-(18,026 missing values generated)
+(18026 missing values generated)
 
 . egen pre_bronchospasm = rmin(pre_bronchospasm_snomed)
-(22,147 missing values generated)
+(22147 missing values generated)
 
-. egen pre_contactderm = rmin(pre_contactderm_snomed pre_contactderm_icd_prim pre_contactderm_ae)
-(17,856 missing values generated)
+. egen pre_contactderm = rmin(pre_contactderm_snomed pre_contactderm_icd_prim p
+> re_contactderm_ae)
+(17856 missing values generated)
 
-. egen pre_dizziness = rmin(pre_dizziness_snomed pre_dizziness_ae pre_dizziness_icd_prim)
-(18,009 missing values generated)
+. egen pre_dizziness = rmin(pre_dizziness_snomed pre_dizziness_ae pre_dizziness
+> _icd_prim)
+(18009 missing values generated)
 
-. egen pre_nausea_vomit = rmin(pre_nausea_vomit_snomed pre_nausea_vomit_icd_prim)
-(20,031 missing values generated)
+. egen pre_nausea_vomit = rmin(pre_nausea_vomit_snomed pre_nausea_vomit_icd_pri
+> m)
+(20031 missing values generated)
 
-. egen pre_headache = rmin(pre_headache_snomed pre_headache_ae pre_headache_icd_prim)
-(18,021 missing values generated)
+. egen pre_headache = rmin(pre_headache_snomed pre_headache_ae pre_headache_icd
+> _prim)
+(18021 missing values generated)
 
-. egen pre_anaphylaxis = rmin(pre_anaphylaxis_icd_prim pre_anaphylaxis_snomed     pre_anaphlaxis_ae)
-(17,999 missing values generated)
+. egen pre_anaphylaxis = rmin(pre_anaphylaxis_icd_prim pre_anaphylaxis_snomed  
+>    pre_anaphlaxis_ae)
+(17999 missing values generated)
 
-. egen pre_severe_drug = rmin(pre_severedrug_icd_prim pre_severedrug_sjs_icd_prim pre_severedrug_snomed pre_severedrug_ae)
-(16,094 missing values generated)
+. egen pre_severe_drug = rmin(pre_severedrug_icd_prim pre_severedrug_sjs_icd_pr
+> im pre_severedrug_snomed pre_severedrug_ae)
+(16094 missing values generated)
 
-. egen pre_nonsevere_drug = rmin(pre_nonsevere_drug_snomed pre_nonsevere_drug_ae)
-(19,965 missing values generated)
+. egen pre_nonsevere_drug = rmin(pre_nonsevere_drug_snomed pre_nonsevere_drug_a
+> e)
+(19965 missing values generated)
 
 . egen pre_ra = rmin(new_pre_ra_icd new_pre_ra_ae new_pre_ra_snomed )
-(18,628 missing values generated)
+(18628 missing values generated)
 
 . egen pre_sle = rmin(new_pre_sle_icd new_pre_sle_ctv new_pre_sle_ae)
-(18,697 missing values generated)
+(18697 missing values generated)
 
-. egen pre_psorasis = rmin(new_pre_psoriasis_icd new_pre_psoriasis_snomed  new_pre_psoriasis_ae)
-(18,555 missing values generated)
+. egen pre_psorasis = rmin(new_pre_psoriasis_icd new_pre_psoriasis_snomed  new_
+> pre_psoriasis_ae)
+(18555 missing values generated)
 
 . egen pre_psa = rmin(new_pre_psa_icd new_pre_psa_ae new_pre_psa_snomed)
-(18,696 missing values generated)
+(18696 missing values generated)
 
 . egen pre_axspa = rmin(new_pre_axspa_icd  new_pre_axspa_ae new_pre_axspa_ctv)
-(18,633 missing values generated)
+(18633 missing values generated)
 
 . egen pre_ibd = rmin(new_pre_ibd_icd new_pre_ibd_ctv new_pre_ibd_ae)
-(18,623 missing values generated)
+(18623 missing values generated)
 
 . egen pre_spc_all = rmin(pre_diverticulitis pre_diarrhoea pre_taste) 
-(10,513 missing values generated)
+(10513 missing values generated)
 
 . egen pre_drug_all = rmin(pre_anaphylaxis pre_severe_drug pre_nonsevere_drug)
-(9,513 missing values generated)
+(9513 missing values generated)
 
-. egen pre_imae_all = rmin(pre_ra pre_sle pre_psorasis pre_psa pre_axspa pre_ibd) 
-(4,559 missing values generated)
+. egen pre_imae_all = rmin(pre_ra pre_sle pre_psorasis pre_psa pre_axspa pre_ib
+> d) 
+(4559 missing values generated)
 
 . egen pre_ae_all = rmin(pre_spc_all pre_drug_all pre_imae_all)
 (774 missing values generated)
 
 . 
-. global pre_ae_group                     pre_spc_all                                     ///
->                                                         pre_drug_all                                    ///             
->                                                         pre_imae_all                                    ///                             
+. global pre_ae_group                     pre_spc_all                          
+>            ///
+>                                                         pre_drug_all         
+>                            ///             
+>                                                         pre_imae_all         
+>                            ///                             
 >                                                         pre_ae_all
 
-. global pre_ae_disease           pre_diverticulitis                              ///
->                                                         pre_diarrhoea                                   ///
->                                                         pre_taste                                               ///
->                                                         pre_rash                                                ///
->                                                         pre_bronchospasm                                ///
->                                                         pre_contactderm                                 ///
->                                                         pre_dizziness                                   ///
->                                                         pre_nausea_vomit                                ///
->                                                         pre_headache                                    ///
->                                                         pre_anaphylaxis                                 ///
->                                                         pre_severe_drug                                 ///
->                                                         pre_nonsevere_drug                              ///
->                                                         pre_ra                                                  ///
->                                                         pre_sle                                                 ///
->                                                         pre_psorasis                                    ///
->                                                         pre_psa                                                 ///
->                                                         pre_axspa                                               ///
->                                                         pre_ibd                 
+. global pre_ae_disease           pre_diverticulitis                           
+>    ///
+>                                                         pre_diarrhoea        
+>                            ///
+>                                                         pre_taste            
+>                                    ///
+>                                                         pre_rash             
+>                                    ///
+>                                                         pre_bronchospasm     
+>                            ///
+>                                                         pre_contactderm      
+>                            ///
+>                                                         pre_dizziness        
+>                            ///
+>                                                         pre_nausea_vomit     
+>                            ///
+>                                                         pre_headache         
+>                            ///
+>                                                         pre_anaphylaxis      
+>                            ///
+>                                                         pre_severe_drug      
+>                            ///
+>                                                         pre_nonsevere_drug   
+>                            ///
+>                                                         pre_ra               
+>                                    ///
+>                                                         pre_sle              
+>                                    ///
+>                                                         pre_psorasis         
+>                            ///
+>                                                         pre_psa              
+>                                    ///
+>                                                         pre_axspa            
+>                                    ///
+>                                                         pre_ibd              
+>    
 
 . 
 . *gen start date for comparator rate
@@ -187,8 +223,10 @@
 . foreach x in $pre_ae_group $pre_ae_disease {
   2.                 display "`x'"
   3.                 count if `x'!=. 
-  4.                 count if (`x'<start_comparator | `x'>start_comparator_28) & `x'!=.  // event outside windown - should be 0 
-  5.                 count if (`x'>start_comparator & `x'<start_comparator_28) & `x'!=.  // event 4-3 years prior to start
+  4.                 count if (`x'<start_comparator | `x'>start_comparator_28) 
+> & `x'!=.  // event outside windown - should be 0 
+  5.                 count if (`x'>start_comparator & `x'<start_comparator_28) 
+> & `x'!=.  // event 4-3 years prior to start
   6.                 gen fail_`x'=1 if `x'!=.
   7.                 tab drug fail_`x', m
   8.                 replace `x'=`x'+0.75 if `x'==start_comparator
@@ -843,162 +881,3160 @@ molnupiravir |        69 |        69
        Total |     6,032 |     6,032 
 
 . 
-end of do-file
+. * Follow-up time
+. stset stop_pre_ae_all, id(patient_id) origin(time start_comparator) enter(tim
+> e start_comparator) exit(time start_comparator_28) failure(fail_pre_ae_all==1
+> ) 
 
-. do "C:\Users\k1635179\AppData\Local\Temp\STD7e4_000000.tmp"
+                id:  patient_id
+     failure event:  fail_pre_ae_all == 1
+obs. time interval:  (stop_pre_ae_all[_n-1], stop_pre_ae_all]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-. stset stop_pre_ae_all, id(patient_id) origin(time start_comparator) enter(time start_comparator) exit(time start_comparator_28) failure(fail_pre_ae_all==1) 
-
-Survival-time data settings
-
-           ID variable: patient_id
-         Failure event: fail_pre_ae_all==1
-Observed time interval: (stop_pre_ae_all[_n-1], stop_pre_ae_all]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
---------------------------------------------------------------------------
+------------------------------------------------------------------------------
      24,655  total observations
       6,958  observations end on or before enter()
---------------------------------------------------------------------------
+------------------------------------------------------------------------------
      17,697  observations remaining, representing
      17,697  subjects
         598  failures in single-failure-per-subject data
  504,494.75  total analysis time at risk and under observation
-                                                At risk from t =         0
-                                     Earliest observed entry t =         0
-                                          Last observed exit t =        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-. 
-end of do-file
+. tab _st  // keep if _st==1 -> removes observations that end on or before ente
+> r 
 
-. tab fail_pre_ae_all
-
-fail_pre_ae |
-       _all |      Freq.     Percent        Cum.
+1 if record |
+   is to be |
+    used; 0 |
+  otherwise |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |     23,881      100.00      100.00
-------------+-----------------------------------
-      Total |     23,881      100.00
-
-. tab fail_pre_ae_all,m
-
-fail_pre_ae |
-       _all |      Freq.     Percent        Cum.
-------------+-----------------------------------
-          1 |     23,881       96.86       96.86
-          . |        774        3.14      100.00
+          0 |      6,958       28.22       28.22
+          1 |     17,697       71.78      100.00
 ------------+-----------------------------------
       Total |     24,655      100.00
 
-. stset stop_pre_ibd, id(patient_id) origin(time start_comparator) enter(time start_comparator) exit(time start_comparator_28) failure(fail_pre_ibd==1)
+. count if start_comparator>=stop_pre_ae_all & _st==0
+  6,958
 
-Survival-time data settings
+. count if start_comparator==stop_pre_ae_all & _st==0
+  0
 
-           ID variable: patient_id
-         Failure event: fail_pre_ibd==1
-Observed time interval: (stop_pre_ibd[_n-1], stop_pre_ibd]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
+. tab _t,m
 
---------------------------------------------------------------------------
+   analysis |
+  time when |
+record ends |      Freq.     Percent        Cum.
+------------+-----------------------------------
+        .75 |         21        0.09        0.09
+          1 |         15        0.06        0.15
+          2 |         22        0.09        0.24
+          3 |         17        0.07        0.30
+          4 |         20        0.08        0.39
+          5 |         24        0.10        0.48
+          6 |         24        0.10        0.58
+          7 |         26        0.11        0.69
+          8 |         20        0.08        0.77
+          9 |         16        0.06        0.83
+         10 |         17        0.07        0.90
+         11 |         13        0.05        0.95
+         12 |         24        0.10        1.05
+         13 |         15        0.06        1.11
+         14 |         26        0.11        1.22
+         15 |         14        0.06        1.27
+         16 |         25        0.10        1.37
+         17 |         17        0.07        1.44
+         18 |         17        0.07        1.51
+         19 |         30        0.12        1.63
+         20 |         20        0.08        1.72
+         21 |         18        0.07        1.79
+         22 |         24        0.10        1.89
+         23 |         22        0.09        1.98
+         24 |         21        0.09        2.06
+         25 |         16        0.06        2.13
+         26 |         26        0.11        2.23
+         27 |         17        0.07        2.30
+         28 |         17        0.07        2.37
+         29 |     17,113       69.41       71.78
+          . |      6,958       28.22      100.00
+------------+-----------------------------------
+      Total |     24,655      100.00
+
+. 
+. 
+. ** Rates of events 
+. tempname comparator_rates
+
+. postfile `comparator_rates' str20(failure) ///
+>                 all_ptime all_events all_rate all_lci all_uci ///
+>                 control_ptime control_events control_rate control_lci_ contro
+> l_uci ///
+>                 sot_ptime sot_events sot_rate sot_lci sot_uci ///
+>                 pax_ptime pax_events pax_rate pax_lci pax_uci ///
+>                 mol_ptime mol_events mol_rate mol_lci mol_uci ///
+>                 using "$projectdir/output/tables/comparator_rates", replace  
+>    
+
+.         
+. foreach fail in $pre_ae_group $pre_ae_disease     {
+  2.         stset stop_`fail', id(patient_id) origin(time start_comparator) en
+> ter(time start_comparator) exit(time start_comparator_28) failure(fail_`fail'
+> ==1)                     
+  3.                 stptime 
+  4.                                         local all_rate = `r(rate)'
+  5.                                         local all_ptime = `r(ptime)'
+  6.                                         local all_lci =  `r(lb)'
+  7.                                         local all_uci = `r(ub)'
+  8.                                         local all_events = `r(failures)'  
+>                                               
+  9.                                                 
+.                 stptime if drug == 0
+ 10.                                         local control_rate = `r(rate)'
+ 11.                                         local control_ptime = `r(ptime)'
+ 12.                                         local control_lci =  `r(lb)'
+ 13.                                         local control_uci = `r(ub)'
+ 14.                                         local control_events = `r(failures
+> )' 
+ 15.                 display "no drug"
+ 16.                 
+.                 stptime if drug == 1
+ 17.                                         local sot_rate = `r(rate)'
+ 18.                                         local sot_ptime = `r(ptime)'
+ 19.                                         local sot_lci =  `r(lb)'
+ 20.                                         local sot_uci = `r(ub)'
+ 21.                                         local sot_events = `r(failures)' 
+ 22.                 display "sotrovimab"
+ 23.                 stptime if drug == 2
+ 24.                                         local pax_rate = `r(rate)'
+ 25.                                         local pax_ptime = `r(ptime)'
+ 26.                                         local pax_lci =  `r(lb)'
+ 27.                                         local pax_uci = `r(ub)'
+ 28.                                         local pax_events = `r(failures)' 
+ 29.                 display "paxlovid"
+ 30.                 stptime if drug == 3
+ 31.                                         local mol_rate = `r(rate)'
+ 32.                                         local mol_ptime = `r(ptime)'
+ 33.                                         local mol_lci =  `r(lb)'
+ 34.                                         local mol_uci = `r(ub)'
+ 35.                                         local mol_events = `r(failures)' 
+ 36.                 display "molnupavir"                    
+ 37.                 post `comparator_rates' ("`fail'") (`all_ptime') (`all_eve
+> nts') (`all_rate') (`all_lci') (`all_uci') ///
+>                                         (`control_ptime') (`control_events') 
+> (`control_rate') (`control_lci') (`control_uci') ///
+>                                         (`sot_ptime') (`sot_events') (`sot_ra
+> te') (`sot_lci') (`sot_uci') ///
+>                                         (`pax_ptime') (`pax_events') (`pax_ra
+> te') (`pax_lci') (`pax_uci') ///
+>                                         (`mol_ptime') (`mol_events') (`mol_ra
+> te') (`mol_lci') (`mol_uci') 
+ 38.                                         
+. }
+
+                id:  patient_id
+     failure event:  fail_pre_spc_all == 1
+obs. time interval:  (stop_pre_spc_all[_n-1], stop_pre_spc_all]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,655  total observations
+      2,341  observations end on or before enter()
+------------------------------------------------------------------------------
+     22,314  observations remaining, representing
+     22,314  subjects
+        247  failures in single-failure-per-subject data
+    643,623  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
+
+         failure _d:  fail_pre_spc_all == 1
+   analysis time _t:  (stop_pre_spc_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |       643623        247   .00038377   .0003388    .0004347
+
+         failure _d:  fail_pre_spc_all == 1
+   analysis time _t:  (stop_pre_spc_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |       621315        238   .00038306   .0003374     .000435
+no drug
+
+         failure _d:  fail_pre_spc_all == 1
+   analysis time _t:  (stop_pre_spc_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7102          2   .00028161   .0000704     .001126
+sotrovimab
+
+         failure _d:  fail_pre_spc_all == 1
+   analysis time _t:  (stop_pre_spc_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8001          2   .00024997   .0000625    .0009995
+paxlovid
+
+         failure _d:  fail_pre_spc_all == 1
+   analysis time _t:  (stop_pre_spc_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7205          5   .00069396   .0002888    .0016673
+molnupavir
+
+                id:  patient_id
+     failure event:  fail_pre_drug_all == 1
+obs. time interval:  (stop_pre_drug_all[_n-1], stop_pre_drug_all]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,655  total observations
+      2,084  observations end on or before enter()
+------------------------------------------------------------------------------
+     22,571  observations remaining, representing
+     22,571  subjects
+        198  failures in single-failure-per-subject data
+ 651,672.75  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
+
+         failure _d:  fail_pre_drug_all == 1
+   analysis time _t:  (stop_pre_drug_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    651672.75        198   .00030383   .0002643    .0003492
+
+         failure _d:  fail_pre_drug_all == 1
+   analysis time _t:  (stop_pre_drug_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    629077.75        189   .00030044   .0002605    .0003465
+no drug
+
+         failure _d:  fail_pre_drug_all == 1
+   analysis time _t:  (stop_pre_drug_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7312          6   .00082057   .0003686    .0018265
+sotrovimab
+
+         failure _d:  fail_pre_drug_all == 1
+   analysis time _t:  (stop_pre_drug_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8004          0           0          .           .
+paxlovid
+
+         failure _d:  fail_pre_drug_all == 1
+   analysis time _t:  (stop_pre_drug_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7279          3   .00041214   .0001329    .0012779
+molnupavir
+
+                id:  patient_id
+     failure event:  fail_pre_imae_all == 1
+obs. time interval:  (stop_pre_imae_all[_n-1], stop_pre_imae_all]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,655  total observations
+      3,591  observations end on or before enter()
+------------------------------------------------------------------------------
+     21,064  observations remaining, representing
+     21,064  subjects
+        325  failures in single-failure-per-subject data
+ 606,059.25  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
+
+         failure _d:  fail_pre_imae_all == 1
+   analysis time _t:  (stop_pre_imae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    606059.25        325   .00053625    .000481    .0005978
+
+         failure _d:  fail_pre_imae_all == 1
+   analysis time _t:  (stop_pre_imae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    585082.25        319   .00054522   .0004886    .0006085
+no drug
+
+         failure _d:  fail_pre_imae_all == 1
+   analysis time _t:  (stop_pre_imae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         6767          2   .00029555   .0000739    .0011817
+sotrovimab
+
+         failure _d:  fail_pre_imae_all == 1
+   analysis time _t:  (stop_pre_imae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7447          3   .00040285   .0001299    .0012491
+paxlovid
+
+         failure _d:  fail_pre_imae_all == 1
+   analysis time _t:  (stop_pre_imae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         6763          1   .00014786   .0000208    .0010497
+molnupavir
+
+                id:  patient_id
+     failure event:  fail_pre_ae_all == 1
+obs. time interval:  (stop_pre_ae_all[_n-1], stop_pre_ae_all]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,655  total observations
+      6,958  observations end on or before enter()
+------------------------------------------------------------------------------
+     17,697  observations remaining, representing
+     17,697  subjects
+        598  failures in single-failure-per-subject data
+ 504,494.75  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
+
+         failure _d:  fail_pre_ae_all == 1
+   analysis time _t:  (stop_pre_ae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    504494.75        598   .00118534    .001094    .0012843
+
+         failure _d:  fail_pre_ae_all == 1
+   analysis time _t:  (stop_pre_ae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    487399.75        579   .00118794    .001095    .0012887
+no drug
+
+         failure _d:  fail_pre_ae_all == 1
+   analysis time _t:  (stop_pre_ae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         5482          7   .00127691   .0006087    .0026784
+sotrovimab
+
+         failure _d:  fail_pre_ae_all == 1
+   analysis time _t:  (stop_pre_ae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         6139          5   .00081446    .000339    .0019568
+paxlovid
+
+         failure _d:  fail_pre_ae_all == 1
+   analysis time _t:  (stop_pre_ae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         5474          7   .00127877   .0006096    .0026824
+molnupavir
+
+                id:  patient_id
+     failure event:  fail_pre_diverticulitis == 1
+obs. time interval:  (stop_pre_diverticulitis[_n-1], stop_pre_diverticulitis]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,655  total observations
+        714  observations end on or before enter()
+------------------------------------------------------------------------------
+     23,941  observations remaining, representing
+     23,941  subjects
+         72  failures in single-failure-per-subject data
+ 693,303.25  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
+
+         failure _d:  fail_pre_diverticulitis == 1
+   analysis time _t:  (stop_pre_diverticulitis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    693303.25         72   .00010385   .0000824    .0001308
+
+         failure _d:  fail_pre_diverticulitis == 1
+   analysis time _t:  (stop_pre_diverticulitis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    669162.25         70   .00010461   .0000828    .0001322
+no drug
+
+         failure _d:  fail_pre_diverticulitis == 1
+   analysis time _t:  (stop_pre_diverticulitis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7743          0           0          .           .
+sotrovimab
+
+         failure _d:  fail_pre_diverticulitis == 1
+   analysis time _t:  (stop_pre_diverticulitis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8555          0           0          .           .
+paxlovid
+
+         failure _d:  fail_pre_diverticulitis == 1
+   analysis time _t:  (stop_pre_diverticulitis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7843          2     .000255   .0000638    .0010196
+molnupavir
+
+                id:  patient_id
+     failure event:  fail_pre_diarrhoea == 1
+obs. time interval:  (stop_pre_diarrhoea[_n-1], stop_pre_diarrhoea]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,655  total observations
+      1,047  observations end on or before enter()
+------------------------------------------------------------------------------
+     23,608  observations remaining, representing
+     23,608  subjects
+        120  failures in single-failure-per-subject data
+    683,008  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
+
+         failure _d:  fail_pre_diarrhoea == 1
+   analysis time _t:  (stop_pre_diarrhoea-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |       683008        120   .00017569   .0001469    .0002101
+
+         failure _d:  fail_pre_diarrhoea == 1
+   analysis time _t:  (stop_pre_diarrhoea-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |       659296        114   .00017291   .0001439    .0002078
+no drug
+
+         failure _d:  fail_pre_diarrhoea == 1
+   analysis time _t:  (stop_pre_diarrhoea-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7595          2   .00026333   .0000659    .0010529
+sotrovimab
+
+         failure _d:  fail_pre_diarrhoea == 1
+   analysis time _t:  (stop_pre_diarrhoea-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8461          1   .00011819   .0000166     .000839
+paxlovid
+
+         failure _d:  fail_pre_diarrhoea == 1
+   analysis time _t:  (stop_pre_diarrhoea-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7656          3   .00039185   .0001264     .001215
+molnupavir
+
+                id:  patient_id
+     failure event:  fail_pre_taste == 1
+obs. time interval:  (stop_pre_taste[_n-1], stop_pre_taste]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,655  total observations
+        707  observations end on or before enter()
+------------------------------------------------------------------------------
+     23,948  observations remaining, representing
+     23,948  subjects
+         69  failures in single-failure-per-subject data
+ 693,443.75  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
+
+         failure _d:  fail_pre_taste == 1
+   analysis time _t:  (stop_pre_taste-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    693443.75         69    .0000995   .0000786     .000126
+
+         failure _d:  fail_pre_taste == 1
+   analysis time _t:  (stop_pre_taste-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    669224.75         68   .00010161   .0000801    .0001289
+no drug
+
+         failure _d:  fail_pre_taste == 1
+   analysis time _t:  (stop_pre_taste-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7714          0           0          .           .
+sotrovimab
+
+         failure _d:  fail_pre_taste == 1
+   analysis time _t:  (stop_pre_taste-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8675          1   .00011527   .0000162    .0008183
+paxlovid
+
+         failure _d:  fail_pre_taste == 1
+   analysis time _t:  (stop_pre_taste-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7830          0           0          .           .
+molnupavir
+
+                id:  patient_id
+     failure event:  fail_pre_rash == 1
+obs. time interval:  (stop_pre_rash[_n-1], stop_pre_rash]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,655  total observations
+        730  observations end on or before enter()
+------------------------------------------------------------------------------
+     23,925  observations remaining, representing
+     23,925  subjects
+         73  failures in single-failure-per-subject data
+  692,756.5  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
+
+         failure _d:  fail_pre_rash == 1
+   analysis time _t:  (stop_pre_rash-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |     692756.5         73   .00010538   .0000838    .0001325
+
+         failure _d:  fail_pre_rash == 1
+   analysis time _t:  (stop_pre_rash-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |     668535.5         71    .0001062   .0000842     .000134
+no drug
+
+         failure _d:  fail_pre_rash == 1
+   analysis time _t:  (stop_pre_rash-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7627          0           0          .           .
+sotrovimab
+
+         failure _d:  fail_pre_rash == 1
+   analysis time _t:  (stop_pre_rash-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8706          2   .00022973   .0000575    .0009185
+paxlovid
+
+         failure _d:  fail_pre_rash == 1
+   analysis time _t:  (stop_pre_rash-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7888          0           0          .           .
+molnupavir
+
+                id:  patient_id
+     failure event:  fail_pre_bronchospasm == 1
+obs. time interval:  (stop_pre_bronchospasm[_n-1], stop_pre_bronchospasm]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,655  total observations
+        353  observations end on or before enter()
+------------------------------------------------------------------------------
+     24,302  observations remaining, representing
+     24,302  subjects
+         31  failures in single-failure-per-subject data
+  704,252.5  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
+
+         failure _d:  fail_pre_bronchospasm == 1
+   analysis time _t:  (stop_pre_bronchospasm-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |     704252.5         31   .00004402    .000031    .0000626
+
+         failure _d:  fail_pre_bronchospasm == 1
+   analysis time _t:  (stop_pre_bronchospasm-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |     679660.5         31   .00004561   .0000321    .0000649
+no drug
+
+         failure _d:  fail_pre_bronchospasm == 1
+   analysis time _t:  (stop_pre_bronchospasm-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7975          0           0          .           .
+sotrovimab
+
+         failure _d:  fail_pre_bronchospasm == 1
+   analysis time _t:  (stop_pre_bronchospasm-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8700          0           0          .           .
+paxlovid
+
+         failure _d:  fail_pre_bronchospasm == 1
+   analysis time _t:  (stop_pre_bronchospasm-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7917          0           0          .           .
+molnupavir
+
+                id:  patient_id
+     failure event:  fail_pre_contactderm == 1
+obs. time interval:  (stop_pre_contactderm[_n-1], stop_pre_contactderm]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,655  total observations
+        750  observations end on or before enter()
+------------------------------------------------------------------------------
+     23,905  observations remaining, representing
+     23,905  subjects
+         69  failures in single-failure-per-subject data
+ 692,240.75  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
+
+         failure _d:  fail_pre_contactderm == 1
+   analysis time _t:  (stop_pre_contactderm-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    692240.75         69   .00009968   .0000787    .0001262
+
+         failure _d:  fail_pre_contactderm == 1
+   analysis time _t:  (stop_pre_contactderm-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    667894.75         67   .00010032    .000079    .0001275
+no drug
+
+         failure _d:  fail_pre_contactderm == 1
+   analysis time _t:  (stop_pre_contactderm-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7772          0           0          .           .
+sotrovimab
+
+         failure _d:  fail_pre_contactderm == 1
+   analysis time _t:  (stop_pre_contactderm-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8657          2   .00023103   .0000578    .0009237
+paxlovid
+
+         failure _d:  fail_pre_contactderm == 1
+   analysis time _t:  (stop_pre_contactderm-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7917          0           0          .           .
+molnupavir
+
+                id:  patient_id
+     failure event:  fail_pre_dizziness == 1
+obs. time interval:  (stop_pre_dizziness[_n-1], stop_pre_dizziness]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,655  total observations
+        708  observations end on or before enter()
+------------------------------------------------------------------------------
+     23,947  observations remaining, representing
+     23,947  subjects
+         65  failures in single-failure-per-subject data
+ 693,486.25  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
+
+         failure _d:  fail_pre_dizziness == 1
+   analysis time _t:  (stop_pre_dizziness-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    693486.25         65   .00009373   .0000735    .0001195
+
+         failure _d:  fail_pre_dizziness == 1
+   analysis time _t:  (stop_pre_dizziness-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    669213.25         65   .00009713   .0000762    .0001239
+no drug
+
+         failure _d:  fail_pre_dizziness == 1
+   analysis time _t:  (stop_pre_dizziness-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7975          0           0          .           .
+sotrovimab
+
+         failure _d:  fail_pre_dizziness == 1
+   analysis time _t:  (stop_pre_dizziness-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8468          0           0          .           .
+paxlovid
+
+         failure _d:  fail_pre_dizziness == 1
+   analysis time _t:  (stop_pre_dizziness-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7830          0           0          .           .
+molnupavir
+
+                id:  patient_id
+     failure event:  fail_pre_nausea_vomit == 1
+obs. time interval:  (stop_pre_nausea_vomit[_n-1], stop_pre_nausea_vomit]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,655  total observations
+        763  observations end on or before enter()
+------------------------------------------------------------------------------
+     23,892  observations remaining, representing
+     23,892  subjects
+         78  failures in single-failure-per-subject data
+ 691,739.75  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
+
+         failure _d:  fail_pre_nausea_vomit == 1
+   analysis time _t:  (stop_pre_nausea_vomit-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    691739.75         78   .00011276   .0000903    .0001408
+
+         failure _d:  fail_pre_nausea_vomit == 1
+   analysis time _t:  (stop_pre_nausea_vomit-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    667622.75         74   .00011084   .0000883    .0001392
+no drug
+
+         failure _d:  fail_pre_nausea_vomit == 1
+   analysis time _t:  (stop_pre_nausea_vomit-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7797          1   .00012825   .0000181    .0009105
+sotrovimab
+
+         failure _d:  fail_pre_nausea_vomit == 1
+   analysis time _t:  (stop_pre_nausea_vomit-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8479          2   .00023588    .000059    .0009431
+paxlovid
+
+         failure _d:  fail_pre_nausea_vomit == 1
+   analysis time _t:  (stop_pre_nausea_vomit-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7841          1   .00012753    .000018    .0009054
+molnupavir
+
+                id:  patient_id
+     failure event:  fail_pre_headache == 1
+obs. time interval:  (stop_pre_headache[_n-1], stop_pre_headache]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,655  total observations
+        701  observations end on or before enter()
+------------------------------------------------------------------------------
+     23,954  observations remaining, representing
+     23,954  subjects
+         65  failures in single-failure-per-subject data
+ 693,814.75  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
+
+         failure _d:  fail_pre_headache == 1
+   analysis time _t:  (stop_pre_headache-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    693814.75         65   .00009368   .0000735    .0001195
+
+         failure _d:  fail_pre_headache == 1
+   analysis time _t:  (stop_pre_headache-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    669853.75         62   .00009256   .0000722    .0001187
+no drug
+
+         failure _d:  fail_pre_headache == 1
+   analysis time _t:  (stop_pre_headache-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7656          0           0          .           .
+sotrovimab
+
+         failure _d:  fail_pre_headache == 1
+   analysis time _t:  (stop_pre_headache-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8663          1   .00011543   .0000163    .0008195
+paxlovid
+
+         failure _d:  fail_pre_headache == 1
+   analysis time _t:  (stop_pre_headache-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7642          2   .00026171   .0000655    .0010464
+molnupavir
+
+                id:  patient_id
+     failure event:  fail_pre_anaphylaxis == 1
+obs. time interval:  (stop_pre_anaphylaxis[_n-1], stop_pre_anaphylaxis]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,655  total observations
+        753  observations end on or before enter()
+------------------------------------------------------------------------------
+     23,902  observations remaining, representing
+     23,902  subjects
+         65  failures in single-failure-per-subject data
+  692,345.5  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
+
+         failure _d:  fail_pre_anaphylaxis == 1
+   analysis time _t:  (stop_pre_anaphylaxis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |     692345.5         65   .00009388   .0000736    .0001197
+
+         failure _d:  fail_pre_anaphylaxis == 1
+   analysis time _t:  (stop_pre_anaphylaxis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |     668090.5         62    .0000928   .0000724     .000119
+no drug
+
+         failure _d:  fail_pre_anaphylaxis == 1
+   analysis time _t:  (stop_pre_anaphylaxis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7786          1   .00012844   .0000181    .0009118
+sotrovimab
+
+         failure _d:  fail_pre_anaphylaxis == 1
+   analysis time _t:  (stop_pre_anaphylaxis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8758          0           0          .           .
+paxlovid
+
+         failure _d:  fail_pre_anaphylaxis == 1
+   analysis time _t:  (stop_pre_anaphylaxis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7711          2   .00025937   .0000649    .0010371
+molnupavir
+
+                id:  patient_id
+     failure event:  fail_pre_severe_drug == 1
+obs. time interval:  (stop_pre_severe_drug[_n-1], stop_pre_severe_drug]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,655  total observations
+      1,055  observations end on or before enter()
+------------------------------------------------------------------------------
+     23,600  observations remaining, representing
+     23,600  subjects
+        108  failures in single-failure-per-subject data
+    682,726  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
+
+         failure _d:  fail_pre_severe_drug == 1
+   analysis time _t:  (stop_pre_severe_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |       682726        108   .00015819    .000131     .000191
+
+         failure _d:  fail_pre_severe_drug == 1
+   analysis time _t:  (stop_pre_severe_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |       658956        103   .00015631   .0001289    .0001896
+no drug
+
+         failure _d:  fail_pre_severe_drug == 1
+   analysis time _t:  (stop_pre_severe_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7617          5   .00065643   .0002732    .0015771
+sotrovimab
+
+         failure _d:  fail_pre_severe_drug == 1
+   analysis time _t:  (stop_pre_severe_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8323          0           0          .           .
+paxlovid
+
+         failure _d:  fail_pre_severe_drug == 1
+   analysis time _t:  (stop_pre_severe_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7830          0           0          .           .
+molnupavir
+
+                id:  patient_id
+     failure event:  fail_pre_nonsevere_drug == 1
+obs. time interval:  (stop_pre_nonsevere_drug[_n-1], stop_pre_nonsevere_drug]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,655  total observations
+        352  observations end on or before enter()
+------------------------------------------------------------------------------
+     24,303  observations remaining, representing
+     24,303  subjects
+         38  failures in single-failure-per-subject data
+ 704,233.75  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
+
+         failure _d:  fail_pre_nonsevere_drug == 1
+   analysis time _t:  (stop_pre_nonsevere_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    704233.75         38   .00005396   .0000393    .0000742
+
+         failure _d:  fail_pre_nonsevere_drug == 1
+   analysis time _t:  (stop_pre_nonsevere_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    679783.75         37   .00005443   .0000394    .0000751
+no drug
+
+         failure _d:  fail_pre_nonsevere_drug == 1
+   analysis time _t:  (stop_pre_nonsevere_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7888          0           0          .           .
+sotrovimab
+
+         failure _d:  fail_pre_nonsevere_drug == 1
+   analysis time _t:  (stop_pre_nonsevere_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8642          0           0          .           .
+paxlovid
+
+         failure _d:  fail_pre_nonsevere_drug == 1
+   analysis time _t:  (stop_pre_nonsevere_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7920          1   .00012626   .0000178    .0008963
+molnupavir
+
+                id:  patient_id
+     failure event:  fail_pre_ra == 1
+obs. time interval:  (stop_pre_ra[_n-1], stop_pre_ra]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,655  total observations
+        672  observations end on or before enter()
+------------------------------------------------------------------------------
+     23,983  observations remaining, representing
+     23,983  subjects
+         53  failures in single-failure-per-subject data
+  694,726.5  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
+
+         failure _d:  fail_pre_ra == 1
+   analysis time _t:  (stop_pre_ra-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |     694726.5         53   .00007629   .0000583    .0000999
+
+         failure _d:  fail_pre_ra == 1
+   analysis time _t:  (stop_pre_ra-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |     670453.5         53   .00007905   .0000604    .0001035
+no drug
+
+         failure _d:  fail_pre_ra == 1
+   analysis time _t:  (stop_pre_ra-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7830          0           0          .           .
+sotrovimab
+
+         failure _d:  fail_pre_ra == 1
+   analysis time _t:  (stop_pre_ra-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8584          0           0          .           .
+paxlovid
+
+         failure _d:  fail_pre_ra == 1
+   analysis time _t:  (stop_pre_ra-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7859          0           0          .           .
+molnupavir
+
+                id:  patient_id
+     failure event:  fail_pre_sle == 1
+obs. time interval:  (stop_pre_sle[_n-1], stop_pre_sle]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,655  total observations
+        643  observations end on or before enter()
+------------------------------------------------------------------------------
+     24,012  observations remaining, representing
+     24,012  subjects
+         59  failures in single-failure-per-subject data
+    695,508  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
+
+         failure _d:  fail_pre_sle == 1
+   analysis time _t:  (stop_pre_sle-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |       695508         59   .00008483   .0000657    .0001095
+
+         failure _d:  fail_pre_sle == 1
+   analysis time _t:  (stop_pre_sle-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |       671177         59   .00008791   .0000681    .0001135
+no drug
+
+         failure _d:  fail_pre_sle == 1
+   analysis time _t:  (stop_pre_sle-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7830          0           0          .           .
+sotrovimab
+
+         failure _d:  fail_pre_sle == 1
+   analysis time _t:  (stop_pre_sle-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8642          0           0          .           .
+paxlovid
+
+         failure _d:  fail_pre_sle == 1
+   analysis time _t:  (stop_pre_sle-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7859          0           0          .           .
+molnupavir
+
+                id:  patient_id
+     failure event:  fail_pre_psorasis == 1
+obs. time interval:  (stop_pre_psorasis[_n-1], stop_pre_psorasis]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,655  total observations
+        695  observations end on or before enter()
+------------------------------------------------------------------------------
+     23,960  observations remaining, representing
+     23,960  subjects
+         64  failures in single-failure-per-subject data
+ 693,886.75  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
+
+         failure _d:  fail_pre_psorasis == 1
+   analysis time _t:  (stop_pre_psorasis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    693886.75         64   .00009223   .0000722    .0001178
+
+         failure _d:  fail_pre_psorasis == 1
+   analysis time _t:  (stop_pre_psorasis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    669825.75         61   .00009107   .0000709     .000117
+no drug
+
+         failure _d:  fail_pre_psorasis == 1
+   analysis time _t:  (stop_pre_psorasis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7754          1   .00012897   .0000182    .0009155
+sotrovimab
+
+         failure _d:  fail_pre_psorasis == 1
+   analysis time _t:  (stop_pre_psorasis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8526          0           0          .           .
+paxlovid
+
+         failure _d:  fail_pre_psorasis == 1
+   analysis time _t:  (stop_pre_psorasis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7781          2   .00025704   .0000643    .0010277
+molnupavir
+
+                id:  patient_id
+     failure event:  fail_pre_psa == 1
+obs. time interval:  (stop_pre_psa[_n-1], stop_pre_psa]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,655  total observations
+        638  observations end on or before enter()
+------------------------------------------------------------------------------
+     24,017  observations remaining, representing
+     24,017  subjects
+         82  failures in single-failure-per-subject data
+ 695,198.25  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
+
+         failure _d:  fail_pre_psa == 1
+   analysis time _t:  (stop_pre_psa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    695198.25         82   .00011795    .000095    .0001465
+
+         failure _d:  fail_pre_psa == 1
+   analysis time _t:  (stop_pre_psa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    670886.25         81   .00012074   .0000971    .0001501
+no drug
+
+         failure _d:  fail_pre_psa == 1
+   analysis time _t:  (stop_pre_psa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7801          0           0          .           .
+sotrovimab
+
+         failure _d:  fail_pre_psa == 1
+   analysis time _t:  (stop_pre_psa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8652          1   .00011558   .0000163    .0008205
+paxlovid
+
+         failure _d:  fail_pre_psa == 1
+   analysis time _t:  (stop_pre_psa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7859          0           0          .           .
+molnupavir
+
+                id:  patient_id
+     failure event:  fail_pre_axspa == 1
+obs. time interval:  (stop_pre_axspa[_n-1], stop_pre_axspa]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
+     24,655  total observations
+        645  observations end on or before enter()
+------------------------------------------------------------------------------
+     24,010  observations remaining, representing
+     24,010  subjects
+         52  failures in single-failure-per-subject data
+    695,520  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
+
+         failure _d:  fail_pre_axspa == 1
+   analysis time _t:  (stop_pre_axspa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |       695520         52   .00007476    .000057    .0000981
+
+         failure _d:  fail_pre_axspa == 1
+   analysis time _t:  (stop_pre_axspa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |       671189         52   .00007747    .000059    .0001017
+no drug
+
+         failure _d:  fail_pre_axspa == 1
+   analysis time _t:  (stop_pre_axspa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7714          0           0          .           .
+sotrovimab
+
+         failure _d:  fail_pre_axspa == 1
+   analysis time _t:  (stop_pre_axspa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8729          0           0          .           .
+paxlovid
+
+         failure _d:  fail_pre_axspa == 1
+   analysis time _t:  (stop_pre_axspa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7888          0           0          .           .
+molnupavir
+
+                id:  patient_id
+     failure event:  fail_pre_ibd == 1
+obs. time interval:  (stop_pre_ibd[_n-1], stop_pre_ibd]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
+
+------------------------------------------------------------------------------
      24,655  total observations
         650  observations end on or before enter()
---------------------------------------------------------------------------
+------------------------------------------------------------------------------
      24,005  observations remaining, representing
      24,005  subjects
          62  failures in single-failure-per-subject data
  695,333.25  total analysis time at risk and under observation
-                                                At risk from t =         0
-                                     Earliest observed entry t =         0
-                                          Last observed exit t =        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-. tab fail_pre_ibd,m
+         failure _d:  fail_pre_ibd == 1
+   analysis time _t:  (stop_pre_ibd-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-fail_pre_ib |
-          d |      Freq.     Percent        Cum.
-------------+-----------------------------------
-          1 |      6,032       24.47       24.47
-          . |     18,623       75.53      100.00
-------------+-----------------------------------
-      Total |     24,655      100.00
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    695333.25         62   .00008917   .0000695    .0001144
 
-. count if pre_ibd!=.
-  6,032
+         failure _d:  fail_pre_ibd == 1
+   analysis time _t:  (stop_pre_ibd-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-. tab _t
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    671222.25         59    .0000879   .0000681    .0001134
+no drug
 
-   Analysis |
-  time when |
-record ends |      Freq.     Percent        Cum.
-------------+-----------------------------------
-        .75 |          3        0.01        0.01
-          1 |          1        0.00        0.02
-          2 |          2        0.01        0.02
-          3 |          1        0.00        0.03
-          4 |          1        0.00        0.03
-          6 |          3        0.01        0.05
-          7 |          3        0.01        0.06
-          8 |          3        0.01        0.07
-          9 |          1        0.00        0.07
-         10 |          1        0.00        0.08
-         11 |          1        0.00        0.08
-         12 |          1        0.00        0.09
-         13 |          2        0.01        0.10
-         14 |          4        0.02        0.11
-         15 |          2        0.01        0.12
-         16 |          3        0.01        0.13
-         17 |          1        0.00        0.14
-         18 |          1        0.00        0.14
-         19 |          2        0.01        0.15
-         20 |          5        0.02        0.17
-         22 |          3        0.01        0.18
-         23 |          2        0.01        0.19
-         24 |          4        0.02        0.21
-         25 |          2        0.01        0.22
-         26 |          2        0.01        0.22
-         27 |          2        0.01        0.23
-         28 |          4        0.02        0.25
-         29 |     23,945       99.75      100.00
-------------+-----------------------------------
-      Total |     24,005      100.00
+         failure _d:  fail_pre_ibd == 1
+   analysis time _t:  (stop_pre_ibd-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-. do "C:\Users\k1635179\AppData\Local\Temp\STD7e4_000000.tmp"
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7742          1   .00012917   .0000182     .000917
+sotrovimab
 
-. ********************************************************************************
-. *
-. *       Do-file:                        propensity score cox model
-. *       Project:                        Sotrovimab-Paxlovid-Molnupiravir
-. *   Date:                               24/4/23
-. *       Programmed by:          Katie Bechman
-. *       Description:            create and run ps model
-. *       Data used:                      main.dta
-. *       Data created:           psoutput
-. *       Other output:           logfiles, printed to folder $Logdir
-. *       User installed ado: (place .ado file(s) in analysis folder)
+         failure _d:  fail_pre_ibd == 1
+   analysis time _t:  (stop_pre_ibd-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8539          2   .00023422   .0000586    .0009365
+paxlovid
+
+         failure _d:  fail_pre_ibd == 1
+   analysis time _t:  (stop_pre_ibd-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
+
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7830          0           0          .           .
+molnupavir
+
+. postclose `comparator_rates'
+
 . 
-. ****************************************************************************************************************
-. **Set filepaths
-. global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+. ** Redact and round rates
+. clear *
 
-. // global projectdir `c(pwd)'
-. di "$projectdir"
-C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir
+. save "$projectdir/output/tables/comparator_rates_round.dta", replace emptyok
+(note: dataset contains 0 observations)
+file /workspace/output/tables/comparator_rates_round.dta saved
 
-. capture mkdir "$projectdir/output/data"
+. use "$projectdir/output/tables/comparator_rates", clear
 
-. capture mkdir "$projectdir/output/figures"
+. foreach var of varlist *events *ptime  {
+  2. gen `var'_round = round(`var', 5)       
+  3. } 
 
-. capture mkdir "$projectdir/output/tables"
+. gen all_rate_round = .
+(22 missing values generated)
 
-. global logdir "$projectdir/logs"
+. gen all_lci_round = .
+(22 missing values generated)
 
-. di "$logdir"
-C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/logs
+. gen all_uci_round = .
+(22 missing values generated)
 
-. * Open a log file
-. cap log close
+. gen control_rate_round = .
+(22 missing values generated)
+
+. gen control_lci_round = .
+(22 missing values generated)
+
+. gen control_uci_round = .
+(22 missing values generated)
+
+. gen sot_rate_round = .
+(22 missing values generated)
+
+. gen sot_lci_round = .
+(22 missing values generated)
+
+. gen sot_uci_round = .
+(22 missing values generated)
+
+. gen pax_rate_round = .
+(22 missing values generated)
+
+. gen pax_lci_round = .
+(22 missing values generated)
+
+. gen pax_uci_round = .
+(22 missing values generated)
+
+. gen mol_rate_round = .
+(22 missing values generated)
+
+. gen mol_lci_round = .
+(22 missing values generated)
+
+. gen mol_uci_round = .
+(22 missing values generated)
+
+. levelsof failure, local(levels)
+`"pre_ae_all"' `"pre_anaphylaxis"' `"pre_axspa"' `"pre_bronchospasm"' `"pre_con
+> tactderm"' `"pre_diarrhoea"' `"pre_diverticulitis"' `"pre_dizziness"' `"pre_d
+> rug_all"' `"pre_headache"' `"pre_ibd"' `"pre_imae_all"' `"pre_nausea_vomit"' 
+> `"pre_nonsevere_drug"' `"pre_psa"' `"pre_psorasis"' `"pre_ra"' `"pre_rash"' `
+> "pre_severe_drug"' `"pre_sle"' `"pre_spc_all"' `"pre_taste"'
+
+. foreach i of local levels {
+  2.         
+.         di "`i'"
+  3.         preserve
+  4.         keep if failure=="`i'" 
+  5.         
+.         local all_p`i' = all_ptime_round
+  6.         local all_e`i' = all_events_round
+  7.     cii means `all_p`i'' `all_e`i'', poisson level(95)
+  8.         replace all_rate_round = r(mean)*1000 if all_rate_round== .
+  9.         replace all_lci_round = r(lb)*1000 if all_lci_round== .
+ 10.     replace all_uci_round =  r(ub)*1000 if all_uci_round== .
+ 11.         
+.         local con_p`i' = control_ptime_round
+ 12.         local con_e`i' = control_events_round
+ 13.     cii means `con_p`i'' `con_e`i'', poisson level(95)
+ 14.         replace control_rate_round = r(mean)*1000 if control_rate_round== 
+> .
+ 15.         replace control_lci_round = r(lb)*1000 if control_lci_round== .
+ 16.     replace control_uci_round =  r(ub)*1000 if control_uci_round== .
+ 17.         
+.         local sot_p`i' = sot_ptime_round
+ 18.         local sot_e`i' = sot_events_round
+ 19.     cii means `sot_p`i'' `sot_e`i'', poisson level(95)
+ 20.         replace sot_rate_round = r(mean)*1000 if sot_rate_round== .
+ 21.         replace sot_lci_round = r(lb)*1000 if sot_lci_round== .
+ 22.     replace sot_uci_round =  r(ub)*1000 if sot_uci_round== .
+ 23.         
+.         local pax_p`i' = pax_ptime_round
+ 24.         local pax_e`i' = pax_events_round
+ 25.     cii means `pax_p`i'' `pax_e`i'', poisson level(95)
+ 26.         replace pax_rate_round = r(mean)*1000 if pax_rate_round== .
+ 27.         replace pax_lci_round = r(lb)*1000 if pax_lci_round== .
+ 28.     replace pax_uci_round =  r(ub)*1000 if pax_uci_round== .
+ 29.         
+.         local mol_p`i' = mol_ptime_round
+ 30.         local mol_e`i' = mol_events_round
+ 31.     cii means `mol_p`i'' `mol_e`i'', poisson level(95)
+ 32.         replace mol_rate_round = r(mean)*1000 if mol_rate_round== .
+ 33.         replace mol_lci_round = r(lb)*1000 if mol_lci_round== .
+ 34.     replace mol_uci_round =  r(ub)*1000 if mol_uci_round== .
+ 35.         
+.         append using "$projectdir/output/tables/comparator_rates_round.dta"
+ 36.         save "$projectdir/output/tables/comparator_rates_round.dta", repla
+> ce
+ 37.         restore
+ 38. }
+pre_ae_all
+(21 observations deleted)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     504495    .0011893    .0000486         .001096    .0012884
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     487400      .00119    .0000494        .0010951    .0012909
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       5480    .0009124     .000408        .0002963    .0021293
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       6140    .0008143    .0003642        .0002644    .0019004
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       5475    .0009132    .0004084        .0002965    .0021312
+(1 real change made)
+(1 real change made)
+(1 real change made)
+file /workspace/output/tables/comparator_rates_round.dta saved
+pre_anaphylaxis
+(21 observations deleted)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     692345    .0000939    .0000116        .0000725    .0001197
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     668090    .0000898    .0000116        .0000685    .0001156
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7785           0           0               0    .0004738*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       8760           0           0               0    .0004211*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7710           0           0               0    .0004785*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+file /workspace/output/tables/comparator_rates_round.dta saved
+pre_axspa
+(21 observations deleted)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     695520    .0000719    .0000102        .0000534    .0000948
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     671190    .0000745    .0000105        .0000553    .0000982
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7715           0           0               0    .0004781*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       8730           0           0               0    .0004226*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7890           0           0               0    .0004675*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+file /workspace/output/tables/comparator_rates_round.dta saved
+pre_bronchospasm
+(21 observations deleted)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     704255    .0000426    7.78e-06        .0000287    .0000608
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     679660    .0000441    8.06e-06        .0000298     .000063
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7975           0           0               0    .0004626*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       8700           0           0               0     .000424*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7915           0           0               0    .0004661*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+file /workspace/output/tables/comparator_rates_round.dta saved
+pre_contactderm
+(21 observations deleted)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     692240    .0001011    .0000121        .0000788    .0001278
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     667895    .0000973    .0000121        .0000751     .000124
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7770           0           0               0    .0004748*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       8655           0           0               0    .0004262*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7915           0           0               0    .0004661*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+file /workspace/output/tables/comparator_rates_round.dta saved
+pre_diarrhoea
+(21 observations deleted)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     683010    .0001757     .000016        .0001457    .0002101
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     659295    .0001744    .0000163         .000144    .0002094
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7595           0           0               0    .0004857*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       8460           0           0               0     .000436*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7655    .0006532    .0002921        .0002121    .0015243
+(1 real change made)
+(1 real change made)
+(1 real change made)
+file /workspace/output/tables/comparator_rates_round.dta saved
+pre_diverticulitis
+(21 observations deleted)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     693305     .000101    .0000121        .0000787    .0001276
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     669160    .0001046    .0000125        .0000815    .0001322
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7745           0           0               0    .0004763*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       8555           0           0               0    .0004312*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7845           0           0               0    .0004702*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+file /workspace/output/tables/comparator_rates_round.dta saved
+pre_dizziness
+(21 observations deleted)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     693485    .0000937    .0000116        .0000723    .0001195
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     669215    .0000971     .000012         .000075    .0001238
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7975           0           0               0    .0004626*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       8470           0           0               0    .0004355*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7830           0           0               0    .0004711*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+file /workspace/output/tables/comparator_rates_round.dta saved
+pre_drug_all
+(21 observations deleted)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     651675    .0003069    .0000217        .0002658    .0003525
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     629080     .000302    .0000219        .0002606    .0003482
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7310     .000684    .0003059        .0002221    .0015962
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       8005           0           0               0    .0004608*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7280    .0006868    .0003072         .000223    .0016028
+(1 real change made)
+(1 real change made)
+(1 real change made)
+file /workspace/output/tables/comparator_rates_round.dta saved
+pre_headache
+(21 observations deleted)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     693815    .0000937    .0000116        .0000723    .0001194
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     669855    .0000896    .0000116        .0000684    .0001153
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7655           0           0               0    .0004819*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       8665           0           0               0    .0004257*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7640           0           0               0    .0004828*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+file /workspace/output/tables/comparator_rates_round.dta saved
+pre_ibd
+(21 observations deleted)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     695335    .0000863    .0000111        .0000658    .0001111
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     671220    .0000894    .0000115        .0000682    .0001151
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7740           0           0               0    .0004766*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       8540           0           0               0     .000432*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7830           0           0               0    .0004711*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+file /workspace/output/tables/comparator_rates_round.dta saved
+pre_imae_all
+(21 observations deleted)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     606060    .0005363    .0000297        .0004795    .0005978
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     585080    .0005469    .0000306        .0004886    .0006103
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       6765           0           0               0    .0005453*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7445    .0006716    .0003003        .0002181    .0015673
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       6765           0           0               0    .0005453*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+file /workspace/output/tables/comparator_rates_round.dta saved
+pre_nausea_vomit
+(21 observations deleted)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     691740    .0001157    .0000129        .0000917    .0001439
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     667625    .0001123     .000013        .0000884    .0001408
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7795           0           0               0    .0004732*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       8480           0           0               0     .000435*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7840           0           0               0    .0004705*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+file /workspace/output/tables/comparator_rates_round.dta saved
+pre_nonsevere_drug
+(21 observations deleted)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     704235    .0000568    8.98e-06        .0000406    .0000773
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     679785    .0000515    8.70e-06        .0000359    .0000716
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7890           0           0               0    .0004675*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       8640           0           0               0     .000427*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7920           0           0               0    .0004658*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+file /workspace/output/tables/comparator_rates_round.dta saved
+pre_psa
+(21 observations deleted)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     695200    .0001151    .0000129        .0000912    .0001432
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     670885    .0001192    .0000133        .0000946    .0001484
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7800           0           0               0    .0004729*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       8650           0           0               0    .0004265*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7860           0           0               0    .0004693*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+file /workspace/output/tables/comparator_rates_round.dta saved
+pre_psorasis
+(21 observations deleted)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     693885    .0000937    .0000116        .0000723    .0001194
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     669825    .0000896    .0000116        .0000684    .0001153
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7755           0           0               0    .0004757*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       8525           0           0               0    .0004327*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7780           0           0               0    .0004741*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+file /workspace/output/tables/comparator_rates_round.dta saved
+pre_ra
+(21 observations deleted)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     694725    .0000792    .0000107        .0000596     .000103
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     670455     .000082    .0000111        .0000618    .0001068
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7830           0           0               0    .0004711*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       8585           0           0               0    .0004297*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7860           0           0               0    .0004693*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+file /workspace/output/tables/comparator_rates_round.dta saved
+pre_rash
+(21 observations deleted)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     692755    .0001083    .0000125        .0000852    .0001357
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     668535    .0001047    .0000125        .0000816    .0001323
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7625           0           0               0    .0004838*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       8705           0           0               0    .0004238*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7890           0           0               0    .0004675*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+file /workspace/output/tables/comparator_rates_round.dta saved
+pre_severe_drug
+(21 observations deleted)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     682725    .0001611    .0000154        .0001324    .0001942
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     658955    .0001593    .0000156        .0001303    .0001929
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7615    .0006566    .0002936        .0002132    .0015323
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       8325           0           0               0    .0004431*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7830           0           0               0    .0004711*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+file /workspace/output/tables/comparator_rates_round.dta saved
+pre_sle
+(21 observations deleted)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     695510    .0000863    .0000111        .0000658     .000111
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     671175    .0000894    .0000115        .0000682    .0001151
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7830           0           0               0    .0004711*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       8640           0           0               0     .000427*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7860           0           0               0    .0004693*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+file /workspace/output/tables/comparator_rates_round.dta saved
+pre_spc_all
+(21 observations deleted)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     643625    .0003807    .0000243        .0003345    .0004314
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     621315    .0003863    .0000249        .0003389    .0004384
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7100           0           0               0    .0005196*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       8000           0           0               0    .0004611*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7205     .000694    .0003103        .0002253    .0016195
+(1 real change made)
+(1 real change made)
+(1 real change made)
+file /workspace/output/tables/comparator_rates_round.dta saved
+pre_taste
+(21 observations deleted)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     693445    .0001009    .0000121        .0000787    .0001275
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |     669225    .0001046    .0000125        .0000815    .0001322
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7715           0           0               0    .0004781*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       8675           0           0               0    .0004252*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+
+                                                         -- Poisson  Exact --
+    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
+-------------+---------------------------------------------------------------
+             |       7830           0           0               0    .0004711*
+
+(*) one-sided, 97.5% confidence interval
+(1 real change made)
+(1 real change made)
+(1 real change made)
+file /workspace/output/tables/comparator_rates_round.dta saved
+
+. use "$projectdir/output/tables/comparator_rates_round", clear
+
+. keep failure *round
+
+. foreach var of varlist all_rate all_lci all_uci all_events{
+  2. replace `var'=. if all_events==5
+  3. }
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+
+. foreach var of varlist control_rate control_lci control_uci control_events{
+  2. replace `var'=. if control_events==5
+  3. }
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+
+. foreach var of varlist sot_rate sot_lci sot_uci sot_events{
+  2. replace `var'=. if sot_events==5
+  3. }
+(3 real changes made, 3 to missing)
+(3 real changes made, 3 to missing)
+(3 real changes made, 3 to missing)
+(3 real changes made, 3 to missing)
+
+. foreach var of varlist pax_rate pax_lci pax_uci pax_events{
+  2. replace `var'=. if pax_events==5
+  3. }
+(2 real changes made, 2 to missing)
+(2 real changes made, 2 to missing)
+(2 real changes made, 2 to missing)
+(2 real changes made, 2 to missing)
+
+. foreach var of varlist mol_rate mol_lci mol_uci mol_events{
+  2. replace `var'=. if mol_events==5
+  3. }
+(4 real changes made, 4 to missing)
+(4 real changes made, 4 to missing)
+(4 real changes made, 4 to missing)
+(4 real changes made, 4 to missing)
+
+. order   failure all* control* sot* pax* mol* 
+
+. save "$projectdir/output/tables/comparator_rates_round", replace
+file /workspace/output/tables/comparator_rates_round.dta saved
+
+. export delimited using "$projectdir/output/tables/comparator_rates_round.csv"
+> , replace
+(note: file /workspace/output/tables/comparator_rates_round.csv not found)
+file /workspace/output/tables/comparator_rates_round.csv saved
+
+. 
+. use "$projectdir/output/tables/comparator_rates", clear
+
+. foreach var of varlist *rate *lci *uci {
+  2. gen `var'_per = `var'*1000      
+  3. drop `var'      
+  4. rename  `var'_per `var'                         
+  5. }
+(12 missing values generated)
+(11 missing values generated)
+(11 missing values generated)
+(12 missing values generated)
+(11 missing values generated)
+(11 missing values generated)
+
+. order failure all* control* sot* pax* mol* 
+
+. save "$projectdir/output/tables/comparator_rates", replace
+file /workspace/output/tables/comparator_rates.dta saved
+
+. export delimited using "$projectdir/output/tables/comparator_rates.csv", repl
+> ace
+(note: file /workspace/output/tables/comparator_rates.csv not found)
+file /workspace/output/tables/comparator_rates.csv saved
+
+. 
+. 
+. 
+. log close
+      name:  <unnamed>
+       log:  /workspace/logs/preceed_rate.log
+  log type:  text
+ closed on:  20 Sep 2023, 16:20:02
+-------------------------------------------------------------------------------

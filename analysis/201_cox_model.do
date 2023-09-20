@@ -12,7 +12,7 @@
 
 ****************************************************************************************************************
 **Set filepaths
-// global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+// global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir" 
 global projectdir `c(pwd)'
 di "$projectdir"
 capture mkdir "$projectdir/output/data"
@@ -96,7 +96,8 @@ foreach fail in $ae_group $ae_disease {
 			ytitle("Survival Probability" ) xtitle("Time (Days)") saving("$projectdir/output/figures/survcurve_`fail'", replace)
 	
 			graph export "$projectdir/output/figures/survcur_`fail'.svg", as(svg) replace
-}						
+}		
+
 						
 ** Hazard of events						
 tempname cox_model_summary
@@ -149,104 +150,163 @@ postclose `cox_model_disease'
 ** Rates of events 
 tempname coxoutput_rates
 postfile `coxoutput_rates' str20(failure) ///
-		ptime_all events_all rate_all lci_all uci_all ///
-		ptime_control events_control rate_control lci_control uci_control ///
-		ptime_sot events_sot rate_sot lci_sot uci_sot ///
-		ptime_pax events_pax rate_pax lci_pax uci_pax ///
-		ptime_mol events_mol rate_mol lci_mol uci_mol ///
+		all_ptime all_events all_rate all_lci all_uci ///
+		control_ptime control_events control_rate control_lci_ control_uci ///
+		sot_ptime sot_events sot_rate sot_lci sot_uci ///
+		pax_ptime pax_events pax_rate pax_lci pax_uci ///
+		mol_ptime mol_events mol_rate mol_lci mol_uci ///
 		using "$projectdir/output/tables/cox_model_rates", replace							 
 foreach fail in $ae_group $ae_disease {
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 			
 		stptime 
-					local rate_all = .
-					local ptime_all = `r(ptime)'
-					local lci_all = .
-					local uci_all = .
-					local events_all .
-						if `r(failures)' == 0 | `r(failures)' > 7 local events_all `r(failures)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local rate_all `r(rate)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local lci_all `r(lb)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local uci_all `r(ub)'
+					local all_rate = `r(rate)'
+					local all_ptime = `r(ptime)'
+					local all_lci =  `r(lb)'
+					local all_uci = `r(ub)'
+					local all_events = `r(failures)'						
+						
 		stptime if drug == 0
-					local rate_control = .
-					local ptime_control = `r(ptime)'
-					local lci_control = .
-					local uci_control = .
-					local events_control .
-						if `r(failures)' == 0 | `r(failures)' > 7 local events_control `r(failures)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local rate_control `r(rate)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local lci_control `r(lb)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local uci_control `r(ub)'
+					local control_rate = `r(rate)'
+					local control_ptime = `r(ptime)'
+					local control_lci =  `r(lb)'
+					local control_uci = `r(ub)'
+					local control_events = `r(failures)' 
 		display "no drug"
+		
 		stptime if drug == 1
-					local rate_sot = .
-					local ptime_sot = `r(ptime)'
-					local lci_sot = .
-					local uci_sot = .
-					local events_sot .
-						if `r(failures)' == 0 | `r(failures)' > 7 local events_sot `r(failures)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local rate_sot `r(rate)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local lci_sot `r(lb)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local uci_sot `r(ub)'		
+					local sot_rate = `r(rate)'
+					local sot_ptime = `r(ptime)'
+					local sot_lci =  `r(lb)'
+					local sot_uci = `r(ub)'
+					local sot_events = `r(failures)' 
 		display "sotrovimab"
 		stptime if drug == 2
-					local rate_pax = .
-					local ptime_pax = `r(ptime)'
-					local lci_pax = .
-					local uci_pax = .
-					local events_pax .
-						if `r(failures)' == 0 | `r(failures)' > 7 local events_pax `r(failures)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local rate_pax `r(rate)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local lci_pax `r(lb)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local uci_pax `r(ub)'	
+					local pax_rate = `r(rate)'
+					local pax_ptime = `r(ptime)'
+					local pax_lci =  `r(lb)'
+					local pax_uci = `r(ub)'
+					local pax_events = `r(failures)' 
 		display "paxlovid"
 		stptime if drug == 3
-					local rate_mol = .
-					local ptime_mol = `r(ptime)'
-					local lci_mol = . 
-					local uci_mol = .
-					local events_mol .
-						if `r(failures)' == 0 | `r(failures)' > 7 local events_mol `r(failures)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local rate_mol `r(rate)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local lci_mol `r(lb)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local uci_mol `r(ub)'	
+					local mol_rate = `r(rate)'
+					local mol_ptime = `r(ptime)'
+					local mol_lci =  `r(lb)'
+					local mol_uci = `r(ub)'
+					local mol_events = `r(failures)' 
 		display "molnupavir"			
-		post `coxoutput_rates' ("`fail'") (`ptime_all') (`events_all') (`rate_all') (`lci_all') (`uci_all') ///
-					(`ptime_control') (`events_control') (`rate_control') (`lci_control') (`uci_control') ///
-					(`ptime_sot') (`events_sot') (`rate_sot') (`lci_sot') (`uci_sot') ///
-					(`ptime_pax') (`events_pax') (`rate_pax') (`lci_pax') (`uci_pax') ///
-					(`ptime_mol') (`events_mol') (`rate_mol') (`lci_mol') (`uci_mol') ///
-					
+		post `coxoutput_rates' ("`fail'") (`all_ptime') (`all_events') (`all_rate') (`all_lci') (`all_uci') ///
+					(`control_ptime') (`control_events') (`control_rate') (`control_lci') (`control_uci') ///
+					(`sot_ptime') (`sot_events') (`sot_rate') (`sot_lci') (`sot_uci') ///
+					(`pax_ptime') (`pax_events') (`pax_rate') (`pax_lci') (`pax_uci') ///
+					(`mol_ptime') (`mol_events') (`mol_rate') (`mol_lci') (`mol_uci') 					
 }
 postclose `coxoutput_rates'
 
-
+** Hazard of events	
 use "$projectdir/output/tables/cox_model_summary", clear
-foreach var of varlist hr* lc* uc* {
-	format `var' %3.2f	
-}	
 save "$projectdir/output/tables/cox_model_summary", replace
 export delimited using "$projectdir/output/tables/cox_model_summary.csv", replace
 
 use "$projectdir/output/tables/cox_model_disease", clear
-foreach var of varlist hr* lc* uc* {
-	format `var' %3.2f			
-}	
 save "$projectdir/output/tables/cox_model_disease", replace
 export delimited using "$projectdir/output/tables/cox_model_disease.csv", replace
 
+** Redact and round rates
+clear *
+save "$projectdir/output/tables/cox_model_rates_round.dta", replace emptyok
 use "$projectdir/output/tables/cox_model_rates", clear
-foreach var of varlist rate* lci* uci* {
+foreach var of varlist *events *ptime  {
+gen `var'_round = round(`var', 5)	
+} 
+gen all_rate_round = .
+gen all_lci_round = .
+gen all_uci_round = .
+gen control_rate_round = .
+gen control_lci_round = .
+gen control_uci_round = .
+gen sot_rate_round = .
+gen sot_lci_round = .
+gen sot_uci_round = .
+gen pax_rate_round = .
+gen pax_lci_round = .
+gen pax_uci_round = .
+gen mol_rate_round = .
+gen mol_lci_round = .
+gen mol_uci_round = .
+levelsof failure, local(levels)
+foreach i of local levels {
+	
+	di "`i'"
+	preserve
+	keep if failure=="`i'" 
+	
+	local all_p`i' = all_ptime_round
+	local all_e`i' = all_events_round
+    cii means `all_p`i'' `all_e`i'', poisson level(95)
+	replace all_rate_round = r(mean)*1000 if all_rate_round== .
+	replace all_lci_round = r(lb)*1000 if all_lci_round== .
+    replace all_uci_round =  r(ub)*1000 if all_uci_round== .
+	
+	local con_p`i' = control_ptime_round
+	local con_e`i' = control_events_round
+    cii means `con_p`i'' `con_e`i'', poisson level(95)
+	replace control_rate_round = r(mean)*1000 if control_rate_round== .
+	replace control_lci_round = r(lb)*1000 if control_lci_round== .
+    replace control_uci_round =  r(ub)*1000 if control_uci_round== .
+	
+	local sot_p`i' = sot_ptime_round
+	local sot_e`i' = sot_events_round
+    cii means `sot_p`i'' `sot_e`i'', poisson level(95)
+	replace sot_rate_round = r(mean)*1000 if sot_rate_round== .
+	replace sot_lci_round = r(lb)*1000 if sot_lci_round== .
+    replace sot_uci_round =  r(ub)*1000 if sot_uci_round== .
+	
+	local pax_p`i' = pax_ptime_round
+	local pax_e`i' = pax_events_round
+    cii means `pax_p`i'' `pax_e`i'', poisson level(95)
+	replace pax_rate_round = r(mean)*1000 if pax_rate_round== .
+	replace pax_lci_round = r(lb)*1000 if pax_lci_round== .
+    replace pax_uci_round =  r(ub)*1000 if pax_uci_round== .
+	
+	local mol_p`i' = mol_ptime_round
+	local mol_e`i' = mol_events_round
+    cii means `mol_p`i'' `mol_e`i'', poisson level(95)
+	replace mol_rate_round = r(mean)*1000 if mol_rate_round== .
+	replace mol_lci_round = r(lb)*1000 if mol_lci_round== .
+    replace mol_uci_round =  r(ub)*1000 if mol_uci_round== .
+	
+	append using "$projectdir/output/tables/cox_model_rates_round.dta"
+	save "$projectdir/output/tables/cox_model_rates_round.dta", replace
+	restore
+}
+use "$projectdir/output/tables/cox_model_rates_round", clear
+keep failure *round
+foreach var of varlist all_rate all_lci all_uci all_events{
+replace `var'=. if all_events==5
+}
+foreach var of varlist control_rate control_lci control_uci control_events{
+replace `var'=. if control_events==5
+}
+foreach var of varlist sot_rate sot_lci sot_uci sot_events{
+replace `var'=. if sot_events==5
+}
+foreach var of varlist pax_rate pax_lci pax_uci pax_events{
+replace `var'=. if pax_events==5
+}
+foreach var of varlist mol_rate mol_lci mol_uci mol_events{
+replace `var'=. if mol_events==5
+}
+order  	failure all* control* sot* pax* mol* 
+save "$projectdir/output/tables/cox_model_rates_round", replace
+export delimited using "$projectdir/output/tables/cox_model_rates_round.csv", replace
+
+use "$projectdir/output/tables/cox_model_rates", clear
+foreach var of varlist *rate *lci *uci {
 gen `var'_per = `var'*1000	
-format `var'_per %3.2f
 drop `var'	
 rename 	`var'_per `var'				
 }
-order  	failure ptime_all events_all rate_all lci_all uci_all ///
-		ptime_control events_control rate_control lci_control uci_control ///
-		ptime_sot events_sot rate_sot lci_sot uci_sot ///
-		ptime_pax events_pax rate_pax lci_pax uci_pax ///
-		ptime_mol events_mol rate_mol lci_mol uci_mol
+order failure all* control* sot* pax* mol* 
 save "$projectdir/output/tables/cox_model_rates", replace
 export delimited using "$projectdir/output/tables/cox_model_rates.csv", replace
 
