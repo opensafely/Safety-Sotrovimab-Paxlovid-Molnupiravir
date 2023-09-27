@@ -143,64 +143,39 @@ postfile `comparator_rates' str20(failure) ///
 	
 foreach fail in $pre_ae_group $pre_ae_disease	  {
 	stset stop_`fail', id(patient_id) origin(time start_comparator) enter(time start_comparator) exit(time start_comparator_28) failure(fail_`fail'==1) 			
-stptime 
-					local all_rate = .
-					local all_ptime = .
-					local all_lci = .
-					local all_uci = .
-					local all_events .
-						if `r(failures)' == 0 | `r(failures)' > 7 local all_events `r(failures)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local all_ptime `r(ptime)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local all_rate `r(rate)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local all_lci `r(lb)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local all_uci `r(ub)'
+		stptime 
+					local all_rate = `r(rate)'
+					local all_ptime = `r(ptime)'
+					local all_lci = `r(lb)'
+					local all_uci = `r(ub)'
+					local all_events = `r(failures)'					
 		stptime if drug == 0
-					local control_rate = .
-					local control_ptime = . 
-					local control_lci = .
-					local control_uci = .
-					local control_events .
-						if `r(failures)' == 0 | `r(failures)' > 7 local control_events `r(failures)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local control_ptime `r(ptime)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local control_rate `r(rate)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local control_lci `r(lb)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local control_uci `r(ub)'
+					local control_rate = `r(rate)'
+					local control_ptime = `r(ptime)'
+					local control_lci = `r(lb)'
+					local control_uci = `r(ub)'
+					local control_events = `r(failures)'
 		display "no drug"
 		stptime if drug == 1
-					local sot_rate = .
-					local sot_ptime = . 
-					local sot_lci = .
-					local sot_uci = .
-					local sot_events .
-						if `r(failures)' == 0 | `r(failures)' > 7 local sot_events `r(failures)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local sot_ptime `r(ptime)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local sot_rate `r(rate)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local sot_lci `r(lb)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local sot_uci `r(ub)'		
+					local sot_rate = `r(rate)'
+					local sot_ptime = `r(ptime)'
+					local sot_lci = `r(lb)'
+					local sot_uci = `r(ub)'
+					local sot_events = `r(failures)'
 		display "sotrovimab"
 		stptime if drug == 2
-					local pax_rate = .
-					local pax_ptime = .
-					local pax_lci = .
-					local pax_uci = .
-					local pax_events .
-						if `r(failures)' == 0 | `r(failures)' > 7 local pax_events `r(failures)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local pax_ptime `r(ptime)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local pax_rate `r(rate)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local pax_lci `r(lb)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local pax_uci `r(ub)'	
+					local pax_rate = `r(rate)'
+					local pax_ptime = `r(ptime)'
+					local pax_lci = `r(lb)'
+					local pax_uci = `r(ub)'
+					local pax_events = `r(failures)'		
 		display "paxlovid"
 		stptime if drug == 3
-					local mol_rate = .
-					local mol_ptime = .
-					local mol_lci = . 
-					local mol_uci = .
-					local mol_events .
-						if `r(failures)' == 0 | `r(failures)' > 7 local mol_events `r(failures)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local mol_ptime `r(ptime)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local mol_rate `r(rate)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local mol_lci `r(lb)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local mol_uci `r(ub)'	
+					local mol_rate = `r(rate)'
+					local mol_ptime = `r(ptime)'
+					local mol_lci = `r(lb)'
+					local mol_uci = `r(ub)'
+					local mol_events = `r(failures)'		
 		display "molnupavir"			
 		post `comparator_rates' ("`fail'")	(`all_ptime') (`all_events') (`all_rate') (`all_lci') (`all_uci') ///
 					(`control_ptime') (`control_events') (`control_rate') (`control_lci') (`control_uci') ///
@@ -210,102 +185,28 @@ stptime
 					
 }
 postclose `comparator_rates'
-
+use "$projectdir/output/tables/comparator_rates", clear
+order failure all* control* sot* pax* mol* 
+save "$projectdir/output/tables/comparator_rates", replace
+export delimited using "$projectdir/output/tables/comparator_rates.csv", replace
 
 ** Redact and round rates
-clear *
-save "$projectdir/output/tables/comparator_rates_round.dta", replace emptyok
 use "$projectdir/output/tables/comparator_rates", clear
 foreach var of varlist *events *ptime  {
 gen `var'_round = round(`var', 5)	
-} 
-gen all_rate_round = .
-gen all_lci_round = .
-gen all_uci_round = .
-gen control_rate_round = .
-gen control_lci_round = .
-gen control_uci_round = .
-gen sot_rate_round = .
-gen sot_lci_round = .
-gen sot_uci_round = .
-gen pax_rate_round = .
-gen pax_lci_round = .
-gen pax_uci_round = .
-gen mol_rate_round = .
-gen mol_lci_round = .
-gen mol_uci_round = .
-levelsof failure, local(levels)
-foreach i of local levels {
-	
-	di "`i'"
-	preserve
-	keep if failure=="`i'" 
-	
-	if all_events!=. {
-		local all_p`i' = all_ptime_round 
-		local all_e`i' = all_events_round 
-		cii means `all_p`i'' `all_e`i'', poisson level(95) 
-		replace all_rate_round = r(mean)*1000 if all_rate_round== .
-		replace all_lci_round = r(lb)*1000 if all_lci_round== .
-		replace all_uci_round =  r(ub)*1000 if all_uci_round== .
 }
-
-	if control_events!=. {
-		local con_p`i' = control_ptime_round
-		local con_e`i' = control_events_round
-		cii means `con_p`i'' `con_e`i'', poisson level(95)
-		replace control_rate_round = r(mean)*1000 if control_rate_round== .
-		replace control_lci_round = r(lb)*1000 if control_lci_round== .
-		replace control_uci_round =  r(ub)*1000 if control_uci_round== .
-}
-	if sot_events!=. {
-		local sot_p`i' = sot_ptime_round
-		local sot_e`i' = sot_events_round
-		cii means `sot_p`i'' `sot_e`i'', poisson level(95)
-		replace sot_rate_round = r(mean)*1000 if sot_rate_round== .
-		replace sot_lci_round = r(lb)*1000 if sot_lci_round== .
-		replace sot_uci_round =  r(ub)*1000 if sot_uci_round== .
-}
-
-	if pax_events!=. {
-		local pax_p`i' = pax_ptime_round
-		local pax_e`i' = pax_events_round
-		cii means `pax_p`i'' `pax_e`i'', poisson level(95)
-		replace pax_rate_round = r(mean)*1000 if pax_rate_round== .
-		replace pax_lci_round = r(lb)*1000 if pax_lci_round== .
-		replace pax_uci_round =  r(ub)*1000 if pax_uci_round== .
-}
-
-	if mol_events!=. {
-		local mol_p`i' = mol_ptime_round
-		local mol_e`i' = mol_events_round
-		cii means `mol_p`i'' `mol_e`i'', poisson level(95)
-		replace mol_rate_round = r(mean)*1000 if mol_rate_round== .
-		replace mol_lci_round = r(lb)*1000 if mol_lci_round== .
-		replace mol_uci_round =  r(ub)*1000 if mol_uci_round== .
-}
-
-	append using "$projectdir/output/tables/comparator_rates_round.dta"
-	save "$projectdir/output/tables/comparator_rates_round.dta", replace
-	restore
-}
-
-
-use "$projectdir/output/tables/comparator_rates_round", clear
+foreach var in all control sot pax mol {
+gen `var'_rate_round = (`var'_events_round/`var'_ptime_round)*1000
+gen `var'_lci_round = (invpoisson(`var'_events_round,.975)/`var'_ptime_round)*1000
+gen `var'_uci_round = (invpoisson(`var'_events_round,.025)/`var'_ptime_round)*1000
+replace `var'_events_round=. if  `var'_events <=7 & `var'_events!=0
+replace `var'_ptime_round=. if  `var'_events <=7 & `var'_events!=0
+}  
 keep failure *round
 order  	failure all* control* sot* pax* mol* 
 save "$projectdir/output/tables/comparator_rates_round", replace
 export delimited using "$projectdir/output/tables/comparator_rates_round.csv", replace
 
-use "$projectdir/output/tables/comparator_rates", clear
-foreach var of varlist *rate *lci *uci {
-gen `var'_per = `var'*1000	
-drop `var'	
-rename 	`var'_per `var'				
-}
-order failure all* control* sot* pax* mol* 
-save "$projectdir/output/tables/comparator_rates", replace
-export delimited using "$projectdir/output/tables/comparator_rates.csv", replace
 
 
 

@@ -159,63 +159,38 @@ postfile `coxoutput_rates' str20(failure) ///
 foreach fail in $ae_group $ae_disease	  {
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 		
 	stptime 
-					local all_rate = .
-					local all_ptime = .
-					local all_lci = .
-					local all_uci = .
-					local all_events .
-						if `r(failures)' == 0 | `r(failures)' > 7 local all_events `r(failures)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local all_ptime `r(ptime)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local all_rate `r(rate)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local all_lci `r(lb)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local all_uci `r(ub)'
+					local all_rate = `r(rate)'
+					local all_ptime = `r(ptime)'
+					local all_lci = `r(lb)'
+					local all_uci = `r(ub)'
+					local all_events = `r(failures)'					
 		stptime if drug == 0
-					local control_rate = .
-					local control_ptime = . 
-					local control_lci = .
-					local control_uci = .
-					local control_events .
-						if `r(failures)' == 0 | `r(failures)' > 7 local control_events `r(failures)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local control_ptime `r(ptime)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local control_rate `r(rate)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local control_lci `r(lb)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local control_uci `r(ub)'
+					local control_rate = `r(rate)'
+					local control_ptime = `r(ptime)'
+					local control_lci = `r(lb)'
+					local control_uci = `r(ub)'
+					local control_events = `r(failures)'
 		display "no drug"
 		stptime if drug == 1
-					local sot_rate = .
-					local sot_ptime = . 
-					local sot_lci = .
-					local sot_uci = .
-					local sot_events .
-						if `r(failures)' == 0 | `r(failures)' > 7 local sot_events `r(failures)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local sot_ptime `r(ptime)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local sot_rate `r(rate)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local sot_lci `r(lb)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local sot_uci `r(ub)'		
+					local sot_rate = `r(rate)'
+					local sot_ptime = `r(ptime)'
+					local sot_lci = `r(lb)'
+					local sot_uci = `r(ub)'
+					local sot_events = `r(failures)'
 		display "sotrovimab"
 		stptime if drug == 2
-					local pax_rate = .
-					local pax_ptime = .
-					local pax_lci = .
-					local pax_uci = .
-					local pax_events .
-						if `r(failures)' == 0 | `r(failures)' > 7 local pax_events `r(failures)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local pax_ptime `r(ptime)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local pax_rate `r(rate)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local pax_lci `r(lb)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local pax_uci `r(ub)'	
+					local pax_rate = `r(rate)'
+					local pax_ptime = `r(ptime)'
+					local pax_lci = `r(lb)'
+					local pax_uci = `r(ub)'
+					local pax_events = `r(failures)'		
 		display "paxlovid"
 		stptime if drug == 3
-					local mol_rate = .
-					local mol_ptime = .
-					local mol_lci = . 
-					local mol_uci = .
-					local mol_events .
-						if `r(failures)' == 0 | `r(failures)' > 7 local mol_events `r(failures)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local mol_ptime `r(ptime)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local mol_rate `r(rate)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local mol_lci `r(lb)'
-						if `r(failures)' == 0 | `r(failures)' > 7 local mol_uci `r(ub)'	
+					local mol_rate = `r(rate)'
+					local mol_ptime = `r(ptime)'
+					local mol_lci = `r(lb)'
+					local mol_uci = `r(ub)'
+					local mol_events = `r(failures)'		
 		display "molnupavir"			
 		post `coxoutput_rates' ("`fail'")	(`all_ptime') (`all_events') (`all_rate') (`all_lci') (`all_uci') ///
 					(`control_ptime') (`control_events') (`control_rate') (`control_lci') (`control_uci') ///
@@ -248,13 +223,14 @@ gen `var'_round = round(`var', 5)
 foreach var in all control sot pax mol {
 gen `var'_rate_round = (`var'_events_round/`var'_ptime_round)*1000
 gen `var'_lci_round = (invpoisson(`var'_events_round,.975)/`var'_ptime_round)*1000
-gen `var'_uci_round = (invpoisson(`var'_events_round,.075)/`var'_ptime_round)*1000
+gen `var'_uci_round = (invpoisson(`var'_events_round,.025)/`var'_ptime_round)*1000
+replace `var'_events_round=. if  `var'_events <=7 & `var'_events!=0
+replace `var'_ptime_round=. if  `var'_events <=7 & `var'_events!=0
 }  
 keep failure *round
 order  	failure all* control* sot* pax* mol* 
 save "$projectdir/output/tables/cox_model_rates_round", replace
 export delimited using "$projectdir/output/tables/cox_model_rates_round.csv", replace
-
 
 log close
 			

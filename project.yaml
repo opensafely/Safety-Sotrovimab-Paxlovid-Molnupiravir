@@ -42,7 +42,7 @@ actions:
         data: output/tables/baseline_allpts.csv      
 
   cox_model:
-    run: stata-mp:latest analysis/202_cox_model.do
+    run: stata-mp:latest analysis/203_cox_model.do
     needs: [define_covariates_combine]
     outputs:
       moderately_sensitive:
@@ -163,7 +163,7 @@ actions:
 
         
   preceed_rate:
-    run: stata-mp:latest analysis/402_preceeding_rate.do
+    run: stata-mp:latest analysis/404_preceeding_rate.do
     needs: [define_covariates_combine]
     outputs:
       moderately_sensitive:
