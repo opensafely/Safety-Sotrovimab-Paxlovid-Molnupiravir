@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  /workspace/logs/preceed_rate.log
   log type:  text
- opened on:  27 Sep 2023, 09:13:02
+ opened on:  27 Sep 2023, 09:04:43
 
 . 
 . *Set Ado file path
@@ -3850,5 +3850,5 @@ file /workspace/output/tables/comparator_rates.csv saved
       name:  <unnamed>
        log:  /workspace/logs/preceed_rate.log
   log type:  text
- closed on:  27 Sep 2023, 09:13:43
+ closed on:  27 Sep 2023, 09:05:20
 -------------------------------------------------------------------------------
