@@ -1,26 +1,19 @@
------------------------------------------------------------------
+-------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\k1635179\OneDrive - King's College London\K
-> atie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Pax
-> lovid-Molnupiravir/logs/preceed_rate.log
+       log:  /workspace/logs/preceed_rate.log
   log type:  text
- opened on:  27 Sep 2023, 17:56:04
+ opened on:  27 Sep 2023, 19:24:41
 
 . 
 . *Set Ado file path
 . adopath + "$projectdir/analysis/ado"
-  [1]  (BASE)      "C:\Program Files\Stata17\ado\base/"
-  [2]  (SITE)      "C:\Program Files\Stata17\ado\site/"
+  [1]  (BASE)      "/usr/local/stata/ado/base/"
+  [2]  (SITE)      "/usr/local/ado/"
   [3]              "."
-  [4]  (PERSONAL)  "C:\users\PUBLIC\documents/"
-  [5]  (PLUS)      "C:\users\PUBLIC\documents/"
-  [6]  (OLDPLACE)  "c:\ado/"
-  [7]              "C:\Users\k1635179\OneDrive - King's College L
-> ondon\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovi
-> mab-Paxlovid-Molnupiravir\analysis/analysis/ado"
-  [8]              "C:\Users\k1635179\OneDrive - King's College L
-> ondon\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovi
-> mab-Paxlovid-Molnupiravir/analysis/ado"
+  [4]  (PERSONAL)  "~/ado/personal/"
+  [5]  (PLUS)      "~/ado/plus/"
+  [6]  (OLDPLACE)  "~/ado/"
+  [7]              "/workspace/analysis/ado"
 
 . 
 . * SET Index date 
@@ -35,20 +28,17 @@
 . 
 . *       COMPARATOR RATE         
 . ****************************
-. **generate rate for adverse outcome in year 3-4 prior to start 
-> date for comparative rate by person years 
-. *ensure not established diagnosis for some of the condition 4 y
-> ear prior
-. gen new_pre_ra_icd = pre_rheumatoid_icd_prim if pre_ra_snomed_n
-> ew==0 
+. **generate rate for adverse outcome in year 3-4 prior to start date for compa
+> rative rate by person years 
+. *ensure not established diagnosis for some of the condition 4 year prior
+. gen new_pre_ra_icd = pre_rheumatoid_icd_prim if pre_ra_snomed_new==0 
 (22,480 missing values generated)
 
-. gen new_pre_ra_ae = pre_rheumatoid_arthritis_ae if pre_ra_snome
-> d_new==0 
+. gen new_pre_ra_ae = pre_rheumatoid_arthritis_ae if pre_ra_snomed_new==0 
 (22,396 missing values generated)
 
-. gen new_pre_ra_snomed = pre_rheumatoid_arthritis_snomed if pre_
-> ra_snomed_new==0 
+. gen new_pre_ra_snomed = pre_rheumatoid_arthritis_snomed if pre_ra_snomed_new=
+> =0 
 (22,386 missing values generated)
 
 . gen new_pre_sle_ctv = pre_sle_ctv if pre_sle_ctv_new==0 
@@ -60,16 +50,15 @@
 . gen new_pre_sle_ae = pre_sle_ae if pre_sle_ctv_new==0 
 (22,450 missing values generated)
 
-. gen new_pre_psoriasis_icd = pre_psoriasis_icd_prim if pre_psori
-> asis_snomed_new==0 
+. gen new_pre_psoriasis_icd = pre_psoriasis_icd_prim if pre_psoriasis_snomed_ne
+> w==0 
 (22,402 missing values generated)
 
-. gen new_pre_psoriasis_snomed = pre_psoriasis_snomed if pre_psor
-> iasis_snomed_new==0 
+. gen new_pre_psoriasis_snomed = pre_psoriasis_snomed if pre_psoriasis_snomed_n
+> ew==0 
 (22,390 missing values generated)
 
-. gen new_pre_psoriasis_ae = pre_psoriasis_ae if pre_psoriasis_sn
-> omed_new==0
+. gen new_pre_psoriasis_ae = pre_psoriasis_ae if pre_psoriasis_snomed_new==0
 (22,415 missing values generated)
 
 . gen new_pre_psa_icd = pre_psa_icd_prim if pre_psa_snomed_new==0
@@ -78,12 +67,10 @@
 . gen new_pre_psa_ae = pre_psa_ae if pre_psa_snomed_new==0 
 (22,395 missing values generated)
 
-. gen new_pre_psa_snomed = pre_psa_snomed if pre_psa_snomed_new==
-> 0 
+. gen new_pre_psa_snomed = pre_psa_snomed if pre_psa_snomed_new==0 
 (22,472 missing values generated)
 
-. gen new_pre_axspa_icd = pre_axspa_icd_prim if pre_axspa_ctv_new
-> ==0
+. gen new_pre_axspa_icd = pre_axspa_icd_prim if pre_axspa_ctv_new==0
 (22,437 missing values generated)
 
 . gen new_pre_axspa_ctv = pre_axspa_ctv if pre_axspa_ctv_new==0 
@@ -103,138 +90,128 @@
 
 . 
 . *** combined ae from GP, hosp and A&E
-. egen pre_diverticulitis = rmin(pre_diverticulitis_icd_prim pre_
-> diverticulitis_snomed pre_diverticulitis_ae)      
-(17,951 missing values generated)
+. egen pre_diverticulitis = rmin(pre_diverticulitis_icd_prim pre_diverticulitis
+> _snomed pre_diverticulitis_ae)      
+(17951 missing values generated)
 
-. egen pre_diarrhoea = rmin(pre_diarrhoea_icd_prim pre_diarrhoea_
-> snomed  pre_diarrhoeal_icd_prim)
-(17,963 missing values generated)
+. egen pre_diarrhoea = rmin(pre_diarrhoea_icd_prim pre_diarrhoea_snomed  pre_di
+> arrhoeal_icd_prim)
+(17963 missing values generated)
 
 . egen pre_taste = rmin(pre_taste_icd_prim pre_taste_snomed )
-(19,893 missing values generated)
+(19893 missing values generated)
 
-. egen pre_rash = rmin(pre_rash_icd_prim pre_rash_snomed pre_rash
-> _ae)
-(18,026 missing values generated)
+. egen pre_rash = rmin(pre_rash_icd_prim pre_rash_snomed pre_rash_ae)
+(18026 missing values generated)
 
 . egen pre_bronchospasm = rmin(pre_bronchospasm_snomed)
-(22,147 missing values generated)
+(22147 missing values generated)
 
-. egen pre_contactderm = rmin(pre_contactderm_snomed pre_contactd
-> erm_icd_prim pre_contactderm_ae)
-(17,856 missing values generated)
+. egen pre_contactderm = rmin(pre_contactderm_snomed pre_contactderm_icd_prim p
+> re_contactderm_ae)
+(17856 missing values generated)
 
-. egen pre_dizziness = rmin(pre_dizziness_snomed pre_dizziness_ae
->  pre_dizziness_icd_prim)
-(18,009 missing values generated)
+. egen pre_dizziness = rmin(pre_dizziness_snomed pre_dizziness_ae pre_dizziness
+> _icd_prim)
+(18009 missing values generated)
 
-. egen pre_nausea_vomit = rmin(pre_nausea_vomit_snomed pre_nausea
-> _vomit_icd_prim)
-(20,031 missing values generated)
+. egen pre_nausea_vomit = rmin(pre_nausea_vomit_snomed pre_nausea_vomit_icd_pri
+> m)
+(20031 missing values generated)
 
-. egen pre_headache = rmin(pre_headache_snomed pre_headache_ae pr
-> e_headache_icd_prim)
-(18,021 missing values generated)
+. egen pre_headache = rmin(pre_headache_snomed pre_headache_ae pre_headache_icd
+> _prim)
+(18021 missing values generated)
 
-. egen pre_anaphylaxis = rmin(pre_anaphylaxis_icd_prim pre_anaphy
-> laxis_snomed     pre_anaphlaxis_ae)
-(17,999 missing values generated)
+. egen pre_anaphylaxis = rmin(pre_anaphylaxis_icd_prim pre_anaphylaxis_snomed  
+>    pre_anaphlaxis_ae)
+(17999 missing values generated)
 
-. egen pre_severe_drug = rmin(pre_severedrug_icd_prim pre_severed
-> rug_sjs_icd_prim pre_severedrug_snomed pre_severedrug_ae)
-(16,094 missing values generated)
+. egen pre_severe_drug = rmin(pre_severedrug_icd_prim pre_severedrug_sjs_icd_pr
+> im pre_severedrug_snomed pre_severedrug_ae)
+(16094 missing values generated)
 
-. egen pre_nonsevere_drug = rmin(pre_nonsevere_drug_snomed pre_no
-> nsevere_drug_ae)
-(19,965 missing values generated)
+. egen pre_nonsevere_drug = rmin(pre_nonsevere_drug_snomed pre_nonsevere_drug_a
+> e)
+(19965 missing values generated)
 
-. egen pre_ra = rmin(new_pre_ra_icd new_pre_ra_ae new_pre_ra_snom
-> ed )
-(18,628 missing values generated)
+. egen pre_ra = rmin(new_pre_ra_icd new_pre_ra_ae new_pre_ra_snomed )
+(18628 missing values generated)
 
-. egen pre_sle = rmin(new_pre_sle_icd new_pre_sle_ctv new_pre_sle
-> _ae)
-(18,697 missing values generated)
+. egen pre_sle = rmin(new_pre_sle_icd new_pre_sle_ctv new_pre_sle_ae)
+(18697 missing values generated)
 
-. egen pre_psorasis = rmin(new_pre_psoriasis_icd new_pre_psoriasi
-> s_snomed  new_pre_psoriasis_ae)
-(18,555 missing values generated)
+. egen pre_psorasis = rmin(new_pre_psoriasis_icd new_pre_psoriasis_snomed  new_
+> pre_psoriasis_ae)
+(18555 missing values generated)
 
-. egen pre_psa = rmin(new_pre_psa_icd new_pre_psa_ae new_pre_psa_
-> snomed)
-(18,696 missing values generated)
+. egen pre_psa = rmin(new_pre_psa_icd new_pre_psa_ae new_pre_psa_snomed)
+(18696 missing values generated)
 
-. egen pre_axspa = rmin(new_pre_axspa_icd  new_pre_axspa_ae new_p
-> re_axspa_ctv)
-(18,633 missing values generated)
+. egen pre_axspa = rmin(new_pre_axspa_icd  new_pre_axspa_ae new_pre_axspa_ctv)
+(18633 missing values generated)
 
-. egen pre_ibd = rmin(new_pre_ibd_icd new_pre_ibd_ctv new_pre_ibd
-> _ae)
-(18,623 missing values generated)
+. egen pre_ibd = rmin(new_pre_ibd_icd new_pre_ibd_ctv new_pre_ibd_ae)
+(18623 missing values generated)
 
-. egen pre_spc_all = rmin(pre_diverticulitis pre_diarrhoea pre_ta
-> ste) 
-(10,513 missing values generated)
+. egen pre_spc_all = rmin(pre_diverticulitis pre_diarrhoea pre_taste) 
+(10513 missing values generated)
 
-. egen pre_drug_all = rmin(pre_anaphylaxis pre_severe_drug pre_no
-> nsevere_drug)
-(9,513 missing values generated)
+. egen pre_drug_all = rmin(pre_anaphylaxis pre_severe_drug pre_nonsevere_drug)
+(9513 missing values generated)
 
-. egen pre_imae_all = rmin(pre_ra pre_sle pre_psorasis pre_psa pr
-> e_axspa pre_ibd) 
-(4,559 missing values generated)
+. egen pre_imae_all = rmin(pre_ra pre_sle pre_psorasis pre_psa pre_axspa pre_ib
+> d) 
+(4559 missing values generated)
 
 . egen pre_ae_all = rmin(pre_spc_all pre_drug_all pre_imae_all)
 (774 missing values generated)
 
 . 
-. global pre_ae_group                     pre_spc_all            
->                          ///
->                                                         pre_dru
-> g_all                                    ///             
->                                                         pre_ima
-> e_all                                    ///                   
->           
->                                                         pre_ae_
-> all
+. global pre_ae_group                     pre_spc_all                          
+>            ///
+>                                                         pre_drug_all         
+>                            ///             
+>                                                         pre_imae_all         
+>                            ///                             
+>                                                         pre_ae_all
 
-. global pre_ae_disease           pre_diverticulitis             
->                  ///
->                                                         pre_dia
-> rrhoea                                   ///
->                                                         pre_tas
-> te                                               ///
->                                                         pre_ras
-> h                                                ///
->                                                         pre_bro
-> nchospasm                                ///
->                                                         pre_con
-> tactderm                                 ///
->                                                         pre_diz
-> ziness                                   ///
->                                                         pre_nau
-> sea_vomit                                ///
->                                                         pre_hea
-> dache                                    ///
->                                                         pre_ana
-> phylaxis                                 ///
->                                                         pre_sev
-> ere_drug                                 ///
->                                                         pre_non
-> severe_drug                              ///
->                                                         pre_ra 
->                                                  ///
->                                                         pre_sle
->                                                  ///
->                                                         pre_pso
-> rasis                                    ///
->                                                         pre_psa
->                                                  ///
->                                                         pre_axs
-> pa                                               ///
->                                                         pre_ibd
->                  
+. global pre_ae_disease           pre_diverticulitis                           
+>    ///
+>                                                         pre_diarrhoea        
+>                            ///
+>                                                         pre_taste            
+>                                    ///
+>                                                         pre_rash             
+>                                    ///
+>                                                         pre_bronchospasm     
+>                            ///
+>                                                         pre_contactderm      
+>                            ///
+>                                                         pre_dizziness        
+>                            ///
+>                                                         pre_nausea_vomit     
+>                            ///
+>                                                         pre_headache         
+>                            ///
+>                                                         pre_anaphylaxis      
+>                            ///
+>                                                         pre_severe_drug      
+>                            ///
+>                                                         pre_nonsevere_drug   
+>                            ///
+>                                                         pre_ra               
+>                                    ///
+>                                                         pre_sle              
+>                                    ///
+>                                                         pre_psorasis         
+>                            ///
+>                                                         pre_psa              
+>                                    ///
+>                                                         pre_axspa            
+>                                    ///
+>                                                         pre_ibd              
+>    
 
 . 
 . *gen start date for comparator rate
@@ -242,22 +219,19 @@
 
 . gen start_comparator_28 = start_date - 1431
 
-. *remove if occurred outside of window, gen failure and stop dat
-> e: 
+. *remove if occurred outside of window, gen failure and stop date: 
 . foreach x in $pre_ae_group $pre_ae_disease {
   2.                 display "`x'"
   3.                 count if `x'!=. 
-  4.                 count if (`x'<start_comparator | `x'>start_c
-> omparator_28) & `x'!=.  // event outside windown - should be 0 
-  5.                 count if (`x'>start_comparator & `x'<start_c
-> omparator_28) & `x'!=.  // event 4-3 years prior to start
+  4.                 count if (`x'<start_comparator | `x'>start_comparator_28) 
+> & `x'!=.  // event outside windown - should be 0 
+  5.                 count if (`x'>start_comparator & `x'<start_comparator_28) 
+> & `x'!=.  // event 4-3 years prior to start
   6.                 gen fail_`x'=1 if `x'!=.
   7.                 tab drug fail_`x', m
-  8.                 replace `x'=`x'+0.75 if `x'==start_comparato
-> r
+  8.                 replace `x'=`x'+0.75 if `x'==start_comparator
   9.                 gen stop_`x'=`x' if fail_`x'==1
- 10.                 replace stop_`x'= start_comparator_28 if fai
-> l_`x'==.
+ 10.                 replace stop_`x'= start_comparator_28 if fail_`x'==.
  11.                 tab drug fail_`x' if stop_`x'!=.
  12.                 format %td stop_`x'
  13. }
@@ -908,39 +882,32 @@ molnupiravir |        69 |        69
 
 . 
 . * Follow-up time
-. stset stop_pre_ae_all, id(patient_id) origin(time start_compara
-> tor) enter(time start_comparator) exit(time start_comparator_28
-> ) failure(fail_pre_ae_all==1) 
+. stset stop_pre_ae_all, id(patient_id) origin(time start_comparator) enter(tim
+> e start_comparator) exit(time start_comparator_28) failure(fail_pre_ae_all==1
+> ) 
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_ae_all == 1
+obs. time interval:  (stop_pre_ae_all[_n-1], stop_pre_ae_all]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_ae_all==1
-Observed time interval: (stop_pre_ae_all[_n-1], stop_pre_ae_all]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,655  total observations
       6,958  observations end on or before enter()
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      17,697  observations remaining, representing
      17,697  subjects
         598  failures in single-failure-per-subject data
  504,494.75  total analysis time at risk and under observation
-                                                At risk from t = 
->         0
-                                     Earliest observed entry t = 
->         0
-                                          Last observed exit t = 
->        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-. tab _st  // keep if _st==1 -> removes observations that end on 
-> or before enter 
+. tab _st  // keep if _st==1 -> removes observations that end on or before ente
+> r 
 
 1 if record |
    is to be |
@@ -960,7 +927,7 @@ Observed time interval: (stop_pre_ae_all[_n-1], stop_pre_ae_all]
 
 . tab _t,m
 
-   Analysis |
+   analysis |
   time when |
 record ends |      Freq.     Percent        Cum.
 ------------+-----------------------------------
@@ -1004,2583 +971,1807 @@ record ends |      Freq.     Percent        Cum.
 . tempname comparator_rates
 
 . postfile `comparator_rates' str20(failure) ///
->                 all_ptime all_events all_rate all_lci all_uci /
-> //
->                 control_ptime control_events control_rate contr
-> ol_lci_ control_uci ///
->                 sot_ptime sot_events sot_rate sot_lci sot_uci /
-> //
->                 pax_ptime pax_events pax_rate pax_lci pax_uci /
-> //
->                 mol_ptime mol_events mol_rate mol_lci mol_uci /
-> //
->                 using "$projectdir/output/tables/comparator_rat
-> es", replace     
+>                 all_ptime all_events all_rate all_lci all_uci ///
+>                 control_ptime control_events control_rate control_lci_ contro
+> l_uci ///
+>                 sot_ptime sot_events sot_rate sot_lci sot_uci ///
+>                 pax_ptime pax_events pax_rate pax_lci pax_uci ///
+>                 mol_ptime mol_events mol_rate mol_lci mol_uci ///
+>                 using "$projectdir/output/tables/comparator_rates", replace  
+>    
 
 .         
 . foreach fail in $pre_ae_group $pre_ae_disease     {
-  2.         stset stop_`fail', id(patient_id) origin(time start_
-> comparator) enter(time start_comparator) exit(time start_compar
-> ator_28) failure(fail_`fail'==1)                     
-  3. stptime 
-  4.                                         local all_rate = .
-  5.                                         local all_ptime = .
-  6.                                         local all_lci = .
-  7.                                         local all_uci = .
-  8.                                         local all_events .
-  9.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local all_events `r(failures)'
- 10.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local all_ptime `r(ptime)'
- 11.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local all_rate `r(rate)'
- 12.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local all_lci `r(lb)'
- 13.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local all_uci `r(ub)'
- 14.                 stptime if drug == 0
- 15.                                         local control_rate =
->  .
- 16.                                         local control_ptime 
-> = . 
- 17.                                         local control_lci = 
-> .
- 18.                                         local control_uci = 
-> .
- 19.                                         local control_events
->  .
- 20.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local control_events `r(failures)
-> '
- 21.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local control_ptime `r(ptime)'
- 22.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local control_rate `r(rate)'
- 23.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local control_lci `r(lb)'
- 24.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local control_uci `r(ub)'
- 25.                 display "no drug"
- 26.                 stptime if drug == 1
- 27.                                         local sot_rate = .
- 28.                                         local sot_ptime = . 
- 29.                                         local sot_lci = .
- 30.                                         local sot_uci = .
- 31.                                         local sot_events .
- 32.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local sot_events `r(failures)'
- 33.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local sot_ptime `r(ptime)'
- 34.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local sot_rate `r(rate)'
- 35.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local sot_lci `r(lb)'
- 36.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local sot_uci `r(ub)'         
- 37.                 display "sotrovimab"
- 38.                 stptime if drug == 2
- 39.                                         local pax_rate = .
- 40.                                         local pax_ptime = .
- 41.                                         local pax_lci = .
- 42.                                         local pax_uci = .
- 43.                                         local pax_events .
- 44.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local pax_events `r(failures)'
- 45.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local pax_ptime `r(ptime)'
- 46.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local pax_rate `r(rate)'
- 47.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local pax_lci `r(lb)'
- 48.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local pax_uci `r(ub)' 
- 49.                 display "paxlovid"
- 50.                 stptime if drug == 3
- 51.                                         local mol_rate = .
- 52.                                         local mol_ptime = .
- 53.                                         local mol_lci = . 
- 54.                                         local mol_uci = .
- 55.                                         local mol_events .
- 56.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local mol_events `r(failures)'
- 57.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local mol_ptime `r(ptime)'
- 58.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local mol_rate `r(rate)'
- 59.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local mol_lci `r(lb)'
- 60.                                                 if `r(failur
-> es)' == 0 | `r(failures)' > 7 local mol_uci `r(ub)' 
- 61.                 display "molnupavir"                    
- 62.                 post `comparator_rates' ("`fail'")      (`al
-> l_ptime') (`all_events') (`all_rate') (`all_lci') (`all_uci') /
-> //
->                                         (`control_ptime') (`con
-> trol_events') (`control_rate') (`control_lci') (`control_uci') 
-> ///
->                                         (`sot_ptime') (`sot_eve
-> nts') (`sot_rate') (`sot_lci') (`sot_uci') ///
->                                         (`pax_ptime') (`pax_eve
-> nts') (`pax_rate') (`pax_lci') (`pax_uci') ///
->                                         (`mol_ptime') (`mol_eve
-> nts') (`mol_rate') (`mol_lci') (`mol_uci')       
- 63.                                         
+  2.         stset stop_`fail', id(patient_id) origin(time start_comparator) en
+> ter(time start_comparator) exit(time start_comparator_28) failure(fail_`fail'
+> ==1)                     
+  3.                 stptime 
+  4.                                         local all_rate = `r(rate)'
+  5.                                         local all_ptime = `r(ptime)'
+  6.                                         local all_lci = `r(lb)'
+  7.                                         local all_uci = `r(ub)'
+  8.                                         local all_events = `r(failures)'  
+>                                       
+  9.                 stptime if drug == 0
+ 10.                                         local control_rate = `r(rate)'
+ 11.                                         local control_ptime = `r(ptime)'
+ 12.                                         local control_lci = `r(lb)'
+ 13.                                         local control_uci = `r(ub)'
+ 14.                                         local control_events = `r(failures
+> )'
+ 15.                 display "no drug"
+ 16.                 stptime if drug == 1
+ 17.                                         local sot_rate = `r(rate)'
+ 18.                                         local sot_ptime = `r(ptime)'
+ 19.                                         local sot_lci = `r(lb)'
+ 20.                                         local sot_uci = `r(ub)'
+ 21.                                         local sot_events = `r(failures)'
+ 22.                 display "sotrovimab"
+ 23.                 stptime if drug == 2
+ 24.                                         local pax_rate = `r(rate)'
+ 25.                                         local pax_ptime = `r(ptime)'
+ 26.                                         local pax_lci = `r(lb)'
+ 27.                                         local pax_uci = `r(ub)'
+ 28.                                         local pax_events = `r(failures)'  
+>               
+ 29.                 display "paxlovid"
+ 30.                 stptime if drug == 3
+ 31.                                         local mol_rate = `r(rate)'
+ 32.                                         local mol_ptime = `r(ptime)'
+ 33.                                         local mol_lci = `r(lb)'
+ 34.                                         local mol_uci = `r(ub)'
+ 35.                                         local mol_events = `r(failures)'  
+>               
+ 36.                 display "molnupavir"                    
+ 37.                 post `comparator_rates' ("`fail'")      (`all_ptime') (`al
+> l_events') (`all_rate') (`all_lci') (`all_uci') ///
+>                                         (`control_ptime') (`control_events') 
+> (`control_rate') (`control_lci') (`control_uci') ///
+>                                         (`sot_ptime') (`sot_events') (`sot_ra
+> te') (`sot_lci') (`sot_uci') ///
+>                                         (`pax_ptime') (`pax_events') (`pax_ra
+> te') (`pax_lci') (`pax_uci') ///
+>                                         (`mol_ptime') (`mol_events') (`mol_ra
+> te') (`mol_lci') (`mol_uci')       
+ 38.                                         
 . }
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_spc_all == 1
+obs. time interval:  (stop_pre_spc_all[_n-1], stop_pre_spc_all]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_spc_all==1
-Observed time interval: (stop_pre_spc_all[_n-1], stop_pre_spc_all
-> ]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,655  total observations
       2,341  observations end on or before enter()
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      22,314  observations remaining, representing
      22,314  subjects
         247  failures in single-failure-per-subject data
     643,623  total analysis time at risk and under observation
-                                                At risk from t = 
->         0
-                                     Earliest observed entry t = 
->         0
-                                          Last observed exit t = 
->        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-         Failure _d: fail_pre_spc_all==1
-   Analysis time _t: (stop_pre_spc_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_spc_all == 1
+   analysis time _t:  (stop_pre_spc_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |       643623        247   .00038377   .0003388    .0004347
 
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |       643623        247   .00038377   .0003388    .0
-> 004347
+         failure _d:  fail_pre_spc_all == 1
+   analysis time _t:  (stop_pre_spc_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-         Failure _d: fail_pre_spc_all==1
-   Analysis time _t: (stop_pre_spc_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |       621315        238   .00038306   .0003374     .
-> 000435
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |       621315        238   .00038306   .0003374     .000435
 no drug
 
-         Failure _d: fail_pre_spc_all==1
-   Analysis time _t: (stop_pre_spc_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_spc_all == 1
+   analysis time _t:  (stop_pre_spc_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7102          2   .00028161   .0000704     .
-> 001126
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7102          2   .00028161   .0000704     .001126
 sotrovimab
 
-         Failure _d: fail_pre_spc_all==1
-   Analysis time _t: (stop_pre_spc_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_spc_all == 1
+   analysis time _t:  (stop_pre_spc_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         8001          2   .00024997   .0000625    .0
-> 009995
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8001          2   .00024997   .0000625    .0009995
 paxlovid
 
-         Failure _d: fail_pre_spc_all==1
-   Analysis time _t: (stop_pre_spc_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_spc_all == 1
+   analysis time _t:  (stop_pre_spc_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7205          5   .00069396   .0002888    .0
-> 016673
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7205          5   .00069396   .0002888    .0016673
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_drug_all == 1
+obs. time interval:  (stop_pre_drug_all[_n-1], stop_pre_drug_all]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_drug_all==1
-Observed time interval: (stop_pre_drug_all[_n-1], stop_pre_drug_a
-> ll]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,655  total observations
       2,084  observations end on or before enter()
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      22,571  observations remaining, representing
      22,571  subjects
         198  failures in single-failure-per-subject data
  651,672.75  total analysis time at risk and under observation
-                                                At risk from t = 
->         0
-                                     Earliest observed entry t = 
->         0
-                                          Last observed exit t = 
->        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-         Failure _d: fail_pre_drug_all==1
-   Analysis time _t: (stop_pre_drug_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_drug_all == 1
+   analysis time _t:  (stop_pre_drug_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    651672.75        198   .00030383   .0002643    .0003492
 
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    651672.75        198   .00030383   .0002643    .0
-> 003492
+         failure _d:  fail_pre_drug_all == 1
+   analysis time _t:  (stop_pre_drug_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-         Failure _d: fail_pre_drug_all==1
-   Analysis time _t: (stop_pre_drug_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    629077.75        189   .00030044   .0002605    .0
-> 003465
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    629077.75        189   .00030044   .0002605    .0003465
 no drug
 
-         Failure _d: fail_pre_drug_all==1
-   Analysis time _t: (stop_pre_drug_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_drug_all == 1
+   analysis time _t:  (stop_pre_drug_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7312          6   .00082057   .0003686    .0
-> 018265
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7312          6   .00082057   .0003686    .0018265
 sotrovimab
 
-         Failure _d: fail_pre_drug_all==1
-   Analysis time _t: (stop_pre_drug_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_drug_all == 1
+   analysis time _t:  (stop_pre_drug_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         8004          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8004          0           0          .           .
 paxlovid
 
-         Failure _d: fail_pre_drug_all==1
-   Analysis time _t: (stop_pre_drug_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_drug_all == 1
+   analysis time _t:  (stop_pre_drug_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7279          3   .00041214   .0001329    .0
-> 012779
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7279          3   .00041214   .0001329    .0012779
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_imae_all == 1
+obs. time interval:  (stop_pre_imae_all[_n-1], stop_pre_imae_all]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_imae_all==1
-Observed time interval: (stop_pre_imae_all[_n-1], stop_pre_imae_a
-> ll]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,655  total observations
       3,591  observations end on or before enter()
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      21,064  observations remaining, representing
      21,064  subjects
         325  failures in single-failure-per-subject data
  606,059.25  total analysis time at risk and under observation
-                                                At risk from t = 
->         0
-                                     Earliest observed entry t = 
->         0
-                                          Last observed exit t = 
->        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-         Failure _d: fail_pre_imae_all==1
-   Analysis time _t: (stop_pre_imae_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_imae_all == 1
+   analysis time _t:  (stop_pre_imae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    606059.25        325   .00053625    .000481    .0005978
 
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    606059.25        325   .00053625    .000481    .0
-> 005978
+         failure _d:  fail_pre_imae_all == 1
+   analysis time _t:  (stop_pre_imae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-         Failure _d: fail_pre_imae_all==1
-   Analysis time _t: (stop_pre_imae_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    585082.25        319   .00054522   .0004886    .0
-> 006085
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    585082.25        319   .00054522   .0004886    .0006085
 no drug
 
-         Failure _d: fail_pre_imae_all==1
-   Analysis time _t: (stop_pre_imae_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_imae_all == 1
+   analysis time _t:  (stop_pre_imae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         6767          2   .00029555   .0000739    .0
-> 011817
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         6767          2   .00029555   .0000739    .0011817
 sotrovimab
 
-         Failure _d: fail_pre_imae_all==1
-   Analysis time _t: (stop_pre_imae_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_imae_all == 1
+   analysis time _t:  (stop_pre_imae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7447          3   .00040285   .0001299    .0
-> 012491
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7447          3   .00040285   .0001299    .0012491
 paxlovid
 
-         Failure _d: fail_pre_imae_all==1
-   Analysis time _t: (stop_pre_imae_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_imae_all == 1
+   analysis time _t:  (stop_pre_imae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         6763          1   .00014786   .0000208    .0
-> 010497
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         6763          1   .00014786   .0000208    .0010497
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_ae_all == 1
+obs. time interval:  (stop_pre_ae_all[_n-1], stop_pre_ae_all]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_ae_all==1
-Observed time interval: (stop_pre_ae_all[_n-1], stop_pre_ae_all]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,655  total observations
       6,958  observations end on or before enter()
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      17,697  observations remaining, representing
      17,697  subjects
         598  failures in single-failure-per-subject data
  504,494.75  total analysis time at risk and under observation
-                                                At risk from t = 
->         0
-                                     Earliest observed entry t = 
->         0
-                                          Last observed exit t = 
->        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-         Failure _d: fail_pre_ae_all==1
-   Analysis time _t: (stop_pre_ae_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_ae_all == 1
+   analysis time _t:  (stop_pre_ae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    504494.75        598   .00118534    .001094    .0012843
 
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    504494.75        598   .00118534    .001094    .0
-> 012843
+         failure _d:  fail_pre_ae_all == 1
+   analysis time _t:  (stop_pre_ae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-         Failure _d: fail_pre_ae_all==1
-   Analysis time _t: (stop_pre_ae_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    487399.75        579   .00118794    .001095    .0
-> 012887
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    487399.75        579   .00118794    .001095    .0012887
 no drug
 
-         Failure _d: fail_pre_ae_all==1
-   Analysis time _t: (stop_pre_ae_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_ae_all == 1
+   analysis time _t:  (stop_pre_ae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         5482          7   .00127691   .0006087    .0
-> 026784
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         5482          7   .00127691   .0006087    .0026784
 sotrovimab
 
-         Failure _d: fail_pre_ae_all==1
-   Analysis time _t: (stop_pre_ae_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_ae_all == 1
+   analysis time _t:  (stop_pre_ae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         6139          5   .00081446    .000339    .0
-> 019568
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         6139          5   .00081446    .000339    .0019568
 paxlovid
 
-         Failure _d: fail_pre_ae_all==1
-   Analysis time _t: (stop_pre_ae_all-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_ae_all == 1
+   analysis time _t:  (stop_pre_ae_all-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         5474          7   .00127877   .0006096    .0
-> 026824
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         5474          7   .00127877   .0006096    .0026824
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_diverticulitis == 1
+obs. time interval:  (stop_pre_diverticulitis[_n-1], stop_pre_diverticulitis]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_diverticulitis==1
-Observed time interval: (stop_pre_diverticulitis[_n-1], stop_pre_
-> diverticulitis]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,655  total observations
         714  observations end on or before enter()
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      23,941  observations remaining, representing
      23,941  subjects
          72  failures in single-failure-per-subject data
  693,303.25  total analysis time at risk and under observation
-                                                At risk from t = 
->         0
-                                     Earliest observed entry t = 
->         0
-                                          Last observed exit t = 
->        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-         Failure _d: fail_pre_diverticulitis==1
-   Analysis time _t: (stop_pre_diverticulitis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_diverticulitis == 1
+   analysis time _t:  (stop_pre_diverticulitis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    693303.25         72   .00010385   .0000824    .0001308
 
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    693303.25         72   .00010385   .0000824    .0
-> 001308
+         failure _d:  fail_pre_diverticulitis == 1
+   analysis time _t:  (stop_pre_diverticulitis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-         Failure _d: fail_pre_diverticulitis==1
-   Analysis time _t: (stop_pre_diverticulitis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    669162.25         70   .00010461   .0000828    .0
-> 001322
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    669162.25         70   .00010461   .0000828    .0001322
 no drug
 
-         Failure _d: fail_pre_diverticulitis==1
-   Analysis time _t: (stop_pre_diverticulitis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_diverticulitis == 1
+   analysis time _t:  (stop_pre_diverticulitis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7743          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7743          0           0          .           .
 sotrovimab
 
-         Failure _d: fail_pre_diverticulitis==1
-   Analysis time _t: (stop_pre_diverticulitis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_diverticulitis == 1
+   analysis time _t:  (stop_pre_diverticulitis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         8555          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8555          0           0          .           .
 paxlovid
 
-         Failure _d: fail_pre_diverticulitis==1
-   Analysis time _t: (stop_pre_diverticulitis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_diverticulitis == 1
+   analysis time _t:  (stop_pre_diverticulitis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7843          2     .000255   .0000638    .0
-> 010196
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7843          2     .000255   .0000638    .0010196
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_diarrhoea == 1
+obs. time interval:  (stop_pre_diarrhoea[_n-1], stop_pre_diarrhoea]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_diarrhoea==1
-Observed time interval: (stop_pre_diarrhoea[_n-1], stop_pre_diarr
-> hoea]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,655  total observations
       1,047  observations end on or before enter()
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      23,608  observations remaining, representing
      23,608  subjects
         120  failures in single-failure-per-subject data
     683,008  total analysis time at risk and under observation
-                                                At risk from t = 
->         0
-                                     Earliest observed entry t = 
->         0
-                                          Last observed exit t = 
->        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-         Failure _d: fail_pre_diarrhoea==1
-   Analysis time _t: (stop_pre_diarrhoea-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_diarrhoea == 1
+   analysis time _t:  (stop_pre_diarrhoea-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |       683008        120   .00017569   .0001469    .0002101
 
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |       683008        120   .00017569   .0001469    .0
-> 002101
+         failure _d:  fail_pre_diarrhoea == 1
+   analysis time _t:  (stop_pre_diarrhoea-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-         Failure _d: fail_pre_diarrhoea==1
-   Analysis time _t: (stop_pre_diarrhoea-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |       659296        114   .00017291   .0001439    .0
-> 002078
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |       659296        114   .00017291   .0001439    .0002078
 no drug
 
-         Failure _d: fail_pre_diarrhoea==1
-   Analysis time _t: (stop_pre_diarrhoea-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_diarrhoea == 1
+   analysis time _t:  (stop_pre_diarrhoea-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7595          2   .00026333   .0000659    .0
-> 010529
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7595          2   .00026333   .0000659    .0010529
 sotrovimab
 
-         Failure _d: fail_pre_diarrhoea==1
-   Analysis time _t: (stop_pre_diarrhoea-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_diarrhoea == 1
+   analysis time _t:  (stop_pre_diarrhoea-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         8461          1   .00011819   .0000166     .
-> 000839
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8461          1   .00011819   .0000166     .000839
 paxlovid
 
-         Failure _d: fail_pre_diarrhoea==1
-   Analysis time _t: (stop_pre_diarrhoea-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_diarrhoea == 1
+   analysis time _t:  (stop_pre_diarrhoea-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7656          3   .00039185   .0001264     .
-> 001215
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7656          3   .00039185   .0001264     .001215
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_taste == 1
+obs. time interval:  (stop_pre_taste[_n-1], stop_pre_taste]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_taste==1
-Observed time interval: (stop_pre_taste[_n-1], stop_pre_taste]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,655  total observations
         707  observations end on or before enter()
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      23,948  observations remaining, representing
      23,948  subjects
          69  failures in single-failure-per-subject data
  693,443.75  total analysis time at risk and under observation
-                                                At risk from t = 
->         0
-                                     Earliest observed entry t = 
->         0
-                                          Last observed exit t = 
->        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-         Failure _d: fail_pre_taste==1
-   Analysis time _t: (stop_pre_taste-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_taste == 1
+   analysis time _t:  (stop_pre_taste-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    693443.75         69    .0000995   .0000786     .000126
 
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    693443.75         69    .0000995   .0000786     .
-> 000126
+         failure _d:  fail_pre_taste == 1
+   analysis time _t:  (stop_pre_taste-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-         Failure _d: fail_pre_taste==1
-   Analysis time _t: (stop_pre_taste-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    669224.75         68   .00010161   .0000801    .0
-> 001289
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    669224.75         68   .00010161   .0000801    .0001289
 no drug
 
-         Failure _d: fail_pre_taste==1
-   Analysis time _t: (stop_pre_taste-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_taste == 1
+   analysis time _t:  (stop_pre_taste-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7714          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7714          0           0          .           .
 sotrovimab
 
-         Failure _d: fail_pre_taste==1
-   Analysis time _t: (stop_pre_taste-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_taste == 1
+   analysis time _t:  (stop_pre_taste-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         8675          1   .00011527   .0000162    .0
-> 008183
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8675          1   .00011527   .0000162    .0008183
 paxlovid
 
-         Failure _d: fail_pre_taste==1
-   Analysis time _t: (stop_pre_taste-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_taste == 1
+   analysis time _t:  (stop_pre_taste-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7830          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7830          0           0          .           .
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_rash == 1
+obs. time interval:  (stop_pre_rash[_n-1], stop_pre_rash]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_rash==1
-Observed time interval: (stop_pre_rash[_n-1], stop_pre_rash]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,655  total observations
         730  observations end on or before enter()
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      23,925  observations remaining, representing
      23,925  subjects
          73  failures in single-failure-per-subject data
   692,756.5  total analysis time at risk and under observation
-                                                At risk from t = 
->         0
-                                     Earliest observed entry t = 
->         0
-                                          Last observed exit t = 
->        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-         Failure _d: fail_pre_rash==1
-   Analysis time _t: (stop_pre_rash-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_rash == 1
+   analysis time _t:  (stop_pre_rash-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |     692756.5         73   .00010538   .0000838    .0001325
 
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |     692756.5         73   .00010538   .0000838    .0
-> 001325
+         failure _d:  fail_pre_rash == 1
+   analysis time _t:  (stop_pre_rash-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-         Failure _d: fail_pre_rash==1
-   Analysis time _t: (stop_pre_rash-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |     668535.5         71    .0001062   .0000842     .
-> 000134
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |     668535.5         71    .0001062   .0000842     .000134
 no drug
 
-         Failure _d: fail_pre_rash==1
-   Analysis time _t: (stop_pre_rash-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_rash == 1
+   analysis time _t:  (stop_pre_rash-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7627          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7627          0           0          .           .
 sotrovimab
 
-         Failure _d: fail_pre_rash==1
-   Analysis time _t: (stop_pre_rash-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_rash == 1
+   analysis time _t:  (stop_pre_rash-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         8706          2   .00022973   .0000575    .0
-> 009185
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8706          2   .00022973   .0000575    .0009185
 paxlovid
 
-         Failure _d: fail_pre_rash==1
-   Analysis time _t: (stop_pre_rash-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_rash == 1
+   analysis time _t:  (stop_pre_rash-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7888          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7888          0           0          .           .
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_bronchospasm == 1
+obs. time interval:  (stop_pre_bronchospasm[_n-1], stop_pre_bronchospasm]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_bronchospasm==1
-Observed time interval: (stop_pre_bronchospasm[_n-1], stop_pre_br
-> onchospasm]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,655  total observations
         353  observations end on or before enter()
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,302  observations remaining, representing
      24,302  subjects
          31  failures in single-failure-per-subject data
   704,252.5  total analysis time at risk and under observation
-                                                At risk from t = 
->         0
-                                     Earliest observed entry t = 
->         0
-                                          Last observed exit t = 
->        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-         Failure _d: fail_pre_bronchospasm==1
-   Analysis time _t: (stop_pre_bronchospasm-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_bronchospasm == 1
+   analysis time _t:  (stop_pre_bronchospasm-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |     704252.5         31   .00004402    .000031    .0000626
 
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |     704252.5         31   .00004402    .000031    .0
-> 000626
+         failure _d:  fail_pre_bronchospasm == 1
+   analysis time _t:  (stop_pre_bronchospasm-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-         Failure _d: fail_pre_bronchospasm==1
-   Analysis time _t: (stop_pre_bronchospasm-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |     679660.5         31   .00004561   .0000321    .0
-> 000649
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |     679660.5         31   .00004561   .0000321    .0000649
 no drug
 
-         Failure _d: fail_pre_bronchospasm==1
-   Analysis time _t: (stop_pre_bronchospasm-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_bronchospasm == 1
+   analysis time _t:  (stop_pre_bronchospasm-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7975          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7975          0           0          .           .
 sotrovimab
 
-         Failure _d: fail_pre_bronchospasm==1
-   Analysis time _t: (stop_pre_bronchospasm-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_bronchospasm == 1
+   analysis time _t:  (stop_pre_bronchospasm-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         8700          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8700          0           0          .           .
 paxlovid
 
-         Failure _d: fail_pre_bronchospasm==1
-   Analysis time _t: (stop_pre_bronchospasm-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_bronchospasm == 1
+   analysis time _t:  (stop_pre_bronchospasm-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7917          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7917          0           0          .           .
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_contactderm == 1
+obs. time interval:  (stop_pre_contactderm[_n-1], stop_pre_contactderm]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_contactderm==1
-Observed time interval: (stop_pre_contactderm[_n-1], stop_pre_con
-> tactderm]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,655  total observations
         750  observations end on or before enter()
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      23,905  observations remaining, representing
      23,905  subjects
          69  failures in single-failure-per-subject data
  692,240.75  total analysis time at risk and under observation
-                                                At risk from t = 
->         0
-                                     Earliest observed entry t = 
->         0
-                                          Last observed exit t = 
->        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-         Failure _d: fail_pre_contactderm==1
-   Analysis time _t: (stop_pre_contactderm-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_contactderm == 1
+   analysis time _t:  (stop_pre_contactderm-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    692240.75         69   .00009968   .0000787    .0001262
 
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    692240.75         69   .00009968   .0000787    .0
-> 001262
+         failure _d:  fail_pre_contactderm == 1
+   analysis time _t:  (stop_pre_contactderm-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-         Failure _d: fail_pre_contactderm==1
-   Analysis time _t: (stop_pre_contactderm-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    667894.75         67   .00010032    .000079    .0
-> 001275
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    667894.75         67   .00010032    .000079    .0001275
 no drug
 
-         Failure _d: fail_pre_contactderm==1
-   Analysis time _t: (stop_pre_contactderm-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_contactderm == 1
+   analysis time _t:  (stop_pre_contactderm-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7772          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7772          0           0          .           .
 sotrovimab
 
-         Failure _d: fail_pre_contactderm==1
-   Analysis time _t: (stop_pre_contactderm-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_contactderm == 1
+   analysis time _t:  (stop_pre_contactderm-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         8657          2   .00023103   .0000578    .0
-> 009237
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8657          2   .00023103   .0000578    .0009237
 paxlovid
 
-         Failure _d: fail_pre_contactderm==1
-   Analysis time _t: (stop_pre_contactderm-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_contactderm == 1
+   analysis time _t:  (stop_pre_contactderm-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7917          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7917          0           0          .           .
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_dizziness == 1
+obs. time interval:  (stop_pre_dizziness[_n-1], stop_pre_dizziness]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_dizziness==1
-Observed time interval: (stop_pre_dizziness[_n-1], stop_pre_dizzi
-> ness]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,655  total observations
         708  observations end on or before enter()
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      23,947  observations remaining, representing
      23,947  subjects
          65  failures in single-failure-per-subject data
  693,486.25  total analysis time at risk and under observation
-                                                At risk from t = 
->         0
-                                     Earliest observed entry t = 
->         0
-                                          Last observed exit t = 
->        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-         Failure _d: fail_pre_dizziness==1
-   Analysis time _t: (stop_pre_dizziness-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_dizziness == 1
+   analysis time _t:  (stop_pre_dizziness-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    693486.25         65   .00009373   .0000735    .0001195
 
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    693486.25         65   .00009373   .0000735    .0
-> 001195
+         failure _d:  fail_pre_dizziness == 1
+   analysis time _t:  (stop_pre_dizziness-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-         Failure _d: fail_pre_dizziness==1
-   Analysis time _t: (stop_pre_dizziness-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    669213.25         65   .00009713   .0000762    .0
-> 001239
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    669213.25         65   .00009713   .0000762    .0001239
 no drug
 
-         Failure _d: fail_pre_dizziness==1
-   Analysis time _t: (stop_pre_dizziness-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_dizziness == 1
+   analysis time _t:  (stop_pre_dizziness-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7975          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7975          0           0          .           .
 sotrovimab
 
-         Failure _d: fail_pre_dizziness==1
-   Analysis time _t: (stop_pre_dizziness-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_dizziness == 1
+   analysis time _t:  (stop_pre_dizziness-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         8468          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8468          0           0          .           .
 paxlovid
 
-         Failure _d: fail_pre_dizziness==1
-   Analysis time _t: (stop_pre_dizziness-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_dizziness == 1
+   analysis time _t:  (stop_pre_dizziness-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7830          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7830          0           0          .           .
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_nausea_vomit == 1
+obs. time interval:  (stop_pre_nausea_vomit[_n-1], stop_pre_nausea_vomit]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_nausea_vomit==1
-Observed time interval: (stop_pre_nausea_vomit[_n-1], stop_pre_na
-> usea_vomit]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,655  total observations
         763  observations end on or before enter()
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      23,892  observations remaining, representing
      23,892  subjects
          78  failures in single-failure-per-subject data
  691,739.75  total analysis time at risk and under observation
-                                                At risk from t = 
->         0
-                                     Earliest observed entry t = 
->         0
-                                          Last observed exit t = 
->        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-         Failure _d: fail_pre_nausea_vomit==1
-   Analysis time _t: (stop_pre_nausea_vomit-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_nausea_vomit == 1
+   analysis time _t:  (stop_pre_nausea_vomit-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    691739.75         78   .00011276   .0000903    .0001408
 
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    691739.75         78   .00011276   .0000903    .0
-> 001408
+         failure _d:  fail_pre_nausea_vomit == 1
+   analysis time _t:  (stop_pre_nausea_vomit-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-         Failure _d: fail_pre_nausea_vomit==1
-   Analysis time _t: (stop_pre_nausea_vomit-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    667622.75         74   .00011084   .0000883    .0
-> 001392
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    667622.75         74   .00011084   .0000883    .0001392
 no drug
 
-         Failure _d: fail_pre_nausea_vomit==1
-   Analysis time _t: (stop_pre_nausea_vomit-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_nausea_vomit == 1
+   analysis time _t:  (stop_pre_nausea_vomit-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7797          1   .00012825   .0000181    .0
-> 009105
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7797          1   .00012825   .0000181    .0009105
 sotrovimab
 
-         Failure _d: fail_pre_nausea_vomit==1
-   Analysis time _t: (stop_pre_nausea_vomit-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_nausea_vomit == 1
+   analysis time _t:  (stop_pre_nausea_vomit-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         8479          2   .00023588    .000059    .0
-> 009431
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8479          2   .00023588    .000059    .0009431
 paxlovid
 
-         Failure _d: fail_pre_nausea_vomit==1
-   Analysis time _t: (stop_pre_nausea_vomit-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_nausea_vomit == 1
+   analysis time _t:  (stop_pre_nausea_vomit-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7841          1   .00012753    .000018    .0
-> 009054
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7841          1   .00012753    .000018    .0009054
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_headache == 1
+obs. time interval:  (stop_pre_headache[_n-1], stop_pre_headache]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_headache==1
-Observed time interval: (stop_pre_headache[_n-1], stop_pre_headac
-> he]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,655  total observations
         701  observations end on or before enter()
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      23,954  observations remaining, representing
      23,954  subjects
          65  failures in single-failure-per-subject data
  693,814.75  total analysis time at risk and under observation
-                                                At risk from t = 
->         0
-                                     Earliest observed entry t = 
->         0
-                                          Last observed exit t = 
->        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-         Failure _d: fail_pre_headache==1
-   Analysis time _t: (stop_pre_headache-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_headache == 1
+   analysis time _t:  (stop_pre_headache-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    693814.75         65   .00009368   .0000735    .0001195
 
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    693814.75         65   .00009368   .0000735    .0
-> 001195
+         failure _d:  fail_pre_headache == 1
+   analysis time _t:  (stop_pre_headache-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-         Failure _d: fail_pre_headache==1
-   Analysis time _t: (stop_pre_headache-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    669853.75         62   .00009256   .0000722    .0
-> 001187
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    669853.75         62   .00009256   .0000722    .0001187
 no drug
 
-         Failure _d: fail_pre_headache==1
-   Analysis time _t: (stop_pre_headache-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_headache == 1
+   analysis time _t:  (stop_pre_headache-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7656          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7656          0           0          .           .
 sotrovimab
 
-         Failure _d: fail_pre_headache==1
-   Analysis time _t: (stop_pre_headache-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_headache == 1
+   analysis time _t:  (stop_pre_headache-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         8663          1   .00011543   .0000163    .0
-> 008195
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8663          1   .00011543   .0000163    .0008195
 paxlovid
 
-         Failure _d: fail_pre_headache==1
-   Analysis time _t: (stop_pre_headache-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_headache == 1
+   analysis time _t:  (stop_pre_headache-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7642          2   .00026171   .0000655    .0
-> 010464
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7642          2   .00026171   .0000655    .0010464
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_anaphylaxis == 1
+obs. time interval:  (stop_pre_anaphylaxis[_n-1], stop_pre_anaphylaxis]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_anaphylaxis==1
-Observed time interval: (stop_pre_anaphylaxis[_n-1], stop_pre_ana
-> phylaxis]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,655  total observations
         753  observations end on or before enter()
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      23,902  observations remaining, representing
      23,902  subjects
          65  failures in single-failure-per-subject data
   692,345.5  total analysis time at risk and under observation
-                                                At risk from t = 
->         0
-                                     Earliest observed entry t = 
->         0
-                                          Last observed exit t = 
->        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-         Failure _d: fail_pre_anaphylaxis==1
-   Analysis time _t: (stop_pre_anaphylaxis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_anaphylaxis == 1
+   analysis time _t:  (stop_pre_anaphylaxis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |     692345.5         65   .00009388   .0000736    .0001197
 
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |     692345.5         65   .00009388   .0000736    .0
-> 001197
+         failure _d:  fail_pre_anaphylaxis == 1
+   analysis time _t:  (stop_pre_anaphylaxis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-         Failure _d: fail_pre_anaphylaxis==1
-   Analysis time _t: (stop_pre_anaphylaxis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |     668090.5         62    .0000928   .0000724     .
-> 000119
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |     668090.5         62    .0000928   .0000724     .000119
 no drug
 
-         Failure _d: fail_pre_anaphylaxis==1
-   Analysis time _t: (stop_pre_anaphylaxis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_anaphylaxis == 1
+   analysis time _t:  (stop_pre_anaphylaxis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7786          1   .00012844   .0000181    .0
-> 009118
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7786          1   .00012844   .0000181    .0009118
 sotrovimab
 
-         Failure _d: fail_pre_anaphylaxis==1
-   Analysis time _t: (stop_pre_anaphylaxis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_anaphylaxis == 1
+   analysis time _t:  (stop_pre_anaphylaxis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         8758          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8758          0           0          .           .
 paxlovid
 
-         Failure _d: fail_pre_anaphylaxis==1
-   Analysis time _t: (stop_pre_anaphylaxis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_anaphylaxis == 1
+   analysis time _t:  (stop_pre_anaphylaxis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7711          2   .00025937   .0000649    .0
-> 010371
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7711          2   .00025937   .0000649    .0010371
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_severe_drug == 1
+obs. time interval:  (stop_pre_severe_drug[_n-1], stop_pre_severe_drug]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_severe_drug==1
-Observed time interval: (stop_pre_severe_drug[_n-1], stop_pre_sev
-> ere_drug]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,655  total observations
       1,055  observations end on or before enter()
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      23,600  observations remaining, representing
      23,600  subjects
         108  failures in single-failure-per-subject data
     682,726  total analysis time at risk and under observation
-                                                At risk from t = 
->         0
-                                     Earliest observed entry t = 
->         0
-                                          Last observed exit t = 
->        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-         Failure _d: fail_pre_severe_drug==1
-   Analysis time _t: (stop_pre_severe_drug-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_severe_drug == 1
+   analysis time _t:  (stop_pre_severe_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |       682726        108   .00015819    .000131     .000191
 
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |       682726        108   .00015819    .000131     .
-> 000191
+         failure _d:  fail_pre_severe_drug == 1
+   analysis time _t:  (stop_pre_severe_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-         Failure _d: fail_pre_severe_drug==1
-   Analysis time _t: (stop_pre_severe_drug-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |       658956        103   .00015631   .0001289    .0
-> 001896
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |       658956        103   .00015631   .0001289    .0001896
 no drug
 
-         Failure _d: fail_pre_severe_drug==1
-   Analysis time _t: (stop_pre_severe_drug-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_severe_drug == 1
+   analysis time _t:  (stop_pre_severe_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7617          5   .00065643   .0002732    .0
-> 015771
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7617          5   .00065643   .0002732    .0015771
 sotrovimab
 
-         Failure _d: fail_pre_severe_drug==1
-   Analysis time _t: (stop_pre_severe_drug-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_severe_drug == 1
+   analysis time _t:  (stop_pre_severe_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         8323          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8323          0           0          .           .
 paxlovid
 
-         Failure _d: fail_pre_severe_drug==1
-   Analysis time _t: (stop_pre_severe_drug-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_severe_drug == 1
+   analysis time _t:  (stop_pre_severe_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7830          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7830          0           0          .           .
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_nonsevere_drug == 1
+obs. time interval:  (stop_pre_nonsevere_drug[_n-1], stop_pre_nonsevere_drug]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_nonsevere_drug==1
-Observed time interval: (stop_pre_nonsevere_drug[_n-1], stop_pre_
-> nonsevere_drug]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,655  total observations
         352  observations end on or before enter()
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,303  observations remaining, representing
      24,303  subjects
          38  failures in single-failure-per-subject data
  704,233.75  total analysis time at risk and under observation
-                                                At risk from t = 
->         0
-                                     Earliest observed entry t = 
->         0
-                                          Last observed exit t = 
->        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-         Failure _d: fail_pre_nonsevere_drug==1
-   Analysis time _t: (stop_pre_nonsevere_drug-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_nonsevere_drug == 1
+   analysis time _t:  (stop_pre_nonsevere_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    704233.75         38   .00005396   .0000393    .0000742
 
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    704233.75         38   .00005396   .0000393    .0
-> 000742
+         failure _d:  fail_pre_nonsevere_drug == 1
+   analysis time _t:  (stop_pre_nonsevere_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-         Failure _d: fail_pre_nonsevere_drug==1
-   Analysis time _t: (stop_pre_nonsevere_drug-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    679783.75         37   .00005443   .0000394    .0
-> 000751
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    679783.75         37   .00005443   .0000394    .0000751
 no drug
 
-         Failure _d: fail_pre_nonsevere_drug==1
-   Analysis time _t: (stop_pre_nonsevere_drug-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_nonsevere_drug == 1
+   analysis time _t:  (stop_pre_nonsevere_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7888          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7888          0           0          .           .
 sotrovimab
 
-         Failure _d: fail_pre_nonsevere_drug==1
-   Analysis time _t: (stop_pre_nonsevere_drug-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_nonsevere_drug == 1
+   analysis time _t:  (stop_pre_nonsevere_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         8642          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8642          0           0          .           .
 paxlovid
 
-         Failure _d: fail_pre_nonsevere_drug==1
-   Analysis time _t: (stop_pre_nonsevere_drug-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_nonsevere_drug == 1
+   analysis time _t:  (stop_pre_nonsevere_drug-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7920          1   .00012626   .0000178    .0
-> 008963
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7920          1   .00012626   .0000178    .0008963
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_ra == 1
+obs. time interval:  (stop_pre_ra[_n-1], stop_pre_ra]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_ra==1
-Observed time interval: (stop_pre_ra[_n-1], stop_pre_ra]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,655  total observations
         672  observations end on or before enter()
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      23,983  observations remaining, representing
      23,983  subjects
          53  failures in single-failure-per-subject data
   694,726.5  total analysis time at risk and under observation
-                                                At risk from t = 
->         0
-                                     Earliest observed entry t = 
->         0
-                                          Last observed exit t = 
->        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-         Failure _d: fail_pre_ra==1
-   Analysis time _t: (stop_pre_ra-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_ra == 1
+   analysis time _t:  (stop_pre_ra-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |     694726.5         53   .00007629   .0000583    .0000999
 
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |     694726.5         53   .00007629   .0000583    .0
-> 000999
+         failure _d:  fail_pre_ra == 1
+   analysis time _t:  (stop_pre_ra-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-         Failure _d: fail_pre_ra==1
-   Analysis time _t: (stop_pre_ra-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |     670453.5         53   .00007905   .0000604    .0
-> 001035
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |     670453.5         53   .00007905   .0000604    .0001035
 no drug
 
-         Failure _d: fail_pre_ra==1
-   Analysis time _t: (stop_pre_ra-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_ra == 1
+   analysis time _t:  (stop_pre_ra-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7830          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7830          0           0          .           .
 sotrovimab
 
-         Failure _d: fail_pre_ra==1
-   Analysis time _t: (stop_pre_ra-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_ra == 1
+   analysis time _t:  (stop_pre_ra-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         8584          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8584          0           0          .           .
 paxlovid
 
-         Failure _d: fail_pre_ra==1
-   Analysis time _t: (stop_pre_ra-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_ra == 1
+   analysis time _t:  (stop_pre_ra-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7859          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7859          0           0          .           .
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_sle == 1
+obs. time interval:  (stop_pre_sle[_n-1], stop_pre_sle]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_sle==1
-Observed time interval: (stop_pre_sle[_n-1], stop_pre_sle]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,655  total observations
         643  observations end on or before enter()
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,012  observations remaining, representing
      24,012  subjects
          59  failures in single-failure-per-subject data
     695,508  total analysis time at risk and under observation
-                                                At risk from t = 
->         0
-                                     Earliest observed entry t = 
->         0
-                                          Last observed exit t = 
->        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-         Failure _d: fail_pre_sle==1
-   Analysis time _t: (stop_pre_sle-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_sle == 1
+   analysis time _t:  (stop_pre_sle-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |       695508         59   .00008483   .0000657    .0001095
 
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |       695508         59   .00008483   .0000657    .0
-> 001095
+         failure _d:  fail_pre_sle == 1
+   analysis time _t:  (stop_pre_sle-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-         Failure _d: fail_pre_sle==1
-   Analysis time _t: (stop_pre_sle-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |       671177         59   .00008791   .0000681    .0
-> 001135
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |       671177         59   .00008791   .0000681    .0001135
 no drug
 
-         Failure _d: fail_pre_sle==1
-   Analysis time _t: (stop_pre_sle-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_sle == 1
+   analysis time _t:  (stop_pre_sle-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7830          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7830          0           0          .           .
 sotrovimab
 
-         Failure _d: fail_pre_sle==1
-   Analysis time _t: (stop_pre_sle-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_sle == 1
+   analysis time _t:  (stop_pre_sle-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         8642          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8642          0           0          .           .
 paxlovid
 
-         Failure _d: fail_pre_sle==1
-   Analysis time _t: (stop_pre_sle-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_sle == 1
+   analysis time _t:  (stop_pre_sle-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7859          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7859          0           0          .           .
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_psorasis == 1
+obs. time interval:  (stop_pre_psorasis[_n-1], stop_pre_psorasis]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_psorasis==1
-Observed time interval: (stop_pre_psorasis[_n-1], stop_pre_psoras
-> is]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,655  total observations
         695  observations end on or before enter()
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      23,960  observations remaining, representing
      23,960  subjects
          64  failures in single-failure-per-subject data
  693,886.75  total analysis time at risk and under observation
-                                                At risk from t = 
->         0
-                                     Earliest observed entry t = 
->         0
-                                          Last observed exit t = 
->        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-         Failure _d: fail_pre_psorasis==1
-   Analysis time _t: (stop_pre_psorasis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_psorasis == 1
+   analysis time _t:  (stop_pre_psorasis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    693886.75         64   .00009223   .0000722    .0001178
 
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    693886.75         64   .00009223   .0000722    .0
-> 001178
+         failure _d:  fail_pre_psorasis == 1
+   analysis time _t:  (stop_pre_psorasis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-         Failure _d: fail_pre_psorasis==1
-   Analysis time _t: (stop_pre_psorasis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    669825.75         61   .00009107   .0000709     .
-> 000117
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    669825.75         61   .00009107   .0000709     .000117
 no drug
 
-         Failure _d: fail_pre_psorasis==1
-   Analysis time _t: (stop_pre_psorasis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_psorasis == 1
+   analysis time _t:  (stop_pre_psorasis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7754          1   .00012897   .0000182    .0
-> 009155
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7754          1   .00012897   .0000182    .0009155
 sotrovimab
 
-         Failure _d: fail_pre_psorasis==1
-   Analysis time _t: (stop_pre_psorasis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_psorasis == 1
+   analysis time _t:  (stop_pre_psorasis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         8526          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8526          0           0          .           .
 paxlovid
 
-         Failure _d: fail_pre_psorasis==1
-   Analysis time _t: (stop_pre_psorasis-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_psorasis == 1
+   analysis time _t:  (stop_pre_psorasis-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7781          2   .00025704   .0000643    .0
-> 010277
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7781          2   .00025704   .0000643    .0010277
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_psa == 1
+obs. time interval:  (stop_pre_psa[_n-1], stop_pre_psa]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_psa==1
-Observed time interval: (stop_pre_psa[_n-1], stop_pre_psa]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,655  total observations
         638  observations end on or before enter()
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,017  observations remaining, representing
      24,017  subjects
          82  failures in single-failure-per-subject data
  695,198.25  total analysis time at risk and under observation
-                                                At risk from t = 
->         0
-                                     Earliest observed entry t = 
->         0
-                                          Last observed exit t = 
->        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-         Failure _d: fail_pre_psa==1
-   Analysis time _t: (stop_pre_psa-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_psa == 1
+   analysis time _t:  (stop_pre_psa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    695198.25         82   .00011795    .000095    .0001465
 
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    695198.25         82   .00011795    .000095    .0
-> 001465
+         failure _d:  fail_pre_psa == 1
+   analysis time _t:  (stop_pre_psa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-         Failure _d: fail_pre_psa==1
-   Analysis time _t: (stop_pre_psa-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    670886.25         81   .00012074   .0000971    .0
-> 001501
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    670886.25         81   .00012074   .0000971    .0001501
 no drug
 
-         Failure _d: fail_pre_psa==1
-   Analysis time _t: (stop_pre_psa-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_psa == 1
+   analysis time _t:  (stop_pre_psa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7801          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7801          0           0          .           .
 sotrovimab
 
-         Failure _d: fail_pre_psa==1
-   Analysis time _t: (stop_pre_psa-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_psa == 1
+   analysis time _t:  (stop_pre_psa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         8652          1   .00011558   .0000163    .0
-> 008205
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8652          1   .00011558   .0000163    .0008205
 paxlovid
 
-         Failure _d: fail_pre_psa==1
-   Analysis time _t: (stop_pre_psa-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_psa == 1
+   analysis time _t:  (stop_pre_psa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7859          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7859          0           0          .           .
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_axspa == 1
+obs. time interval:  (stop_pre_axspa[_n-1], stop_pre_axspa]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_axspa==1
-Observed time interval: (stop_pre_axspa[_n-1], stop_pre_axspa]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,655  total observations
         645  observations end on or before enter()
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,010  observations remaining, representing
      24,010  subjects
          52  failures in single-failure-per-subject data
     695,520  total analysis time at risk and under observation
-                                                At risk from t = 
->         0
-                                     Earliest observed entry t = 
->         0
-                                          Last observed exit t = 
->        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-         Failure _d: fail_pre_axspa==1
-   Analysis time _t: (stop_pre_axspa-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_axspa == 1
+   analysis time _t:  (stop_pre_axspa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |       695520         52   .00007476    .000057    .0000981
 
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |       695520         52   .00007476    .000057    .0
-> 000981
+         failure _d:  fail_pre_axspa == 1
+   analysis time _t:  (stop_pre_axspa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-         Failure _d: fail_pre_axspa==1
-   Analysis time _t: (stop_pre_axspa-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |       671189         52   .00007747    .000059    .0
-> 001017
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |       671189         52   .00007747    .000059    .0001017
 no drug
 
-         Failure _d: fail_pre_axspa==1
-   Analysis time _t: (stop_pre_axspa-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_axspa == 1
+   analysis time _t:  (stop_pre_axspa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7714          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7714          0           0          .           .
 sotrovimab
 
-         Failure _d: fail_pre_axspa==1
-   Analysis time _t: (stop_pre_axspa-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_axspa == 1
+   analysis time _t:  (stop_pre_axspa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         8729          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8729          0           0          .           .
 paxlovid
 
-         Failure _d: fail_pre_axspa==1
-   Analysis time _t: (stop_pre_axspa-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_axspa == 1
+   analysis time _t:  (stop_pre_axspa-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7888          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7888          0           0          .           .
 molnupavir
 
-Survival-time data settings
+                id:  patient_id
+     failure event:  fail_pre_ibd == 1
+obs. time interval:  (stop_pre_ibd[_n-1], stop_pre_ibd]
+ enter on or after:  time start_comparator
+ exit on or before:  time start_comparator_28
+    t for analysis:  (time-origin)
+            origin:  time start_comparator
 
-           ID variable: patient_id
-         Failure event: fail_pre_ibd==1
-Observed time interval: (stop_pre_ibd[_n-1], stop_pre_ibd]
-     Enter on or after: time start_comparator
-     Exit on or before: time start_comparator_28
-     Time for analysis: (time-origin)
-                Origin: time start_comparator
-
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,655  total observations
         650  observations end on or before enter()
------------------------------------------------------------------
-> ---------
+------------------------------------------------------------------------------
      24,005  observations remaining, representing
      24,005  subjects
          62  failures in single-failure-per-subject data
  695,333.25  total analysis time at risk and under observation
-                                                At risk from t = 
->         0
-                                     Earliest observed entry t = 
->         0
-                                          Last observed exit t = 
->        29
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =        29
 
-         Failure _d: fail_pre_ibd==1
-   Analysis time _t: (stop_pre_ibd-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_ibd == 1
+   analysis time _t:  (stop_pre_ibd-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    695333.25         62   .00008917   .0000695    .0001144
 
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    695333.25         62   .00008917   .0000695    .0
-> 001144
+         failure _d:  fail_pre_ibd == 1
+   analysis time _t:  (stop_pre_ibd-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-         Failure _d: fail_pre_ibd==1
-   Analysis time _t: (stop_pre_ibd-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
-
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |    671222.25         59    .0000879   .0000681    .0
-> 001134
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |    671222.25         59    .0000879   .0000681    .0001134
 no drug
 
-         Failure _d: fail_pre_ibd==1
-   Analysis time _t: (stop_pre_ibd-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_ibd == 1
+   analysis time _t:  (stop_pre_ibd-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7742          1   .00012917   .0000182     .
-> 000917
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7742          1   .00012917   .0000182     .000917
 sotrovimab
 
-         Failure _d: fail_pre_ibd==1
-   Analysis time _t: (stop_pre_ibd-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_ibd == 1
+   analysis time _t:  (stop_pre_ibd-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         8539          2   .00023422   .0000586    .0
-> 009365
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         8539          2   .00023422   .0000586    .0009365
 paxlovid
 
-         Failure _d: fail_pre_ibd==1
-   Analysis time _t: (stop_pre_ibd-origin)
-             Origin: time start_comparator
-  Enter on or after: time start_comparator
-  Exit on or before: time start_comparator_28
-        ID variable: patient_id
+         failure _d:  fail_pre_ibd == 1
+   analysis time _t:  (stop_pre_ibd-origin)
+             origin:  time start_comparator
+  enter on or after:  time start_comparator
+  exit on or before:  time start_comparator_28
+                 id:  patient_id
 
-Estimated person-time and incidence rate
-
-    Cohort |  Person-time   Failures        Rate   [95% conf. int
-> erval]
------------+-----------------------------------------------------
-> ------
-     Total |         7830          0           0          .      
->      .
+Cohort     |  person-time   failures        rate   [95% Conf. Interval]
+-----------+-----------------------------------------------------------
+     total |         7830          0           0          .           .
 molnupavir
 
 . postclose `comparator_rates'
@@ -3590,16 +2781,12 @@ molnupavir
 . order failure all* control* sot* pax* mol* 
 
 . save "$projectdir/output/tables/comparator_rates", replace
-file C:\Users\k1635179\OneDrive - King's College
-    London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/t
-    > ables/comparator_rates.dta saved
+file /workspace/output/tables/comparator_rates.dta saved
 
-. export delimited using "$projectdir/output/tables/comparator_ra
-> tes.csv", replace
-file C:\Users\k1635179\OneDrive - King's College London\Katie\Ope
-> nSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Mo
-> lnupiravir/output/tables/comparator_rates.csv saved
+. export delimited using "$projectdir/output/tables/comparator_rates.csv", repl
+> ace
+(note: file /workspace/output/tables/comparator_rates.csv not found)
+file /workspace/output/tables/comparator_rates.csv saved
 
 . 
 . ** Redact and round rates
@@ -3608,47 +2795,38 @@ file C:\Users\k1635179\OneDrive - King's College London\Katie\Ope
 . foreach var of varlist *events *ptime  {
   2. gen `var'_round = round(`var', 5)       
   3. }
-(10 missing values generated)
-(11 missing values generated)
-(11 missing values generated)
-(10 missing values generated)
-(11 missing values generated)
-(11 missing values generated)
 
 . foreach var in all control sot pax mol {
-  2. gen `var'_rate_round = (`var'_events_round/`var'_ptime_round
-> )*1000
-  3. gen `var'_lci_round = (invpoisson(`var'_events_round,.975)/`
-> var'_ptime_round)*1000
-  4. gen `var'_uci_round = (invpoisson(`var'_events_round,.075)/`
-> var'_ptime_round)*1000
-  5. }  
-(10 missing values generated)
-(10 missing values generated)
-(10 missing values generated)
-(11 missing values generated)
-(11 missing values generated)
-(11 missing values generated)
-(11 missing values generated)
-(11 missing values generated)
-(11 missing values generated)
+  2. gen `var'_rate_round = (`var'_events_round/`var'_ptime_round)*1000
+  3. gen `var'_lci_round = (invpoisson(`var'_events_round,.975)/`var'_ptime_rou
+> nd)*1000
+  4. gen `var'_uci_round = (invpoisson(`var'_events_round,.025)/`var'_ptime_rou
+> nd)*1000
+  5. replace `var'_events_round=. if  `var'_events <=7 & `var'_events!=0
+  6. replace `var'_ptime_round=. if  `var'_events <=7 & `var'_events!=0
+  7. }  
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(10 real changes made, 10 to missing)
+(10 real changes made, 10 to missing)
+(11 real changes made, 11 to missing)
+(11 real changes made, 11 to missing)
+(11 real changes made, 11 to missing)
+(11 real changes made, 11 to missing)
 
 . keep failure *round
 
 . order   failure all* control* sot* pax* mol* 
 
-. save "$projectdir/output/tables/comparator_rates_round", replac
-> e
-file C:\Users\k1635179\OneDrive - King's College
-    London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/t
-    > ables/comparator_rates_round.dta saved
+. save "$projectdir/output/tables/comparator_rates_round", replace
+file /workspace/output/tables/comparator_rates_round.dta saved
 
-. export delimited using "$projectdir/output/tables/comparator_ra
-> tes_round.csv", replace
-file C:\Users\k1635179\OneDrive - King's College London\Katie\Ope
-> nSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Mo
-> lnupiravir/output/tables/comparator_rates_round.csv saved
+. export delimited using "$projectdir/output/tables/comparator_rates_round.csv"
+> , replace
+(note: file /workspace/output/tables/comparator_rates_round.csv not found)
+file /workspace/output/tables/comparator_rates_round.csv saved
 
 . 
 . 
@@ -3656,9 +2834,7 @@ file C:\Users\k1635179\OneDrive - King's College London\Katie\Ope
 . 
 . log close
       name:  <unnamed>
-       log:  C:\Users\k1635179\OneDrive - King's College London\K
-> atie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Pax
-> lovid-Molnupiravir/logs/preceed_rate.log
+       log:  /workspace/logs/preceed_rate.log
   log type:  text
- closed on:  27 Sep 2023, 17:56:22
------------------------------------------------------------------
+ closed on:  27 Sep 2023, 19:25:17
+-------------------------------------------------------------------------------
