@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  /workspace/logs/cox_model.log
   log type:  text
- opened on:  20 Sep 2023, 16:27:15
+ opened on:  27 Sep 2023, 08:56:15
 
 . 
 . *Set Ado file path
@@ -139,7 +139,7 @@
   8.         
 .                         graph export "$projectdir/output/figures/survcur_`fai
 > l'.svg", as(svg) replace
-  9. }                                               
+  9. }               
 
                 id:  patient_id
      failure event:  fail_ae_spc_all == 1
@@ -2162,6 +2162,7 @@ molnupira~r  |    1.23302   .3744715     0.69   0.490       .67992    2.236054
 (note: file /workspace/output/figures/survcur_ae_ibd.svg not found)
 (file /workspace/output/figures/survcur_ae_ibd.svg written in SVG format)
 
+. 
 .                                                 
 . ** Hazard of events                                             
 . tempname cox_model_summary
@@ -10596,51 +10597,97 @@ hypertension |   1.116496   .2077474     0.59   0.554     .7753066    1.607833
 >                 pax_ptime pax_events pax_rate pax_lci pax_uci ///
 >                 mol_ptime mol_events mol_rate mol_lci mol_uci ///
 >                 using "$projectdir/output/tables/cox_model_rates", replace   
->                                                     
+>    
 
-. foreach fail in $ae_group $ae_disease {
+. foreach fail in $ae_group $ae_disease     {
   2.         stset stop_`fail', id(patient_id) origin(time start_date) enter(ti
-> me start_date) failure(fail_`fail'==1)                        
-  3.                 stptime 
-  4.                                         local all_rate = `r(rate)'
-  5.                                         local all_ptime = `r(ptime)'
-  6.                                         local all_lci =  `r(lb)'
-  7.                                         local all_uci = `r(ub)'
-  8.                                         local all_events = `r(failures)'  
->                                               
-  9.                                                 
-.                 stptime if drug == 0
- 10.                                         local control_rate = `r(rate)'
- 11.                                         local control_ptime = `r(ptime)'
- 12.                                         local control_lci =  `r(lb)'
- 13.                                         local control_uci = `r(ub)'
- 14.                                         local control_events = `r(failures
-> )' 
- 15.                 display "no drug"
- 16.                 
-.                 stptime if drug == 1
- 17.                                         local sot_rate = `r(rate)'
- 18.                                         local sot_ptime = `r(ptime)'
- 19.                                         local sot_lci =  `r(lb)'
- 20.                                         local sot_uci = `r(ub)'
- 21.                                         local sot_events = `r(failures)' 
- 22.                 display "sotrovimab"
- 23.                 stptime if drug == 2
- 24.                                         local pax_rate = `r(rate)'
- 25.                                         local pax_ptime = `r(ptime)'
- 26.                                         local pax_lci =  `r(lb)'
- 27.                                         local pax_uci = `r(ub)'
- 28.                                         local pax_events = `r(failures)' 
- 29.                 display "paxlovid"
- 30.                 stptime if drug == 3
- 31.                                         local mol_rate = `r(rate)'
- 32.                                         local mol_ptime = `r(ptime)'
- 33.                                         local mol_lci =  `r(lb)'
- 34.                                         local mol_uci = `r(ub)'
- 35.                                         local mol_events = `r(failures)' 
- 36.                 display "molnupavir"                    
- 37.                 post `coxoutput_rates' ("`fail'") (`all_ptime') (`all_even
-> ts') (`all_rate') (`all_lci') (`all_uci') ///
+> me start_date) failure(fail_`fail'==1)                
+  3.         stptime 
+  4.                                         local all_rate = .
+  5.                                         local all_ptime = .
+  6.                                         local all_lci = .
+  7.                                         local all_uci = .
+  8.                                         local all_events .
+  9.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local all_events `r(failures)'
+ 10.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local all_ptime `r(ptime)'
+ 11.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local all_rate `r(rate)'
+ 12.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local all_lci `r(lb)'
+ 13.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local all_uci `r(ub)'
+ 14.                 stptime if drug == 0
+ 15.                                         local control_rate = .
+ 16.                                         local control_ptime = . 
+ 17.                                         local control_lci = .
+ 18.                                         local control_uci = .
+ 19.                                         local control_events_control .
+ 20.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local control_events `r(failures)'
+ 21.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local control_ptime `r(ptime)'
+ 22.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local control_rate `r(rate)'
+ 23.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local control_lci `r(lb)'
+ 24.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local control_uci `r(ub)'
+ 25.                 display "no drug"
+ 26.                 stptime if drug == 1
+ 27.                                         local sot_rate = .
+ 28.                                         local sot_ptime = . 
+ 29.                                         local sot_lci = .
+ 30.                                         local sot_uci = .
+ 31.                                         local sot_events .
+ 32.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local sot_events `r(failures)'
+ 33.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local sot_ptime `r(ptime)'
+ 34.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local sot_rate `r(rate)'
+ 35.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local sot_lci `r(lb)'
+ 36.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local sot_uci `r(ub)'         
+ 37.                 display "sotrovimab"
+ 38.                 stptime if drug == 2
+ 39.                                         local pax_rate = .
+ 40.                                         local pax_ptime = .
+ 41.                                         local pax_lci = .
+ 42.                                         local pax_uci = .
+ 43.                                         local pax_events .
+ 44.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local pax_events `r(failures)'
+ 45.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local pax_ptime `r(ptime)'
+ 46.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local pax_rate `r(rate)'
+ 47.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local pax_lci `r(lb)'
+ 48.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local pax_uci `r(ub)' 
+ 49.                 display "paxlovid"
+ 50.                 stptime if drug == 3
+ 51.                                         local mol_rate = .
+ 52.                                         local mol_ptime = .
+ 53.                                         local mol_lci = . 
+ 54.                                         local mol_uci = .
+ 55.                                         local mol_events .
+ 56.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local mol_events `r(failures)'
+ 57.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local mol_ptime `r(ptime)'
+ 58.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local mol_rate `r(rate)'
+ 59.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local mol_lci `r(lb)'
+ 60.                                                 if `r(failures)' == 0 | `r
+> (failures)' > 7 local mol_uci `r(ub)' 
+ 61.                 display "molnupavir"                    
+ 62.                 post `coxoutput_rates' ("`fail'")       (`all_ptime') (`al
+> l_events') (`all_rate') (`all_lci') (`all_uci') ///
 >                                         (`control_ptime') (`control_events') 
 > (`control_rate') (`control_lci') (`control_uci') ///
 >                                         (`sot_ptime') (`sot_events') (`sot_ra
@@ -10648,8 +10695,9 @@ hypertension |   1.116496   .2077474     0.59   0.554     .7753066    1.607833
 >                                         (`pax_ptime') (`pax_events') (`pax_ra
 > te') (`pax_lci') (`pax_uci') ///
 >                                         (`mol_ptime') (`mol_events') (`mol_ra
-> te') (`mol_lci') (`mol_uci')                                       
- 38. }
+> te') (`mol_lci') (`mol_uci')       
+ 63.                                         
+. }
 
                 id:  patient_id
      failure event:  fail_ae_spc_all == 1
@@ -12614,6 +12662,12 @@ file /workspace/output/tables/cox_model_rates_round.dta saved
 . foreach var of varlist *events *ptime  {
   2. gen `var'_round = round(`var', 5)       
   3. } 
+(9 missing values generated)
+(9 missing values generated)
+(5 missing values generated)
+(9 missing values generated)
+(9 missing values generated)
+(5 missing values generated)
 
 . gen all_rate_round = .
 (26 missing values generated)
@@ -12674,47 +12728,67 @@ file /workspace/output/tables/cox_model_rates_round.dta saved
   3.         preserve
   4.         keep if failure=="`i'" 
   5.         
-.         local all_p`i' = all_ptime_round
-  6.         local all_e`i' = all_events_round
-  7.     cii means `all_p`i'' `all_e`i'', poisson level(95)
-  8.         replace all_rate_round = r(mean)*1000 if all_rate_round== .
-  9.         replace all_lci_round = r(lb)*1000 if all_lci_round== .
- 10.     replace all_uci_round =  r(ub)*1000 if all_uci_round== .
- 11.         
-.         local con_p`i' = control_ptime_round
- 12.         local con_e`i' = control_events_round
- 13.     cii means `con_p`i'' `con_e`i'', poisson level(95)
- 14.         replace control_rate_round = r(mean)*1000 if control_rate_round== 
+.         if all_events!=. {
+  6.                 local all_p`i' = all_ptime_round 
+  7.                 local all_e`i' = all_events_round 
+  8.                 cii means `all_p`i'' `all_e`i'', poisson level(95) 
+  9.                 replace all_rate_round = r(mean)*1000 if all_rate_round== 
 > .
- 15.         replace control_lci_round = r(lb)*1000 if control_lci_round== .
- 16.     replace control_uci_round =  r(ub)*1000 if control_uci_round== .
- 17.         
-.         local sot_p`i' = sot_ptime_round
- 18.         local sot_e`i' = sot_events_round
- 19.     cii means `sot_p`i'' `sot_e`i'', poisson level(95)
- 20.         replace sot_rate_round = r(mean)*1000 if sot_rate_round== .
- 21.         replace sot_lci_round = r(lb)*1000 if sot_lci_round== .
- 22.     replace sot_uci_round =  r(ub)*1000 if sot_uci_round== .
- 23.         
-.         local pax_p`i' = pax_ptime_round
- 24.         local pax_e`i' = pax_events_round
- 25.     cii means `pax_p`i'' `pax_e`i'', poisson level(95)
- 26.         replace pax_rate_round = r(mean)*1000 if pax_rate_round== .
- 27.         replace pax_lci_round = r(lb)*1000 if pax_lci_round== .
- 28.     replace pax_uci_round =  r(ub)*1000 if pax_uci_round== .
- 29.         
-.         local mol_p`i' = mol_ptime_round
- 30.         local mol_e`i' = mol_events_round
- 31.     cii means `mol_p`i'' `mol_e`i'', poisson level(95)
- 32.         replace mol_rate_round = r(mean)*1000 if mol_rate_round== .
- 33.         replace mol_lci_round = r(lb)*1000 if mol_lci_round== .
- 34.     replace mol_uci_round =  r(ub)*1000 if mol_uci_round== .
- 35.         
+ 10.                 replace all_lci_round = r(lb)*1000 if all_lci_round== .
+ 11.                 replace all_uci_round =  r(ub)*1000 if all_uci_round== .
+ 12.                 replace all_uci_round =  0 if all_events_round==0
+ 13. }
+ 14. 
+.         if control_events!=. {
+ 15.                 local con_p`i' = control_ptime_round
+ 16.                 local con_e`i' = control_events_round
+ 17.                 cii means `con_p`i'' `con_e`i'', poisson level(95)
+ 18.                 replace control_rate_round = r(mean)*1000 if control_rate_
+> round== .
+ 19.                 replace control_lci_round = r(lb)*1000 if control_lci_roun
+> d== .
+ 20.                 replace control_uci_round =  r(ub)*1000 if control_uci_rou
+> nd== .
+ 21.                 replace control_uci_round =  0 if control_events_round==0
+ 22. }
+ 23.         if sot_events!=. {
+ 24.                 local sot_p`i' = sot_ptime_round
+ 25.                 local sot_e`i' = sot_events_round
+ 26.                 cii means `sot_p`i'' `sot_e`i'', poisson level(95)
+ 27.                 replace sot_rate_round = r(mean)*1000 if sot_rate_round== 
+> .
+ 28.                 replace sot_lci_round = r(lb)*1000 if sot_lci_round== .
+ 29.                 replace sot_uci_round =  r(ub)*1000 if sot_uci_round== .
+ 30.                 replace sot_uci_round =  0 if sot_events_round==0
+ 31. }
+ 32. 
+.         if pax_events_round!=. {
+ 33.                 local pax_p`i' = pax_ptime_round
+ 34.                 local pax_e`i' = pax_events_round
+ 35.                 cii means `pax_p`i'' `pax_e`i'', poisson level(95)
+ 36.                 replace pax_rate_round = r(mean)*1000 if pax_rate_round== 
+> .
+ 37.                 replace pax_lci_round = r(lb)*1000 if pax_lci_round== .
+ 38.                 replace pax_uci_round =  r(ub)*1000 if pax_uci_round== .
+ 39.                 replace pax_uci_round =  0 if pax_events_round==0
+ 40. }
+ 41. 
+.         if mol_events_round!=. {
+ 42.                 local mol_p`i' = mol_ptime_round
+ 43.                 local mol_e`i' = mol_events_round
+ 44.                 cii means `mol_p`i'' `mol_e`i'', poisson level(95)
+ 45.                 replace mol_rate_round = r(mean)*1000 if mol_rate_round== 
+> .
+ 46.                 replace mol_lci_round = r(lb)*1000 if mol_lci_round== .
+ 47.                 replace mol_uci_round =  r(ub)*1000 if mol_uci_round== .
+ 48.                 replace mol_uci_round =  0 if mol_rate_round==0
+ 49. }
+ 50.         
 .         append using "$projectdir/output/tables/cox_model_rates_round.dta"
- 36.         save "$projectdir/output/tables/cox_model_rates_round.dta", replac
+ 51.         save "$projectdir/output/tables/cox_model_rates_round.dta", replac
 > e
- 37.         restore
- 38. }
+ 52.         restore
+ 53. }
 ae_all
 (25 observations deleted)
 
@@ -12725,6 +12799,7 @@ ae_all
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -12733,30 +12808,7 @@ ae_all
 (1 real change made)
 (1 real change made)
 (1 real change made)
-
-                                                         -- Poisson  Exact --
-    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
--------------+---------------------------------------------------------------
-             |        220    .0227273    .0101639        .0073795    .0530379
-(1 real change made)
-(1 real change made)
-(1 real change made)
-
-                                                         -- Poisson  Exact --
-    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
--------------+---------------------------------------------------------------
-             |        240    .0208333    .0093169        .0067645    .0486181
-(1 real change made)
-(1 real change made)
-(1 real change made)
-
-                                                         -- Poisson  Exact --
-    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
--------------+---------------------------------------------------------------
-             |        135     .037037    .0165635        .0120258    .0864321
-(1 real change made)
-(1 real change made)
-(1 real change made)
+(0 real changes made)
 file /workspace/output/tables/cox_model_rates_round.dta saved
 ae_anaphylaxis
 (25 observations deleted)
@@ -12768,6 +12820,7 @@ ae_anaphylaxis
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -12776,6 +12829,7 @@ ae_anaphylaxis
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -12784,14 +12838,7 @@ ae_anaphylaxis
 (1 real change made)
 (1 real change made)
 (1 real change made)
-
-                                                         -- Poisson  Exact --
-    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
--------------+---------------------------------------------------------------
-             |       4730    .0010571    .0004727        .0003432    .0024669
-(1 real change made)
-(1 real change made)
-(1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -12800,6 +12847,7 @@ ae_anaphylaxis
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 file /workspace/output/tables/cox_model_rates_round.dta saved
 ae_axspa
 (25 observations deleted)
@@ -12811,6 +12859,7 @@ ae_axspa
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -12819,6 +12868,7 @@ ae_axspa
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -12827,6 +12877,7 @@ ae_axspa
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -12835,6 +12886,7 @@ ae_axspa
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -12843,6 +12895,7 @@ ae_axspa
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 file /workspace/output/tables/cox_model_rates_round.dta saved
 ae_bronchospasm
 (25 observations deleted)
@@ -12854,6 +12907,7 @@ ae_bronchospasm
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -12862,6 +12916,7 @@ ae_bronchospasm
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -12870,22 +12925,7 @@ ae_bronchospasm
 (1 real change made)
 (1 real change made)
 (1 real change made)
-
-                                                         -- Poisson  Exact --
-    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
--------------+---------------------------------------------------------------
-             |       6935     .000721    .0003224        .0002341    .0016825
-(1 real change made)
-(1 real change made)
-(1 real change made)
-
-                                                         -- Poisson  Exact --
-    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
--------------+---------------------------------------------------------------
-             |       6305     .000793    .0003546        .0002575    .0018506
-(1 real change made)
-(1 real change made)
-(1 real change made)
+(0 real changes made)
 file /workspace/output/tables/cox_model_rates_round.dta saved
 ae_contactderm
 (25 observations deleted)
@@ -12897,6 +12937,7 @@ ae_contactderm
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -12905,6 +12946,7 @@ ae_contactderm
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -12913,6 +12955,7 @@ ae_contactderm
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -12921,6 +12964,7 @@ ae_contactderm
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -12929,6 +12973,7 @@ ae_contactderm
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 file /workspace/output/tables/cox_model_rates_round.dta saved
 ae_diarrhoea
 (25 observations deleted)
@@ -12940,6 +12985,7 @@ ae_diarrhoea
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -12948,14 +12994,7 @@ ae_diarrhoea
 (1 real change made)
 (1 real change made)
 (1 real change made)
-
-                                                         -- Poisson  Exact --
-    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
--------------+---------------------------------------------------------------
-             |       4030    .0012407    .0005549        .0004029    .0028954
-(1 real change made)
-(1 real change made)
-(1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -12964,6 +13003,7 @@ ae_diarrhoea
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -12972,6 +13012,7 @@ ae_diarrhoea
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 file /workspace/output/tables/cox_model_rates_round.dta saved
 ae_diverticulitis
 (25 observations deleted)
@@ -12983,6 +13024,7 @@ ae_diverticulitis
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -12991,6 +13033,7 @@ ae_diverticulitis
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -12999,6 +13042,7 @@ ae_diverticulitis
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13007,6 +13051,7 @@ ae_diverticulitis
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13015,6 +13060,7 @@ ae_diverticulitis
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 file /workspace/output/tables/cox_model_rates_round.dta saved
 ae_dizziness
 (25 observations deleted)
@@ -13026,6 +13072,7 @@ ae_dizziness
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13034,6 +13081,7 @@ ae_dizziness
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13042,6 +13090,7 @@ ae_dizziness
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13050,6 +13099,7 @@ ae_dizziness
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13058,6 +13108,7 @@ ae_dizziness
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 file /workspace/output/tables/cox_model_rates_round.dta saved
 ae_drug_all
 (25 observations deleted)
@@ -13069,6 +13120,7 @@ ae_drug_all
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13077,6 +13129,7 @@ ae_drug_all
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13085,6 +13138,7 @@ ae_drug_all
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13093,6 +13147,7 @@ ae_drug_all
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13101,6 +13156,7 @@ ae_drug_all
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 file /workspace/output/tables/cox_model_rates_round.dta saved
 ae_headache
 (25 observations deleted)
@@ -13112,6 +13168,7 @@ ae_headache
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13120,14 +13177,7 @@ ae_headache
 (1 real change made)
 (1 real change made)
 (1 real change made)
-
-                                                         -- Poisson  Exact --
-    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
--------------+---------------------------------------------------------------
-             |       4570    .0010941    .0004893        .0003552    .0025532
-(1 real change made)
-(1 real change made)
-(1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13136,6 +13186,7 @@ ae_headache
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13144,6 +13195,7 @@ ae_headache
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 file /workspace/output/tables/cox_model_rates_round.dta saved
 ae_ibd
 (25 observations deleted)
@@ -13155,6 +13207,7 @@ ae_ibd
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13163,6 +13216,7 @@ ae_ibd
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13171,14 +13225,7 @@ ae_ibd
 (1 real change made)
 (1 real change made)
 (1 real change made)
-
-                                                         -- Poisson  Exact --
-    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
--------------+---------------------------------------------------------------
-             |       4640    .0010776    .0004819        .0003499    .0025147
-(1 real change made)
-(1 real change made)
-(1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13187,6 +13234,7 @@ ae_ibd
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 file /workspace/output/tables/cox_model_rates_round.dta saved
 ae_imae_all
 (25 observations deleted)
@@ -13198,6 +13246,7 @@ ae_imae_all
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13206,6 +13255,7 @@ ae_imae_all
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13214,6 +13264,7 @@ ae_imae_all
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13222,6 +13273,7 @@ ae_imae_all
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13230,6 +13282,7 @@ ae_imae_all
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 file /workspace/output/tables/cox_model_rates_round.dta saved
 ae_nausea_vomit
 (25 observations deleted)
@@ -13241,6 +13294,7 @@ ae_nausea_vomit
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13249,6 +13303,7 @@ ae_nausea_vomit
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13257,14 +13312,7 @@ ae_nausea_vomit
 (1 real change made)
 (1 real change made)
 (1 real change made)
-
-                                                         -- Poisson  Exact --
-    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
--------------+---------------------------------------------------------------
-             |       5550    .0009009    .0004029        .0002925    .0021024
-(1 real change made)
-(1 real change made)
-(1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13273,6 +13321,7 @@ ae_nausea_vomit
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 file /workspace/output/tables/cox_model_rates_round.dta saved
 ae_nonsevere_drug
 (25 observations deleted)
@@ -13284,6 +13333,7 @@ ae_nonsevere_drug
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13292,14 +13342,7 @@ ae_nonsevere_drug
 (1 real change made)
 (1 real change made)
 (1 real change made)
-
-                                                         -- Poisson  Exact --
-    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
--------------+---------------------------------------------------------------
-             |       5235    .0009551    .0004271        .0003101    .0022289
-(1 real change made)
-(1 real change made)
-(1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13308,6 +13351,7 @@ ae_nonsevere_drug
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13316,6 +13360,7 @@ ae_nonsevere_drug
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 file /workspace/output/tables/cox_model_rates_round.dta saved
 ae_psa
 (25 observations deleted)
@@ -13327,6 +13372,7 @@ ae_psa
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13335,6 +13381,7 @@ ae_psa
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13343,6 +13390,7 @@ ae_psa
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13351,6 +13399,7 @@ ae_psa
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13359,6 +13408,7 @@ ae_psa
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 file /workspace/output/tables/cox_model_rates_round.dta saved
 ae_psorasis
 (25 observations deleted)
@@ -13370,6 +13420,7 @@ ae_psorasis
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13378,6 +13429,7 @@ ae_psorasis
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13386,6 +13438,7 @@ ae_psorasis
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13394,6 +13447,7 @@ ae_psorasis
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13402,6 +13456,7 @@ ae_psorasis
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 file /workspace/output/tables/cox_model_rates_round.dta saved
 ae_ra
 (25 observations deleted)
@@ -13413,6 +13468,7 @@ ae_ra
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13421,30 +13477,7 @@ ae_ra
 (1 real change made)
 (1 real change made)
 (1 real change made)
-
-                                                         -- Poisson  Exact --
-    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
--------------+---------------------------------------------------------------
-             |       4810    .0010395    .0004649        .0003375    .0024258
-(1 real change made)
-(1 real change made)
-(1 real change made)
-
-                                                         -- Poisson  Exact --
-    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
--------------+---------------------------------------------------------------
-             |       4915    .0010173    .0004549        .0003303     .002374
-(1 real change made)
-(1 real change made)
-(1 real change made)
-
-                                                         -- Poisson  Exact --
-    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
--------------+---------------------------------------------------------------
-             |       4760    .0010504    .0004698        .0003411    .0024513
-(1 real change made)
-(1 real change made)
-(1 real change made)
+(0 real changes made)
 file /workspace/output/tables/cox_model_rates_round.dta saved
 ae_rash
 (25 observations deleted)
@@ -13456,6 +13489,7 @@ ae_rash
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13464,6 +13498,7 @@ ae_rash
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13472,6 +13507,7 @@ ae_rash
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13480,6 +13516,7 @@ ae_rash
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13488,6 +13525,7 @@ ae_rash
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 file /workspace/output/tables/cox_model_rates_round.dta saved
 ae_severe_drug
 (25 observations deleted)
@@ -13499,6 +13537,7 @@ ae_severe_drug
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13507,6 +13546,7 @@ ae_severe_drug
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13515,6 +13555,7 @@ ae_severe_drug
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13523,6 +13564,7 @@ ae_severe_drug
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13531,6 +13573,7 @@ ae_severe_drug
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 file /workspace/output/tables/cox_model_rates_round.dta saved
 ae_sle
 (25 observations deleted)
@@ -13542,6 +13585,7 @@ ae_sle
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13550,22 +13594,7 @@ ae_sle
 (1 real change made)
 (1 real change made)
 (1 real change made)
-
-                                                         -- Poisson  Exact --
-    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
--------------+---------------------------------------------------------------
-             |       4770    .0010482    .0004688        .0003404    .0024462
-(1 real change made)
-(1 real change made)
-(1 real change made)
-
-                                                         -- Poisson  Exact --
-    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
--------------+---------------------------------------------------------------
-             |       5080    .0009843    .0004402        .0003196    .0022969
-(1 real change made)
-(1 real change made)
-(1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13574,6 +13603,7 @@ ae_sle
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 file /workspace/output/tables/cox_model_rates_round.dta saved
 ae_spc_all
 (25 observations deleted)
@@ -13585,6 +13615,7 @@ ae_spc_all
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13593,6 +13624,7 @@ ae_spc_all
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13601,6 +13633,7 @@ ae_spc_all
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13609,6 +13642,7 @@ ae_spc_all
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13617,6 +13651,7 @@ ae_spc_all
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 file /workspace/output/tables/cox_model_rates_round.dta saved
 ae_taste
 (25 observations deleted)
@@ -13628,6 +13663,7 @@ ae_taste
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13636,6 +13672,7 @@ ae_taste
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13644,6 +13681,7 @@ ae_taste
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13652,6 +13690,7 @@ ae_taste
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13660,6 +13699,7 @@ ae_taste
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 file /workspace/output/tables/cox_model_rates_round.dta saved
 all_hosp_date
 (25 observations deleted)
@@ -13671,6 +13711,7 @@ all_hosp_date
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13679,6 +13720,7 @@ all_hosp_date
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13689,15 +13731,6 @@ all_hosp_date
 (1 real change made)
 (1 real change made)
 (1 real change made)
-
-                                                         -- Poisson  Exact --
-    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
--------------+---------------------------------------------------------------
-             |       8205           0           0               0    .0004496*
-
-(*) one-sided, 97.5% confidence interval
-(1 real change made)
-(1 real change made)
 (1 real change made)
 
                                                          -- Poisson  Exact --
@@ -13706,6 +13739,7 @@ all_hosp_date
              |       7595           0           0               0    .0004857*
 
 (*) one-sided, 97.5% confidence interval
+(1 real change made)
 (1 real change made)
 (1 real change made)
 (1 real change made)
@@ -13720,6 +13754,7 @@ allcause_emerg_aande
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13728,16 +13763,7 @@ allcause_emerg_aande
 (1 real change made)
 (1 real change made)
 (1 real change made)
-
-                                                         -- Poisson  Exact --
-    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
--------------+---------------------------------------------------------------
-             |       7725           0           0               0    .0004775*
-
-(*) one-sided, 97.5% confidence interval
-(1 real change made)
-(1 real change made)
-(1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13748,6 +13774,7 @@ allcause_emerg_aande
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(1 real change made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13755,6 +13782,7 @@ allcause_emerg_aande
              |       7690           0           0               0    .0004797*
 
 (*) one-sided, 97.5% confidence interval
+(1 real change made)
 (1 real change made)
 (1 real change made)
 (1 real change made)
@@ -13769,6 +13797,7 @@ covid_hosp_date
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13777,16 +13806,7 @@ covid_hosp_date
 (1 real change made)
 (1 real change made)
 (1 real change made)
-
-                                                         -- Poisson  Exact --
-    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
--------------+---------------------------------------------------------------
-             |       7425           0           0               0    .0004968*
-
-(*) one-sided, 97.5% confidence interval
-(1 real change made)
-(1 real change made)
-(1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13795,15 +13815,6 @@ covid_hosp_date
 
 (*) one-sided, 97.5% confidence interval
 (1 real change made)
-(1 real change made)
-(1 real change made)
-
-                                                         -- Poisson  Exact --
-    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
--------------+---------------------------------------------------------------
-             |       7690           0           0               0    .0004797*
-
-(*) one-sided, 97.5% confidence interval
 (1 real change made)
 (1 real change made)
 (1 real change made)
@@ -13818,6 +13829,7 @@ died_date_ons
 (1 real change made)
 (1 real change made)
 (1 real change made)
+(0 real changes made)
 
                                                          -- Poisson  Exact --
     Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
@@ -13826,77 +13838,14 @@ died_date_ons
 (1 real change made)
 (1 real change made)
 (1 real change made)
-
-                                                         -- Poisson  Exact --
-    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
--------------+---------------------------------------------------------------
-             |       4675           0           0               0    .0007891*
-
-(*) one-sided, 97.5% confidence interval
-(1 real change made)
-(1 real change made)
-(1 real change made)
-
-                                                         -- Poisson  Exact --
-    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
--------------+---------------------------------------------------------------
-             |       4420    .0011312    .0005059        .0003673    .0026399
-(1 real change made)
-(1 real change made)
-(1 real change made)
-
-                                                         -- Poisson  Exact --
-    Variable |   Exposure        Mean    Std. Err.       [95% Conf. Interval]
--------------+---------------------------------------------------------------
-             |       4685    .0010672    .0004773        .0003465    .0024906
-(1 real change made)
-(1 real change made)
-(1 real change made)
+(0 real changes made)
 file /workspace/output/tables/cox_model_rates_round.dta saved
 
+. 
+. 
 . use "$projectdir/output/tables/cox_model_rates_round", clear
 
 . keep failure *round
-
-. foreach var of varlist all_rate all_lci all_uci all_events{
-  2. replace `var'=. if all_events==5
-  3. }
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-
-. foreach var of varlist control_rate control_lci control_uci control_events{
-  2. replace `var'=. if control_events==5
-  3. }
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-
-. foreach var of varlist sot_rate sot_lci sot_uci sot_events{
-  2. replace `var'=. if sot_events==5
-  3. }
-(6 real changes made, 6 to missing)
-(6 real changes made, 6 to missing)
-(6 real changes made, 6 to missing)
-(6 real changes made, 6 to missing)
-
-. foreach var of varlist pax_rate pax_lci pax_uci pax_events{
-  2. replace `var'=. if pax_events==5
-  3. }
-(8 real changes made, 8 to missing)
-(8 real changes made, 8 to missing)
-(8 real changes made, 8 to missing)
-(8 real changes made, 8 to missing)
-
-. foreach var of varlist mol_rate mol_lci mol_uci mol_events{
-  2. replace `var'=. if mol_events==5
-  3. }
-(4 real changes made, 4 to missing)
-(4 real changes made, 4 to missing)
-(4 real changes made, 4 to missing)
-(4 real changes made, 4 to missing)
 
 . order   failure all* control* sot* pax* mol* 
 
@@ -13916,12 +13865,15 @@ file /workspace/output/tables/cox_model_rates_round.csv saved
   3. drop `var'      
   4. rename  `var'_per `var'                         
   5. }
-(1 missing value generated)
-(2 missing values generated)
-(2 missing values generated)
-(1 missing value generated)
-(2 missing values generated)
-(2 missing values generated)
+(9 missing values generated)
+(9 missing values generated)
+(5 missing values generated)
+(10 missing values generated)
+(11 missing values generated)
+(7 missing values generated)
+(10 missing values generated)
+(11 missing values generated)
+(7 missing values generated)
 
 . order failure all* control* sot* pax* mol* 
 
@@ -13938,5 +13890,5 @@ file /workspace/output/tables/cox_model_rates.csv saved
       name:  <unnamed>
        log:  /workspace/logs/cox_model.log
   log type:  text
- closed on:  20 Sep 2023, 16:30:56
+ closed on:  27 Sep 2023, 08:59:50
 -------------------------------------------------------------------------------
