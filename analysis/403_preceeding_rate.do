@@ -210,102 +210,26 @@ stptime
 					
 }
 postclose `comparator_rates'
-
+use "$projectdir/output/tables/comparator_rates", clear
+order failure all* control* sot* pax* mol* 
+save "$projectdir/output/tables/comparator_rates", replace
+export delimited using "$projectdir/output/tables/comparator_rates.csv", replace
 
 ** Redact and round rates
-clear *
-save "$projectdir/output/tables/comparator_rates_round.dta", replace emptyok
 use "$projectdir/output/tables/comparator_rates", clear
 foreach var of varlist *events *ptime  {
 gen `var'_round = round(`var', 5)	
-} 
-gen all_rate_round = .
-gen all_lci_round = .
-gen all_uci_round = .
-gen control_rate_round = .
-gen control_lci_round = .
-gen control_uci_round = .
-gen sot_rate_round = .
-gen sot_lci_round = .
-gen sot_uci_round = .
-gen pax_rate_round = .
-gen pax_lci_round = .
-gen pax_uci_round = .
-gen mol_rate_round = .
-gen mol_lci_round = .
-gen mol_uci_round = .
-levelsof failure, local(levels)
-foreach i of local levels {
-	
-	di "`i'"
-	preserve
-	keep if failure=="`i'" 
-	
-	if all_events!=. {
-		local all_p`i' = all_ptime_round 
-		local all_e`i' = all_events_round 
-		cii means `all_p`i'' `all_e`i'', poisson level(95) 
-		replace all_rate_round = r(mean)*1000 if all_rate_round== .
-		replace all_lci_round = r(lb)*1000 if all_lci_round== .
-		replace all_uci_round =  r(ub)*1000 if all_uci_round== .
 }
-
-	if control_events!=. {
-		local con_p`i' = control_ptime_round
-		local con_e`i' = control_events_round
-		cii means `con_p`i'' `con_e`i'', poisson level(95)
-		replace control_rate_round = r(mean)*1000 if control_rate_round== .
-		replace control_lci_round = r(lb)*1000 if control_lci_round== .
-		replace control_uci_round =  r(ub)*1000 if control_uci_round== .
-}
-	if sot_events!=. {
-		local sot_p`i' = sot_ptime_round
-		local sot_e`i' = sot_events_round
-		cii means `sot_p`i'' `sot_e`i'', poisson level(95)
-		replace sot_rate_round = r(mean)*1000 if sot_rate_round== .
-		replace sot_lci_round = r(lb)*1000 if sot_lci_round== .
-		replace sot_uci_round =  r(ub)*1000 if sot_uci_round== .
-}
-
-	if pax_events!=. {
-		local pax_p`i' = pax_ptime_round
-		local pax_e`i' = pax_events_round
-		cii means `pax_p`i'' `pax_e`i'', poisson level(95)
-		replace pax_rate_round = r(mean)*1000 if pax_rate_round== .
-		replace pax_lci_round = r(lb)*1000 if pax_lci_round== .
-		replace pax_uci_round =  r(ub)*1000 if pax_uci_round== .
-}
-
-	if mol_events!=. {
-		local mol_p`i' = mol_ptime_round
-		local mol_e`i' = mol_events_round
-		cii means `mol_p`i'' `mol_e`i'', poisson level(95)
-		replace mol_rate_round = r(mean)*1000 if mol_rate_round== .
-		replace mol_lci_round = r(lb)*1000 if mol_lci_round== .
-		replace mol_uci_round =  r(ub)*1000 if mol_uci_round== .
-}
-
-	append using "$projectdir/output/tables/comparator_rates_round.dta"
-	save "$projectdir/output/tables/comparator_rates_round.dta", replace
-	restore
-}
-
-
-use "$projectdir/output/tables/comparator_rates_round", clear
+foreach var in all control sot pax mol {
+gen `var'_rate_round = (`var'_events_round/`var'_ptime_round)*1000
+gen `var'_lci_round = (invpoisson(`var'_events_round,.975)/`var'_ptime_round)*1000
+gen `var'_uci_round = (invpoisson(`var'_events_round,.075)/`var'_ptime_round)*1000
+}  
 keep failure *round
 order  	failure all* control* sot* pax* mol* 
 save "$projectdir/output/tables/comparator_rates_round", replace
 export delimited using "$projectdir/output/tables/comparator_rates_round.csv", replace
 
-use "$projectdir/output/tables/comparator_rates", clear
-foreach var of varlist *rate *lci *uci {
-gen `var'_per = `var'*1000	
-drop `var'	
-rename 	`var'_per `var'				
-}
-order failure all* control* sot* pax* mol* 
-save "$projectdir/output/tables/comparator_rates", replace
-export delimited using "$projectdir/output/tables/comparator_rates.csv", replace
 
 
 

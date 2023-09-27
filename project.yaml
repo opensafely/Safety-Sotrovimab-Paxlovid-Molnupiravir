@@ -163,7 +163,7 @@ actions:
 
         
   preceed_rate:
-    run: stata-mp:latest analysis/402_preceeding_rate.do
+    run: stata-mp:latest analysis/403_preceeding_rate.do
     needs: [define_covariates_combine]
     outputs:
       moderately_sensitive:
