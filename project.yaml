@@ -172,7 +172,7 @@ actions:
         data1: output/tables/comparator_rates_round.csv 
   
   redacted_table:
-    run: stata-mp:latest analysis/500_redacted_table.do
+    run: stata-mp:latest analysis/501_redacted_table.do
     needs: [define_covariates_combine]
     outputs:
       moderately_sensitive:

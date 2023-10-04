@@ -193,21 +193,17 @@ export delimited using "$projectdir/output/tables/comparator_rates.csv", replace
 ** Redact and round rates
 use "$projectdir/output/tables/comparator_rates", clear
 foreach var of varlist *events *ptime  {
-gen `var'_round = round(`var', 5)	
+gen `var'_midpoint = (ceil(`var'/6)*6) - (floor(6/2) * (`var'!=0))
 }
 foreach var in all control sot pax mol {
-gen `var'_rate_round = (`var'_events_round/`var'_ptime_round)*1000
-gen `var'_lci_round = (invpoisson(`var'_events_round,.975)/`var'_ptime_round)*1000
-gen `var'_uci_round = (invpoisson(`var'_events_round,.025)/`var'_ptime_round)*1000
-replace `var'_events_round=. if  `var'_events <=7 & `var'_events!=0
-replace `var'_ptime_round=. if  `var'_events <=7 & `var'_events!=0
+gen `var'_rate_midpoint = (`var'_events_midpoint/`var'_ptime_midpoint)*1000
+gen `var'_lci_midpoint = (invpoisson(`var'_events_midpoint,.975)/`var'_ptime_midpoint)*1000
+gen `var'_uci_midpoint = (invpoisson(`var'_events_midpoint,.025)/`var'_ptime_midpoint)*1000
 }  
-keep failure *round
+keep failure *_midpoint
 order  	failure all* control* sot* pax* mol* 
 save "$projectdir/output/tables/comparator_rates_round", replace
 export delimited using "$projectdir/output/tables/comparator_rates_round.csv", replace
-
-
 
 
 log close
