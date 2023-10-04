@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  /workspace/logs/redacted_table.log
   log type:  text
- opened on:   6 Sep 2023, 12:04:22
+ opened on:   4 Oct 2023, 11:56:17
 
 . 
 . *Set Ado file path
@@ -68,47 +68,26 @@ file /workspace/output/tables/baseline_table_redact_all.dta saved
   4.         gen variable = `"`var'"'
   5.         label variable `var' "`var'"    
   6.         decode `var', gen(categories)
-  7.         gen count = round(_freq, 5)
-  8.         egen total = total(count)
+  7.         gen count_mid_all  = (ceil(_freq/6)*6) - (floor(6/2) * (_freq!=0))
+  8.         egen total_mid_all = total(count)
   9.         egen non_missing=sum(count) if categories!=""
  10.         drop if categories==""
- 11.         gen percent = round((count/non_missing)*100, 0.1)
- 12.         gen missing=(total-non_missing)
- 13.         gen countstr = string(count)
- 14.         replace countstr = "<8" if count<=7
- 15.         rename countstr count_all
- 16.         tostring percent, gen(percentstr) force format(%9.1f)
- 17.         replace percentstr = "-" if count_all =="<8"
- 18.         rename percentstr percent_all
- 19.         gen totalstr = string(total)
- 20.         replace totalstr = "-" if count_all =="<8"
- 21.         rename totalstr total_all
- 22.         gen missingstr = string(missing)
- 23.         replace missingstr = "-" if count_all =="<8"
- 24.         replace missingstr = "-" if missing <=7 & missing !=0
- 25.         rename missingstr missing_all
- 26.         drop count percent total missing
- 27.         list variable `var' count percent total missing
- 28.         keep variable categories count percent total missing
- 29.         order variable categories count percent total missing
- 30.         append using "$projectdir/output/tables/baseline_table_redact_all.
+ 11.         gen percent_mid_all = round((count/non_missing)*100, 0.1)
+ 12.         gen missing_mid_all=(total-non_missing)
+ 13.         list variable `var' count percent total missing
+ 14.         keep variable categories count percent total missing
+ 15.         order variable categories count percent total missing
+ 16.         append using "$projectdir/output/tables/baseline_table_redact_all.
 > dta"
- 31.         save "$projectdir/output/tables/baseline_table_redact_all.dta", re
+ 17.         save "$projectdir/output/tables/baseline_table_redact_all.dta", re
 > place
- 32.         restore
- 33. }
+ 18.         restore
+ 19. }
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +-------------------------------------------------------------------+
   1. |              variable | organ_~b | count_~l | percen~l | total_~l |
-     | organ_transplant_comb |       no |    14980 |     60.8 |    24655 |
+     | organ_transplant_comb |       no |    14979 |     60.8 |    24654 |
      |-------------------------------------------------------------------|
      |                             missin~l                              |
      |                                    0                              |
@@ -116,41 +95,28 @@ percentstr was forced to string; some loss of information
 
      +-------------------------------------------------------------------+
   2. |              variable | organ_~b | count_~l | percen~l | total_~l |
-     | organ_transplant_comb |      yes |     9675 |     39.2 |    24655 |
+     | organ_transplant_comb |      yes |     9675 |     39.2 |    24654 |
      |-------------------------------------------------------------------|
      |                             missin~l                              |
      |                                    0                              |
      +-------------------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +----------------------------------------------------------------------+
      |      variable   hiv_ai~b   count_~l   percen~l   total_~l   missin~l |
      |----------------------------------------------------------------------|
-  1. | hiv_aids_comb         no      18805       76.3      24655          0 |
-  2. | hiv_aids_comb        yes       5850       23.7      24655          0 |
+  1. | hiv_aids_comb         no      18807       76.3      24654          0 |
+  2. | hiv_aids_comb        yes       5847       23.7      24654          0 |
      +----------------------------------------------------------------------+
 (note: variable variable was str13, now str21 to accommodate using data's
        values)
 file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +-------------------------------------------------------------------+
   1. |              variable | immuno~b | count_~l | percen~l | total_~l |
-     | immunosupression_comb |       no |    19940 |     80.9 |    24655 |
+     | immunosupression_comb |       no |    19941 |     80.9 |    24654 |
      |-------------------------------------------------------------------|
      |                             missin~l                              |
      |                                    0                              |
@@ -158,24 +124,17 @@ percentstr generated as str4
 
      +-------------------------------------------------------------------+
   2. |              variable | immuno~b | count_~l | percen~l | total_~l |
-     | immunosupression_comb |      yes |     4715 |     19.1 |    24655 |
+     | immunosupression_comb |      yes |     4713 |     19.1 |    24654 |
      |-------------------------------------------------------------------|
      |                             missin~l                              |
      |                                    0                              |
      +-------------------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +---------------------------------------------------------------+
   1. |          variable | imid_o~b | count_~l | percen~l | total_~l |
-     | imid_on_drug_comb |       no |    15120 |     61.3 |    24655 |
+     | imid_on_drug_comb |       no |    15117 |     61.3 |    24654 |
      |---------------------------------------------------------------|
      |                           missin~l                            |
      |                                  0                            |
@@ -183,7 +142,7 @@ percentstr was forced to string; some loss of information
 
      +---------------------------------------------------------------+
   2. |          variable | imid_o~b | count_~l | percen~l | total_~l |
-     | imid_on_drug_comb |      yes |     9535 |     38.7 |    24655 |
+     | imid_on_drug_comb |      yes |     9537 |     38.7 |    24654 |
      |---------------------------------------------------------------|
      |                           missin~l                            |
      |                                  0                            |
@@ -192,33 +151,21 @@ percentstr was forced to string; some loss of information
        values)
 file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------------------------+
      |        variable   rare_n~b   count_~l   percen~l   total_~l   missin~l |
      |------------------------------------------------------------------------|
-  1. | rare_neuro_comb         no       9095       36.9      24655          0 |
-  2. | rare_neuro_comb        yes      15560       63.1      24655          0 |
+  1. | rare_neuro_comb         no       9093       36.9      24654          0 |
+  2. | rare_neuro_comb        yes      15561       63.1      24654          0 |
      +------------------------------------------------------------------------+
 (note: variable variable was str15, now str21 to accommodate using data's
        values)
 file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +----------------------------------------------------------------+
   1. |           variable | renal_~b | count_~l | percen~l | total_~l |
-     | renal_disease_comb |       no |    14170 |     57.5 |    24655 |
+     | renal_disease_comb |       no |    14169 |     57.5 |    24654 |
      |----------------------------------------------------------------|
      |                            missin~l                            |
      |                                   0                            |
@@ -226,7 +173,7 @@ percentstr generated as str4
 
      +----------------------------------------------------------------+
   2. |           variable | renal_~b | count_~l | percen~l | total_~l |
-     | renal_disease_comb |      yes |    10485 |     42.5 |    24655 |
+     | renal_disease_comb |      yes |    10485 |     42.5 |    24654 |
      |----------------------------------------------------------------|
      |                            missin~l                            |
      |                                   0                            |
@@ -235,16 +182,10 @@ percentstr generated as str4
        values)
 file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +----------------------------------------------------------------+
   1. |           variable | liver_~b | count_~l | percen~l | total_~l |
-     | liver_disease_comb |       no |    18710 |     75.9 |    24655 |
+     | liver_disease_comb |       no |    18705 |     75.9 |    24654 |
      |----------------------------------------------------------------|
      |                            missin~l                            |
      |                                   0                            |
@@ -252,7 +193,7 @@ percentstr generated as str4
 
      +----------------------------------------------------------------+
   2. |           variable | liver_~b | count_~l | percen~l | total_~l |
-     | liver_disease_comb |      yes |     5945 |     24.1 |    24655 |
+     | liver_disease_comb |      yes |     5949 |     24.1 |    24654 |
      |----------------------------------------------------------------|
      |                            missin~l                            |
      |                                   0                            |
@@ -261,17 +202,10 @@ percentstr generated as str4
        values)
 file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +---------------------------------------------------------------+
   1. |          variable | haem_d~b | count_~l | percen~l | total_~l |
-     | haem_disease_comb |       no |     9395 |     38.1 |    24655 |
+     | haem_disease_comb |       no |     9393 |     38.1 |    24654 |
      |---------------------------------------------------------------|
      |                           missin~l                            |
      |                                  0                            |
@@ -279,7 +213,7 @@ percentstr was forced to string; some loss of information
 
      +---------------------------------------------------------------+
   2. |          variable | haem_d~b | count_~l | percen~l | total_~l |
-     | haem_disease_comb |      yes |    15260 |     61.9 |    24655 |
+     | haem_disease_comb |      yes |    15261 |     61.9 |    24654 |
      |---------------------------------------------------------------|
      |                           missin~l                            |
      |                                  0                            |
@@ -288,16 +222,10 @@ percentstr was forced to string; some loss of information
        values)
 file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +---------------------------------------------------------------+
   1. |          variable | solid_~b | count_~l | percen~l | total_~l |
-     | solid_cancer_comb |       no |    17740 |     72.0 |    24655 |
+     | solid_cancer_comb |       no |    17739 |       72 |    24654 |
      |---------------------------------------------------------------|
      |                           missin~l                            |
      |                                  0                            |
@@ -305,7 +233,7 @@ percentstr generated as str4
 
      +---------------------------------------------------------------+
   2. |          variable | solid_~b | count_~l | percen~l | total_~l |
-     | solid_cancer_comb |      yes |     6915 |     28.0 |    24655 |
+     | solid_cancer_comb |      yes |     6915 |       28 |    24654 |
      |---------------------------------------------------------------|
      |                           missin~l                            |
      |                                  0                            |
@@ -314,16 +242,10 @@ percentstr generated as str4
        values)
 file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +-----------------------------------------------------------------+
   1. |            variable | downs_~b | count_~l | percen~l | total_~l |
-     | downs_syndrome_comb |       no |    17805 |     72.2 |    24655 |
+     | downs_syndrome_comb |       no |    17805 |     72.2 |    24654 |
      |-----------------------------------------------------------------|
      |                            missin~l                             |
      |                                   0                             |
@@ -331,7 +253,7 @@ percentstr generated as str4
 
      +-----------------------------------------------------------------+
   2. |            variable | downs_~b | count_~l | percen~l | total_~l |
-     | downs_syndrome_comb |      yes |     6850 |     27.8 |    24655 |
+     | downs_syndrome_comb |      yes |     6849 |     27.8 |    24654 |
      |-----------------------------------------------------------------|
      |                            missin~l                             |
      |                                   0                             |
@@ -340,77 +262,50 @@ percentstr generated as str4
        values)
 file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +---------------------------------------------------------------------+
      |     variable   hypert~n   count_~l   percen~l   total_~l   missin~l |
      |---------------------------------------------------------------------|
-  1. | hypertension         no      22165       89.9      24655          0 |
-  2. | hypertension        yes       2490       10.1      24655          0 |
+  1. | hypertension         no      22161       89.9      24654          0 |
+  2. | hypertension        yes       2493       10.1      24654          0 |
      +---------------------------------------------------------------------+
 (note: variable variable was str12, now str21 to accommodate using data's
        values)
 file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +-----------------------------------------------------------------+
      | variable   diabetes   count_~l   percen~l   total_~l   missin~l |
      |-----------------------------------------------------------------|
-  1. | diabetes         no      22275       90.3      24655          0 |
-  2. | diabetes        yes       2380        9.7      24655          0 |
+  1. | diabetes         no      22275       90.4      24654          0 |
+  2. | diabetes        yes       2379        9.6      24654          0 |
      +-----------------------------------------------------------------+
 (note: variable variable was str8, now str21 to accommodate using data's
        values)
 file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +--------------------------------------------------------------+
   1. |                    variable | chroni~e | count_~l | percen~l |
-     | chronic_respiratory_disease |       no |    22185 |     90.0 |
+     | chronic_respiratory_disease |       no |    22185 |       90 |
      |--------------------------------------------------------------|
      |           total_~l           |           missin~l            |
-     |              24655           |                  0            |
+     |              24654           |                  0            |
      +--------------------------------------------------------------+
 
      +--------------------------------------------------------------+
   2. |                    variable | chroni~e | count_~l | percen~l |
-     | chronic_respiratory_disease |      yes |     2470 |     10.0 |
+     | chronic_respiratory_disease |      yes |     2469 |       10 |
      |--------------------------------------------------------------|
      |           total_~l           |           missin~l            |
-     |              24655           |                  0            |
+     |              24654           |                  0            |
      +--------------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +---------------------------------------------------------------------+
   1. |                variable | chroni~e | count_~l | percen~l | total_~l |
-     | chronic_cardiac_disease |       no |    22205 |     90.1 |    24655 |
+     | chronic_cardiac_disease |       no |    22203 |     90.1 |    24654 |
      |---------------------------------------------------------------------|
      |                              missin~l                               |
      |                                     0                               |
@@ -418,7 +313,7 @@ percentstr was forced to string; some loss of information
 
      +---------------------------------------------------------------------+
   2. |                variable | chroni~e | count_~l | percen~l | total_~l |
-     | chronic_cardiac_disease |      yes |     2450 |      9.9 |    24655 |
+     | chronic_cardiac_disease |      yes |     2451 |      9.9 |    24654 |
      |---------------------------------------------------------------------|
      |                              missin~l                               |
      |                                     0                               |
@@ -427,17 +322,10 @@ percentstr was forced to string; some loss of information
        values)
 file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +----------------------------------------------------------------------+
   1. |                 variable | paxlov~d | count_~l | percen~l | total_~l |
-     | paxlovid_contraindicated |       no |    11435 |     46.4 |    24655 |
+     | paxlovid_contraindicated |       no |    11439 |     46.4 |    24654 |
      |----------------------------------------------------------------------|
      |                               missin~l                               |
      |                                      0                               |
@@ -445,7 +333,7 @@ percentstr was forced to string; some loss of information
 
      +----------------------------------------------------------------------+
   2. |                 variable | paxlov~d | count_~l | percen~l | total_~l |
-     | paxlovid_contraindicated |      yes |    13220 |     53.6 |    24655 |
+     | paxlovid_contraindicated |      yes |    13215 |     53.6 |    24654 |
      |----------------------------------------------------------------------|
      |                               missin~l                               |
      |                                      0                               |
@@ -454,62 +342,48 @@ percentstr was forced to string; some loss of information
        values)
 file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +--------------------------------------------------------------------+
      |    variable   prior_~d   count_~l   percen~l   total_~l   missin~l |
      |--------------------------------------------------------------------|
-  1. | prior_covid         no      17280       70.1      24655          0 |
-  2. | prior_covid        yes       7375       29.9      24655          0 |
+  1. | prior_covid         no      17277       70.1      24654          0 |
+  2. | prior_covid        yes       7377       29.9      24654          0 |
      +--------------------------------------------------------------------+
 (note: variable variable was str11, now str27 to accommodate using data's
        values)
 file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +----------------------------------------------------------------------+
   1. |           variable |        vaccination_status | count_~l | percen~l |
      | vaccination_status |             Un-vaccinated |     4875 |     19.8 |
      |----------------------------------------------------------------------|
      |             total_~l             |             missin~l              |
-     |                24655             |                    0              |
+     |                24651             |                    0              |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
   2. |           variable |        vaccination_status | count_~l | percen~l |
-     | vaccination_status |           One vaccination |     2470 |     10.0 |
+     | vaccination_status |           One vaccination |     2469 |       10 |
      |----------------------------------------------------------------------|
      |             total_~l             |             missin~l              |
-     |                24655             |                    0              |
+     |                24651             |                    0              |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
   3. |           variable |        vaccination_status | count_~l | percen~l |
-     | vaccination_status |          Two vaccinations |     2410 |      9.8 |
+     | vaccination_status |          Two vaccinations |     2409 |      9.8 |
      |----------------------------------------------------------------------|
      |             total_~l             |             missin~l              |
-     |                24655             |                    0              |
+     |                24651             |                    0              |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
   4. |           variable |        vaccination_status | count_~l | percen~l |
-     | vaccination_status |        Three vaccinations |    12515 |     50.8 |
+     | vaccination_status |        Three vaccinations |    12513 |     50.8 |
      |----------------------------------------------------------------------|
      |             total_~l             |             missin~l              |
-     |                24655             |                    0              |
+     |                24651             |                    0              |
      +----------------------------------------------------------------------+
 
      +----------------------------------------------------------------------+
@@ -517,23 +391,16 @@ percentstr was forced to string; some loss of information
      | vaccination_status | Four or more vaccinations |     2385 |      9.7 |
      |----------------------------------------------------------------------|
      |             total_~l             |             missin~l              |
-     |                24655             |                    0              |
+     |                24651             |                    0              |
      +----------------------------------------------------------------------+
 (note: variable variable was str18, now str27 to accommodate using data's
        values)
 file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------------------------+
   1. |   variable |               region_nhs | count_~l | percen~l | total_~l |
-     | region_nhs |                     East |     2450 |      9.9 |    24660 |
+     | region_nhs |                     East |     2451 |      9.9 |    24657 |
      |------------------------------------------------------------------------|
      |                                missin~l                                |
      |                                       0                                |
@@ -541,7 +408,7 @@ percentstr was forced to string; some loss of information
 
      +------------------------------------------------------------------------+
   2. |   variable |               region_nhs | count_~l | percen~l | total_~l |
-     | region_nhs |            East Midlands |     2540 |     10.3 |    24660 |
+     | region_nhs |            East Midlands |     2541 |     10.3 |    24657 |
      |------------------------------------------------------------------------|
      |                                missin~l                                |
      |                                       0                                |
@@ -549,7 +416,7 @@ percentstr was forced to string; some loss of information
 
      +------------------------------------------------------------------------+
   3. |   variable |               region_nhs | count_~l | percen~l | total_~l |
-     | region_nhs |                   London |     4990 |     20.2 |    24660 |
+     | region_nhs |                   London |     4989 |     20.2 |    24657 |
      |------------------------------------------------------------------------|
      |                                missin~l                                |
      |                                       0                                |
@@ -557,7 +424,7 @@ percentstr was forced to string; some loss of information
 
      +------------------------------------------------------------------------+
   4. |   variable |               region_nhs | count_~l | percen~l | total_~l |
-     | region_nhs |               North East |     2490 |     10.1 |    24660 |
+     | region_nhs |               North East |     2487 |     10.1 |    24657 |
      |------------------------------------------------------------------------|
      |                                missin~l                                |
      |                                       0                                |
@@ -565,7 +432,7 @@ percentstr was forced to string; some loss of information
 
      +------------------------------------------------------------------------+
   5. |   variable |               region_nhs | count_~l | percen~l | total_~l |
-     | region_nhs |               North West |     2495 |     10.1 |    24660 |
+     | region_nhs |               North West |     2499 |     10.1 |    24657 |
      |------------------------------------------------------------------------|
      |                                missin~l                                |
      |                                       0                                |
@@ -573,7 +440,7 @@ percentstr was forced to string; some loss of information
 
      +------------------------------------------------------------------------+
   6. |   variable |               region_nhs | count_~l | percen~l | total_~l |
-     | region_nhs |               South East |     2345 |      9.5 |    24660 |
+     | region_nhs |               South East |     2343 |      9.5 |    24657 |
      |------------------------------------------------------------------------|
      |                                missin~l                                |
      |                                       0                                |
@@ -581,7 +448,7 @@ percentstr was forced to string; some loss of information
 
      +------------------------------------------------------------------------+
   7. |   variable |               region_nhs | count_~l | percen~l | total_~l |
-     | region_nhs |               South West |     2415 |      9.8 |    24660 |
+     | region_nhs |               South West |     2415 |      9.8 |    24657 |
      |------------------------------------------------------------------------|
      |                                missin~l                                |
      |                                       0                                |
@@ -589,7 +456,7 @@ percentstr was forced to string; some loss of information
 
      +------------------------------------------------------------------------+
   8. |   variable |               region_nhs | count_~l | percen~l | total_~l |
-     | region_nhs |            West Midlands |     2440 |      9.9 |    24660 |
+     | region_nhs |            West Midlands |     2439 |      9.9 |    24657 |
      |------------------------------------------------------------------------|
      |                                missin~l                                |
      |                                       0                                |
@@ -597,7 +464,7 @@ percentstr was forced to string; some loss of information
 
      +------------------------------------------------------------------------+
   9. |   variable |               region_nhs | count_~l | percen~l | total_~l |
-     | region_nhs | Yorkshire and The Humber |     2495 |     10.1 |    24660 |
+     | region_nhs | Yorkshire and The Humber |     2493 |     10.1 |    24657 |
      |------------------------------------------------------------------------|
      |                                missin~l                                |
      |                                       0                                |
@@ -606,158 +473,111 @@ percentstr was forced to string; some loss of information
        values)
 (note: variable categories was str24, now str25 to accommodate using data's
        values)
-(note: variable count_all was str4, now str5 to accommodate using data's
-       values)
 file /workspace/output/tables/baseline_table_redact_all.dta saved
 (1 missing value generated)
 (1 observation deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +--------------------------------------------------------------+
   1. | variable |            imdq5 | count_~l | percen~l | total_~l |
-     |    imdq5 | 1 least deprived |     4825 |     19.8 |    24660 |
+     |    imdq5 | 1 least deprived |     4821 |     19.7 |    24654 |
      |--------------------------------------------------------------|
      |                           missin~l                           |
-     |                                245                           |
+     |                                243                           |
      +--------------------------------------------------------------+
 
      +--------------------------------------------------------------+
   2. | variable |            imdq5 | count_~l | percen~l | total_~l |
-     |    imdq5 |                2 |     4830 |     19.8 |    24660 |
+     |    imdq5 |                2 |     4827 |     19.8 |    24654 |
      |--------------------------------------------------------------|
      |                           missin~l                           |
-     |                                245                           |
+     |                                243                           |
      +--------------------------------------------------------------+
 
      +--------------------------------------------------------------+
   3. | variable |            imdq5 | count_~l | percen~l | total_~l |
-     |    imdq5 |                3 |     4935 |     20.2 |    24660 |
+     |    imdq5 |                3 |     4935 |     20.2 |    24654 |
      |--------------------------------------------------------------|
      |                           missin~l                           |
-     |                                245                           |
+     |                                243                           |
      +--------------------------------------------------------------+
 
      +--------------------------------------------------------------+
   4. | variable |            imdq5 | count_~l | percen~l | total_~l |
-     |    imdq5 |                4 |     4905 |     20.1 |    24660 |
+     |    imdq5 |                4 |     4905 |     20.1 |    24654 |
      |--------------------------------------------------------------|
      |                           missin~l                           |
-     |                                245                           |
+     |                                243                           |
      +--------------------------------------------------------------+
 
      +--------------------------------------------------------------+
   5. | variable |            imdq5 | count_~l | percen~l | total_~l |
-     |    imdq5 |  5 most deprived |     4920 |     20.2 |    24660 |
+     |    imdq5 |  5 most deprived |     4923 |     20.2 |    24654 |
      |--------------------------------------------------------------|
      |                           missin~l                           |
-     |                                245                           |
+     |                                243                           |
      +--------------------------------------------------------------+
 (note: variable variable was str5, now str27 to accommodate using data's
        values)
 (note: variable categories was str16, now str25 to accommodate using data's
        values)
-(note: variable count_all was str4, now str5 to accommodate using data's
-       values)
 file /workspace/output/tables/baseline_table_redact_all.dta saved
 (1 missing value generated)
 (1 observation deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +---------------------------------------------------------------------+
      |  variable     bmi_group   count_~l   percen~l   total_~l   missin~l |
      |---------------------------------------------------------------------|
-  1. | bmi_group   underweight       2420       10.4      24655       1475 |
-  2. | bmi_group        normal       5620       24.2      24655       1475 |
-  3. | bmi_group    overweight       5775       24.9      24655       1475 |
-  4. | bmi_group         obese       9365       40.4      24655       1475 |
+  1. | bmi_group   underweight       2415       10.4      24651       1473 |
+  2. | bmi_group        normal       5619       24.2      24651       1473 |
+  3. | bmi_group    overweight       5775       24.9      24651       1473 |
+  4. | bmi_group         obese       9369       40.4      24651       1473 |
      +---------------------------------------------------------------------+
 (note: variable variable was str9, now str27 to accommodate using data's
        values)
 (note: variable categories was str11, now str25 to accommodate using data's
-       values)
-(note: variable count_all was str4, now str5 to accommodate using data's
        values)
 file /workspace/output/tables/baseline_table_redact_all.dta saved
 (1 missing value generated)
 (1 observation deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +---------------------------------------------------------------------+
      |  variable     ethnicity   count_~l   percen~l   total_~l   missin~l |
      |---------------------------------------------------------------------|
-  1. | ethnicity         Black       1010       11.3      24655      15740 |
-  2. | ethnicity         Other       1015       11.4      24655      15740 |
-  3. | ethnicity   South Asian        980       11.0      24655      15740 |
-  4. | ethnicity         White       5910       66.3      24655      15740 |
+  1. | ethnicity         Black       1011       11.3      24657      15741 |
+  2. | ethnicity         Other       1011       11.3      24657      15741 |
+  3. | ethnicity   South Asian        981         11      24657      15741 |
+  4. | ethnicity         White       5913       66.3      24657      15741 |
      +---------------------------------------------------------------------+
 (note: variable variable was str9, now str27 to accommodate using data's
        values)
 (note: variable categories was str11, now str25 to accommodate using data's
        values)
-(note: variable count_all was str4, now str5 to accommodate using data's
-       values)
 file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +---------------------------------------------------------------+
      | variable      sex   count_~l   percen~l   total_~l   missin~l |
      |---------------------------------------------------------------|
-  1. |      sex     Male      12090       49.0      24655          0 |
-  2. |      sex   Female      12565       51.0      24655          0 |
+  1. |      sex     Male      12093       49.1      24654          0 |
+  2. |      sex   Female      12561       50.9      24654          0 |
      +---------------------------------------------------------------+
 (note: variable variable was str3, now str27 to accommodate using data's
        values)
 (note: variable categories was str6, now str25 to accommodate using data's
        values)
-(note: variable missing_all was str1, now str5 to accommodate using data's
-       values)
 file /workspace/output/tables/baseline_table_redact_all.dta saved
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------------------+
      |  variable   age_gr~p   count_~l   percen~l   total_~l   missin~l |
      |------------------------------------------------------------------|
-  1. | age_group      18-39       9005       36.5      24655          0 |
-  2. | age_group      40-59       8160       33.1      24655          0 |
-  3. | age_group       >=60       7490       30.4      24655          0 |
+  1. | age_group      18-39       9003       36.5      24651          0 |
+  2. | age_group      40-59       8157       33.1      24651          0 |
+  3. | age_group       >=60       7491       30.4      24651          0 |
      +------------------------------------------------------------------+
 (note: variable variable was str9, now str27 to accommodate using data's
        values)
 (note: variable categories was str5, now str25 to accommodate using data's
-       values)
-(note: variable count_all was str4, now str5 to accommodate using data's
-       values)
-(note: variable missing_all was str1, now str5 to accommodate using data's
        values)
 file /workspace/output/tables/baseline_table_redact_all.dta saved
 
@@ -830,41 +650,27 @@ file /workspace/output/tables/baseline_table_redact_bydrug.xls saved
  38.         gen variable = `"`var'"'
  39.         label variable `var' "`var'"    
  40.         decode `var', gen(categories)
- 41.         gen count = round(_freq, 5)
- 42.         egen total = total(count)
+ 41.         gen count_mid_`i'  = (ceil(_freq/6)*6) - (floor(6/2) * (_freq!=0))
+ 42.         egen total_mid_`i' = total(count)
  43.         egen non_missing=sum(count) if categories!=""
  44.         drop if categories==""
- 45.         gen percent = round((count/non_missing)*100, 0.1)
- 46.         gen missing=(total-non_missing)
- 47.         gen countstr = string(count)
- 48.         replace countstr = "<8" if count<=7
- 49.         rename countstr count_`i'
- 50.         tostring percent, gen(percentstr) force format(%9.1f)
- 51.         replace percentstr = "-" if count_`i' =="<8"
- 52.         rename percentstr percent_`i'
- 53.         gen totalstr = string(total)
- 54.         replace totalstr = "-" if count_`i' =="<8"
- 55.         rename totalstr total_`i'
- 56.         gen missingstr = string(missing)
- 57.         replace missingstr = "-" if count_`i' =="<8"
- 58.         replace missingstr = "-" if missing <=7 & missing !=0
- 59.         rename missingstr missing_`i'
- 60.         drop count percent total missing
- 61.         list `var' count percent total missing
- 62.         keep count percent total missing
- 63.         order(count), first
- 64.         append using "$projectdir/output/tables/baseline_table_redact_`i'.
+ 45.         gen percent_mid_`i' = round((count/non_missing)*100, 0.1)
+ 46.         gen missing_mid_`i'=(total-non_missing)
+ 47.         list `var' count percent total missing
+ 48.         keep count percent total missing
+ 49.         order(count), first
+ 50.         append using "$projectdir/output/tables/baseline_table_redact_`i'.
 > dta"
- 65.         save "$projectdir/output/tables/baseline_table_redact_`i'.dta", re
+ 51.         save "$projectdir/output/tables/baseline_table_redact_`i'.dta", re
 > place
- 66.         restore
- 67. }
- 68. display `index'
- 69. display "`col'"
- 70. use "$projectdir/output/tables/baseline_table_redact_`i'.dta", clear
- 71. export excel "$projectdir/output/tables/baseline_table_redact_bydrug.xls",
+ 52.         restore
+ 53. }
+ 54. display `index'
+ 55. display "`col'"
+ 56. use "$projectdir/output/tables/baseline_table_redact_`i'.dta", clear
+ 57. export excel "$projectdir/output/tables/baseline_table_redact_bydrug.xls",
 >  sheet("Overall", modify) cell("`col'1") keepcellfmt firstrow(variables)
- 72. }
+ 58. }
 (note: dataset contains 0 observations)
 file /workspace/output/tables/baseline_table_redact_control.dta saved
 0
@@ -888,422 +694,255 @@ G
 (paxlovid_contraindicated: 0 changes made)
 (861 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | organ_~b   count_~l   percen~l   total_~l   missin~l |
      |------------------------------------------------------|
-  1. |       no      14430       60.6      23795          0 |
-  2. |      yes       9365       39.4      23795          0 |
+  1. |       no      14433       60.7      23796          0 |
+  2. |      yes       9363       39.3      23796          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | hiv_ai~b   count_~l   percen~l   total_~l   missin~l |
      |------------------------------------------------------|
-  1. |       no      18140       76.2      23795          0 |
-  2. |      yes       5655       23.8      23795          0 |
+  1. |       no      18141       76.2      23796          0 |
+  2. |      yes       5655       23.8      23796          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | immuno~b   count_~l   percen~l   total_~l   missin~l |
      |------------------------------------------------------|
-  1. |       no      19230       80.8      23795          0 |
-  2. |      yes       4565       19.2      23795          0 |
+  1. |       no      19233       80.8      23796          0 |
+  2. |      yes       4563       19.2      23796          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | imid_o~b   count_~l   percen~l   total_~l   missin~l |
      |------------------------------------------------------|
-  1. |       no      14615       61.4      23795          0 |
-  2. |      yes       9180       38.6      23795          0 |
+  1. |       no      14613       61.4      23790          0 |
+  2. |      yes       9177       38.6      23790          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | rare_n~b   count_~l   percen~l   total_~l   missin~l |
      |------------------------------------------------------|
-  1. |       no       8780       36.9      23790          0 |
-  2. |      yes      15010       63.1      23790          0 |
+  1. |       no       8781       36.9      23790          0 |
+  2. |      yes      15009       63.1      23790          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | renal_~b   count_~l   percen~l   total_~l   missin~l |
      |------------------------------------------------------|
-  1. |       no      13655       57.4      23795          0 |
-  2. |      yes      10140       42.6      23795          0 |
+  1. |       no      13653       57.4      23790          0 |
+  2. |      yes      10137       42.6      23790          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | liver_~b   count_~l   percen~l   total_~l   missin~l |
      |------------------------------------------------------|
-  1. |       no      18065       75.9      23795          0 |
-  2. |      yes       5730       24.1      23795          0 |
+  1. |       no      18063       75.9      23790          0 |
+  2. |      yes       5727       24.1      23790          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | haem_d~b   count_~l   percen~l   total_~l   missin~l |
      |------------------------------------------------------|
-  1. |       no       9050       38.0      23790          0 |
-  2. |      yes      14740       62.0      23790          0 |
+  1. |       no       9051         38      23790          0 |
+  2. |      yes      14739         62      23790          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | solid_~b   count_~l   percen~l   total_~l   missin~l |
      |------------------------------------------------------|
-  1. |       no      17160       72.1      23795          0 |
-  2. |      yes       6635       27.9      23795          0 |
+  1. |       no      17163       72.1      23796          0 |
+  2. |      yes       6633       27.9      23796          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | downs_~b   count_~l   percen~l   total_~l   missin~l |
      |------------------------------------------------------|
-  1. |       no      17195       72.3      23790          0 |
-  2. |      yes       6595       27.7      23790          0 |
+  1. |       no      17199       72.3      23796          0 |
+  2. |      yes       6597       27.7      23796          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | hypert~n   count_~l   percen~l   total_~l   missin~l |
      |------------------------------------------------------|
-  1. |       no      21405       90.0      23795          0 |
-  2. |      yes       2390       10.0      23795          0 |
+  1. |       no      21405         90      23796          0 |
+  2. |      yes       2391         10      23796          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | diabetes   count_~l   percen~l   total_~l   missin~l |
      |------------------------------------------------------|
-  1. |       no      21495       90.3      23795          0 |
-  2. |      yes       2300        9.7      23795          0 |
+  1. |       no      21495       90.3      23796          0 |
+  2. |      yes       2301        9.7      23796          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | chroni~e   count_~l   percen~l   total_~l   missin~l |
      |------------------------------------------------------|
-  1. |       no      21410       90.0      23795          0 |
-  2. |      yes       2385       10.0      23795          0 |
+  1. |       no      21411         90      23796          0 |
+  2. |      yes       2385         10      23796          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | chroni~e   count_~l   percen~l   total_~l   missin~l |
      |------------------------------------------------------|
-  1. |       no      21440       90.1      23795          0 |
-  2. |      yes       2355        9.9      23795          0 |
+  1. |       no      21441       90.1      23796          0 |
+  2. |      yes       2355        9.9      23796          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | paxlov~d   count_~l   percen~l   total_~l   missin~l |
      |------------------------------------------------------|
-  1. |       no      11015       46.3      23795          0 |
-  2. |      yes      12780       53.7      23795          0 |
+  1. |       no      11013       46.3      23790          0 |
+  2. |      yes      12777       53.7      23790          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | prior_~d   count_~l   percen~l   total_~l   missin~l |
      |------------------------------------------------------|
-  1. |       no      16670       70.1      23795          0 |
-  2. |      yes       7125       29.9      23795          0 |
+  1. |       no      16671       70.1      23796          0 |
+  2. |      yes       7125       29.9      23796          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +-----------------------------------------------------------------------+
      |        vaccination_status   count_~l   percen~l   total_~l   missin~l |
      |-----------------------------------------------------------------------|
-  1. |             Un-vaccinated       4700       19.8      23795          0 |
-  2. |           One vaccination       2395       10.1      23795          0 |
-  3. |          Two vaccinations       2320        9.7      23795          0 |
-  4. |        Three vaccinations      12070       50.7      23795          0 |
-  5. | Four or more vaccinations       2310        9.7      23795          0 |
+  1. |             Un-vaccinated       4701       19.8      23793          0 |
+  2. |           One vaccination       2397       10.1      23793          0 |
+  3. |          Two vaccinations       2319        9.7      23793          0 |
+  4. |        Three vaccinations      12069       50.7      23793          0 |
+  5. | Four or more vaccinations       2307        9.7      23793          0 |
      +-----------------------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +----------------------------------------------------------------------+
      |               region_nhs   count_~l   percen~l   total_~l   missin~l |
      |----------------------------------------------------------------------|
-  1. |                     East       2370       10.0      23795          0 |
-  2. |            East Midlands       2455       10.3      23795          0 |
-  3. |                   London       4815       20.2      23795          0 |
-  4. |               North East       2405       10.1      23795          0 |
-  5. |               North West       2400       10.1      23795          0 |
+  1. |                     East       2367        9.9      23793          0 |
+  2. |            East Midlands       2457       10.3      23793          0 |
+  3. |                   London       4815       20.2      23793          0 |
+  4. |               North East       2403       10.1      23793          0 |
+  5. |               North West       2403       10.1      23793          0 |
      |----------------------------------------------------------------------|
-  6. |               South East       2265        9.5      23795          0 |
-  7. |               South West       2325        9.8      23795          0 |
-  8. |            West Midlands       2360        9.9      23795          0 |
-  9. | Yorkshire and The Humber       2400       10.1      23795          0 |
+  6. |               South East       2265        9.5      23793          0 |
+  7. |               South West       2325        9.8      23793          0 |
+  8. |            West Midlands       2361        9.9      23793          0 |
+  9. | Yorkshire and The Humber       2397       10.1      23793          0 |
      +----------------------------------------------------------------------+
-(note: variable count_control was str4, now str5 to accommodate using data's
-       values)
 file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (1 missing value generated)
 (1 observation deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +--------------------------------------------------------------+
      |            imdq5   count_~l   percen~l   total_~l   missin~l |
      |--------------------------------------------------------------|
-  1. | 1 least deprived       4655       19.7      23800        230 |
-  2. |                2       4680       19.9      23800        230 |
-  3. |                3       4765       20.2      23800        230 |
-  4. |                4       4725       20.0      23800        230 |
-  5. |  5 most deprived       4745       20.1      23800        230 |
+  1. | 1 least deprived       4653       19.7      23790        225 |
+  2. |                2       4677       19.8      23790        225 |
+  3. |                3       4767       20.2      23790        225 |
+  4. |                4       4725       20.1      23790        225 |
+  5. |  5 most deprived       4743       20.1      23790        225 |
      +--------------------------------------------------------------+
-(note: variable count_control was str4, now str5 to accommodate using data's
-       values)
 file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (1 missing value generated)
 (1 observation deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +---------------------------------------------------------+
      |   bmi_group   count_~l   percen~l   total_~l   missin~l |
      |---------------------------------------------------------|
-  1. | underweight       2340       10.5      23795       1420 |
-  2. |      normal       5405       24.2      23795       1420 |
-  3. |  overweight       5595       25.0      23795       1420 |
-  4. |       obese       9035       40.4      23795       1420 |
+  1. | underweight       2337       10.4      23787       1419 |
+  2. |      normal       5403       24.2      23787       1419 |
+  3. |  overweight       5595         25      23787       1419 |
+  4. |       obese       9033       40.4      23787       1419 |
      +---------------------------------------------------------+
-(note: variable count_control was str4, now str5 to accommodate using data's
-       values)
 file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (1 missing value generated)
 (1 observation deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +---------------------------------------------------------+
      |   ethnicity   count_~l   percen~l   total_~l   missin~l |
      |---------------------------------------------------------|
-  1. |       Black        970       11.3      23795      15225 |
-  2. |       Other        965       11.3      23795      15225 |
-  3. | South Asian        945       11.0      23795      15225 |
-  4. |       White       5690       66.4      23795      15225 |
+  1. |       Black        969       11.3      23793      15225 |
+  2. |       Other        963       11.2      23793      15225 |
+  3. | South Asian        945         11      23793      15225 |
+  4. |       White       5691       66.4      23793      15225 |
      +---------------------------------------------------------+
-(note: variable count_control was str4, now str5 to accommodate using data's
-       values)
 file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +----------------------------------------------------+
      |    sex   count_~l   percen~l   total_~l   missin~l |
      |----------------------------------------------------|
-  1. |   Male      11665       49.0      23795          0 |
-  2. | Female      12130       51.0      23795          0 |
+  1. |   Male      11667         49      23796          0 |
+  2. | Female      12129         51      23796          0 |
      +----------------------------------------------------+
-(note: variable missing_control was str1, now str5 to accommodate using
-       data's values)
 file /workspace/output/tables/baseline_table_redact_control.dta saved
 (861 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | age_gr~p   count_~l   percen~l   total_~l   missin~l |
      |------------------------------------------------------|
-  1. |    18-39       8710       36.6      23795          0 |
-  2. |    40-59       7890       33.2      23795          0 |
-  3. |     >=60       7195       30.2      23795          0 |
+  1. |    18-39       8709       36.6      23787          0 |
+  2. |    40-59       7887       33.2      23787          0 |
+  3. |     >=60       7191       30.2      23787          0 |
      +------------------------------------------------------+
-(note: variable count_control was str4, now str5 to accommodate using data's
-       values)
-(note: variable missing_control was str1, now str5 to accommodate using
-       data's values)
 file /workspace/output/tables/baseline_table_redact_control.dta saved
 6
 G
@@ -1331,418 +970,255 @@ K
 (paxlovid_contraindicated: 0 changes made)
 (24,376 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | organ_~b   count_~r   percen~r   total_~r   missin~r |
      |------------------------------------------------------|
-  1. |       no        175       62.5        280          0 |
-  2. |      yes        105       37.5        280          0 |
+  1. |       no        177       62.8        282          0 |
+  2. |      yes        105       37.2        282          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | hiv_ai~b   count_~r   percen~r   total_~r   missin~r |
      |------------------------------------------------------|
-  1. |       no        215       76.8        280          0 |
-  2. |      yes         65       23.2        280          0 |
+  1. |       no        213       77.2        276          0 |
+  2. |      yes         63       22.8        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | immuno~b   count_~r   percen~r   total_~r   missin~r |
      |------------------------------------------------------|
-  1. |       no        215       76.8        280          0 |
-  2. |      yes         65       23.2        280          0 |
+  1. |       no        213       77.2        276          0 |
+  2. |      yes         63       22.8        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | imid_o~b   count_~r   percen~r   total_~r   missin~r |
      |------------------------------------------------------|
-  1. |       no        170       60.7        280          0 |
-  2. |      yes        110       39.3        280          0 |
+  1. |       no        171         62        276          0 |
+  2. |      yes        105         38        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | rare_n~b   count_~r   percen~r   total_~r   missin~r |
      |------------------------------------------------------|
-  1. |       no         95       34.5        275          0 |
-  2. |      yes        180       65.5        275          0 |
+  1. |       no         99       35.1        282          0 |
+  2. |      yes        183       64.9        282          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | renal_~b   count_~r   percen~r   total_~r   missin~r |
      |------------------------------------------------------|
-  1. |       no        160       57.1        280          0 |
-  2. |      yes        120       42.9        280          0 |
+  1. |       no        159       57.6        276          0 |
+  2. |      yes        117       42.4        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | liver_~b   count_~r   percen~r   total_~r   missin~r |
      |------------------------------------------------------|
-  1. |       no        215       76.8        280          0 |
-  2. |      yes         65       23.2        280          0 |
+  1. |       no        213       77.2        276          0 |
+  2. |      yes         63       22.8        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | haem_d~b   count_~r   percen~r   total_~r   missin~r |
      |------------------------------------------------------|
-  1. |       no        110       39.3        280          0 |
-  2. |      yes        170       60.7        280          0 |
+  1. |       no        105         38        276          0 |
+  2. |      yes        171         62        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | solid_~b   count_~r   percen~r   total_~r   missin~r |
      |------------------------------------------------------|
-  1. |       no        190       67.9        280          0 |
-  2. |      yes         90       32.1        280          0 |
+  1. |       no        189       68.5        276          0 |
+  2. |      yes         87       31.5        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | downs_~b   count_~r   percen~r   total_~r   missin~r |
      |------------------------------------------------------|
-  1. |       no        205       73.2        280          0 |
-  2. |      yes         75       26.8        280          0 |
+  1. |       no        201       72.8        276          0 |
+  2. |      yes         75       27.2        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | hypert~n   count_~r   percen~r   total_~r   missin~r |
      |------------------------------------------------------|
-  1. |       no        250       89.3        280          0 |
-  2. |      yes         30       10.7        280          0 |
+  1. |       no        249       90.2        276          0 |
+  2. |      yes         27        9.8        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | diabetes   count_~r   percen~r   total_~r   missin~r |
      |------------------------------------------------------|
-  1. |       no        250       89.3        280          0 |
-  2. |      yes         30       10.7        280          0 |
+  1. |       no        249       90.2        276          0 |
+  2. |      yes         27        9.8        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | chroni~e   count_~r   percen~r   total_~r   missin~r |
      |------------------------------------------------------|
-  1. |       no        245       87.5        280          0 |
-  2. |      yes         35       12.5        280          0 |
+  1. |       no        243         88        276          0 |
+  2. |      yes         33         12        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | chroni~e   count_~r   percen~r   total_~r   missin~r |
      |------------------------------------------------------|
-  1. |       no        245       87.5        280          0 |
-  2. |      yes         35       12.5        280          0 |
+  1. |       no        243         88        276          0 |
+  2. |      yes         33         12        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | paxlov~d   count_~r   percen~r   total_~r   missin~r |
      |------------------------------------------------------|
-  1. |       no        135       48.2        280          0 |
-  2. |      yes        145       51.8        280          0 |
+  1. |       no        135       47.9        282          0 |
+  2. |      yes        147       52.1        282          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | prior_~d   count_~r   percen~r   total_~r   missin~r |
      |------------------------------------------------------|
-  1. |       no        205       73.2        280          0 |
-  2. |      yes         75       26.8        280          0 |
+  1. |       no        207       73.4        282          0 |
+  2. |      yes         75       26.6        282          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +-----------------------------------------------------------------------+
      |        vaccination_status   count_~r   percen~r   total_~r   missin~r |
      |-----------------------------------------------------------------------|
-  1. |             Un-vaccinated         55       19.3        285          0 |
-  2. |           One vaccination         30       10.5        285          0 |
-  3. |          Two vaccinations         35       12.3        285          0 |
-  4. |        Three vaccinations        140       49.1        285          0 |
-  5. | Four or more vaccinations         25        8.8        285          0 |
+  1. |             Un-vaccinated         51       18.7        273          0 |
+  2. |           One vaccination         27        9.9        273          0 |
+  3. |          Two vaccinations         33       12.1        273          0 |
+  4. |        Three vaccinations        141       51.6        273          0 |
+  5. | Four or more vaccinations         21        7.7        273          0 |
      +-----------------------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +----------------------------------------------------------------------+
      |               region_nhs   count_~r   percen~r   total_~r   missin~r |
      |----------------------------------------------------------------------|
-  1. |                     East         25        8.9        280          0 |
-  2. |            East Midlands         25        8.9        280          0 |
-  3. |                   London         60       21.4        280          0 |
-  4. |               North East         25        8.9        280          0 |
-  5. |               North West         25        8.9        280          0 |
+  1. |                     East         21        7.5        279          0 |
+  2. |            East Midlands         27        9.7        279          0 |
+  3. |                   London         57       20.4        279          0 |
+  4. |               North East         27        9.7        279          0 |
+  5. |               North West         27        9.7        279          0 |
      |----------------------------------------------------------------------|
-  6. |               South East         25        8.9        280          0 |
-  7. |               South West         30       10.7        280          0 |
-  8. |            West Midlands         25        8.9        280          0 |
-  9. | Yorkshire and The Humber         40       14.3        280          0 |
+  6. |               South East         27        9.7        279          0 |
+  7. |               South West         33       11.8        279          0 |
+  8. |            West Midlands         21        7.5        279          0 |
+  9. | Yorkshire and The Humber         39         14        279          0 |
      +----------------------------------------------------------------------+
-(note: variable count_molnupiravir was str2, now str3 to accommodate using
-       data's values)
 file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (1 missing value generated)
 (1 observation deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(5 real changes made)
 
      +--------------------------------------------------------------+
      |            imdq5   count_~r   percen~r   total_~r   missin~r |
      |--------------------------------------------------------------|
-  1. | 1 least deprived         55       19.6        285          - |
-  2. |                2         55       19.6        285          - |
-  3. |                3         60       21.4        285          - |
-  4. |                4         60       21.4        285          - |
-  5. |  5 most deprived         50       17.9        285          - |
+  1. | 1 least deprived         51       18.7        276          3 |
+  2. |                2         51       18.7        276          3 |
+  3. |                3         57       20.9        276          3 |
+  4. |                4         63       23.1        276          3 |
+  5. |  5 most deprived         51       18.7        276          3 |
      +--------------------------------------------------------------+
-(note: variable count_molnupiravir was str2, now str3 to accommodate using
-       data's values)
 file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (1 missing value generated)
 (1 observation deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +---------------------------------------------------------+
      |   bmi_group   count_~r   percen~r   total_~r   missin~r |
      |---------------------------------------------------------|
-  1. | underweight         30       11.5        280         20 |
-  2. |      normal         75       28.8        280         20 |
-  3. |  overweight         60       23.1        280         20 |
-  4. |       obese         95       36.5        280         20 |
+  1. | underweight         27       10.7        267         15 |
+  2. |      normal         75       29.8        267         15 |
+  3. |  overweight         57       22.6        267         15 |
+  4. |       obese         93       36.9        267         15 |
      +---------------------------------------------------------+
-(note: variable count_molnupiravir was str2, now str3 to accommodate using
-       data's values)
 file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (1 missing value generated)
 (1 observation deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +---------------------------------------------------------+
      |   ethnicity   count_~r   percen~r   total_~r   missin~r |
      |---------------------------------------------------------|
-  1. |       Black         15       12.0        275        150 |
-  2. |       Other         15       12.0        275        150 |
-  3. | South Asian         15       12.0        275        150 |
-  4. |       White         80       64.0        275        150 |
+  1. |       Black         15       11.9        279        153 |
+  2. |       Other         15       11.9        279        153 |
+  3. | South Asian         15       11.9        279        153 |
+  4. |       White         81       64.3        279        153 |
      +---------------------------------------------------------+
-(note: variable count_molnupiravir was str2, now str3 to accommodate using
-       data's values)
 file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +----------------------------------------------------+
      |    sex   count_~r   percen~r   total_~r   missin~r |
      |----------------------------------------------------|
-  1. |   Male        135       48.2        280          0 |
-  2. | Female        145       51.8        280          0 |
+  1. |   Male        135       47.9        282          0 |
+  2. | Female        147       52.1        282          0 |
      +----------------------------------------------------+
-(note: variable missing_molnupiravir was str1, now str3 to accommodate using
-       data's values)
 file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 (24,376 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | age_gr~p   count_~r   percen~r   total_~r   missin~r |
      |------------------------------------------------------|
-  1. |    18-39         90       32.1        280          0 |
-  2. |    40-59         80       28.6        280          0 |
-  3. |     >=60        110       39.3        280          0 |
+  1. |    18-39         93       33.3        279          0 |
+  2. |    40-59         75       26.9        279          0 |
+  3. |     >=60        111       39.8        279          0 |
      +------------------------------------------------------+
-(note: variable missing_molnupiravir was str1, now str3 to accommodate using
-       data's values)
 file /workspace/output/tables/baseline_table_redact_molnupiravir.dta saved
 10
 K
@@ -1770,417 +1246,255 @@ O
 (paxlovid_contraindicated: 0 changes made)
 (24,349 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | organ_~b   count_~d   percen~d   total_~d   missin~d |
      |------------------------------------------------------|
-  1. |       no        200       65.6        305          0 |
-  2. |      yes        105       34.4        305          0 |
+  1. |       no        201       65.7        306          0 |
+  2. |      yes        105       34.3        306          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | hiv_ai~b   count_~d   percen~d   total_~d   missin~d |
      |------------------------------------------------------|
-  1. |       no        235       77.0        305          0 |
-  2. |      yes         70       23.0        305          0 |
+  1. |       no        231         77        300          0 |
+  2. |      yes         69         23        300          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | immuno~b   count_~d   percen~d   total_~d   missin~d |
      |------------------------------------------------------|
-  1. |       no        260       85.2        305          0 |
-  2. |      yes         45       14.8        305          0 |
+  1. |       no        261       85.3        306          0 |
+  2. |      yes         45       14.7        306          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | imid_o~b   count_~d   percen~d   total_~d   missin~d |
      |------------------------------------------------------|
-  1. |       no        170       55.7        305          0 |
-  2. |      yes        135       44.3        305          0 |
+  1. |       no        171       55.9        306          0 |
+  2. |      yes        135       44.1        306          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | rare_n~b   count_~d   percen~d   total_~d   missin~d |
      |------------------------------------------------------|
-  1. |       no        120       38.7        310          0 |
-  2. |      yes        190       61.3        310          0 |
+  1. |       no        117       38.2        306          0 |
+  2. |      yes        189       61.8        306          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | renal_~b   count_~d   percen~d   total_~d   missin~d |
      |------------------------------------------------------|
-  1. |       no        195       63.9        305          0 |
-  2. |      yes        110       36.1        305          0 |
+  1. |       no        195       63.7        306          0 |
+  2. |      yes        111       36.3        306          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | liver_~b   count_~d   percen~d   total_~d   missin~d |
      |------------------------------------------------------|
-  1. |       no        230       75.4        305          0 |
-  2. |      yes         75       24.6        305          0 |
+  1. |       no        231       75.5        306          0 |
+  2. |      yes         75       24.5        306          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | haem_d~b   count_~d   percen~d   total_~d   missin~d |
      |------------------------------------------------------|
-  1. |       no        135       44.3        305          0 |
-  2. |      yes        170       55.7        305          0 |
+  1. |       no        135       44.1        306          0 |
+  2. |      yes        171       55.9        306          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | solid_~b   count_~d   percen~d   total_~d   missin~d |
      |------------------------------------------------------|
-  1. |       no        195       63.9        305          0 |
-  2. |      yes        110       36.1        305          0 |
+  1. |       no        195       63.7        306          0 |
+  2. |      yes        111       36.3        306          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | downs_~b   count_~d   percen~d   total_~d   missin~d |
      |------------------------------------------------------|
-  1. |       no        220       72.1        305          0 |
-  2. |      yes         85       27.9        305          0 |
+  1. |       no        219         73        300          0 |
+  2. |      yes         81         27        300          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | hypert~n   count_~d   percen~d   total_~d   missin~d |
      |------------------------------------------------------|
-  1. |       no        270       88.5        305          0 |
-  2. |      yes         35       11.5        305          0 |
+  1. |       no        267       87.3        306          0 |
+  2. |      yes         39       12.7        306          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | diabetes   count_~d   percen~d   total_~d   missin~d |
      |------------------------------------------------------|
-  1. |       no        280       91.8        305          0 |
-  2. |      yes         25        8.2        305          0 |
+  1. |       no        279         93        300          0 |
+  2. |      yes         21          7        300          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | chroni~e   count_~d   percen~d   total_~d   missin~d |
      |------------------------------------------------------|
-  1. |       no        285       93.4        305          0 |
-  2. |      yes         20        6.6        305          0 |
+  1. |       no        285       93.1        306          0 |
+  2. |      yes         21        6.9        306          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | chroni~e   count_~d   percen~d   total_~d   missin~d |
      |------------------------------------------------------|
-  1. |       no        280       91.8        305          0 |
-  2. |      yes         25        8.2        305          0 |
+  1. |       no        279       91.2        306          0 |
+  2. |      yes         27        8.8        306          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | paxlov~d   count_~d   percen~d   total_~d   missin~d |
      |------------------------------------------------------|
-  1. |       no        160       52.5        305          0 |
-  2. |      yes        145       47.5        305          0 |
+  1. |       no        159         52        306          0 |
+  2. |      yes        147         48        306          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | prior_~d   count_~d   percen~d   total_~d   missin~d |
      |------------------------------------------------------|
-  1. |       no        210       68.9        305          0 |
-  2. |      yes         95       31.1        305          0 |
+  1. |       no        213       69.6        306          0 |
+  2. |      yes         93       30.4        306          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +-----------------------------------------------------------------------+
      |        vaccination_status   count_~d   percen~d   total_~d   missin~d |
      |-----------------------------------------------------------------------|
-  1. |             Un-vaccinated         65       21.0        310          0 |
-  2. |           One vaccination         20        6.5        310          0 |
-  3. |          Two vaccinations         35       11.3        310          0 |
-  4. |        Three vaccinations        160       51.6        310          0 |
-  5. | Four or more vaccinations         30        9.7        310          0 |
+  1. |             Un-vaccinated         63       20.8        303          0 |
+  2. |           One vaccination         21        6.9        303          0 |
+  3. |          Two vaccinations         33       10.9        303          0 |
+  4. |        Three vaccinations        159       52.5        303          0 |
+  5. | Four or more vaccinations         27        8.9        303          0 |
      +-----------------------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +----------------------------------------------------------------------+
      |               region_nhs   count_~d   percen~d   total_~d   missin~d |
      |----------------------------------------------------------------------|
-  1. |                     East         35       11.5        305          0 |
-  2. |            East Midlands         40       13.1        305          0 |
-  3. |                   London         55       18.0        305          0 |
-  4. |               North East         20        6.6        305          0 |
-  5. |               North West         35       11.5        305          0 |
+  1. |                     East         33       11.1        297          0 |
+  2. |            East Midlands         39       13.1        297          0 |
+  3. |                   London         57       19.2        297          0 |
+  4. |               North East         21        7.1        297          0 |
+  5. |               North West         39       13.1        297          0 |
      |----------------------------------------------------------------------|
-  6. |               South East         30        9.8        305          0 |
-  7. |               South West         30        9.8        305          0 |
-  8. |            West Midlands         25        8.2        305          0 |
-  9. | Yorkshire and The Humber         35       11.5        305          0 |
+  6. |               South East         27        9.1        297          0 |
+  7. |               South West         27        9.1        297          0 |
+  8. |            West Midlands         21        7.1        297          0 |
+  9. | Yorkshire and The Humber         33       11.1        297          0 |
      +----------------------------------------------------------------------+
-(note: variable count_paxlovid was str2, now str3 to accommodate using data's
-       values)
 file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (1 missing value generated)
 (1 observation deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(5 real changes made)
 
      +--------------------------------------------------------------+
      |            imdq5   count_~d   percen~d   total_~d   missin~d |
      |--------------------------------------------------------------|
-  1. | 1 least deprived         70       23.0        310          - |
-  2. |                2         55       18.0        310          - |
-  3. |                3         60       19.7        310          - |
-  4. |                4         60       19.7        310          - |
-  5. |  5 most deprived         60       19.7        310          - |
+  1. | 1 least deprived         69       23.2        300          3 |
+  2. |                2         57       19.2        300          3 |
+  3. |                3         57       19.2        300          3 |
+  4. |                4         57       19.2        300          3 |
+  5. |  5 most deprived         57       19.2        300          3 |
      +--------------------------------------------------------------+
-(note: variable count_paxlovid was str2, now str3 to accommodate using data's
-       values)
 file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (1 missing value generated)
 (1 observation deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +---------------------------------------------------------+
      |   bmi_group   count_~d   percen~d   total_~d   missin~d |
      |---------------------------------------------------------|
-  1. | underweight         25        8.8        305         20 |
-  2. |      normal         75       26.3        305         20 |
-  3. |  overweight         65       22.8        305         20 |
-  4. |       obese        120       42.1        305         20 |
+  1. | underweight         27        9.4        303         15 |
+  2. |      normal         75         26        303         15 |
+  3. |  overweight         63       21.9        303         15 |
+  4. |       obese        123       42.7        303         15 |
      +---------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (1 missing value generated)
 (1 observation deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +---------------------------------------------------------+
      |   ethnicity   count_~d   percen~d   total_~d   missin~d |
      |---------------------------------------------------------|
-  1. |       Black         15       12.0        305        180 |
-  2. |       Other         15       12.0        305        180 |
-  3. | South Asian         10        8.0        305        180 |
-  4. |       White         85       68.0        305        180 |
+  1. |       Black         15       12.5        297        177 |
+  2. |       Other         15       12.5        297        177 |
+  3. | South Asian          9        7.5        297        177 |
+  4. |       White         81       67.5        297        177 |
      +---------------------------------------------------------+
-(note: variable count_paxlovid was str2, now str3 to accommodate using data's
-       values)
 file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +----------------------------------------------------+
      |    sex   count_~d   percen~d   total_~d   missin~d |
      |----------------------------------------------------|
-  1. |   Male        150       49.2        305          0 |
-  2. | Female        155       50.8        305          0 |
+  1. |   Male        147         49        300          0 |
+  2. | Female        153         51        300          0 |
      +----------------------------------------------------+
-(note: variable missing_paxlovid was str1, now str3 to accommodate using
-       data's values)
 file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 (24,349 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | age_gr~p   count_~d   percen~d   total_~d   missin~d |
      |------------------------------------------------------|
-  1. |    18-39        105       34.4        305          0 |
-  2. |    40-59        105       34.4        305          0 |
-  3. |     >=60         95       31.1        305          0 |
+  1. |    18-39        105       34.7        303          0 |
+  2. |    40-59        105       34.7        303          0 |
+  3. |     >=60         93       30.7        303          0 |
      +------------------------------------------------------+
-(note: variable missing_paxlovid was str1, now str3 to accommodate using
-       data's values)
 file /workspace/output/tables/baseline_table_redact_paxlovid.dta saved
 14
 O
@@ -2208,424 +1522,262 @@ S
 (paxlovid_contraindicated: 0 changes made)
 (24,379 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | organ_~b   count_~b   percen~b   total_~b   missin~b |
      |------------------------------------------------------|
-  1. |       no        175       63.6        275          0 |
-  2. |      yes        100       36.4        275          0 |
+  1. |       no        177       64.1        276          0 |
+  2. |      yes         99       35.9        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | hiv_ai~b   count_~b   percen~b   total_~b   missin~b |
      |------------------------------------------------------|
-  1. |       no        220       78.6        280          0 |
-  2. |      yes         60       21.4        280          0 |
+  1. |       no        219       79.3        276          0 |
+  2. |      yes         57       20.7        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | immuno~b   count_~b   percen~b   total_~b   missin~b |
      |------------------------------------------------------|
-  1. |       no        235       83.9        280          0 |
-  2. |      yes         45       16.1        280          0 |
+  1. |       no        231       83.7        276          0 |
+  2. |      yes         45       16.3        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | imid_o~b   count_~b   percen~b   total_~b   missin~b |
      |------------------------------------------------------|
-  1. |       no        160       58.2        275          0 |
-  2. |      yes        115       41.8        275          0 |
+  1. |       no        159       58.9        270          0 |
+  2. |      yes        111       41.1        270          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | rare_n~b   count_~b   percen~b   total_~b   missin~b |
      |------------------------------------------------------|
-  1. |       no         95       34.5        275          0 |
-  2. |      yes        180       65.5        275          0 |
+  1. |       no         93       34.4        270          0 |
+  2. |      yes        177       65.6        270          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | renal_~b   count_~b   percen~b   total_~b   missin~b |
      |------------------------------------------------------|
-  1. |       no        160       57.1        280          0 |
-  2. |      yes        120       42.9        280          0 |
+  1. |       no        159       57.6        276          0 |
+  2. |      yes        117       42.4        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | liver_~b   count_~b   percen~b   total_~b   missin~b |
      |------------------------------------------------------|
-  1. |       no        200       72.7        275          0 |
-  2. |      yes         75       27.3        275          0 |
+  1. |       no        201       72.8        276          0 |
+  2. |      yes         75       27.2        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | haem_d~b   count_~b   percen~b   total_~b   missin~b |
      |------------------------------------------------------|
-  1. |       no        100       35.7        280          0 |
-  2. |      yes        180       64.3        280          0 |
+  1. |       no         99       35.9        276          0 |
+  2. |      yes        177       64.1        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | solid_~b   count_~b   percen~b   total_~b   missin~b |
      |------------------------------------------------------|
-  1. |       no        195       70.9        275          0 |
-  2. |      yes         80       29.1        275          0 |
+  1. |       no        195       70.7        276          0 |
+  2. |      yes         81       29.3        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | downs_~b   count_~b   percen~b   total_~b   missin~b |
      |------------------------------------------------------|
-  1. |       no        185       67.3        275          0 |
-  2. |      yes         90       32.7        275          0 |
+  1. |       no        183       66.3        276          0 |
+  2. |      yes         93       33.7        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | hypert~n   count_~b   percen~b   total_~b   missin~b |
      |------------------------------------------------------|
-  1. |       no        240       87.3        275          0 |
-  2. |      yes         35       12.7        275          0 |
+  1. |       no        237       87.8        270          0 |
+  2. |      yes         33       12.2        270          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | diabetes   count_~b   percen~b   total_~b   missin~b |
      |------------------------------------------------------|
-  1. |       no        250       90.9        275          0 |
-  2. |      yes         25        9.1        275          0 |
+  1. |       no        249       90.2        276          0 |
+  2. |      yes         27        9.8        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | chroni~e   count_~b   percen~b   total_~b   missin~b |
      |------------------------------------------------------|
-  1. |       no        245       89.1        275          0 |
-  2. |      yes         30       10.9        275          0 |
+  1. |       no        249       90.2        276          0 |
+  2. |      yes         27        9.8        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | chroni~e   count_~b   percen~b   total_~b   missin~b |
      |------------------------------------------------------|
-  1. |       no        245       89.1        275          0 |
-  2. |      yes         30       10.9        275          0 |
+  1. |       no        243         88        276          0 |
+  2. |      yes         33         12        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | paxlov~d   count_~b   percen~b   total_~b   missin~b |
      |------------------------------------------------------|
-  1. |       no        125       45.5        275          0 |
-  2. |      yes        150       54.5        275          0 |
+  1. |       no        129       46.7        276          0 |
+  2. |      yes        147       53.3        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | prior_~d   count_~b   percen~b   total_~b   missin~b |
      |------------------------------------------------------|
-  1. |       no        190       69.1        275          0 |
-  2. |      yes         85       30.9        275          0 |
+  1. |       no        189       68.5        276          0 |
+  2. |      yes         87       31.5        276          0 |
      +------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +-----------------------------------------------------------------------+
      |        vaccination_status   count_~b   percen~b   total_~b   missin~b |
      |-----------------------------------------------------------------------|
-  1. |             Un-vaccinated         55       20.0        275          0 |
-  2. |           One vaccination         25        9.1        275          0 |
-  3. |          Two vaccinations         20        7.3        275          0 |
-  4. |        Three vaccinations        145       52.7        275          0 |
-  5. | Four or more vaccinations         30       10.9        275          0 |
+  1. |             Un-vaccinated         57       20.9        273          0 |
+  2. |           One vaccination         21        7.7        273          0 |
+  3. |          Two vaccinations         21        7.7        273          0 |
+  4. |        Three vaccinations        147       53.8        273          0 |
+  5. | Four or more vaccinations         27        9.9        273          0 |
      +-----------------------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +----------------------------------------------------------------------+
      |               region_nhs   count_~b   percen~b   total_~b   missin~b |
      |----------------------------------------------------------------------|
-  1. |                     East         25        9.1        275          0 |
-  2. |            East Midlands         20        7.3        275          0 |
-  3. |                   London         60       21.8        275          0 |
-  4. |               North East         35       12.7        275          0 |
-  5. |               North West         30       10.9        275          0 |
+  1. |                     East         21        7.7        273          0 |
+  2. |            East Midlands         21        7.7        273          0 |
+  3. |                   London         57       20.9        273          0 |
+  4. |               North East         39       14.3        273          0 |
+  5. |               North West         33       12.1        273          0 |
      |----------------------------------------------------------------------|
-  6. |               South East         25        9.1        275          0 |
-  7. |               South West         25        9.1        275          0 |
-  8. |            West Midlands         35       12.7        275          0 |
-  9. | Yorkshire and The Humber         20        7.3        275          0 |
+  6. |               South East         21        7.7        273          0 |
+  7. |               South West         27        9.9        273          0 |
+  8. |            West Midlands         33       12.1        273          0 |
+  9. | Yorkshire and The Humber         21        7.7        273          0 |
      +----------------------------------------------------------------------+
-(note: variable count_sotrovimab was str2, now str3 to accommodate using
-       data's values)
 file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (1 missing value generated)
 (1 observation deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(5 real changes made)
 
      +--------------------------------------------------------------+
      |            imdq5   count_~b   percen~b   total_~b   missin~b |
      |--------------------------------------------------------------|
-  1. | 1 least deprived         50       18.5        275          - |
-  2. |                2         40       14.8        275          - |
-  3. |                3         55       20.4        275          - |
-  4. |                4         60       22.2        275          - |
-  5. |  5 most deprived         65       24.1        275          - |
+  1. | 1 least deprived         51       19.1        270          3 |
+  2. |                2         39       14.6        270          3 |
+  3. |                3         51       19.1        270          3 |
+  4. |                4         57       21.3        270          3 |
+  5. |  5 most deprived         69       25.8        270          3 |
      +--------------------------------------------------------------+
-(note: variable count_sotrovimab was str2, now str3 to accommodate using
-       data's values)
 file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (1 missing value generated)
 (1 observation deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +---------------------------------------------------------+
      |   bmi_group   count_~b   percen~b   total_~b   missin~b |
      |---------------------------------------------------------|
-  1. | underweight         25        9.6        275         15 |
-  2. |      normal         65       25.0        275         15 |
-  3. |  overweight         55       21.2        275         15 |
-  4. |       obese        115       44.2        275         15 |
+  1. | underweight         21        8.1        273         15 |
+  2. |      normal         63       24.4        273         15 |
+  3. |  overweight         57       22.1        273         15 |
+  4. |       obese        117       45.3        273         15 |
      +---------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (1 missing value generated)
 (1 observation deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +---------------------------------------------------------+
      |   ethnicity   count_~b   percen~b   total_~b   missin~b |
      |---------------------------------------------------------|
-  1. |       Black         10       11.1        275        185 |
-  2. |       Other         15       16.7        275        185 |
-  3. | South Asian         10       11.1        275        185 |
-  4. |       White         55       61.1        275        185 |
+  1. |       Black          9         10        273        183 |
+  2. |       Other         15       16.7        273        183 |
+  3. | South Asian          9         10        273        183 |
+  4. |       White         57       63.3        273        183 |
      +---------------------------------------------------------+
-(note: variable count_sotrovimab was str2, now str3 to accommodate using
-       data's values)
 file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +----------------------------------------------------+
      |    sex   count_~b   percen~b   total_~b   missin~b |
      |----------------------------------------------------|
-  1. |   Male        145       51.8        280          0 |
-  2. | Female        135       48.2        280          0 |
+  1. |   Male        141       51.1        276          0 |
+  2. | Female        135       48.9        276          0 |
      +----------------------------------------------------+
-(note: variable missing_sotrovimab was str1, now str3 to accommodate using
-       data's values)
 file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 (24,379 observations deleted)
 (0 observations deleted)
-(0 real changes made)
-percentstr generated as str4
-percentstr was forced to string; some loss of information
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
 
      +------------------------------------------------------+
      | age_gr~p   count_~b   percen~b   total_~b   missin~b |
      |------------------------------------------------------|
-  1. |    18-39        100       35.7        280          0 |
-  2. |    40-59         85       30.4        280          0 |
-  3. |     >=60         95       33.9        280          0 |
+  1. |    18-39         99       36.3        273          0 |
+  2. |    40-59         81       29.7        273          0 |
+  3. |     >=60         93       34.1        273          0 |
      +------------------------------------------------------+
-(note: variable missing_sotrovimab was str1, now str3 to accommodate using
-       data's values)
 file /workspace/output/tables/baseline_table_redact_sotrovimab.dta saved
 18
 S
 file /workspace/output/tables/baseline_table_redact_bydrug.xls saved
 
 .         
-. *Output tables as CSVs           
+. *Output tables as CSVs  
 . import excel "$projectdir/output/tables/baseline_table_redact_bydrug.xls", cl
 > ear
 (22 vars, 65 obs)
@@ -2655,79 +1807,47 @@ file /workspace/output/tables/baseline_table_redact_mean.dta saved
 > `var', by(drug_str)
   4.         gen variable = "`var'"
   5.         rename *count freq
-  6.         gen count = round(freq, 5)
-  7.         gen countstr = string(count)
-  8.         replace countstr = "<8" if count<=7
-  9.         tostring mean, gen(meanstr) force format(%9.1f)
- 10.         replace meanstr = "-" if countstr =="<8"
- 11.         tostring stdev, gen(stdevstr) force format(%9.1f)
- 12.         replace stdevstr = "-" if countstr =="<8"
- 13.         drop stdev mean freq count
- 14.         rename countstr count
- 15.         rename meanstr mean
- 16.         rename stdevstr stdev
- 17.     order variable drug_str count mean stdev
- 18.         list variable drug_str count mean stdev
- 19.         append using "$projectdir/output/tables/baseline_table_redact_mean
+  6.         gen count_mid  = (ceil(freq/6)*6) - (floor(6/2) * (freq!=0))
+  7.         drop freq
+  8.     order variable drug_str count mean stdev
+  9.         list variable drug_str count mean stdev
+ 10.         append using "$projectdir/output/tables/baseline_table_redact_mean
 > .dta"
- 20.         save "$projectdir/output/tables/baseline_table_redact_mean.dta", r
+ 11.         save "$projectdir/output/tables/baseline_table_redact_mean.dta", r
 > eplace
- 21.         restore
- 22.         preserve
- 23.         collapse (count) "`var'_count"=`var' (mean) mean=`var' (sd) stdev=
+ 12.         restore
+ 13.         preserve
+ 14.         collapse (count) "`var'_count"=`var' (mean) mean=`var' (sd) stdev=
 > `var'
- 24.         gen variable = "`var'"
- 25.         rename *count freq
- 26.         gen count = round(freq, 5)
- 27.         gen countstr = string(count)
- 28.         replace countstr = "<8" if count<=7
- 29.         tostring mean, gen(meanstr) force format(%9.1f)
- 30.         replace meanstr = "-" if countstr =="<8"
- 31.         tostring stdev, gen(stdevstr) force format(%9.1f)
- 32.         replace stdevstr = "-" if countstr =="<8"
- 33.         drop stdev mean freq count
- 34.         rename countstr count
- 35.         rename meanstr mean
- 36.         rename stdevstr stdev
- 37.         gen drug_str = "all"
- 38.     order variable drug_str count mean stdev
- 39.         list variable drug_str count mean stdev
- 40.         append using "$projectdir/output/tables/baseline_table_redact_mean
+ 15.         gen variable = "`var'"
+ 16.         rename *count freq
+ 17.         gen count_mid  = (ceil(freq/6)*6) - (floor(6/2) * (freq!=0))
+ 18.         drop freq
+ 19.         gen drug_str = "all"
+ 20.     order variable drug_str count mean stdev
+ 21.         list variable drug_str count mean stdev
+ 22.         append using "$projectdir/output/tables/baseline_table_redact_mean
 > .dta"
- 41.         save "$projectdir/output/tables/baseline_table_redact_mean.dta", r
+ 23.         save "$projectdir/output/tables/baseline_table_redact_mean.dta", r
 > eplace
- 42.         restore
- 43. }       
-(0 real changes made)
-meanstr generated as str4
-meanstr was forced to string; some loss of information
-(0 real changes made)
-stdevstr generated as str4
-stdevstr was forced to string; some loss of information
-(0 real changes made)
+ 24.         restore
+ 25. }       
 
-     +------------------------------------------------+
-     | variable       drug_str   count   mean   stdev |
-     |------------------------------------------------|
-  1. |      age        control   23795   48.8    19.0 |
-  2. |      age   molnupiravir     280   51.1    19.2 |
-  3. |      age       paxlovid     305   49.4    19.1 |
-  4. |      age     sotrovimab     275   49.3    19.1 |
-     +------------------------------------------------+
+     +--------------------------------------------------------+
+     | variable       drug_str   count_~d      mean     stdev |
+     |--------------------------------------------------------|
+  1. |      age        control      23793   48.8128   19.0498 |
+  2. |      age   molnupiravir        279    51.086   19.2277 |
+  3. |      age       paxlovid        303    49.402   19.1294 |
+  4. |      age     sotrovimab        273    49.337   19.0662 |
+     +--------------------------------------------------------+
 file /workspace/output/tables/baseline_table_redact_mean.dta saved
-(0 real changes made)
-meanstr generated as str4
-meanstr was forced to string; some loss of information
-(0 real changes made)
-stdevstr generated as str4
-stdevstr was forced to string; some loss of information
-(0 real changes made)
 
-     +--------------------------------------------+
-     | variable   drug_str   count   mean   stdev |
-     |--------------------------------------------|
-  1. |      age        all   24655   48.9    19.1 |
-     +--------------------------------------------+
+     +----------------------------------------------------+
+     | variable   drug_str   count_~d      mean     stdev |
+     |----------------------------------------------------|
+  1. |      age        all      24657   48.8517   19.0535 |
+     +----------------------------------------------------+
 (note: variable drug_str was str3, now str12 to accommodate using data's
        values)
 file /workspace/output/tables/baseline_table_redact_mean.dta saved
@@ -2747,5 +1867,5 @@ file /workspace/output/tables/baseline_table_redact_mean.csv saved
       name:  <unnamed>
        log:  /workspace/logs/redacted_table.log
   log type:  text
- closed on:   6 Sep 2023, 12:04:32
+ closed on:   4 Oct 2023, 11:56:25
 -------------------------------------------------------------------------------

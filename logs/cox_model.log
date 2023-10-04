@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  /workspace/logs/cox_model.log
   log type:  text
- opened on:  27 Sep 2023, 20:20:37
+ opened on:   4 Oct 2023, 11:35:04
 
 . 
 . *Set Ado file path
@@ -12621,30 +12621,19 @@ file /workspace/output/tables/cox_model_rates.csv saved
 . use "$projectdir/output/tables/cox_model_rates", clear
 
 . foreach var of varlist *events *ptime  {
-  2. gen `var'_round = round(`var', 5)       
+  2. gen `var'_midpoint = (ceil(`var'/6)*6) - (floor(6/2) * (`var'!=0))
   3. }
 
 . foreach var in all control sot pax mol {
-  2. gen `var'_rate_round = (`var'_events_round/`var'_ptime_round)*1000
-  3. gen `var'_lci_round = (invpoisson(`var'_events_round,.975)/`var'_ptime_rou
-> nd)*1000
-  4. gen `var'_uci_round = (invpoisson(`var'_events_round,.025)/`var'_ptime_rou
-> nd)*1000
-  5. replace `var'_events_round=. if  `var'_events <=7 & `var'_events!=0
-  6. replace `var'_ptime_round=. if  `var'_events <=7 & `var'_events!=0
-  7. }  
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(0 real changes made)
-(9 real changes made, 9 to missing)
-(9 real changes made, 9 to missing)
-(9 real changes made, 9 to missing)
-(9 real changes made, 9 to missing)
-(5 real changes made, 5 to missing)
-(5 real changes made, 5 to missing)
+  2. gen `var'_rate_midpoint = (`var'_events_midpoint/`var'_ptime_midpoint)*100
+> 0
+  3. gen `var'_lci_midpoint = (invpoisson(`var'_events_midpoint,.975)/`var'_pti
+> me_midpoint)*1000
+  4. gen `var'_uci_midpoint = (invpoisson(`var'_events_midpoint,.025)/`var'_pti
+> me_midpoint)*1000
+  5. }  
 
-. keep failure *round
+. keep failure *midpoint
 
 . order   failure all* control* sot* pax* mol* 
 
@@ -12661,5 +12650,5 @@ file /workspace/output/tables/cox_model_rates_round.csv saved
       name:  <unnamed>
        log:  /workspace/logs/cox_model.log
   log type:  text
- closed on:  27 Sep 2023, 20:24:23
+ closed on:   4 Oct 2023, 11:38:44
 -------------------------------------------------------------------------------
