@@ -141,8 +141,8 @@
     "nhsd-immunosuppresant-drugs-pra-dmd.csv": {
       "id": "nhsd/immunosuppresant-drugs-pra-dmd/526d9f5f",
       "url": "https://codelists.opensafely.org/codelist/nhsd/immunosuppresant-drugs-pra-dmd/526d9f5f/",
-      "downloaded_at": "2022-07-01 08:20:36.703395Z",
-      "sha": "fbb772601936d4df67f1ebe8a2e7e0bb3ec0777f"
+      "downloaded_at": "2023-10-31 15:21:43.017651Z",
+      "sha": "b86c1ff06c9208851b40b668fc846e25ccabcbb1"
     },
     "nhsd-immunosuppresant-drugs-pra-snomed.csv": {
       "id": "nhsd/immunosuppresant-drugs-pra-snomed/6b7d1294",
@@ -153,8 +153,8 @@
     "nhsd-oral-steroid-drugs-pra-dmd.csv": {
       "id": "nhsd/oral-steroid-drugs-pra-dmd/44292c02",
       "url": "https://codelists.opensafely.org/codelist/nhsd/oral-steroid-drugs-pra-dmd/44292c02/",
-      "downloaded_at": "2022-07-01 08:20:37.760999Z",
-      "sha": "bc844f5bf1d376fdfff43458233e09cc2a0978de"
+      "downloaded_at": "2023-10-31 15:21:43.425389Z",
+      "sha": "b7cf7bb49ba4841b629d6fc41e77d5537eea4a0c"
     },
     "nhsd-oral-steroid-drugs-snomed.csv": {
       "id": "nhsd/oral-steroid-drugs-snomed/1ae93909",
@@ -459,26 +459,26 @@
     "opensafely-methotrexate-injectable.csv": {
       "id": "opensafely/methotrexate-injectable/3328044b",
       "url": "https://codelists.opensafely.org/codelist/opensafely/methotrexate-injectable/3328044b/",
-      "downloaded_at": "2023-01-30 11:59:51.156890Z",
-      "sha": "b3346c5e6169072eb26bb62094ee883dcd8325d4"
+      "downloaded_at": "2023-10-31 15:21:54.714993Z",
+      "sha": "8850a188cc05752a06359383c0ed736b43b1eb0e"
     },
     "opensafely-methotrexate-oral.csv": {
       "id": "opensafely/methotrexate-oral/041a8320",
       "url": "https://codelists.opensafely.org/codelist/opensafely/methotrexate-oral/041a8320/",
-      "downloaded_at": "2023-01-30 11:59:51.345211Z",
-      "sha": "68754de9916bb08a1ea9d6d84c899dda5ee64ad7"
+      "downloaded_at": "2023-10-31 15:21:54.885971Z",
+      "sha": "83f9e01458553cda591d8cbfb65318f5b61d15b8"
     },
     "opensafely-mycophenolate.csv": {
       "id": "opensafely/mycophenolate/30754455",
       "url": "https://codelists.opensafely.org/codelist/opensafely/mycophenolate/30754455/",
-      "downloaded_at": "2023-01-30 11:59:51.542989Z",
-      "sha": "1d86687fd7f4dc21351f2e8af88035460a1b1a06"
+      "downloaded_at": "2023-10-31 15:21:56.085974Z",
+      "sha": "00c8ef20665ec26ad21272d30d595ac21cb529e3"
     },
     "opensafely-ciclosporin-oral-dmd.csv": {
       "id": "opensafely/ciclosporin-oral-dmd/4c961cc9",
       "url": "https://codelists.opensafely.org/codelist/opensafely/ciclosporin-oral-dmd/4c961cc9/",
-      "downloaded_at": "2023-01-30 11:59:51.746495Z",
-      "sha": "e5c310a46991fd4aae1ac7b4a2272d87c4f68439"
+      "downloaded_at": "2023-10-31 15:21:56.315798Z",
+      "sha": "0f6bcda3b7e44d7b7f24b41d8840cfad90e0bc1d"
     },
     "opensafely-dialysis.csv": {
       "id": "opensafely/dialysis/3ce108ac",
@@ -543,14 +543,20 @@
     "opensafely-sps-paxlovid-interactions-do-not-use-dmd.csv": {
       "id": "opensafely/sps-paxlovid-interactions-do-not-use-dmd/1a657b33",
       "url": "https://codelists.opensafely.org/codelist/opensafely/sps-paxlovid-interactions-do-not-use-dmd/1a657b33/",
-      "downloaded_at": "2023-07-05 16:17:42.237774Z",
-      "sha": "1ea163397491dd6aa73fd1453a42274364bfa177"
+      "downloaded_at": "2023-10-31 15:21:58.655882Z",
+      "sha": "112c2e395512fc04e0167f7668a07ae8cd3daeb8"
     },
     "opensafely-nirmatrelvir-drug-interactions-dmd.csv": {
       "id": "opensafely/nirmatrelvir-drug-interactions-dmd/015607fe",
       "url": "https://codelists.opensafely.org/codelist/opensafely/nirmatrelvir-drug-interactions-dmd/015607fe/",
-      "downloaded_at": "2023-07-05 16:17:42.567528Z",
-      "sha": "496c698c13e59be0de955da9535927d637da2081"
+      "downloaded_at": "2023-10-31 15:21:58.921915Z",
+      "sha": "bd2782dffa5cbce0c51efd68812be27ee1faabeb"
+    },
+    "opensafely-paxlovid-nirmatrelvirritonavir-absolute-contraindications-dmd.csv": {
+      "id": "opensafely/paxlovid-nirmatrelvirritonavir-absolute-contraindications-dmd/774852b7",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/paxlovid-nirmatrelvirritonavir-absolute-contraindications-dmd/774852b7/",
+      "downloaded_at": "2023-10-31 15:21:59.123906Z",
+      "sha": "0e1113bbc2429d0bb9593284a9892d7d455f525b"
     },
     "opensafely-symptoms-rashes.csv": {
       "id": "opensafely/symptoms-rashes/6bd2da47",

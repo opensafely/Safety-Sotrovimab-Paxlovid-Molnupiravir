@@ -12,8 +12,8 @@
 
 ****************************************************************************************************************
 **Set filepaths
-global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
-// global projectdir `c(pwd)'
+// global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+global projectdir `c(pwd)'
 di "$projectdir"
 capture mkdir "$projectdir/output/data"
 capture mkdir "$projectdir/output/figures"
@@ -41,7 +41,7 @@ global adj 		age i.sex i.region_nhs i.imdq5 i.ethnicity 1b.bmi_group ///
 global adj2 	age i.sex i.region_nhs i.imdq5 i.ethnicity 1b.bmi_group 
 global adj3 	age i.sex i.region_nhs i.imdq5 i.ethnicity 1b.bmi_group ///
 				paxlovid_contraindicated i.vaccination_status diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension 	
-global adj4 	i.drug age i.sex i.region_nhs i.imdq5 White 1b.bmi_group ///
+global adj4 	age i.sex i.region_nhs i.imdq5 White 1b.bmi_group ///
 				paxlovid_contraindicated i.vaccination_status diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension ///
 				dementia care_home serious_mental_illness				
 				
@@ -74,8 +74,9 @@ global ae_disease			ae_diverticulitis 				///
 							ae_sle 							///
 							ae_psorasis 					///
 							ae_psa 							///
-							ae_axspa 						///
-							ae_ibd
+							ae_axspa 						
+							
+							//ae_ibd
 global ae_disease_serious	ae_diverticulitis_serious 		///
 							ae_diarrhoea_serious			///
 							ae_taste_serious 				///
@@ -135,7 +136,7 @@ preserve
 		}
 			pbalchk drug $bal_agesex  
 			pbalchk drug $bal_agesex, wt(iptw_agesex) graph 
-			graph title(save "$projectdir/output/figures/sot_match_agesex", replace
+			graph save "$projectdir/output/figures/sot_match_agesex", replace
 			
 			pbalchk drug $bal_adj  
 			pbalchk drug $bal_adj, wt(iptw_adj) graph 
@@ -267,15 +268,24 @@ restore
 postclose `coxoutput_propensity_mol'
 
 ** Histogram figures
-graph combine histogram_mol_agesex histogram_pax_agesex histogram_mol_agesex, title("histogram agesex model") saving("$projectdir/output/figures/histogram_agesex", replace)
+graph combine "$projectdir/output/figures/histogram_sot_agesex" "$projectdir/output/figures/histogram_pax_agesex" "$projectdir/output/figures/histogram_mol_agesex", ///
+title("histogram agesex adjusted model") saving("$projectdir/output/figures/histogram_agesex", replace)
 graph export "$projectdir/output/figures/histogram_agesex.svg", as(svg) replace
-graph combine histogram_sot_adj histogram_pax_adj histogram_mol_adj, title("histogram adj model") saving("$projectdir/output/figures/histogram_adj", replace)
+
+graph combine "$projectdir/output/figures/histogram_sot_adj" "$projectdir/output/figures/histogram_pax_adj" "$projectdir/output/figures/histogram_mol_adj", ///
+title("histogram adjusted model") saving("$projectdir/output/figures/histogram_adj", replace)
 graph export "$projectdir/output/figures/histogram_adj.svg", as(svg) replace 
-graph combine histogram_sot_adj2 histogram_pax_adj2 histogram_mol_adj2, title("histogram adj2 model") saving("$projectdir/output/figures/histogram_adj2", replace)
+
+graph combine "$projectdir/output/figures/histogram_sot_adj2" "$projectdir/output/figures/histogram_pax_adj2" "$projectdir/output/figures/histogram_mol_adj2", ///
+title("histogram adjusted model 2") saving("$projectdir/output/figures/histogram_adj2", replace)
 graph export "$projectdir/output/figures/histogram_adj2.svg", as(svg) replace 
-graph combine histogram_sot_adj3 histogram_pax_adj3 histogram_mol_adj3, title("histogram adj3 model") saving("$projectdir/output/figures/histogram_adj3", replace)
+
+graph combine "$projectdir/output/figures/histogram_sot_adj3" "$projectdir/output/figures/histogram_pax_adj3" "$projectdir/output/figures/histogram_mol_adj3", ///
+title("histogram adjusted model 3") saving("$projectdir/output/figures/histogram_adj3", replace)
 graph export "$projectdir/output/figures/histogram_adj3.svg", as(svg) replace 
-graph combine histogram_sot_adj4 histogram_pax_adj4 histogram_mol_adj4, title("histogram adj4 model") saving("$projectdir/output/figures/histogram_adj4", replace)
+
+graph combine "$projectdir/output/figures/histogram_sot_adj4" "$projectdir/output/figures/histogram_pax_adj4" "$projectdir/output/figures/histogram_mol_adj4", ///
+title("histogram adjusted model 4") saving("$projectdir/output/figures/histogram_adj4", replace)
 graph export "$projectdir/output/figures/histogram_adj4.svg", as(svg) replace 
 
 
@@ -283,13 +293,13 @@ graph export "$projectdir/output/figures/histogram_adj4.svg", as(svg) replace
 graph combine "$projectdir/output/figures/sot_match_agesex.gph" "$projectdir/output/figures/pax_match_agesex.gph" "$projectdir/output/figures/mol_match_agesex.gph" ///
 , title("PS balancing agesex model") saving("$projectdir/output/figures/balance_agesex", replace)
 graph combine "$projectdir/output/figures/sot_match_adj.gph" "$projectdir/output/figures/pax_match_adj.gph" "$projectdir/output/figures/mol_match_adj.gph" ///
-, title("PS balancing adj model") saving("$projectdir/output/figures/balance_adj", replace)
+, title("PS balancing adjusted model") saving("$projectdir/output/figures/balance_adj", replace)
 graph combine "$projectdir/output/figures/sot_match_adj2.gph" "$projectdir/output/figures/pax_match_adj2.gph" "$projectdir/output/figures/mol_match_adj2.gph" ///
-, title("PS balancing adj2 model") saving("$projectdir/output/figures/balance_adj2", replace)
+, title("PS balancing adjusted model 2") saving("$projectdir/output/figures/balance_adj2", replace)
 graph combine "$projectdir/output/figures/sot_match_adj3.gph" "$projectdir/output/figures/pax_match_adj3.gph" "$projectdir/output/figures/mol_match_adj3.gph" ///
-, title("PS balancing adj3 model") saving("$projectdir/output/figures/balance_adj3", replace)
+, title("PS balancing adjusted model 3") saving("$projectdir/output/figures/balance_adj3", replace)
 graph combine "$projectdir/output/figures/sot_match_adj4.gph" "$projectdir/output/figures/pax_match_adj4.gph" "$projectdir/output/figures/mol_match_adj4.gph" ///
-, title("PS balancing adj4 model") saving("$projectdir/output/figures/balance_adj4", replace)
+, title("PS balancing adjusted model 4") saving("$projectdir/output/figures/balance_adj4", replace)
 
 
 *******************************************************************************

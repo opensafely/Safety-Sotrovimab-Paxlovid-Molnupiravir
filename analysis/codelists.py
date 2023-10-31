@@ -202,22 +202,22 @@ immunosuppresant_drugs_snomed_codes = codelist_from_csv(
   "codelists/nhsd-immunosuppresant-drugs-pra-snomed.csv",   system = "snomed",   column = "code"
 )
 oral_steroid_drugs_dmd_codes = codelist_from_csv(
-  "codelists/nhsd-oral-steroid-drugs-pra-dmd.csv",  system = "snomed",  column = "dmd_id",
+  "codelists/nhsd-oral-steroid-drugs-pra-dmd.csv",  system = "snomed",  column = "code",
 )
 oral_steroid_drugs_snomed_codes = codelist_from_csv(
   "codelists/nhsd-oral-steroid-drugs-snomed.csv",   system = "snomed",   column = "code"
 )
 inj_methotrexate_drugs_snomed_codes = codelist_from_csv(
-  "codelists/opensafely-methotrexate-injectable.csv",   system = "snomed",   column = "dmd_id"
+  "codelists/opensafely-methotrexate-injectable.csv",   system = "snomed",   column = "code"
 )
 oral_methotrexate_drugs_snomed_codes = codelist_from_csv(
-  "codelists/opensafely-methotrexate-oral.csv",   system = "snomed",   column = "dmd_id"
+  "codelists/opensafely-methotrexate-oral.csv",   system = "snomed",   column = "code"
 )
 oral_mycophenolate_drugs_snomed_codes = codelist_from_csv(
-  "codelists/opensafely-mycophenolate.csv",   system = "snomed",   column = "dmd_id"
+  "codelists/opensafely-mycophenolate.csv",   system = "snomed",   column = "code"
 )
 oral_ciclosporin_snomed_codes = codelist_from_csv(
-  "codelists/opensafely-ciclosporin-oral-dmd.csv",   system = "snomed",   column = "dmd_id"
+  "codelists/opensafely-ciclosporin-oral-dmd.csv",   system = "snomed",   column = "code"
 )
 
 ### Primary immune deficiencies
@@ -382,11 +382,15 @@ covid_vaccine_declined_codes = combine_codelists(
 )
 # Paxlovid interactions
 drugs_interaction_paxlovid_codes = codelist_from_csv(
-  "codelists/opensafely-sps-paxlovid-interactions-do-not-use-dmd.csv",  system = "snomed", column = "dmd_id"
+  "codelists/opensafely-sps-paxlovid-interactions-do-not-use-dmd.csv",  system = "snomed", column = "code"
 )
 drugs_interaction_nirmatrelvir_codes = codelist_from_csv(
-  "codelists/opensafely-nirmatrelvir-drug-interactions-dmd.csv",  system = "snomed", column = "dmd_id"
+  "codelists/opensafely-nirmatrelvir-drug-interactions-dmd.csv",  system = "snomed", column = "code"
 )
+paxlovid_absolute_contraindication_codes = codelist_from_csv(
+  "codelists/opensafely-paxlovid-nirmatrelvirritonavir-absolute-contraindications-dmd.csv",  system = "snomed", column = "code"
+)
+
 ## Outcomes  ---- Pre-specified adverse drug reactions and AESIs
 
 ### Pre-specified adverse drug reactions

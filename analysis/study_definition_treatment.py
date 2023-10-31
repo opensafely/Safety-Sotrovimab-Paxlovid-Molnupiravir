@@ -1,4 +1,3 @@
-
 ## Main analysis - treatment arm restricted to those WITH covid test within 5 days of treatment. Start date is COVID TEST date 
 
 from cohortextractor import StudyDefinition, patients, codelist_from_csv, codelist, filter_codes_by_category, combine_codelists, Measure
@@ -336,7 +335,6 @@ study = StudyDefinition(
     pathogen = "SARS-CoV-2", test_result = "positive", returning = "date", date_format = "YYYY-MM-DD", on_or_after = "date_treated - 5 days", find_first_match_in_period = True, 
     restrict_to_earliest_specimen_date = False, return_expectations = {"date": {"earliest": "2021-12-11", "latest": "today"}, "incidence": 0.9},
   ),
-
 
   # Eligable based on comorbidities for control population
   ## Not hospitalised

@@ -12,8 +12,8 @@
 
 ****************************************************************************************************************
 **Set filepaths
-global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
-// global projectdir `c(pwd)'
+// global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+global projectdir `c(pwd)'
 di "$projectdir"
 capture mkdir "$projectdir/output/data"
 capture mkdir "$projectdir/output/figures"
@@ -105,47 +105,47 @@ egen pre_imae_serious = rmin(pre_ra_serious pre_sle_serious pre_psorasis_serious
 egen pre_all = rmin(ae_spc_all ae_drug_all ae_imae_all )
 egen pre_all_serious = rmin(ae_spc_serious ae_drug_serious ae_imae_serious)
 
-global pre_ae_disease		pre_diverticulitis 				///
-							pre_diarrhoea					///
-							pre_taste 						///
-							pre_rash 						///
-							pre_bronchospasm				///
-							pre_contactderm					///
-							pre_dizziness					///
-							pre_nausea_vomit				///
-							pre_headache					///
-							pre_anaphylaxis 				///
-							pre_drugreaction				///
-							pre_ra 							///
-							pre_sle 						///
-							pre_psorasis 					///
-							pre_psa 						///
-							pre_axspa	 					///
-							pre_ibd 
-global pre_disease_serious	pre_diverticulitis_serious 		///
-							pre_diarrhoea_serious			///
-							pre_taste_serious				///
-							pre_rash_serious 				///
-							pre_contactderm_serious			///
-							pre_dizziness_serious			///
-							pre_nausea_vomit_serious		///
-							pre_headache_serious			///
-							pre_anaphylaxis_serious 		///
-							pre_drugreaction_serious		///
-							pre_ra_serious 					///
-							pre_sle_serious 				///
-							pre_psorasis_serious 			///
-							pre_psa_serious 				///
-							pre_axspa_serious	 			///
-							pre_ibd_serious 							
-global pre_ae_combined		pre_all							///
-							pre_all_serious  				///
-							pre_spc_all 					///
-							pre_spc_serious					///
-							pre_drug_all					///
-							pre_drug_serious				///
-							pre_imae_all					///	
-							pre_imae_serious							
+global pre_ae_disease			pre_diverticulitis 				///
+								pre_diarrhoea					///
+								pre_taste 						///
+								pre_rash 						///
+								pre_bronchospasm				///
+								pre_contactderm					///
+								pre_dizziness					///
+								pre_nausea_vomit				///
+								pre_headache					///
+								pre_anaphylaxis 				///
+								pre_drugreaction				///
+								pre_ra 							///
+								pre_sle 						///
+								pre_psorasis 					///
+								pre_psa 						///
+								pre_axspa	 					///
+								pre_ibd 
+global pre_ae_disease_serious	pre_diverticulitis_serious 		///
+								pre_diarrhoea_serious			///
+								pre_taste_serious				///
+								pre_rash_serious 				///
+								pre_contactderm_serious			///
+								pre_dizziness_serious			///
+								pre_nausea_vomit_serious		///
+								pre_headache_serious			///
+								pre_anaphylaxis_serious 		///
+								pre_drugreaction_serious		///
+								pre_ra_serious 					///
+								pre_sle_serious 				///
+								pre_psorasis_serious 			///
+								pre_psa_serious 				///
+								pre_axspa_serious	 			///
+								pre_ibd_serious 							
+global pre_ae_combined			pre_all							///
+								pre_all_serious  				///
+								pre_spc_all 					///
+								pre_spc_serious					///
+								pre_drug_all					///
+								pre_drug_serious				///
+								pre_imae_all					///	
+								pre_imae_serious							
 
 ********************************************************
 *	A. START DATE		*
@@ -157,7 +157,7 @@ gen start_comparator_28 = start_date - 1431
 *	A. COX MODEL		*
 ********************************************************
 * Generate failure 
-foreach x in $pre_ae_disease $pre_disease_serious $pre_ae_combined{
+foreach x in $pre_ae_disease $pre_ae_disease_serious $pre_ae_combined{
 		display "`x'"
 		count if `x'!=. 
 		count if (`x'<start_comparator | `x'>start_comparator_28) & `x'!=.  // event outside windown - should be 0 
@@ -167,13 +167,13 @@ foreach x in $pre_ae_disease $pre_disease_serious $pre_ae_combined{
 }
 
 * Add half-day buffer if outcome on indexdate
-foreach x in $pre_ae_disease $pre_disease_serious $pre_ae_combined{
+foreach x in $pre_ae_disease $pre_ae_disease_serious $pre_ae_combined{
 		display "`x'"
 		replace `x'=`x'+0.75 if `x'==start_comparator
 }
 
 *Generate censor date
-foreach x in $pre_ae_disease $pre_disease_serious $pre_ae_combined{
+foreach x in $pre_ae_disease $pre_ae_disease_serious $pre_ae_combined{
 		gen stop_`x'=`x' if fail_`x'==1
 		replace stop_`x'= start_comparator_28 if fail_`x'==.
 		tab drug fail_`x' if stop_`x'!=.
@@ -201,7 +201,7 @@ postfile `comparator_rates' str20(failure) ///
 		mol_ptime mol_events mol_rate mol_lci mol_uci ///
 		using "$projectdir/output/tables/comparator_rates", replace	
 	
-foreach fail in $pre_ae_disease $pre_disease_serious $pre_ae_combined{
+foreach fail in $pre_ae_disease $pre_ae_disease_serious $pre_ae_combined{
 	stset stop_`fail', id(patient_id) origin(time start_comparator) enter(time start_comparator) exit(time start_comparator_28) failure(fail_`fail'==1) 			
 		stptime 
 					local all_rate = `r(rate)'

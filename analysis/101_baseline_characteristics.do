@@ -12,8 +12,8 @@
 
 ****************************************************************************************************************
 **Set filepaths
-global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
-//global projectdir `c(pwd)'
+// global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+global projectdir `c(pwd)'
 di "$projectdir"
 capture mkdir "$projectdir/output/data"
 capture mkdir "$projectdir/output/figures"
@@ -30,13 +30,17 @@ adopath + "$projectdir/analysis/ado"
 * SET Index date 
 global indexdate 			= "01/03/2020"
 
+
+*******************************************************************************************************************
+** Main analysis table 
 use "$projectdir/output/data/main", clear
 
-/*Tables=====================================================================================*/
 table1_mc, by(drug) total(before) mis onecol iqrmiddle(",")  ///
 		vars(age contn %5.1f \ ///
 			age conts %5.1f \ ///
 			age_group cat %5.1f \ ///	
+			bmi contn %5.1f \ ///
+			bmi conts %5.1f \ ///
 			bmi_group cat %5.1f \ ///	
 		    sex cat %5.1f \ ///
 			ethnicity cat %5.1f \ ///
@@ -71,13 +75,16 @@ import excel "$projectdir/output/tables/baseline_allpts.xls", clear
 outsheet * using "$projectdir/output/tables/baseline_allpts.csv" , comma nonames replace
 
 
+*******************************************************************************************************************
+** Sensitivity analysis table 
 use "$projectdir/output/data/sensitivity_analysis", clear
 
-/*Tables=====================================================================================*/
 table1_mc, by(drug) total(before) mis onecol iqrmiddle(",")  ///
 		vars(age contn %5.1f \ ///
 			age conts %5.1f \ ///
 			age_group cat %5.1f \ ///	
+			bmi contn %5.1f \ ///
+			bmi conts %5.1f \ ///
 			bmi_group cat %5.1f \ ///	
 		    sex cat %5.1f \ ///
 			ethnicity cat %5.1f \ ///

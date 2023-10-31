@@ -1,9 +1,8 @@
------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-
-> Paxlovid-Molnupiravir/logs/cox_model.log
+       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/logs/cox_model.log
   log type:  text
- opened on:  30 Oct 2023, 11:34:31
+ opened on:  31 Oct 2023, 15:49:15
 
 . 
 . *Set Ado file path
@@ -14,8 +13,8 @@
   [4]  (PERSONAL)  "C:\users\PUBLIC\documents/"
   [5]  (PLUS)      "C:\users\PUBLIC\documents/"
   [6]  (OLDPLACE)  "c:\ado/"
-  [7]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotr
-> ovimab-Paxlovid-Molnupiravir/analysis/ado"
+  [7]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/analysis/ado"
+  [8]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/analysis/ado"
 
 . 
 . * SET Index date 
@@ -33,22 +32,17 @@
 . global agesex   i.drug age i.sex
 
 . global adj              i.drug age i.sex i.region_nhs i.imdq5 White 1b.bmi_group ///
->                                 paxlovid_contraindicated i.vaccination_status diabetes chronic_cardiac_disease chronic_resp
-> iratory_disease hypertension ///
->                             downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosuppres
-> sion hiv_aids organ_transplant rare_neuro  
+>                                 paxlovid_contraindicated i.vaccination_status diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension ///
+>                             downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosuppression hiv_aids organ_transplant rare_neuro  
 
 . global adj2     i.drug age i.sex i.region_nhs i.imdq5 White 1b.bmi_group 
 
 . global adj3     i.drug age i.sex i.region_nhs i.imdq5 White 1b.bmi_group ///
->                                 paxlovid_contraindicated i.vaccination_status diabetes chronic_cardiac_disease chronic_resp
-> iratory_disease hypertension 
+>                                 paxlovid_contraindicated i.vaccination_status diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension 
 
 . global adj4     i.drug age i.sex i.region_nhs i.imdq5 White 1b.bmi_group ///
->                                 paxlovid_contraindicated i.vaccination_status diabetes chronic_cardiac_disease chronic_resp
-> iratory_disease hypertension ///
->                             downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosuppres
-> sion hiv_aids organ_transplant rare_neuro ///
+>                                 paxlovid_contraindicated i.vaccination_status diabetes chronic_cardiac_disease chronic_respiratory_disease hypertension ///
+>                             downs_syndrome solid_cancer haem_disease renal_disease liver_disease imid_on_drug immunosuppression hiv_aids organ_transplant rare_neuro ///
 >                                 dementia care_home serious_mental_illness
 
 . 
@@ -99,37 +93,38 @@
 
 . 
 . *******************************************************************************************************************
-. ** Main analysis 1 ** 
+. ** MAIN ANALYSIS ** 
 . tab drug covid_test
 
-                      | covid_test
-                 drug |         1 |     Total
-----------------------+-----------+----------
-              control |    26,381 |    26,381 
-           sotrovimab |        84 |        84 
-             paxlovid |        80 |        80 
-         molnupiravir |       104 |       104 
-----------------------+-----------+----------
-                Total |    26,649 |    26,649 
+                      |      covid_test
+                 drug |         0          1 |     Total
+----------------------+----------------------+----------
+              control |         0     26,381 |    26,381 
+           sotrovimab |    10,104         84 |    10,188 
+             paxlovid |    10,142         80 |    10,222 
+         molnupiravir |     9,935        104 |    10,039 
+----------------------+----------------------+----------
+                Total |    30,181     26,649 |    56,830 
 
 . tab eligible
 
    eligible |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |     26,649      100.00      100.00
+          1 |     56,830      100.00      100.00
 ------------+-----------------------------------
-      Total |     26,649      100.00
+      Total |     56,830      100.00
 
 . tab drug pre_drug_test
 
-                      |     pre_drug_test
-                 drug |  <=3 days   4-5 days |     Total
-----------------------+----------------------+----------
-           sotrovimab |        56         28 |        84 
-             paxlovid |        44         36 |        80 
-         molnupiravir |        68         36 |       104 
-----------------------+----------------------+----------
-                Total |       168        100 |       268 
+                      |                                           pre_drug_test
+                 drug |    0 days     1 days     2 days     3 days     4 days     5 days   6-7 days  >7 days &  treatment |     Total
+----------------------+---------------------------------------------------------------------------------------------------+----------
+              control |         0          0          0          0          0          0          0          0     26,381 |    26,381 
+           sotrovimab |        10         16         16         14         14         14         18        200      9,886 |    10,188 
+             paxlovid |        14          3         20          7         14         22         19        220      9,903 |    10,222 
+         molnupiravir |        13         18         20         17         20         16         13        217      9,705 |    10,039 
+----------------------+---------------------------------------------------------------------------------------------------+----------
+                Total |        37         37         56         38         48         52         50        637     55,875 |    56,830 
 
 . tab drug paxlovid_contraindicated
 
@@ -138,11 +133,11 @@
                  drug |         0          1 |     Total
 ----------------------+----------------------+----------
               control |    12,185     14,196 |    26,381 
-           sotrovimab |        29         55 |        84 
-             paxlovid |        43         37 |        80 
-         molnupiravir |        57         47 |       104 
+           sotrovimab |     4,353      5,835 |    10,188 
+             paxlovid |     4,463      5,759 |    10,222 
+         molnupiravir |     4,365      5,674 |    10,039 
 ----------------------+----------------------+----------
-                Total |    12,314     14,335 |    26,649 
+                Total |    25,366     31,464 |    56,830 
 
 . 
 . *** Graphs - Schoenfeld Residual & log-log plot
@@ -150,17 +145,13 @@
   2.         stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
   3.                         stcox i.drug 
   4.                         estat phtest,de
-  5.                         estat phtest, plot(1.drug) ytitle("Scaled Schoenfeld Residual, Sotrovimab", size(small)) name(sc
-> hoenfeld_sot_`fail', replace)
-  6.                         estat phtest, plot(2.drug) ytitle("Scaled Schoenfeld Residual, Paxlovid",size(small)) name(schoe
-> nfeld_pax_`fail', replace)
-  7.                         estat phtest, plot(3.drug) ytitle("Scaled Schoenfeld Residual, Molnupiravir",size(small)) name(s
-> choenfeld_mol_`fail', replace)
-  8.                         graph combine schoenfeld_sot_`fail' schoenfeld_pax_`fail' schoenfeld_mol_`fail', title("Schoenfe
-> ld Residual `fail'") saving("$projectdir/output/figures/schoenfield_`fail'", replace)
+  5.                         estat phtest, plot(1.drug) ytitle("Scaled Schoenfeld Residual, Sotrovimab", size(small)) name(schoenfeld_sot_`fail', replace)
+  6.                         estat phtest, plot(2.drug) ytitle("Scaled Schoenfeld Residual, Paxlovid",size(small)) name(schoenfeld_pax_`fail', replace)
+  7.                         estat phtest, plot(3.drug) ytitle("Scaled Schoenfeld Residual, Molnupiravir",size(small)) name(schoenfeld_mol_`fail', replace)
+  8.                         graph combine schoenfeld_sot_`fail' schoenfeld_pax_`fail' schoenfeld_mol_`fail', title("Schoenfeld Residual `fail'") saving("$projectdir/output/figures/schoenfield_`fail'", replace)
   9.                         graph export "$projectdir/output/figures/schoenfield_`fail'.svg", as(svg) replace
- 10.                         stphplot, by(drug) legend(order(1 "Control" 2 "Sotrovimab" 3 "Paxlovid" 4 "Molnupiravir") symxsi
-> ze(*0.4) size(small)) title ("log-log plot `fail'") saving("$projectdir/output/figures/loglog_plot_`fail'", replace)    
+ 10.                         stphplot, by(drug) legend(order(1 "Control" 2 "Sotrovimab" 3 "Paxlovid" 4 "Molnupiravir") symxsize(*0.4) size(small)) title ("log-log plot `fail'") saving("$projectdir/output/figures/loglo
+> g_plot_`fail'", replace)    
  11.                         graph export "$projectdir/output/figures/loglog_plot_`fail'.svg", as(svg) replace
  12. }
 
@@ -175,14 +166,14 @@ Observed time interval: (stop_ae_all[_n-1], stop_ae_all]
                 Origin: time start_date
 
 --------------------------------------------------------------------------
-     26,649  total observations
-         24  ignored because never entered
-     25,130  observations end on or before enter()
+     56,830  total observations
+      3,039  ignored because never entered
+     50,778  observations end on or before enter()
 --------------------------------------------------------------------------
-      1,495  observations remaining, representing
-      1,495  subjects
-        919  failures in single-failure-per-subject data
-  27,980.75  total analysis time at risk and under observation
+      3,013  observations remaining, representing
+      3,013  subjects
+      1,896  failures in single-failure-per-subject data
+     55,286  total analysis time at risk and under observation
                                                 At risk from t =         0
                                      Earliest observed entry t =         0
                                           Last observed exit t =        29
@@ -193,29 +184,27 @@ Observed time interval: (stop_ae_all[_n-1], stop_ae_all]
   Enter on or after: time start_date
         ID variable: patient_id
 
-Iteration 0:   log likelihood = -6350.1214
-Iteration 1:   log likelihood = -6347.0135
-Iteration 2:   log likelihood = -6346.9721
-Iteration 3:   log likelihood = -6346.9718
-Iteration 4:   log likelihood = -6346.9718
+Iteration 0:   log likelihood = -14394.947
+Iteration 1:   log likelihood = -14392.821
+Iteration 2:   log likelihood = -14392.821
 Refining estimates:
-Iteration 0:   log likelihood = -6346.9718
+Iteration 0:   log likelihood = -14392.821
 
 Cox regression with Breslow method for ties
 
-No. of subjects =     1,495                             Number of obs =  1,495
-No. of failures =       919
-Time at risk    = 27,980.75
-                                                        LR chi2(3)    =   6.30
-Log likelihood = -6346.9718                             Prob > chi2   = 0.0979
+No. of subjects =  3,013                                Number of obs =  3,013
+No. of failures =  1,896
+Time at risk    = 55,286
+                                                        LR chi2(3)    =   4.25
+Log likelihood = -14392.821                             Prob > chi2   = 0.2356
 
 -------------------------------------------------------------------------------
            _t | Haz. ratio   Std. err.      z    P>|z|     [95% conf. interval]
 --------------+----------------------------------------------------------------
          drug |
-  sotrovimab  |   1.020251   .5900271     0.03   0.972     .3284312    3.169349
-    paxlovid  |    3.57698   1.795294     2.54   0.011     1.337508    9.566135
-molnupiravir  |   2.504438   1.449592     1.59   0.113     .8054283    7.787419
+  sotrovimab  |   1.099895    .069704     1.50   0.133     .9714218     1.24536
+    paxlovid  |   1.102117   .0716421     1.50   0.135     .9702778     1.25187
+molnupiravir  |   1.095977     .07092     1.42   0.157     .9654301    1.244177
 -------------------------------------------------------------------------------
 
 Test of proportional-hazards assumption
@@ -225,62 +214,94 @@ Time function: Analysis time
              |        rho     chi2       df    Prob>chi2
 -------------+------------------------------------------
      0b.drug |          .        .        1           .
-      1.drug |   -0.01416     0.18        1       0.6678
-      2.drug |    0.02002     0.37        1       0.5438
-      3.drug |    0.03237     0.96        1       0.3267
+      1.drug |   -0.00015     0.00        1       0.9947
+      2.drug |   -0.01083     0.22        1       0.6374
+      3.drug |    0.01976     0.74        1       0.3895
 -------------+------------------------------------------
- Global test |                1.51        3       0.6793
+ Global test |                1.27        3       0.7362
 --------------------------------------------------------
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid
-> -Molnupiravir/output/figures/schoenfield_ae_all.gph saved
-file C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and
-    antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/figures/schoenfield_ae_all.svg saved as SVG format
-
-         Failure _d: fail_ae_all==1
-   Analysis time _t: (stop_ae_all-origin)
-             Origin: time start_date
-  Enter on or after: time start_date
-        ID variable: patient_id
---Break--
-r(1);
+error (1) reading file
+Error in file, skipping lines:
+ <EndItem>
+source and target types are not compatible
+     may not assign instances of incompatible classes
+error (4019) reading file
+Error in file, skipping lines:
+ .sersets[1] = .__Map.K441cd058.ref
+.insert (plotregion1 = .plotregion.new , style(scheme twoway) graph(__key(444cee58))) at 1 1
+.plotregion1.Declare plot1 = .yxview.new , type(scatter) serset() yvariable() xvariable()    plotregion(__key(444d0cf8)) style(scheme p1) 
+.plotregion1.Declare plot2 = .yxview.new , type(line) serset() yvariable() xvariable()    plotregion(__key(444d0cf8)) style(scheme p2line) 
+.plotregion1.plot2.style.editstyle style(p1) editcopy
+.plotregion1.clear_scales
+.plotregion1.reset_scales , noclear
+.n_views = 2
+.n_plotregions = 1
+.last_style = 2
+.x_scales = `" "1""'
+.y_scales = `" "1""'
+.create_axes 1 1 "9" "" 9
+.insert (legend = .legend_g.new, graphs(__key(444cee58)) style(scheme)) rightof plotregion1 , ring(3) 
+.legend.style.editstyle box_alignment(SE) editcopy
+.legend.holes = ""
+.legend.style.editstyle  force_draw(no) force_nodraw(yes) editcopy
+.legend.insert (note = .sized_textbox.new, mtextq(`""') style(scheme leg_note) ) below plotregion1 , ring(3) 
+.legend.note.style.editstyle box_alignment(SW) editcopy
+.legend.note.style.editstyle horizontal(left) editcopy
+.legend.insert (caption = .sized_textbox.new, mtextq(`""') style(scheme leg_caption) ) below plotregion1 , ring(5) 
+.legend.caption.style.editstyle box_alignment(SW) editcopy
+.legend.caption.style.editstyle horizontal(left) editcopy
+.legend.insert (subtitle = .sized_textbox.new, mtextq(`""') style(scheme leg_subtitle) ) above plotregion1 , ring(6) 
+.legend.subtitle.style.editstyle box_alignment(N) editcopy
+.legend.subtitle.style.editstyle horizontal(center) editcopy
+.legend.insert (title = .sized_textbox.new, mtextq(`""') style(scheme leg_title) ) above plotregion1 , ring(7) 
+.legend.title.style.editstyle box_alignment(N) editcopy
+.legend.title.style.editstyle horizontal(center) editcopy
+.legend.rebuild
+.legend.repositionkeys
+.xaxis1.title.edit , mtextq(`"`"__00000B"'"')   replace
+.xaxis1.title.edit , mtextq(`"`"Analysis time"'"')   replace
+.yaxis1.title.edit , mtextq(`"`"Scaled Schoenfeld residual, 1.drug"'"')   replace
+.yaxis1.title.edit , mtextq(`""Scaled Schoenfeld Residual, Sotrovimab""')   replace
+.yaxis1.title.style.editstyle  size(small) editcopy
+.insert (r1title = .sized_textbox.new, mtextq(`""') style(scheme r1title) orientation(vertical)) rightof plotregion1 , ring(1) 
+.insert (r2title = .sized_textbox.new, mtextq(`""') style(scheme r2title) orientation(vertical)) rightof plotregion1 , ring(2) 
+.insert (l1title = .sized_textbox.new, mtextq(`""') style(scheme l1title) orientation(vertical)) leftof plotregion1 , ring(1) 
+.insert (l2title = .sized_textbox.new, mtextq(`""') style(scheme l2title) orientation(vertical)) leftof plotregion1 , ring(2) 
+.insert (t1title = .sized_textbox.new, mtextq(`""') style(scheme t1title) ) above plotregion1 , ring(1) 
+.insert (t2title = .sized_textbox.new, mtextq(`""') style(scheme t2title) ) above plotregion1 , ring(2) 
+.insert (b1title = .sized_textbox.new, mtextq(`""') style(scheme b1title) ) below plotregion1 , ring(1) 
+.insert (b2title = .sized_textbox.new, mtextq(`""') style(scheme b1title) ) below plotregion1 , ring(2) 
+.insert (note = .sized_textbox.new, mtextq(`"`"bandwidth = .8"'"') style(scheme note) ) below plotregion1 , ring(4) 
+.note.style.editstyle box_alignment(SW) editcopy
+.note.style.editstyle horizontal(left) editcopy
+.insert (caption = .sized_textbox.new, mtextq(`""') style(scheme caption) ) below plotregion1 , ring(5) 
+.caption.style.editstyle box_alignment(SW) editcopy
+.caption.style.editstyle horizontal(left) editcopy
+.insert (subtitle = .sized_textbox.new, mtextq(`""') style(scheme subtitle) ) above plotregion1 , ring(6) 
+.subtitle.style.editstyle box_alignment(N) editcopy
+.subtitle.style.editstyle horizontal(center) editcopy
+.insert (title = .sized_textbox.new, mtextq(`"Test of PH assumption"') style(scheme title) ) above plotregion1 , ring(7) 
+.title.style.editstyle box_alignment(N) editcopy
+.title.style.editstyle horizontal(center) editcopy
+.insert (spacert = .spacer.new) above plotregion1 , ring(11)
+.insert (spacerb = .spacer.new) below plotregion1 , ring(11)
+.insert (spacerl = .spacer.new) leftof plotregion1 , ring(11)
+.insert (spacerr = .spacer.new) rightof plotregion1 , ring(11)
+.command = `"twoway (scatter __000004 __00000B if __00000M, msymbol(.) title("Running mean smoother")   note(`"bandwidth = .8"') legend(nodraw) ytitle(`"Scaled Schoenfeld residual, 1.drug"') xtitle(`"__00000B"')  xtit
+> le(`"Analysis time"') title(Test of PH assumption) ytitle("Scaled Schoenfeld Residual, Sotrovimab", size(small)) name(schoenfeld_sot_ae_all, replace)  ) (line __00000Q __00000B if __00000M, pstyle(p1)   ) ||  ||"'
+.date = "31 Oct 2023"
+.time = "15:49:36"
+.dta_file = "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/output/data/main.dta"
+.dta_date = "31 Oct 2023 11:36"
+<EndItem>
+__000003.gversion invalid name
+r(198);
 
 end of do-file
 
---Break--
-r(1);
+r(198);
 
-. tab elig
-
-   eligible |      Freq.     Percent        Cum.
-------------+-----------------------------------
-          1 |     26,649      100.00      100.00
-------------+-----------------------------------
-      Total |     26,649      100.00
-
-. tab pre_drug_test
-
-                   pre_drug_test |      Freq.     Percent        Cum.
----------------------------------+-----------------------------------
-                        <=3 days |        168       62.69       62.69
-                        4-5 days |        100       37.31      100.00
----------------------------------+-----------------------------------
-                           Total |        268      100.00
-
-. tab pre_drug_test_time
-
-pre_drug_te |
-    st_time |      Freq.     Percent        Cum.
-------------+-----------------------------------
-          0 |         37       13.81       13.81
-          1 |         37       13.81       27.61
-          2 |         56       20.90       48.51
-          3 |         38       14.18       62.69
-          4 |         48       17.91       80.60
-          5 |         52       19.40      100.00
-------------+-----------------------------------
-      Total |        268      100.00
-
-. do "C:\Users\k1635179\AppData\Local\Temp\STDf70_000000.tmp"
+. do "C:\Users\k1635179\AppData\Local\Temp\STD5030_000000.tmp"
 
 . ********************************************************************************
 . *
@@ -296,14 +317,12 @@ pre_drug_te |
 . 
 . ****************************************************************************************************************
 . **Set filepaths
-. global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sot
-> rovimab-Paxlovid-Molnupiravir"
+. global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
 
 . // global projectdir `c(pwd)'
 . 
 . di "$projectdir"
-C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Moln
-> upiravir
+C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir
 
 . capture mkdir "$projectdir/output/data"
 
@@ -314,8 +333,7 @@ C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB a
 . global logdir "$projectdir/logs"
 
 . di "$logdir"
-C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Moln
-> upiravir/logs
+C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir/logs
 
 . 
 . * Open a log file
