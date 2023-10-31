@@ -32,7 +32,8 @@ adopath + "$projectdir/analysis/ado"
 global indexdate 			= "01/03/2020"
 
 
-use "$projectdir/output/data/main", clear
+use "$projectdir/output/data/main.dta", clear
+
 
 * Models
 global crude 	i.drug 
@@ -89,7 +90,7 @@ global ae_combined			ae_all							///
 							ae_drug_all						///
 							ae_drug_serious					///
 							ae_imae_all						///	
-							ae_imae_serious							
+							ae_imae_serious	
 
 *******************************************************************************************************************
 ** Main analysis 1 ** 
@@ -143,7 +144,7 @@ postfile `cox_model_disease' str20(model) str20(failure) ///
 	using "$projectdir/output/tables/cox_model_disease", replace							 
 foreach fail in $ae_diseaseae_ $ae_disease_serious {
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
-	foreach model in crude agesex adj adj2 adj3 adj4{
+	foreach model in crude {
 		stcox $`model', vce(robust)
 					matrix b = r(table)
 					local hr_sot = b[1,2]
@@ -170,7 +171,7 @@ postfile `coxoutput_rates' str20(failure) ///
 		pax_ptime pax_events pax_rate pax_lci pax_uci ///
 		mol_ptime mol_events mol_rate mol_lci mol_uci ///
 		using "$projectdir/output/tables/cox_model_rates", replace	
-foreach fail in $ae_combined $ae_disease $ae_disease_serious  {
+foreach fail in $ae_disease $ae_disease_serious $ae_combined {
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 		
 	stptime 
 					local all_rate = `r(rate)'
@@ -246,7 +247,7 @@ export delimited using "$projectdir/output/tables/cox_model_rates_round.csv", re
 
 *******************************************************************************************************************
 ** Sensitivity analysis 1 = time lag **
-use "$projectdir/output/data/main", clear
+use "$projectdir/output/data/main.dta", clear
 
 ** Hazard of events	with 1 day lag					
 tempname cox_model_summary_sens_1a
@@ -255,7 +256,7 @@ postfile `cox_model_summary_sens_1a' str20(model) str20(failure) ///
 	using "$projectdir/output/tables/cox_model_summary_sens_1a", replace							 
 foreach fail in $ae_combined {
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
-	foreach model in crude agesex adj {
+	foreach model in adj {
 		stcox $`model' if _t>=2, vce(robust)
 					matrix b = r(table)
 					local hr_sot = b[1,2]
@@ -280,7 +281,7 @@ postfile `cox_model_summary_sens_1b' str20(model) str20(failure) ///
 	using "$projectdir/output/tables/cox_model_summary_sens_1b", replace						 
 foreach fail in $ae_combined {
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
-	foreach model in crude agesex adj {
+	foreach model in adj {
 		stcox $`model' if _t>=3, vce(robust)
 					matrix b = r(table)
 					local hr_sot = b[1,2]
@@ -308,88 +309,46 @@ export delimited using "$projectdir/output/tables/cox_model_summary_sens_1.csv",
 
 *******************************************************************************************************************
 ** Sensitivity analysis 2 ** time varying covariate
-use "$projectdir/output/data/main", clear
+use "$projectdir/output/data/main.dta", clear
 
-** Hazard of events						
-tempname cox_model_summary_sens2
-postfile `cox_model_summary_sens2' str20(model) str20(failure) ///
-	hr_sot lc_sot uc_sot hr_pax lc_pax uc_pax hr_mol lc_mol uc_mol ///
-	using "$projectdir/output/tables/cox_model_summary_sens2", replace							 
+** Hazard of events using stsplit								 
 foreach fail in $ae_combined {
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 	stsplit time_`fail', at(1(1)5)
 	tab _t time_`fail'
-	foreach model in crude  {
-	bys time_`fail': stcox i.drug $`model', vce(robust) 
-					matrix b = r(table)
-					local hr_sot = b[1,2]
-					local lc_sot = b[5,2]
-					local uc_sot = b[6,2]
-					local hr_pax = b[1,3]
-					local lc_pax = b[5,3]
-					local uc_pax = b[6,3]
-					local hr_mol = b[1,4]
-					local lc_mol = b[5,4]
-					local uc_mol = b[6,4]	
-		
-		post `cox_model_summary_sens2' ("`model'") ("`fail'") (`hr_sot') (`lc_sot') (`uc_sot') (`hr_pax') (`lc_pax') (`uc_pax') (`hr_mol') (`lc_mol') (`uc_mol')				
+	foreach model in adj  {
+	bys time_`fail': stcox i.drug $`model', vce(robust) 	
+	//stcox i.drug $`model' if time_`fail==1, vce(robust) 
 }
 }
-postclose `cox_model_summary_sens2'
 
-tempname cox_model_disease_sens2
-postfile `cox_model_disease_sens2' str20(model) str20(failure) ///
-	hr_sot lc_sot uc_sot hr_pax lc_pax uc_pax hr_mol lc_mol uc_mol ///
-	using "$projectdir/output/tables/cox_model_disease_sens2", replace							 
-foreach fail in $ae_diseaseae_ $ae_disease_serious {
+** Hazard of eventsusnig tvc										 
+foreach fail in $ae_combined {
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
-	foreach model in crude agesex adj adj2 adj3 adj4{
-		stcox $`model', vce(robust)
-					matrix b = r(table)
-					local hr_sot = b[1,2]
-					local lc_sot = b[5,2]
-					local uc_sot = b[6,2]
-					local hr_pax = b[1,3]
-					local lc_pax = b[5,3]
-					local uc_pax = b[6,3]
-					local hr_mol = b[1,4]
-					local lc_mol = b[5,4]
-					local uc_mol = b[6,4]			
-		post `cox_model_disease_sens2' ("`model'") ("`fail'") (`hr_sot') (`lc_sot') (`uc_sot') (`hr_pax') (`lc_pax') (`uc_pax') (`hr_mol') (`lc_mol') (`uc_mol')				
+	stsplit time_`fail', at(1(1)5)
+	foreach model in adj  {
+	stcox i.drug $`model', tvc(i.time_`fail') vce(robust) 
 }
 }
-postclose `cox_model_disease_sens2'
 
-
-log close
-			
+*** Redact and save 
+use "$projectdir/output/tables/cox_model_summary_sens2", clear
+save "$projectdir/output/tables/cox_model_summary_sens2", replace
+export delimited using "$projectdir/output/tables/cox_model_summary_sens2.csv", replace
    
 *******************************************************************************************************************
-** Sensitivity analysis 1 Time varying covariate **
-
-use "$projectdir/output/data/sensitivity_analysis", clear
-
-*** Graphs - Schoenfeld Residual & log-log plot
-foreach fail in $ae_combined {
-	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
-			stcox i.drug 
-			estat phtest,de
-			estat phtest, plot(1.drug) ytitle("Scaled Schoenfeld Residual, Sotrovimab", size(small)) name(schoenfeld_sot_`fail', replace)
-			estat phtest, plot(2.drug) ytitle("Scaled Schoenfeld Residual, Paxlovid",size(small)) name(schoenfeld_pax_`fail', replace)
-			estat phtest, plot(3.drug) ytitle("Scaled Schoenfeld Residual, Molnupiravir",size(small)) name(schoenfeld_mol_`fail', replace)
-			graph combine schoenfeld_sot_`fail' schoenfeld_pax_`fail' schoenfeld_mol_`fail', title("Schoenfeld Residual `fail'") saving("$projectdir/output/figures/schoenfield_`fail'", replace)
-			graph export "$projectdir/output/figures/schoenfield_`fail'.svg", as(svg) replace
-			stphplot, by(drug) legend(order(1 "Control" 2 "Sotrovimab" 3 "Paxlovid" 4 "Molnupiravir") symxsize(*0.4) size(small)) title ("log-log plot `fail'") saving("$projectdir/output/figures/loglog_plot_`fail'", replace) 	
-			graph export "$projectdir/output/figures/loglog_plot_`fail'.svg", as(svg) replace
-}
-** Hazard of events						
-tempname cox_model_summary_sens
-postfile `cox_model_summary_sens' str20(model) str20(failure) ///
+** Sensitivity analysis 3 restrict to eligible and pax contraindicated **
+use "$projectdir/output/data/main.dta", clear
+tab drug paxlovid_contraindicated
+tab drug eligible					
+*** Hazard of events						
+tempname cox_model_summary_sens3
+postfile `cox_model_summary_sens3' str20(model) str20(failure) ///
 	hr_sot lc_sot uc_sot hr_pax lc_pax uc_pax hr_mol lc_mol uc_mol ///
-	using "$projectdir/output/tables/cox_model_summary_sens", replace							 
+	using "$projectdir/output/tables/cox_model_summary_sens3", replace							 
 foreach fail in $ae_combined {
-	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
-	foreach model in crude agesex adj adj2 adj3 adj4{
+	stset stop_`fail' if eligible==1 & paxlovid_contraindicated==0, id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
+	foreach model in crude agesex adj{
 		stcox $`model', vce(robust)
 					matrix b = r(table)
 					local hr_sot = b[1,2]
@@ -402,48 +361,102 @@ foreach fail in $ae_combined {
 					local lc_mol = b[5,4]
 					local uc_mol = b[6,4]	
 		
-		post `cox_model_summary_sens' ("`model'") ("`fail'") (`hr_sot') (`lc_sot') (`uc_sot') (`hr_pax') (`lc_pax') (`uc_pax') (`hr_mol') (`lc_mol') (`uc_mol')				
+		post `cox_model_summary_sens3' ("`model'") ("`fail'") (`hr_sot') (`lc_sot') (`uc_sot') (`hr_pax') (`lc_pax') (`uc_pax') (`hr_mol') (`lc_mol') (`uc_mol')				
 }
 }
-postclose `cox_model_summary_sens'
+postclose `cox_model_summary_sens3'
 
-tempname cox_model_disease_sens
-postfile `cox_model_disease_sens' str20(model) str20(failure) ///
-	hr_sot lc_sot uc_sot hr_pax lc_pax uc_pax hr_mol lc_mol uc_mol ///
-	using "$projectdir/output/tables/cox_model_disease_sens", replace							 
-foreach fail in $ae_diseaseae_ $ae_disease_serious {
-	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
-	foreach model in crude agesex adj adj2 adj3 adj4{
-		stcox $`model', vce(robust)
-					matrix b = r(table)
-					local hr_sot = b[1,2]
-					local lc_sot = b[5,2]
-					local uc_sot = b[6,2]
-					local hr_pax = b[1,3]
-					local lc_pax = b[5,3]
-					local uc_pax = b[6,3]
-					local hr_mol = b[1,4]
-					local lc_mol = b[5,4]
-					local uc_mol = b[6,4]			
-		post `cox_model_disease_sens' ("`model'") ("`fail'") (`hr_sot') (`lc_sot') (`uc_sot') (`hr_pax') (`lc_pax') (`uc_pax') (`hr_mol') (`lc_mol') (`uc_mol')				
+**** Rates of events 
+tempname coxoutput_rates_sens3
+postfile `coxoutput_rates_sens3' str20(failure) ///
+		all_ptime all_events all_rate all_lci all_uci ///
+		control_ptime control_events control_rate control_lci_ control_uci ///
+		sot_ptime sot_events sot_rate sot_lci sot_uci ///
+		pax_ptime pax_events pax_rate pax_lci pax_uci ///
+		mol_ptime mol_events mol_rate mol_lci mol_uci ///
+		using "$projectdir/output/tables/cox_model_rates_sens3", replace	
+foreach fail in $ae_disease $ae_disease_serious $ae_combined {
+	stset stop_`fail' if eligible==1 & paxlovid_contraindicated==0, id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 		
+	stptime 
+					local all_rate = `r(rate)'
+					local all_ptime = `r(ptime)'
+					local all_lci = `r(lb)'
+					local all_uci = `r(ub)'
+					local all_events = `r(failures)'					
+		stptime if drug == 0
+					local control_rate = `r(rate)'
+					local control_ptime = `r(ptime)'
+					local control_lci = `r(lb)'
+					local control_uci = `r(ub)'
+					local control_events = `r(failures)'
+		display "no drug"
+		stptime if drug == 1
+					local sot_rate = `r(rate)'
+					local sot_ptime = `r(ptime)'
+					local sot_lci = `r(lb)'
+					local sot_uci = `r(ub)'
+					local sot_events = `r(failures)'
+		display "sotrovimab"
+		stptime if drug == 2
+					local pax_rate = `r(rate)'
+					local pax_ptime = `r(ptime)'
+					local pax_lci = `r(lb)'
+					local pax_uci = `r(ub)'
+					local pax_events = `r(failures)'		
+		display "paxlovid"
+		stptime if drug == 3
+					local mol_rate = `r(rate)'
+					local mol_ptime = `r(ptime)'
+					local mol_lci = `r(lb)'
+					local mol_uci = `r(ub)'
+					local mol_events = `r(failures)'		
+		display "molnupavir"			
+		post `coxoutput_rates_sens3' ("`fail'")	(`all_ptime') (`all_events') (`all_rate') (`all_lci') (`all_uci') ///
+					(`control_ptime') (`control_events') (`control_rate') (`control_lci') (`control_uci') ///
+					(`sot_ptime') (`sot_events') (`sot_rate') (`sot_lci') (`sot_uci') ///
+					(`pax_ptime') (`pax_events') (`pax_rate') (`pax_lci') (`pax_uci') ///
+					(`mol_ptime') (`mol_events') (`mol_rate') (`mol_lci') (`mol_uci') 	
+					
 }
-}
-postclose `cox_model_disease_sens'
+postclose `coxoutput_rates_sens3'
 
+*** Redact and save 
+use "$projectdir/output/tables/cox_model_summary_sens3", clear
+save "$projectdir/output/tables/cox_model_summary_sens3", replace
+export delimited using "$projectdir/output/tables/cox_model_summary_sens3.csv", replace
+
+use "$projectdir/output/tables/cox_model_rates_sens3", clear
+order failure all* control* sot* pax* mol* 
+save "$projectdir/output/tables/cox_model_rates_sens3", replace
+export delimited using "$projectdir/output/tables/cox_model_rates_sens3.csv", replace
+
+use "$projectdir/output/tables/cox_model_rates_sens3", clear
+foreach var of varlist *events *ptime  {
+gen `var'_midpoint = (ceil(`var'/6)*6) - (floor(6/2) * (`var'!=0))
+}
+foreach var in all control sot pax mol {
+gen `var'_rate_midpoint = (`var'_events_midpoint/`var'_ptime_midpoint)*1000
+gen `var'_lci_midpoint = (invpoisson(`var'_events_midpoint,.975)/`var'_ptime_midpoint)*1000
+gen `var'_uci_midpoint = (invpoisson(`var'_events_midpoint,.025)/`var'_ptime_midpoint)*1000
+}  
+keep failure *midpoint
+order  	failure all* control* sot* pax* mol* 
+save "$projectdir/output/tables/cox_model_rates_sens3_round", replace
+export delimited using "$projectdir/output/tables/cox_model_rates_sens3_round.csv", replace
 
 *******************************************************************************************************************
-** Sensitivity analysis 2 **
-use "$projectdir/output/data/sensitivity_analysis", clear
-keep if covid_test==1
-
-** Hazard of events						
-tempname cox_model_summary_sens2
-postfile `cox_model_summary_sens2' str20(model) str20(failure) ///
+** Sensitivity analysis 4 not restricted to covid positive date - start date Control is covid test. Treatment is treat date  **
+use "$projectdir/output/data/sensitivity_analysis.dta", clear
+tab drug paxlovid_contraindicated
+tab drug eligible					
+*** Hazard of events						
+tempname cox_model_summary_sens4
+postfile `cox_model_summary_sens4' str20(model) str20(failure) ///
 	hr_sot lc_sot uc_sot hr_pax lc_pax uc_pax hr_mol lc_mol uc_mol ///
-	using "$projectdir/output/tables/cox_model_summary_sens2", replace							 
+	using "$projectdir/output/tables/cox_model_summary_sens4", replace							 
 foreach fail in $ae_combined {
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
-	foreach model in crude agesex adj adj2 adj3 adj4{
+	foreach model in crude agesex adj{
 		stcox $`model', vce(robust)
 					matrix b = r(table)
 					local hr_sot = b[1,2]
@@ -456,14 +469,88 @@ foreach fail in $ae_combined {
 					local lc_mol = b[5,4]
 					local uc_mol = b[6,4]	
 		
-		post `cox_model_summary_sens2' ("`model'") ("`fail'") (`hr_sot') (`lc_sot') (`uc_sot') (`hr_pax') (`lc_pax') (`uc_pax') (`hr_mol') (`lc_mol') (`uc_mol')				
+		post `cox_model_summary_sens4' ("`model'") ("`fail'") (`hr_sot') (`lc_sot') (`uc_sot') (`hr_pax') (`lc_pax') (`uc_pax') (`hr_mol') (`lc_mol') (`uc_mol')				
 }
 }
-postclose `cox_model_summary_sens2'
+postclose `cox_model_summary_sens4'
 
-log close
-			
-	   
+**** Rates of events 
+tempname coxoutput_rates_sens4
+postfile `coxoutput_rates_sens4' str20(failure) ///
+		all_ptime all_events all_rate all_lci all_uci ///
+		control_ptime control_events control_rate control_lci_ control_uci ///
+		sot_ptime sot_events sot_rate sot_lci sot_uci ///
+		pax_ptime pax_events pax_rate pax_lci pax_uci ///
+		mol_ptime mol_events mol_rate mol_lci mol_uci ///
+		using "$projectdir/output/tables/cox_model_rates_sens4", replace	
+foreach fail in $ae_disease $ae_disease_serious $ae_combined  {
+	stset stop_`fail' if eligible==1 & paxlovid_contraindicated==0, id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 		
+	stptime 
+					local all_rate = `r(rate)'
+					local all_ptime = `r(ptime)'
+					local all_lci = `r(lb)'
+					local all_uci = `r(ub)'
+					local all_events = `r(failures)'					
+		stptime if drug == 0
+					local control_rate = `r(rate)'
+					local control_ptime = `r(ptime)'
+					local control_lci = `r(lb)'
+					local control_uci = `r(ub)'
+					local control_events = `r(failures)'
+		display "no drug"
+		stptime if drug == 1
+					local sot_rate = `r(rate)'
+					local sot_ptime = `r(ptime)'
+					local sot_lci = `r(lb)'
+					local sot_uci = `r(ub)'
+					local sot_events = `r(failures)'
+		display "sotrovimab"
+		stptime if drug == 2
+					local pax_rate = `r(rate)'
+					local pax_ptime = `r(ptime)'
+					local pax_lci = `r(lb)'
+					local pax_uci = `r(ub)'
+					local pax_events = `r(failures)'		
+		display "paxlovid"
+		stptime if drug == 3
+					local mol_rate = `r(rate)'
+					local mol_ptime = `r(ptime)'
+					local mol_lci = `r(lb)'
+					local mol_uci = `r(ub)'
+					local mol_events = `r(failures)'		
+		display "molnupavir"			
+		post `coxoutput_rates_sens4' ("`fail'")	(`all_ptime') (`all_events') (`all_rate') (`all_lci') (`all_uci') ///
+					(`control_ptime') (`control_events') (`control_rate') (`control_lci') (`control_uci') ///
+					(`sot_ptime') (`sot_events') (`sot_rate') (`sot_lci') (`sot_uci') ///
+					(`pax_ptime') (`pax_events') (`pax_rate') (`pax_lci') (`pax_uci') ///
+					(`mol_ptime') (`mol_events') (`mol_rate') (`mol_lci') (`mol_uci') 	
+					
+}
+postclose `coxoutput_rates_sens4'
+
+*** Redact and save 
+use "$projectdir/output/tables/cox_model_summary_sens4", clear
+save "$projectdir/output/tables/cox_model_summary_sens4", replace
+export delimited using "$projectdir/output/tables/cox_model_summary_sens4.csv", replace
+
+use "$projectdir/output/tables/cox_model_rates_sens4", clear
+order failure all* control* sot* pax* mol* 
+save "$projectdir/output/tables/cox_model_rates_sens4", replace
+export delimited using "$projectdir/output/tables/cox_model_rates_sens4.csv", replace
+
+use "$projectdir/output/tables/cox_model_rates_sens4", clear
+foreach var of varlist *events *ptime  {
+gen `var'_midpoint = (ceil(`var'/6)*6) - (floor(6/2) * (`var'!=0))
+}
+foreach var in all control sot pax mol {
+gen `var'_rate_midpoint = (`var'_events_midpoint/`var'_ptime_midpoint)*1000
+gen `var'_lci_midpoint = (invpoisson(`var'_events_midpoint,.975)/`var'_ptime_midpoint)*1000
+gen `var'_uci_midpoint = (invpoisson(`var'_events_midpoint,.025)/`var'_ptime_midpoint)*1000
+}  
+keep failure *midpoint
+order  	failure all* control* sot* pax* mol* 
+save "$projectdir/output/tables/cox_model_rates_sens4_round", replace
+export delimited using "$projectdir/output/tables/cox_model_rates_sens4_round.csv", replace  
 	   
 *** Graphs - Survival Risk & Survival Curve 
 /*foreach fail in $ae_combined {

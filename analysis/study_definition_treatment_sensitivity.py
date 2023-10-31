@@ -1,4 +1,4 @@
-## SENSITIVITY - CONTROL ARM INCLUDING THOSE WITHOUT COVID TEST WITHIN 5 DAYS OF TREATMENT - START DATE IS START OF TREATMENT
+## Sensitivity analysis- treatment arm NOT restricted to those with covid test within 5 days of treatment. Start date is TREAT date 
 
 from cohortextractor import StudyDefinition, patients, codelist_from_csv, codelist, filter_codes_by_category, combine_codelists, Measure
 import datetime
@@ -113,7 +113,6 @@ def adverse_outcome_icd(dx_codelist):
           "date": {"earliest": "2021-12-16"},
       },
   )
-## NEED TO INCLUDE WITH PRIMARY DIAGNOSIS as currently including all coding - diveritcular numbers too high   
 def adverse_outcome_icd_prim(dx_codelist):
   return patients.admitted_to_hospital(
       with_these_primary_diagnoses = dx_codelist,
@@ -162,7 +161,6 @@ def adverse_outcome_icd_pre(dx_codelist):
           "date": {"earliest": "2017-12-16"},
       },
   )
-## NEED TO INCLUDE WITH PRIMARY DIAGNOSIS as currently including all coding - diveritcular numbers too high   
 def adverse_outcome_icd_pre_primary(dx_codelist):
   return patients.admitted_to_hospital(
       with_these_primary_diagnoses = dx_codelist,
@@ -234,32 +232,29 @@ study = StudyDefinition(
     """
     age >= 12 AND age < 110
     AND NOT has_died
-    AND (
-        registered_eligible
-        AND
-        high_risk_cohort_nhsd
-        AND
-        covid_test_positive
-        ) 
-    AND NOT registered_treated
+    AND registered_treated 
+    AND NOT 
+        (remdesivir
+        OR
+        casirivimab
+        )
     """,
-    
-    registered_eligible = patients.registered_as_of("covid_test_positive_date"),
+      
     registered_treated = patients.registered_as_of("date_treated"),  
   ),
-           
-  ## TREATMENT - MAB + Antivirals. 
+  
+  ## TREATMENT 
   sotrovimab= patients.with_covid_therapeutics(
     with_these_therapeutics = "Sotrovimab", with_these_indications = "non_hospitalised", on_or_after = "index_date",
-    find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.01, "date": {"earliest": "2021-12-16"},},
+    find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.7, "date": {"earliest": "2021-12-16"},},
   ),
   molnupiravir= patients.with_covid_therapeutics(
     with_these_therapeutics = "Molnupiravir", with_these_indications = "non_hospitalised", on_or_after = "index_date",
-    find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.01, "date": {"earliest": "2021-12-16"},},
+    find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.7, "date": {"earliest": "2021-12-16"},},
   ),
   paxlovid= patients.with_covid_therapeutics(
     with_these_therapeutics = "Paxlovid", with_these_indications = "non_hospitalised", on_or_after = "index_date",
-    find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.01, "date": {"earliest": "2021-12-16"},},
+    find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.7, "date": {"earliest": "2021-12-16"},},
   ),
   remdesivir= patients.with_covid_therapeutics(
     with_these_therapeutics = "Remdesivir", with_these_indications = "non_hospitalised", on_or_after = "index_date",
@@ -286,7 +281,7 @@ study = StudyDefinition(
   ),
 
   ## COVID TEST POSITIVE
-  ## First positive SARS-CoV-2 test since index date 
+  ## SARS-CoV-2 - INCLUDING THOSE WITHOUT COVID TEST WITHIN 5 DAYS OF TREATMENT - START DATE IS START TREATMENT
   covid_test_positive = patients.with_test_result_in_sgss(
     pathogen = "SARS-CoV-2", test_result = "positive", returning = "binary_flag", on_or_after = "index_date - 5 days", find_first_match_in_period = True, 
     restrict_to_earliest_specimen_date = False,  return_expectations = {"incidence": 0.9 },
@@ -339,12 +334,11 @@ study = StudyDefinition(
       restrict_to_earliest_specimen_date=False, returning="variant", return_expectations={"rate": "universal", "category": {"ratios": {"B.1.617.2": 0.7, "VOC-21JAN-02": 0.2, "": 0.1}},},
   ), 
   
-  ## Start date
-  start_date = patients.with_test_result_in_sgss(
-    pathogen = "SARS-CoV-2", test_result = "positive", returning = "date", date_format = "YYYY-MM-DD", on_or_after = "index_date - 5 days", find_first_match_in_period = True, 
-    restrict_to_earliest_specimen_date = False, return_expectations = {"date": {"earliest": "2021-12-11", "latest": "today"}, "incidence": 1},
+  ## START DATE 
+  start_date = patients.minimum_of(
+    "sotrovimab","paxlovid", "molnupiravir"
   ),
-    
+
   # Eligable based on comorbidities for control population
   ## Not hospitalised
   pre_covid_hosp_date = patients.admitted_to_hospital(
@@ -355,7 +349,6 @@ study = StudyDefinition(
     returning = "date_discharged", on_or_before ="start_date", date_format = "YYYY-MM-DD", find_last_match_in_period = True, 
     return_expectations = {"date": {"earliest": "2010-12-20"},"rate": "uniform", "incidence": 0.05},
   ),
-    
   ## Down's syndrome
   downs_syndrome_snomed=comorbidity_snomed(downs_syndrome_nhsd_snomed_codes),
   downs_syndrome_icd=comorbidity_icd(downs_syndrome_nhsd_icd10_codes),
@@ -515,7 +508,7 @@ study = StudyDefinition(
           "NA":0.05,},},
     },
   ),
-      
+  
   # DEMOGRAPHIC COVARIATES & COMORBIDITY  
   age = patients.age_as_of(
     "start_date", return_expectations = {"rate": "universal", "int": {"distribution": "population_ages"}, "incidence" : 0.9},
@@ -644,7 +637,7 @@ study = StudyDefinition(
   chronic_cardiac_disease=comorbidity_snomed(chronic_cardiac_dis_codes),
   hypertension=comorbidity_snomed(hypertension_codes),
   chronic_respiratory_disease=comorbidity_snomed(chronic_respiratory_dis_codes),
-
+  
   ## Autism, Carehome, Dementia, Learning difficulties
   autism = comorbidity_snomed(autism_nhsd_snomed_codes),
   care_home = comorbidity_snomed(care_home_primis_snomed_codes), 
@@ -691,7 +684,6 @@ study = StudyDefinition(
   ),
   
   ## DRUG CONTRAINDICATIONS OR AVOID 
-
   drugs_paxlovid_interaction = patients.with_these_medications(
     codelist = drugs_interaction_paxlovid_codes, returning = "date", on_or_before = "start_date", find_last_match_in_period = True, date_format = "YYYY-MM-DD",
   ),
@@ -701,7 +693,6 @@ study = StudyDefinition(
   drugs_paxlovid_contraindication = patients.with_these_medications(
     codelist = paxlovid_absolute_contraindication_codes, returning = "date",  on_or_before = "start_date", find_last_match_in_period = True, date_format = "YYYY-MM-DD",
   ), 
-  
   # Paxlovid CI in stage 3-5 CKD based on recorded creatinine value
   creatinine_ctv3 = patients.with_these_clinical_events(
     creatinine_codes_ctv3, find_last_match_in_period=True, on_or_before = "start_date", returning="numeric_value", include_date_of_match=True, date_format = "YYYY-MM-DD",
@@ -900,8 +891,8 @@ study = StudyDefinition(
   pre_IBD_icd=adverse_outcome_icd_pre(inflam_bowel_icd_codes), 
   pre_IBD_icd_prim=adverse_outcome_icd_pre_primary(inflam_bowel_icd_codes), 
   pre_IBD_ctv=adverse_outcome_snomed_pre(IBD_ctv3),  
-  pre_IBD_AE=adverse_outcome_AE_pre(codelist(["34000006", "64766004"], system="snomed")),
-     
+  pre_IBD_AE=adverse_outcome_AE_pre(codelist(["34000006", "64766004"], system="snomed")),     
+  
   ## Ensure is a new diagnosis of adverse outcome 3-4 prior to start date 
   pre_ra_snomed_new=comorbidity_snomed_pre(rheumatoid_arthritis_snowmed),
   pre_SLE_ctv_new=comorbidity_snomed_pre(SLE_ctv),

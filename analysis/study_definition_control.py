@@ -1,3 +1,5 @@
+## Main analysis - control arm: restricted to those with covid test. Start date is COVID TEST date 
+
 from cohortextractor import StudyDefinition, patients, codelist_from_csv, codelist, filter_codes_by_category, combine_codelists, Measure
 import datetime
 from codelists import *
