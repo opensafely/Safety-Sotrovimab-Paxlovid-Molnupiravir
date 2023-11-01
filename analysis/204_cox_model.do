@@ -382,7 +382,7 @@ gen `var'_uci_midpoint = (invpoisson(`var'_events_midpoint,.025)/`var'_ptime_mid
 keep failure *midpoint
 order  	failure all* control* sot* pax* mol* 
 save "$projectdir/output/tables/cox_model_rates_round_sens_1", replace
-export delimited using "$projectdir/output/tables/cox_model_rates_round.csv_sens_1", replace
+export delimited using "$projectdir/output/tables/cox_model_rates_round_sens_1.csv", replace
 
 
 **************************************************************************************************************************************************************************************************************************************
@@ -585,8 +585,8 @@ gen `var'_uci_midpoint = (invpoisson(`var'_events_midpoint,.025)/`var'_ptime_mid
 }  
 keep failure *midpoint
 order  	failure all* control* sot* pax* mol* 
-save "$projectdir/output/tables/cox_model_rates_sens_4_round", replace
-export delimited using "$projectdir/output/tables/cox_model_rates_sens_4_round.csv", replace
+save "$projectdir/output/tables/cox_model_rates_round_sens_4", replace
+export delimited using "$projectdir/output/tables/cox_model_rates_round_sens_4.csv", replace
 
 *******************************************************************************************************************
 ** SENSITIVITY ANALYSIS  5 == unrestricted to covid positive date. Start date for treatment is TREAT DATE **
@@ -696,8 +696,8 @@ gen `var'_uci_midpoint = (invpoisson(`var'_events_midpoint,.025)/`var'_ptime_mid
 }  
 keep failure *midpoint
 order  	failure all* control* sot* pax* mol* 
-save "$projectdir/output/tables/cox_model_rates_sens_5_round", replace
-export delimited using "$projectdir/output/tables/cox_model_rates_sens_5_round.csv", replace  
+save "$projectdir/output/tables/cox_model_rates_round_sens_5", replace
+export delimited using "$projectdir/output/tables/cox_model_rates_round_sens_5.csv", replace  
 
 
 *******************************************************************************************************************
@@ -811,8 +811,8 @@ gen `var'_uci_midpoint = (invpoisson(`var'_events_midpoint,.025)/`var'_ptime_mid
 }  
 keep failure *midpoint
 order  	failure all* control* sot* pax* mol* 
-save "$projectdir/output/tables/cox_model_rates_sens_6_round", replace
-export delimited using "$projectdir/output/tables/cox_model_rates_sens_6_round.csv", replace  
+save "$projectdir/output/tables/cox_model_rates_round_sens_6", replace
+export delimited using "$projectdir/output/tables/cox_model_rates_round_sens_6.csv", replace  
 
 
 	   

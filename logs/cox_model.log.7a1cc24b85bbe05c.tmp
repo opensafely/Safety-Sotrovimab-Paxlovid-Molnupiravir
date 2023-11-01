@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  /workspace/logs/cox_model.log
   log type:  text
- opened on:   1 Nov 2023, 10:20:54
+ opened on:   1 Nov 2023, 09:53:09
 
 . 
 . *Set Ado file path
@@ -38979,7 +38979,7 @@ file /workspace/output/tables/cox_model_rates_sens_6_round.csv saved
 . 
 end of do-file
 
-. . file open output using "/tmp/204_cox_model.do.SdNT.out", write text replace
+. . file open output using "/tmp/204_cox_model.do.kNF9.out", write text replace
 
 . . file write output "success" 
 

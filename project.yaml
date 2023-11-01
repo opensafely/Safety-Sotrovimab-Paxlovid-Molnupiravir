@@ -59,18 +59,18 @@ actions:
         data1: output/tables/cox_model_disease.csv 
         data2: output/tables/cox_model_rates.csv 
         data3: output/tables/cox_model_rates_round.csv 
-        data4: output/tablescox_model_summary_sens_1.csv 
+        data4: output/tables/cox_model_summary_sens_1.csv 
         data5: output/tables/cox_model_disease_sens_1.csv 
         data6: output/tables/cox_model_rates_sens_1.csv 
         data7: output/tables/cox_model_rates_round_sens_1.csv 
-        data8: output/tables/cox_model_rates_round_sens_2.csv 
-        data9: output/tablescox_model_summary_sens_4.csv 
+        data8: output/tables/cox_model_summary_sens_2.csv 
+        data9: output/tables/cox_model_summary_sens_4.csv 
         data10: output/tables/cox_model_rates_sens_4.csv 
         data11: output/tables/cox_model_rates_round_sens_4.csv 
-        data12: output/tablescox_model_summary_sens_5.csv 
+        data12: output/tables/cox_model_summary_sens_5.csv 
         data13: output/tables/cox_model_rates_sens_5.csv 
         data14: output/tables/cox_model_rates_round_sens_5.csv 
-        data15: output/tablescox_model_summary_sens_6.csv 
+        data15: output/tables/cox_model_summary_sens_6.csv 
         data16: output/tables/cox_model_rates_sens_6.csv 
         data17: output/tables/cox_model_rates_round_sens_6.csv 
         schoenfield_ae_all: output/figures/schoenfield_ae_all.svg
