@@ -249,15 +249,15 @@ study = StudyDefinition(
   ## TREATMENT 
   sotrovimab= patients.with_covid_therapeutics(
     with_these_therapeutics = "Sotrovimab", with_these_indications = "non_hospitalised", on_or_after = "index_date",
-    find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.7, "date": {"earliest": "2021-12-16"},},
+    find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.01, "date": {"earliest": "2021-12-16"},},
   ),
   molnupiravir= patients.with_covid_therapeutics(
     with_these_therapeutics = "Molnupiravir", with_these_indications = "non_hospitalised", on_or_after = "index_date",
-    find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.7, "date": {"earliest": "2021-12-16"},},
+    find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.01, "date": {"earliest": "2021-12-16"},},
   ),
   paxlovid= patients.with_covid_therapeutics(
     with_these_therapeutics = "Paxlovid", with_these_indications = "non_hospitalised", on_or_after = "index_date",
-    find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.7, "date": {"earliest": "2021-12-16"},},
+    find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.01, "date": {"earliest": "2021-12-16"},},
   ),
   remdesivir= patients.with_covid_therapeutics(
     with_these_therapeutics = "Remdesivir", with_these_indications = "non_hospitalised", on_or_after = "index_date",

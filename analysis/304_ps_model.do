@@ -292,14 +292,24 @@ graph export "$projectdir/output/figures/histogram_adj4.svg", as(svg) replace
 ** Balancing figures
 graph combine "$projectdir/output/figures/sot_match_agesex.gph" "$projectdir/output/figures/pax_match_agesex.gph" "$projectdir/output/figures/mol_match_agesex.gph" ///
 , title("PS balancing agesex model") saving("$projectdir/output/figures/balance_agesex", replace)
+graph export "$projectdir/output/figures/balance_agesex.svg", as(svg) replace 
+
 graph combine "$projectdir/output/figures/sot_match_adj.gph" "$projectdir/output/figures/pax_match_adj.gph" "$projectdir/output/figures/mol_match_adj.gph" ///
 , title("PS balancing adjusted model") saving("$projectdir/output/figures/balance_adj", replace)
+graph export "$projectdir/output/figures/balance_adj.svg", as(svg) replace 
+
 graph combine "$projectdir/output/figures/sot_match_adj2.gph" "$projectdir/output/figures/pax_match_adj2.gph" "$projectdir/output/figures/mol_match_adj2.gph" ///
 , title("PS balancing adjusted model 2") saving("$projectdir/output/figures/balance_adj2", replace)
+graph export "$projectdir/output/figures/balance_adj2.svg", as(svg) replace 
+
 graph combine "$projectdir/output/figures/sot_match_adj3.gph" "$projectdir/output/figures/pax_match_adj3.gph" "$projectdir/output/figures/mol_match_adj3.gph" ///
 , title("PS balancing adjusted model 3") saving("$projectdir/output/figures/balance_adj3", replace)
+graph export "$projectdir/output/figures/balance_adj3.svg", as(svg) replace 
+
 graph combine "$projectdir/output/figures/sot_match_adj4.gph" "$projectdir/output/figures/pax_match_adj4.gph" "$projectdir/output/figures/mol_match_adj4.gph" ///
 , title("PS balancing adjusted model 4") saving("$projectdir/output/figures/balance_adj4", replace)
+graph export "$projectdir/output/figures/balance_adj4.svg", as(svg) replace 
+
 
 
 *******************************************************************************

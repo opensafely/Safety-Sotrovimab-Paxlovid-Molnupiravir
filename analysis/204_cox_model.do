@@ -12,7 +12,6 @@
 
 ****************************************************************************************************************
 
-**Set filepaths
 // global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir" 
 global projectdir `c(pwd)'
 di "$projectdir"
@@ -465,13 +464,13 @@ foreach fail in $ae_combined {
 }
 }
 
-/*
-use "$projectdir/output/data/main.dta", clear
+/*use "$projectdir/output/data/main.dta", clear
 ** Hazard of events using tvc										 
 foreach fail in $ae_combined {
 	preserve
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 	stsplit time_`fail', at(1(1)5)
+	keep if _st==1
 	foreach model in adj  {
 	stcox $`model', tvc(i.time_`fail') vce(robust) 
 	restore

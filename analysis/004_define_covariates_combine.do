@@ -841,7 +841,7 @@ replace pre_drug_test=6 if dataset==1 & pre_drug_test_time>=6 & pre_drug_test_ti
 replace pre_drug_test=7 if dataset==1 & pre_drug_test_time>=7 & pre_drug_test_time<=21
 replace pre_drug_test=8 if dataset==1 & pre_drug_test_time<0 | pre_drug_test_time>21
 replace pre_drug_test=9 if dataset==1 & (covid_test_positive_date==. | date_treated==.) & dataset==1
-label define pre_drug_test 0 "0 days" 1 "1 days" 2 "2 days" 3 "3 days" 4 "4 days" 5 "5 days" 6 "6-7 days" 7 ">7 days & <21 days" 8 "treatment >21 day or <0" 9 "no test date / no treatment date", replace 
+label define pre_drug_test 0 "0 days" 1 "1 days" 2 "2 days" 3 "3 days" 4 "4 days" 5 "5 days" 6 "6-7 days" 7 ">7 days & <21 days" 8 ">21 or <0 days" 9 "no test/no treatment date", replace 
 label values pre_drug_test pre_drug_test
 tab pre_drug_test_time if pre_drug_test<=5
 tab pre_drug_test dataset,m

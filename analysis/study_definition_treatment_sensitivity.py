@@ -133,7 +133,7 @@ def adverse_outcome_snomed(dx_codelist):
       find_first_match_in_period=True,
       date_format="YYYY-MM-DD",
       return_expectations={
-          "incidence": 0.4,
+          "incidence": 0.3,
           "date": {"earliest": "2021-12-16"},
       },
   )
