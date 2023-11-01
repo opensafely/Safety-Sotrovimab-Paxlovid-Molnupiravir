@@ -1,8 +1,10 @@
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/logs/redacted_table.log
+       log:  C:\Users\k1635179\OneDrive - King's College London\Katie\Ope
+> nSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupirav
+> ir\analysis/logs/redacted_table.log
   log type:  text
- opened on:  15 Aug 2023, 15:39:44
+ opened on:  31 Oct 2023, 13:29:22
 
 . 
 . *Set Ado file path
@@ -13,9 +15,18 @@
   [4]  (PERSONAL)  "C:\users\PUBLIC\documents/"
   [5]  (PLUS)      "C:\users\PUBLIC\documents/"
   [6]  (OLDPLACE)  "c:\ado/"
-  [7]              "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir\analysis/analysis/ado"
+  [7]              "C:\Users\k1635179\OneDrive - King's College London\Ka
+> tie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Mol
+> nupiravir/analysis/ado"
+  [8]              "C:\Users\k1635179\OneDrive - King's College London\Ka
+> tie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Mol
+> nupiravir\analysis/analysis/ado"
 
 . 
+. 
+. ***********************************************************************
+> ********************************************
+. ** Main analysis  
 . **Baseline table redacted and rounded 
 . clear *
 
@@ -29,25 +40,12 @@ end of do-file
 
 r(603);
 
-. do "C:\Users\k1635179\AppData\Local\Temp\STD412c_000000.tmp"
+. do "C:\Users\k1635179\AppData\Local\Temp\STD1c7c_000000.tmp"
 
-. ********************************************************************************
-. *
-. *       Do-file:                        redacted_table.do
-. *       Project:                        Sotrovimab-Paxlovid-Molnupiravir
-. *   Date:                               25/07/23
-. *       Programmed by:          Katie Bechman
-. *       Description:            data management, reformat variables, categorise variables, label variables 
-. *       Data used:                      data in memory (from output/input.csv) 
-. *       Data created:           analysis main.dta  (main analysis dataset)
-. *       Other output:           logfiles, printed to folder $Logdir
-. *       User installed ado: (place .ado file(s) in analysis folder)
-. 
-. ****************************************************************************************************************
 . **Set filepaths
 . global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
 
-. //global projectdir `c(pwd)'
+. // global projectdir `c(pwd)'
 . 
 . di "$projectdir"
 C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir

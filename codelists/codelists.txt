@@ -90,6 +90,7 @@ user/ss808/estimated-glomerular-filtration-rate-egfr-values/5d974480
 primis-covid19-vacc-uptake/ckd35/v.1.5.3
 opensafely/sps-paxlovid-interactions-do-not-use-dmd/1a657b33
 opensafely/nirmatrelvir-drug-interactions-dmd/015607fe/
+opensafely/paxlovid-nirmatrelvirritonavir-absolute-contraindications-dmd/774852b7
 opensafely/symptoms-rashes/6bd2da47/
 opensafely/symptoms-headache/4930920c/
 

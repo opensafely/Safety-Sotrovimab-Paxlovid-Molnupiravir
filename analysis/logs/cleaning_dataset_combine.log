@@ -1,0 +1,99 @@
+-------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\k1635179\OneDrive - King's College Lond
+> on\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrov
+> imab-Paxlovid-Molnupiravir\analysis/logs/cleaning_dataset_c
+> ombine.log
+  log type:  text
+ opened on:  31 Oct 2023, 20:52:35
+
+. 
+. *Set Ado file path
+. adopath + "$projectdir/analysis/ado"
+  [1]  (BASE)      "C:\Program Files\Stata17\ado\base/"
+  [2]  (SITE)      "C:\Program Files\Stata17\ado\site/"
+  [3]              "."
+  [4]  (PERSONAL)  "C:\users\PUBLIC\documents/"
+  [5]  (PLUS)      "C:\users\PUBLIC\documents/"
+  [6]  (OLDPLACE)  "c:\ado/"
+  [7]              "C:\Users\k1635179\OneDrive - King's Colle
+> ge London\Katie\OpenSafely\Safety mAB and antivirals\Safety
+> -Sotrovimab-Paxlovid-Molnupiravir/analysis/ado"
+  [8]              "C:\Users\k1635179\OneDrive - King's Colle
+> ge London\Katie\OpenSafely\Safety mAB and antivirals\Safety
+> -Sotrovimab-Paxlovid-Molnupiravir\analysis/analysis/ado"
+
+. 
+. 
+. ***********************************************************
+> ***********************************************************
+> *
+. **                      MAIN ANALYSIS                   **
+. ***********************************************************
+> ***********************************************************
+> *
+. *       Import control dataset
+. import delimited "$projectdir/output/input_control.csv", cl
+> ear
+file C:\Users\k1635179\OneDrive - King's College London\Katie
+> \OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Pax
+> lovid-Molnupiravir\analysis/output/input_control.csv not fo
+> und
+r(601);
+
+end of do-file
+
+r(601);
+
+. do "C:\Users\k1635179\AppData\Local\Temp\STD5a0_000000.tmp"
+
+. ***********************************************************
+> *********************
+. *
+. *       Do-file:                        define covariates.d
+> o
+. *       Project:                        Sotrovimab-Paxlovid
+> -Molnupiravir
+. *   Date:                               15/2/23
+. *       Programmed by:          Katie Bechman
+. *       Description:            data management, reformat v
+> ariables, categorise variables, label variables 
+. *       Data used:                      data in memory (fro
+> m output/input.csv) 
+. *       Data created:           analysis main.dta  (main an
+> alysis dataset)
+. *       Other output:           logfiles, printed to folder
+>  $Logdir
+. *       User installed ado: (place .ado file(s) in analysis
+>  folder)
+. 
+. ***********************************************************
+> *****************************************************
+. **Set filepaths
+. global projectdir "C:\Users\k1635179\OneDrive - King's Coll
+> ege London\Katie\OpenSafely\Safety mAB and antivirals\Safet
+> y-Sotrovimab-Paxlovid-Molnupiravir"
+
+. // global projectdir `c(pwd)'
+. 
+. di "$projectdir"
+C:\Users\k1635179\OneDrive - King's College London\Katie\Open
+> Safely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid
+> -Molnupiravir
+
+. capture mkdir "$projectdir/output/data"
+
+. capture mkdir "$projectdir/output/figures"
+
+. capture mkdir "$projectdir/output/tables"
+
+. global logdir "$projectdir/logs"
+
+. di "$logdir"
+C:\Users\k1635179\OneDrive - King's College London\Katie\Open
+> Safely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid
+> -Molnupiravir/logs
+
+. 
+. * Open a log file
+. cap log close

@@ -1,4 +1,4 @@
-## Main analysis - control arm: restricted to those with covid test. Start date is COVID TEST date 
+## Sensitivity analysis- treatment arm NOT restricted to those with covid test within 5 days of treatment. Start date is TREAT date 
 
 from cohortextractor import StudyDefinition, patients, codelist_from_csv, codelist, filter_codes_by_category, combine_codelists, Measure
 import datetime
@@ -133,7 +133,7 @@ def adverse_outcome_snomed(dx_codelist):
       find_first_match_in_period=True,
       date_format="YYYY-MM-DD",
       return_expectations={
-          "incidence": 0.4,
+          "incidence": 0.3,
           "date": {"earliest": "2021-12-16"},
       },
   )
@@ -232,32 +232,29 @@ study = StudyDefinition(
     """
     age >= 12 AND age < 110
     AND NOT has_died
-    AND (
-        registered_eligible
-        AND
-        high_risk_cohort_nhsd
-        AND
-        covid_test_positive
-        ) 
-    AND NOT registered_treated
+    AND registered_treated 
+    AND NOT 
+        (remdesivir
+        OR
+        casirivimab
+        )
     """,
-    
-    registered_eligible = patients.registered_as_of("covid_test_positive_date"),
+      
     registered_treated = patients.registered_as_of("date_treated"),  
   ),
-           
+  
   ## TREATMENT 
   sotrovimab= patients.with_covid_therapeutics(
     with_these_therapeutics = "Sotrovimab", with_these_indications = "non_hospitalised", on_or_after = "index_date",
-    find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.01, "date": {"earliest": "2021-12-16"},},
+    find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.7, "date": {"earliest": "2021-12-16"},},
   ),
   molnupiravir= patients.with_covid_therapeutics(
     with_these_therapeutics = "Molnupiravir", with_these_indications = "non_hospitalised", on_or_after = "index_date",
-    find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.01, "date": {"earliest": "2021-12-16"},},
+    find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.7, "date": {"earliest": "2021-12-16"},},
   ),
   paxlovid= patients.with_covid_therapeutics(
     with_these_therapeutics = "Paxlovid", with_these_indications = "non_hospitalised", on_or_after = "index_date",
-    find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.01, "date": {"earliest": "2021-12-16"},},
+    find_first_match_in_period=True, returning="date", date_format="YYYY-MM-DD", return_expectations={"incidence": 0.7, "date": {"earliest": "2021-12-16"},},
   ),
   remdesivir= patients.with_covid_therapeutics(
     with_these_therapeutics = "Remdesivir", with_these_indications = "non_hospitalised", on_or_after = "index_date",
@@ -284,14 +281,19 @@ study = StudyDefinition(
   ),
 
   ## COVID TEST POSITIVE
-  ## SARS-CoV-2 - IN TREATMENT COHORT COVID TEST WITHIN 5 DAYS OF TREATMENT 
+  ## SARS-CoV-2 - INCLUDING THOSE WITHOUT COVID TEST WITHIN 5 DAYS OF TREATMENT - START DATE IS START TREATMENT
   covid_test_positive = patients.with_test_result_in_sgss(
-    pathogen = "SARS-CoV-2", test_result = "positive", returning = "binary_flag", on_or_after = "date_treated - 5 days", find_first_match_in_period = True, 
+    pathogen = "SARS-CoV-2", test_result = "positive", returning = "binary_flag", on_or_after = "index_date - 5 days", find_first_match_in_period = True, 
     restrict_to_earliest_specimen_date = False,  return_expectations = {"incidence": 0.9 },
   ),
   covid_test_positive_date = patients.with_test_result_in_sgss(
-    pathogen = "SARS-CoV-2", test_result = "positive", returning = "date", date_format = "YYYY-MM-DD", on_or_after = "date_treated - 5 days", find_first_match_in_period = True, 
+    pathogen = "SARS-CoV-2", test_result = "positive", returning = "date", date_format = "YYYY-MM-DD", on_or_after = "index_date - 5 days", find_first_match_in_period = True, 
     restrict_to_earliest_specimen_date = False, return_expectations = {"date": {"earliest": "2021-12-11", "latest": "today"}, "incidence": 0.9},
+  ),
+  ## Closest covid test before treatment in those treated
+  covid_test_positive_treat = patients.with_test_result_in_sgss(
+    pathogen = "SARS-CoV-2", test_result = "positive", returning = "date", date_format = "YYYY-MM-DD", on_or_before = "date_treated", find_last_match_in_period = True, 
+    restrict_to_earliest_specimen_date = False, return_expectations = {"date": {"earliest": "2021-12-11", "latest": "today"}, "incidence": 0.4},
   ),
   ## Second positive SARS-CoV-2 test
   covid_test_positive_date2 = patients.with_test_result_in_sgss(
@@ -333,9 +335,8 @@ study = StudyDefinition(
   ), 
   
   ## START DATE 
-  start_date = patients.with_test_result_in_sgss(
-    pathogen = "SARS-CoV-2", test_result = "positive", returning = "date", date_format = "YYYY-MM-DD", on_or_after = "date_treated - 5 days", find_first_match_in_period = True, 
-    restrict_to_earliest_specimen_date = False, return_expectations = {"date": {"earliest": "2021-12-11", "latest": "today"}, "incidence": 0.9},
+  start_date = patients.minimum_of(
+    "sotrovimab","paxlovid", "molnupiravir"
   ),
 
   # Eligable based on comorbidities for control population
