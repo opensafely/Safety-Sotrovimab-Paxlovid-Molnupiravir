@@ -464,19 +464,19 @@ foreach fail in $ae_combined {
 }
 }
 
-/*use "$projectdir/output/data/main.dta", clear
+use "$projectdir/output/data/main.dta", clear
 ** Hazard of events using tvc										 
 foreach fail in $ae_combined {
 	preserve
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 	stsplit time_`fail', at(1(1)5)
-	keep if _st==1
+	replace _t=1 if _t==0.75	
 	foreach model in adj  {
 	stcox $`model', tvc(i.time_`fail') vce(robust) 
 	restore
 }
 }
-*/
+
    
 *******************************************************************************************************************
 ** SENSITIVITY ANALYSIS 4 == restrict to eligible and pax contraindicated **
