@@ -24,8 +24,8 @@ actions:
         cohort: output/input_treatment_sensitivity.csv
   
   data_properties:
-    run: r:latest analysis/data_properties.R output/input_control.csv output/input_treatment.csv output/input_treatment_sensitivity.csv output/data_properties
-    needs: [generate_study_population_control, generate_study_population_treatment, generate_study_population_treatment_sensitivity]
+    run: r:latest analysis/data_properties.R output/input_control.csv output/input_treatment.csv output/data_properties
+    needs: [generate_study_population_control, generate_study_population_treatment]
     outputs:
       moderately_sensitive:
         cohort: output/data_properties/input*.txt
