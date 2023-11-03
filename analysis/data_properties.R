@@ -40,8 +40,7 @@ args <- commandArgs(trailingOnly=TRUE)
 if(length(args)==0){
   # use for interactive testing
   csv_files <- list("output/input_control.csv",
-                    "output/input_treatment.csv",
-                    "output/input_treatment_sensitivity.csv")
+                    "output/input_treatment.csv")
   output_dir <- "output/data_properties"
 } else {
   csv_files <- list(args[[1]], args[[2]])

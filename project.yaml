@@ -22,14 +22,20 @@ actions:
     outputs:
       highly_sensitive:
         cohort: output/input_treatment_sensitivity.csv
-
+  
+  data_properties:
+    run: r:latest analysis/data_properties.R output/input_control.csv output/input_treatment.csv output/data_properties
+    needs: [generate_study_population_control, generate_study_population_treatment]
+    outputs:
+      moderately_sensitive:
+        cohort: output/data_properties/input*.txt
+        
   define_covariates_combine:
     run: stata-mp:latest analysis/004_define_covariates_combine.do
     needs: [generate_study_population_control, generate_study_population_treatment, generate_study_population_treatment_sensitivity]
     outputs:
-      moderately_sensitive:
-        log: logs/cleaning_dataset_combine.log 
       highly_sensitive:
+        log: logs/cleaning_dataset_combine.log 
         data: output/data/main.dta
         data1: output/data/sensitivity_analysis.dta
 
