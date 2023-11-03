@@ -12,8 +12,8 @@
 
 ****************************************************************************************************************
 **Set filepaths
-// global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
-global projectdir `c(pwd)'
+global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+// global projectdir `c(pwd)'
 
 di "$projectdir"
 capture mkdir "$projectdir/output/data"
@@ -36,6 +36,7 @@ adopath + "$projectdir/analysis/ado"
 * 	Import control dataset
 import delimited "$projectdir/output/input_control.csv", clear
 gen control_dataset=1
+drop variant_recorded
 *	Convert control strings to dates     * 
 foreach var of varlist 	 pre_covid_hosp_date					///
 						 pre_covid_hosp_discharge				///
@@ -216,7 +217,7 @@ save "$projectdir/output/data/control.dta", replace
 * import treatment dataset
 import delimited "$projectdir/output/input_treatment.csv", clear
 gen treatment_dataset=1
-
+drop variant_recorded
 *	Convert control strings to dates     * 
 foreach var of varlist 	 pre_covid_hosp_date					///
 						 pre_covid_hosp_discharge				///
@@ -1072,6 +1073,7 @@ save "$projectdir/output/data/main.dta", replace
 * import treatment_sensitvity dataset - includes those without positive covid test 
 import delimited "$projectdir/output/input_treatment_sensitivity.csv", clear
 gen treatment_dataset=1
+drop variant_recorded
 
 *	Convert control strings to dates     * 
 foreach var of varlist 	 pre_covid_hosp_date					///
