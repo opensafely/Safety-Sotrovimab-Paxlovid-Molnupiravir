@@ -37,6 +37,8 @@ adopath + "$projectdir/analysis/ado"
 import delimited "$projectdir/output/input_control.csv", clear
 gen control_dataset=1
 drop variant_recorded
+drop sgtf
+
 *	Convert control strings to dates     * 
 foreach var of varlist 	 pre_covid_hosp_date					///
 						 pre_covid_hosp_discharge				///
@@ -202,6 +204,9 @@ foreach var of varlist 	 pre_covid_hosp_date					///
 						 pre_ibd_ctv							///
 						 pre_ibd_icd							///
 						 pre_ibd_icd_prim						///
+						 covid_hosp_discharge 					///
+						 any_covid_hosp_discharge 				///
+						 preg_36wks_date						///									 
 {					 
 	capture confirm string variable `var'
 	if _rc==0 {
@@ -218,6 +223,7 @@ save "$projectdir/output/data/control.dta", replace
 import delimited "$projectdir/output/input_treatment.csv", clear
 gen treatment_dataset=1
 drop variant_recorded
+drop sgtf
 *	Convert control strings to dates     * 
 foreach var of varlist 	 pre_covid_hosp_date					///
 						 pre_covid_hosp_discharge				///
@@ -383,6 +389,9 @@ foreach var of varlist 	 pre_covid_hosp_date					///
 						 pre_ibd_ctv							///
 						 pre_ibd_icd							///
 						 pre_ibd_icd_prim						///
+						 covid_hosp_discharge 					///
+						 any_covid_hosp_discharge 				///
+						 preg_36wks_date						///
 {					 
 	capture confirm string variable `var'
 	if _rc==0 {
@@ -740,9 +749,6 @@ gen month_after_campaign=ceil((start_date-mdy(12,15,2021))/30)
 tab month_after_campaign,m
 tab start_date if month_after_campaign>100
 //drop if month_after_campaign>100
-* Variant
-label define sgtf_new 0 "S gene detected" 1 "confirmed SGTF" 9 "NA"
-label values sgtf_new sgtf_new
 * Prior infection / check Bang code
 tab prior_covid, m
 gen prior_covid_index=1 if prior_covid==1 & prior_covid_date<campaign_start
@@ -1074,6 +1080,7 @@ save "$projectdir/output/data/main.dta", replace
 import delimited "$projectdir/output/input_treatment_sensitivity.csv", clear
 gen treatment_dataset=1
 drop variant_recorded
+drop sgtf
 
 *	Convert control strings to dates     * 
 foreach var of varlist 	 pre_covid_hosp_date					///
@@ -1241,6 +1248,9 @@ foreach var of varlist 	 pre_covid_hosp_date					///
 						 pre_ibd_ctv							///
 						 pre_ibd_icd							///
 						 pre_ibd_icd_prim						///
+						 covid_hosp_discharge 					///
+						 any_covid_hosp_discharge 				///
+						 preg_36wks_date						///
 {					 
 	capture confirm string variable `var'
 	if _rc==0 {
@@ -1599,9 +1609,6 @@ gen month_after_campaign=ceil((start_date-mdy(12,15,2021))/30)
 tab month_after_campaign,m
 tab start_date if month_after_campaign>100
 //drop if month_after_campaign>100
-* Variant
-label define sgtf_new 0 "S gene detected" 1 "confirmed SGTF" 9 "NA"
-label values sgtf_new sgtf_new
 * Prior infection / check Bang code
 tab prior_covid, m
 gen prior_covid_index=1 if prior_covid==1 & prior_covid_date<campaign_start
