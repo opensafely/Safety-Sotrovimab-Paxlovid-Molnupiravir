@@ -284,13 +284,13 @@ study = StudyDefinition(
   ),
 
   ## COVID TEST POSITIVE
-  ## SARS-CoV-2 - IN TREATMENT COHORT COVID TEST WITHIN 5 DAYS OF TREATMENT 
+  ## SARS-CoV-2 - IN CONTROL COHORT IS COVID TEST 
   covid_test_positive = patients.with_test_result_in_sgss(
-    pathogen = "SARS-CoV-2", test_result = "positive", returning = "binary_flag", on_or_after = "date_treated - 5 days", find_first_match_in_period = True, 
+    pathogen = "SARS-CoV-2", test_result = "positive", returning = "binary_flag", on_or_after = "index_date - 5 days", find_first_match_in_period = True, 
     restrict_to_earliest_specimen_date = False,  return_expectations = {"incidence": 0.9 },
   ),
   covid_test_positive_date = patients.with_test_result_in_sgss(
-    pathogen = "SARS-CoV-2", test_result = "positive", returning = "date", date_format = "YYYY-MM-DD", on_or_after = "date_treated - 5 days", find_first_match_in_period = True, 
+    pathogen = "SARS-CoV-2", test_result = "positive", returning = "date", date_format = "YYYY-MM-DD", on_or_after = "index_date - 5 days", find_first_match_in_period = True, 
     restrict_to_earliest_specimen_date = False, return_expectations = {"date": {"earliest": "2021-12-11", "latest": "today"}, "incidence": 0.9},
   ),
   ## Second positive SARS-CoV-2 test
@@ -334,7 +334,7 @@ study = StudyDefinition(
   
   ## START DATE 
   start_date = patients.with_test_result_in_sgss(
-    pathogen = "SARS-CoV-2", test_result = "positive", returning = "date", date_format = "YYYY-MM-DD", on_or_after = "date_treated - 5 days", find_first_match_in_period = True, 
+    pathogen = "SARS-CoV-2", test_result = "positive", returning = "date", date_format = "YYYY-MM-DD", on_or_after = "index_date - 5 days", find_first_match_in_period = True, 
     restrict_to_earliest_specimen_date = False, return_expectations = {"date": {"earliest": "2021-12-11", "latest": "today"}, "incidence": 0.9},
   ),
 

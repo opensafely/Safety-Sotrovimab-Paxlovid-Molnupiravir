@@ -853,12 +853,13 @@ label values pre_drug_test pre_drug_test
 tab pre_drug_test_time if pre_drug_test<=5
 tab pre_drug_test dataset,m
 count if dataset==1 & pre_drug_test>5
-// drop if dataset==1 & pre_drug_test>5
+drop if dataset==1 & pre_drug_test>5
 sum pre_drug_test_time, det
 
 **delay between covid test and treatment 
 gen covid_test_5d = 1 if pre_drug_test<=5 & dataset==1
-egen median_delay_treatment =  median(date_treated - covid_test_positive_date) if covid_test_5d==1
+sum pre_drug_test_time if covid_test_5d==1, det
+egen median_delay_treatment =  median(pre_drug_test_time) if covid_test_5d==1
 egen median_delay_all= max(median_delay_treatment)
 
 ** removing individuals who did not start therapy
@@ -1717,7 +1718,8 @@ sum pre_drug_test_time, det
 
 **delay between covid test and treatment 
 gen covid_test_5d = 1 if pre_drug_test<=5 & dataset==1
-egen median_delay_treatment =  median(date_treated - covid_test_positive_date) if covid_test_5d==1
+sum pre_drug_test_time if covid_test_5d==1, det
+egen median_delay_treatment =  median(pre_drug_test_time) if covid_test_5d==1
 egen median_delay_all= max(median_delay_treatment)
 
 ** removing individuals who did not start therapy
