@@ -874,30 +874,27 @@ foreach var of varlist sotrovimab molnupiravir paxlovid {
 	replace `var'_start = 0 if `var'==date_treated & `var'!=. & date_treated!=. & `var'_not_start!=.
 	tab `var'_start, m  
 }
+** removing individuals start two or more drugs (i.e sotrovimab and paxlovid dates both on treat date and no code for not starting drug)
+gen sotrovimab_start_clean = 1 if sotrovimab_start==1 & paxlovid_start!=1 & molnupiravir_start!=1
+replace sotrovimab_start_clean = 0 if sotrovimab_start==1 & (paxlovid_start==1 | molnupiravir_start==1)
+tab sotrovimab_start_clean sotrovimab_start
+gen paxlovid_start_clean = 1 if paxlovid_start==1 & sotrovimab_start!=1 & molnupiravir_start!=1
+replace paxlovid_start_clean = 0 if paxlovid_start==1 & (sotrovimab_start==1 | molnupiravir_start==1)
+tab paxlovid_start_clean paxlovid_start
+gen molnupiravir_start_clean = 1 if molnupiravir_start==1 & sotrovimab_start!=1 & paxlovid_start!=1
+replace molnupiravir_start_clean = 0 if molnupiravir_start==1 & (sotrovimab_start==1 | paxlovid_start==1)
+tab molnupiravir_start_clean molnupiravir_start
 * remove if had remdesivir or casirivimab
-gen drug=7 if remdesivir==date_treated&remdesivir!=.&date_treated!=.
-replace drug=8 if casirivimab==date_treated&casirivimab!=.&date_treated!=.
+gen drug=4 if remdesivir==date_treated&remdesivir!=.&date_treated!=.
+replace drug=5 if casirivimab==date_treated&casirivimab!=.&date_treated!=.
 tab drug,m 
 * patient who started sotrovimab, paxlovid, molnupiravir 
-replace drug=1 if sotrovimab_start==1 
-replace drug=2 if paxlovid_start==1
-replace drug=3 if molnupiravir_start==1
-tab drug,m 
-* remove if didnt start sotrovimab, paxlovid, molnupiravir 
-replace drug=4 if sotrovimab_start==0 
-replace drug=5 if paxlovid_start==0
-replace drug=6 if molnupiravir_start==0
-tab drug,m 
-* remove if had 2 treatment codes on start date
-gen two_drugs= 1 if sotrovimab_start==1 & paxlovid_start==1
-replace two_drugs=2 if sotrovimab_start==1 & molnupiravir_start==1
-replace two_drugs=3 if paxlovid_start==1 & molnupiravir_start==1
-replace two_drugs=4 if sotrovimab_start==1 & paxlovid_start==1 & molnupiravir_start==1
-tab two_drug
-replace drug=9 if two_drugs!=.
+replace drug=1 if sotrovimab_start_clean==1 
+replace drug=2 if paxlovid_start_clean==1
+replace drug=3 if molnupiravir_start_clean==1
 tab drug,m 
 replace drug=0 if drug==.
-label define drug 0 "control" 1 "sotrovimab" 2 "paxlovid" 3"molnupiravir" 4 "sotrovimab not started" 5 "paxlovid not started" 6 "molnupiravir not started" 7 "remdesivir" 8 "casirivimab" 9 "combination treatment", replace
+label define drug 0 "control" 1 "sotrovimab" 2 "paxlovid" 3"molnupiravir" 4 "remdesivir" 5 "casirivimab", replace
 label values drug drug
 tab drug, m
 * for flow sheet for treatment arm
@@ -958,7 +955,7 @@ count if drug==0 & (covid_test_positive_date-pre_covid_hosp_discharge<=1) & (cov
 drop if drug==0 & covid_test_positive_date==pre_covid_hosp_date
 ** remove if discharged on day of positive covid test 
 drop if drug==0 & covid_test_positive_date==pre_covid_hosp_discharge
-** remove if control patient's covid test is on discharge date
+** remove if discharged on 1 day before positive covid test 
 drop if drug==0 & (covid_test_positive_date-pre_covid_hosp_discharge<=1) & (covid_test_positive_date-pre_covid_hosp_discharge>=0)
 bys dataset: tab drug,m 
 
@@ -1734,30 +1731,27 @@ foreach var of varlist sotrovimab molnupiravir paxlovid {
 	replace `var'_start = 0 if `var'==date_treated & `var'!=. & date_treated!=. & `var'_not_start!=.
 	tab `var'_start, m  
 }
+** removing individuals start two or more drugs (i.e sotrovimab and paxlovid dates both on treat date and no code for not starting drug)
+gen sotrovimab_start_clean = 1 if sotrovimab_start==1 & paxlovid_start!=1 & molnupiravir_start!=1
+replace sotrovimab_start_clean = 0 if sotrovimab_start==1 & (paxlovid_start==1 | molnupiravir_start==1)
+tab sotrovimab_start_clean sotrovimab_start
+gen paxlovid_start_clean = 1 if paxlovid_start==1 & sotrovimab_start!=1 & molnupiravir_start!=1
+replace paxlovid_start_clean = 0 if paxlovid_start==1 & (sotrovimab_start==1 | molnupiravir_start==1)
+tab paxlovid_start_clean paxlovid_start
+gen molnupiravir_start_clean = 1 if molnupiravir_start==1 & sotrovimab_start!=1 & paxlovid_start!=1
+replace molnupiravir_start_clean = 0 if molnupiravir_start==1 & (sotrovimab_start==1 | paxlovid_start==1)
+tab molnupiravir_start_clean molnupiravir_start
 * remove if had remdesivir or casirivimab
-gen drug=7 if remdesivir==date_treated&remdesivir!=.&date_treated!=.
-replace drug=8 if casirivimab==date_treated&casirivimab!=.&date_treated!=.
+gen drug=4 if remdesivir==date_treated&remdesivir!=.&date_treated!=.
+replace drug=5 if casirivimab==date_treated&casirivimab!=.&date_treated!=.
 tab drug,m 
 * patient who started sotrovimab, paxlovid, molnupiravir 
-replace drug=1 if sotrovimab_start==1 
-replace drug=2 if paxlovid_start==1
-replace drug=3 if molnupiravir_start==1
-tab drug,m 
-* remove if didnt start sotrovimab, paxlovid, molnupiravir 
-replace drug=4 if sotrovimab_start==0 
-replace drug=5 if paxlovid_start==0
-replace drug=6 if molnupiravir_start==0
-tab drug,m 
-* remove if had 2 treatment codes on start date
-gen two_drugs= 1 if sotrovimab_start==1 & paxlovid_start==1
-replace two_drugs=2 if sotrovimab_start==1 & molnupiravir_start==1
-replace two_drugs=3 if paxlovid_start==1 & molnupiravir_start==1
-replace two_drugs=4 if sotrovimab_start==1 & paxlovid_start==1 & molnupiravir_start==1
-tab two_drug
-replace drug=9 if two_drugs!=.
+replace drug=1 if sotrovimab_start_clean==1 
+replace drug=2 if paxlovid_start_clean==1
+replace drug=3 if molnupiravir_start_clean==1
 tab drug,m 
 replace drug=0 if drug==.
-label define drug 0 "control" 1 "sotrovimab" 2 "paxlovid" 3"molnupiravir" 4 "sotrovimab not started" 5 "paxlovid not started" 6 "molnupiravir not started" 7 "remdesivir" 8 "casirivimab" 9 "combination treatment", replace
+label define drug 0 "control" 1 "sotrovimab" 2 "paxlovid" 3"molnupiravir" 4 "remdesivir" 5 "casirivimab", replace
 label values drug drug
 tab drug, m
 * for flow sheet for treatment arm
@@ -1818,7 +1812,7 @@ count if drug==0 & (covid_test_positive_date-pre_covid_hosp_discharge<=1) & (cov
 drop if drug==0 & covid_test_positive_date==pre_covid_hosp_date
 ** remove if discharged on day of positive covid test 
 drop if drug==0 & covid_test_positive_date==pre_covid_hosp_discharge
-** remove if control patient's covid test is on discharge date
+** remove if discharged 1 day before positive covid test 
 drop if drug==0 & (covid_test_positive_date-pre_covid_hosp_discharge<=1) & (covid_test_positive_date-pre_covid_hosp_discharge>=0)
 bys dataset: tab drug,m 
 
