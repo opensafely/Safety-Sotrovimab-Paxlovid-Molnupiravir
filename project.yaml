@@ -96,6 +96,7 @@ actions:
       moderately_sensitive:
         log: logs/ps_model.log
         data: output/tables/cox_propensity.csv 
+        data1: output/tables/cox_propensity_disease.csv 
         histogram_agesex: output/figures/histogram_agesex.svg
         histogram_adj: output/figures/histogram_adj.svg
         histogram_adj2: output/figures/histogram_adj2.svg

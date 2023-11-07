@@ -1,73 +1,73 @@
-code,term
-327104000,Mycophenolate mofetil 250mg capsules
-18310411000001102,Mycophenolate mofetil 250mg capsules
-22352411000001100,Mycophenolate mofetil 250mg capsules
-18464211000001103,Mycophenolate mofetil 250mg capsules
-18164311000001107,Mycophenolate mofetil 250mg capsules
-18342411000001105,Mycophenolate mofetil 250mg capsules
-24028011000001102,Mycophenolate mofetil 250mg capsules
-22605811000001106,Mycophenolate mofetil 250mg capsules
-21842611000001101,Mycophenolate mofetil 250mg capsules
-22409911000001101,Mycophenolate mofetil 250mg capsules
-18477711000001105,Mycophenolate mofetil 250mg capsules
-25881711000001105,Mycophenolate mofetil 250mg capsules
-23218811000001105,Mycophenolate mofetil 250mg capsules
-32424411000001104,Mycophenolate mofetil 250mg capsules
-24571011000001105,Mycophenolate mofetil 250mg capsules
-23958811000001104,Mycophenolate mofetil 250mg capsules
-18622711000001109,Mycophenolate mofetil 250mg capsules
-20312011000001106,Mycophenolate mofetil 250mg capsules
-18728911000001102,Mycophenolate mofetil 250mg capsules
-38523011000001107,Mycophenolate mofetil 250mg capsules
-21808611000001106,Mycophenolate mofetil 250mg capsules
-327106003,Mycophenolate mofetil 500mg tablets
-18310611000001104,Mycophenolate mofetil 500mg tablets
-18464411000001104,Mycophenolate mofetil 500mg tablets
-18164511000001101,Mycophenolate mofetil 500mg tablets
-18342611000001108,Mycophenolate mofetil 500mg tablets
-22464411000001109,Mycophenolate mofetil 500mg tablets
-24405511000001101,Mycophenolate mofetil 500mg tablets
-18477511000001100,Mycophenolate mofetil 500mg tablets
-32424611000001101,Mycophenolate mofetil 500mg tablets
-30849511000001103,Mycophenolate mofetil 500mg tablets
-18412111000001102,Mycophenolate mofetil 500mg tablets
-18622911000001106,Mycophenolate mofetil 500mg tablets
-18730111000001104,Mycophenolate mofetil 500mg tablets
-35725211000001106,Mycophenolate mofetil 500mg tablets
-21808811000001105,Mycophenolate mofetil 500mg tablets
-20312211000001101,Mycophenolate motefil 500mg tablets
-19429811000001107,Mycophenolate motefil 500mg tablets
-13000511000001100,Mycophenolate mofetil 250mg/5ml oral suspension
-12986311000001108,Mycophenolate mofetil 250mg/5ml oral suspension
-13000611000001101,Mycophenolate mofetil 300mg/5ml oral suspension
-12987211000001103,Mycophenolate mofetil 300mg/5ml oral suspension
-13000711000001105,Mycophenolate mofetil 500mg/5ml oral suspension
-12988111000001105,Mycophenolate mofetil 500mg/5ml oral suspension
-13000311000001106,Mycophenolate mofetil 100mg/5ml oral suspension
-12984311000001102,Mycophenolate mofetil 100mg/5ml oral suspension
-327109005,Mycophenolate mofetil 500mg powder for solution for infusion vials
-33341411000001104,Mycophenolate mofetil 500mg powder for concentrate for solution for infusion vials
-13000411000001104,Mycophenolate mofetil 125mg/5ml oral suspension
-12984911000001101,Mycophenolate mofetil 125mg/5ml oral suspension
-4897811000001103,Mycophenolate mofetil 1g/5ml oral suspension sugar free
-3659911000001102,CellCept 250mg capsules
-3661611000001102,CellCept 500mg tablets
-4346311000001104,CellCept 500mg powder for solution for infusion vials
-4881311000001100,CellCept 1g/5ml oral suspension
-18163911000001106,Myfenax 500mg tablets
-18164111000001105,Myfenax 250mg capsules
-18166911000001100,Arzip 250mg capsules
-18166711000001102,Arzip 500mg tablets
-8076911000001104,Mycophenolic acid 180mg gastro-resistant tablets
-35335811000001106,Mycophenolic acid 180mg gastro-resistant tablets
-34932711000001105,Mycophenolic acid 180mg gastro-resistant tablets
-8077011000001100,Mycophenolic acid 360mg gastro-resistant tablets
-35336011000001109,Mycophenolic acid 360mg gastro-resistant tablets
-34932911000001107,Mycophenolic acid 360mg gastro-resistant tablets
-8077511000001108,Myfortic 180mg gastro-resistant tablets
-8077811000001106,Myfortic 360mg gastro-resistant tablets
-34809211000001105,Ceptava 180mg gastro-resistant tablets
-34809411000001109,Ceptava 360mg gastro-resistant tablets
-41766011000001104,VMP subsequent to 327104000
-41766111000001103,VMP subsequent to 327109005
-41766211000001109,VMP subsequent to 327106003
+code,term,dmd_id
+327104000,Mycophenolate mofetil 250mg capsules,327104000
+18310411000001102,Mycophenolate mofetil 250mg capsules,18310411000001102
+22352411000001100,Mycophenolate mofetil 250mg capsules,22352411000001100
+18464211000001103,Mycophenolate mofetil 250mg capsules,18464211000001103
+18164311000001107,Mycophenolate mofetil 250mg capsules,18164311000001107
+18342411000001105,Mycophenolate mofetil 250mg capsules,18342411000001105
+24028011000001102,Mycophenolate mofetil 250mg capsules,24028011000001102
+22605811000001106,Mycophenolate mofetil 250mg capsules,22605811000001106
+21842611000001101,Mycophenolate mofetil 250mg capsules,21842611000001101
+22409911000001101,Mycophenolate mofetil 250mg capsules,22409911000001101
+18477711000001105,Mycophenolate mofetil 250mg capsules,18477711000001105
+25881711000001105,Mycophenolate mofetil 250mg capsules,25881711000001105
+23218811000001105,Mycophenolate mofetil 250mg capsules,23218811000001105
+32424411000001104,Mycophenolate mofetil 250mg capsules,32424411000001104
+24571011000001105,Mycophenolate mofetil 250mg capsules,24571011000001105
+23958811000001104,Mycophenolate mofetil 250mg capsules,23958811000001104
+18622711000001109,Mycophenolate mofetil 250mg capsules,18622711000001109
+20312011000001106,Mycophenolate mofetil 250mg capsules,20312011000001106
+18728911000001102,Mycophenolate mofetil 250mg capsules,18728911000001102
+38523011000001107,Mycophenolate mofetil 250mg capsules,38523011000001107
+21808611000001106,Mycophenolate mofetil 250mg capsules,21808611000001106
+327106003,Mycophenolate mofetil 500mg tablets,327106003
+18310611000001104,Mycophenolate mofetil 500mg tablets,18310611000001104
+18464411000001104,Mycophenolate mofetil 500mg tablets,18464411000001104
+18164511000001101,Mycophenolate mofetil 500mg tablets,18164511000001101
+18342611000001108,Mycophenolate mofetil 500mg tablets,18342611000001108
+22464411000001109,Mycophenolate mofetil 500mg tablets,22464411000001109
+24405511000001101,Mycophenolate mofetil 500mg tablets,24405511000001101
+18477511000001100,Mycophenolate mofetil 500mg tablets,18477511000001100
+32424611000001101,Mycophenolate mofetil 500mg tablets,32424611000001101
+30849511000001103,Mycophenolate mofetil 500mg tablets,30849511000001103
+18412111000001102,Mycophenolate mofetil 500mg tablets,18412111000001102
+18622911000001106,Mycophenolate mofetil 500mg tablets,18622911000001106
+18730111000001104,Mycophenolate mofetil 500mg tablets,18730111000001104
+35725211000001106,Mycophenolate mofetil 500mg tablets,35725211000001106
+21808811000001105,Mycophenolate mofetil 500mg tablets,21808811000001105
+20312211000001101,Mycophenolate motefil 500mg tablets,20312211000001101
+19429811000001107,Mycophenolate motefil 500mg tablets,19429811000001107
+13000511000001100,Mycophenolate mofetil 250mg/5ml oral suspension,13000511000001100
+12986311000001108,Mycophenolate mofetil 250mg/5ml oral suspension,12986311000001108
+13000611000001101,Mycophenolate mofetil 300mg/5ml oral suspension,13000611000001101
+12987211000001103,Mycophenolate mofetil 300mg/5ml oral suspension,12987211000001103
+13000711000001105,Mycophenolate mofetil 500mg/5ml oral suspension,13000711000001105
+12988111000001105,Mycophenolate mofetil 500mg/5ml oral suspension,12988111000001105
+13000311000001106,Mycophenolate mofetil 100mg/5ml oral suspension,13000311000001106
+12984311000001102,Mycophenolate mofetil 100mg/5ml oral suspension,12984311000001102
+327109005,Mycophenolate mofetil 500mg powder for solution for infusion vials,327109005
+33341411000001104,Mycophenolate mofetil 500mg powder for concentrate for solution for infusion vials,33341411000001104
+13000411000001104,Mycophenolate mofetil 125mg/5ml oral suspension,13000411000001104
+12984911000001101,Mycophenolate mofetil 125mg/5ml oral suspension,12984911000001101
+4897811000001103,Mycophenolate mofetil 1g/5ml oral suspension sugar free,4897811000001103
+3659911000001102,CellCept 250mg capsules,3659911000001102
+3661611000001102,CellCept 500mg tablets,3661611000001102
+4346311000001104,CellCept 500mg powder for solution for infusion vials,4346311000001104
+4881311000001100,CellCept 1g/5ml oral suspension,4881311000001100
+18163911000001106,Myfenax 500mg tablets,18163911000001106
+18164111000001105,Myfenax 250mg capsules,18164111000001105
+18166911000001100,Arzip 250mg capsules,18166911000001100
+18166711000001102,Arzip 500mg tablets,18166711000001102
+8076911000001104,Mycophenolic acid 180mg gastro-resistant tablets,8076911000001104
+35335811000001106,Mycophenolic acid 180mg gastro-resistant tablets,35335811000001106
+34932711000001105,Mycophenolic acid 180mg gastro-resistant tablets,34932711000001105
+8077011000001100,Mycophenolic acid 360mg gastro-resistant tablets,8077011000001100
+35336011000001109,Mycophenolic acid 360mg gastro-resistant tablets,35336011000001109
+34932911000001107,Mycophenolic acid 360mg gastro-resistant tablets,34932911000001107
+8077511000001108,Myfortic 180mg gastro-resistant tablets,8077511000001108
+8077811000001106,Myfortic 360mg gastro-resistant tablets,8077811000001106
+34809211000001105,Ceptava 180mg gastro-resistant tablets,34809211000001105
+34809411000001109,Ceptava 360mg gastro-resistant tablets,34809411000001109
+41766011000001104,VMP subsequent to 327104000,41766011000001104
+41766111000001103,VMP subsequent to 327109005,41766111000001103
+41766211000001109,VMP subsequent to 327106003,41766211000001109
