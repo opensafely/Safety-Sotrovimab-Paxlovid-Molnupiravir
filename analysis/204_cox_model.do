@@ -12,7 +12,7 @@
 
 ****************************************************************************************************************
 
-//global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir" 
+// global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir" 
 global projectdir `c(pwd)'
 di "$projectdir"
 capture mkdir "$projectdir/output/data"
@@ -446,37 +446,6 @@ replace lag =2 if lag==.
 save "$projectdir/output/tables/cox_model_summary_sens_2", replace
 export delimited using "$projectdir/output/tables/cox_model_summary_sens_2.csv", replace
 
-
-*******************************************************************************************************************
-** SENSITIVITY ANALYSIS 3 == time varying covariate **
-use "$projectdir/output/data/main.dta", clear
-
-** Hazard of events using stsplit								 
-foreach fail in ae_all ae_spc_all ae_drug_all ae_imae_all {
-	preserve
-	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
-	stsplit time_`fail', at(1(1)5)
-	tab _t time_`fail'
-	foreach model in crude agesex adj  {
-	bys time_`fail': stcox $`model', vce(robust) 	
-	//stcox i.drug $`model' if time_`fail==1, vce(robust) 
-	restore
-}
-}
-
-use "$projectdir/output/data/main.dta", clear
-** Hazard of events using tvc										 
-foreach fail in ae_all ae_spc_all ae_drug_all ae_imae_all {
-	preserve
-	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
-	stsplit time_`fail', at(1(1)5)
-	replace _t=1 if _t==0.75	
-	foreach model in crude agesex adj  {
-	stcox $`model', tvc(i.time_`fail') vce(robust) 
-	restore
-}
-}
-
    
 *******************************************************************************************************************
 ** SENSITIVITY ANALYSIS 4 == restrict to eligible and pax contraindicated **
@@ -813,6 +782,36 @@ keep failure *midpoint
 order  	failure all* control* sot* pax* mol* 
 save "$projectdir/output/tables/cox_model_rates_round_sens_6", replace
 export delimited using "$projectdir/output/tables/cox_model_rates_round_sens_6.csv", replace  
+
+
+*******************************************************************************************************************
+** SENSITIVITY ANALYSIS 3 == time varying covariate **
+use "$projectdir/output/data/main.dta", clear
+
+** Hazard of events using stsplit								 
+foreach fail in ae_all ae_spc_all ae_drug_all ae_imae_all {
+	preserve
+	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
+	stsplit time_`fail', at(1(1)5)
+	tab _t time_`fail'
+	foreach model in crude agesex adj  {
+	bys time_`fail': stcox $`model', vce(robust) 	
+}
+restore
+}
+
+use "$projectdir/output/data/main.dta", clear
+** Hazard of events using tvc										 
+foreach fail in ae_all ae_spc_all ae_drug_all ae_imae_all {
+	preserve
+	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
+	stsplit time_`fail', at(1(1)5)
+	replace _t=1 if _t==0.75	
+	foreach model in crude agesex adj  {
+	stcox $`model', tvc(i.time_`fail') vce(robust) 
+}
+	restore
+}
 
 
 	   
