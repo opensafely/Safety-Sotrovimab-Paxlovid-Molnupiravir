@@ -12,7 +12,7 @@
 
 ****************************************************************************************************************
 **Set filepaths
-// global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+//global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
 global projectdir `c(pwd)'
 di "$projectdir"
 capture mkdir "$projectdir/output/data"
@@ -74,9 +74,8 @@ global ae_disease			ae_diverticulitis 				///
 							ae_sle 							///
 							ae_psorasis 					///
 							ae_psa 							///
-							ae_axspa 						
-							
-							//ae_ibd
+							ae_axspa 						///
+							ae_ibd 						
 global ae_disease_serious	ae_diverticulitis_serious 		///
 							ae_diarrhoea_serious			///
 							ae_taste_serious 				///
@@ -92,7 +91,7 @@ global ae_disease_serious	ae_diverticulitis_serious 		///
 							ae_psorasis_serious 			///
 							ae_psa_serious					///
 							ae_axspa_serious				///
-							ae_ibd_serious
+							ae_ibd_serious	
 global ae_combined			ae_all							///
 							ae_all_serious  				///
 							ae_spc_all 						///
@@ -100,10 +99,10 @@ global ae_combined			ae_all							///
 							ae_drug_all						///
 							ae_drug_serious					///
 							ae_imae_all						///	
-							ae_imae_serious							
+							ae_imae_serious	
 											
 	
-** Hazard of events										
+** Hazard of summary 										
 ****************************************************************************************************************
 *1. Individual drug V No Drug
 	
@@ -124,7 +123,7 @@ preserve
 			gen iptw_`model' = 1/p_drug_`model' if drug==1
 			replace iptw_`model'  = 1/(1-p_drug_`model') if drug==0
 			
-			foreach fail in $ae_group $ae_disease {
+			foreach fail in $ae_combined {
 					stset stop_`fail' [pw=iptw_`model'], id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 					stcox i.drug, vce(robust)
 									matrix b = r(table)
@@ -179,7 +178,7 @@ preserve
 			gen iptw_`model' = 1/p_drug_`model' if drug==1
 			replace iptw_`model'  = 1/(1-p_drug_`model') if drug==0
 
-			foreach fail in $ae_group $ae_disease  {
+			foreach fail in $ae_combined  {
 					stset stop_`fail' [pw=iptw_`model'], id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 					stcox i.drug, vce(robust)
 									matrix b = r(table)
@@ -234,7 +233,7 @@ preserve
 			gen iptw_`model' = 1/p_drug_`model' if drug==1
 			replace iptw_`model'  = 1/(1-p_drug_`model') if drug==0
 
-			foreach fail in $ae_group $ae_disease  {
+			foreach fail in $ae_combined  {
 					stset stop_`fail' [pw=iptw_`model'], id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 					stcox i.drug, vce(robust)
 									matrix b = r(table)
@@ -321,6 +320,117 @@ foreach var of varlist hr* lc* uc* {
 }	
 save "$projectdir/output/tables/cox_propensity", replace
 export delimited using "$projectdir/output/tables/cox_propensity.csv", replace
+
+
+** Hazard of disease events										
+****************************************************************************************************************
+use "$projectdir/output/data/main", clear
+	
+// SOTROVIMAB //
+tempname coxoutput_propensity_sot_dis
+postfile `coxoutput_propensity_sot_dis' str20(model) str20(fail)  ///
+									hr_sot lc_sot uc_sot ///
+									using "$projectdir/output/tables/cox_propensity_sot_dis", replace	
+preserve
+		keep if drug==0 | drug==1
+		foreach model in agesex adj adj2 adj3 adj4 {
+			logistic drug $`model'	 	
+			predict p_drug_`model'	
+						
+			gen iptw_`model' = 1/p_drug_`model' if drug==1
+			replace iptw_`model'  = 1/(1-p_drug_`model') if drug==0
+			
+			foreach fail in  $ae_disease $ae_disease_serious  {
+					stset stop_`fail' [pw=iptw_`model'], id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
+					stcox i.drug, vce(robust)
+									matrix b = r(table)
+									local hr_sot = b[1,2]
+									local lc_sot = b[5,2]
+									local uc_sot = b[6,2]
+					post `coxoutput_propensity_sot_dis' ("`fail'") ("`model'") (`hr_sot') (`lc_sot') (`uc_sot') 
+		}		
+		}
+restore
+postclose `coxoutput_propensity_sot_dis'
+
+
+// PAXLOVID //
+tempname coxoutput_propensity_pax_dis
+postfile `coxoutput_propensity_pax_dis' str20(model) str20(fail)  ///
+									hr_pax lc_pax uc_pax ///
+									using "$projectdir/output/tables/cox_propensity_pax_dis", replace
+preserve
+		keep if drug==0 | drug==2
+		replace drug=1 if drug==2
+		lab define drug 0 "Control" 1 "Paxlovid", replace
+		label values drug drug	
+								
+		foreach model in agesex adj adj2 adj3 adj4 {
+			logistic drug $`model'	 	
+			predict p_drug_`model'	
+			
+			gen iptw_`model' = 1/p_drug_`model' if drug==1
+			replace iptw_`model'  = 1/(1-p_drug_`model') if drug==0
+
+			foreach fail in $ae_disease $ae_disease_serious  {
+					stset stop_`fail' [pw=iptw_`model'], id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
+					stcox i.drug, vce(robust)
+									matrix b = r(table)
+									local hr_pax = b[1,2]
+									local lc_pax = b[5,2]
+									local uc_pax = b[6,2]
+					post `coxoutput_propensity_pax_dis' ("`fail'") ("`model'") (`hr_pax') (`lc_pax') (`uc_pax') 
+		}			
+		}
+			
+restore
+postclose `coxoutput_propensity_pax_dis'
+
+
+// MOLNUPAVIR //
+tempname coxoutput_propensity_mol_dis
+postfile `coxoutput_propensity_mol_dis' str20(model) str20(fail)  ///
+									hr_mol lc_mol uc_mol ///
+									using "$projectdir/output/tables/cox_propensity_mol_dis", replace	
+preserve
+		keep if drug==0 | drug==3
+		replace drug=1 if drug==3
+		lab define drug 0 "Control" 1 "Molnupavir", replace
+		label values drug drug									
+		foreach model in agesex adj adj2 adj3 adj4 {
+
+			logistic drug $`model'	 	
+			predict p_drug_`model'	
+					
+			gen iptw_`model' = 1/p_drug_`model' if drug==1
+			replace iptw_`model'  = 1/(1-p_drug_`model') if drug==0
+
+			foreach fail in $ae_disease $ae_disease_serious   {
+					stset stop_`fail' [pw=iptw_`model'], id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
+					stcox i.drug, vce(robust)
+									matrix b = r(table)
+									local hr_mol = b[1,2]
+									local lc_mol = b[5,2]
+									local uc_mol = b[6,2]
+					post `coxoutput_propensity_mol_dis' ("`fail'") ("`model'") (`hr_mol') (`lc_mol') (`uc_mol') 
+		}		
+		}
+	
+
+restore
+postclose `coxoutput_propensity_mol_dis'
+
+*******************************************************************************
+use "$projectdir/output/tables/cox_propensity_sot_dis", clear
+merge 1:1 model fail using "$projectdir/output/tables/cox_propensity_pax_dis", nogenerate 
+merge 1:1 model fail using "$projectdir/output/tables/cox_propensity_mol_dis", nogenerate
+foreach var of varlist hr* lc* uc* {
+	format `var' %3.2f			
+}	
+save "$projectdir/output/tables/cox_propensity_disease", replace
+export delimited using "$projectdir/output/tables/cox_propensity_disease.csv", replace
+
+
 
 
 log close

@@ -12,7 +12,7 @@
 
 ****************************************************************************************************************
 
-// global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir" 
+//global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir" 
 global projectdir `c(pwd)'
 di "$projectdir"
 capture mkdir "$projectdir/output/data"
@@ -81,7 +81,7 @@ global ae_disease_serious	ae_diverticulitis_serious 		///
 							ae_psorasis_serious 			///
 							ae_psa_serious					///
 							ae_axspa_serious				///
-							ae_ibd_serious 						
+							ae_ibd_serious	
 global ae_combined			ae_all							///
 							ae_all_serious  				///
 							ae_spc_all 						///
@@ -396,7 +396,7 @@ postfile `cox_model_summary_sens_2a' str20(model) str20(failure) ///
 	using "$projectdir/output/tables/cox_model_summary_sens_2a", replace							 
 foreach fail in $ae_combined {
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
-	foreach model in adj {
+	foreach model in crude agesex adj {
 		stcox $`model' if _t>=2, vce(robust)
 					matrix b = r(table)
 					local hr_sot = b[1,2]
@@ -421,7 +421,7 @@ postfile `cox_model_summary_sens_2b' str20(model) str20(failure) ///
 	using "$projectdir/output/tables/cox_model_summary_sens_2b", replace						 
 foreach fail in $ae_combined {
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
-	foreach model in adj {
+	foreach model in crude agesex adj {
 		stcox $`model' if _t>=3, vce(robust)
 					matrix b = r(table)
 					local hr_sot = b[1,2]
@@ -452,12 +452,12 @@ export delimited using "$projectdir/output/tables/cox_model_summary_sens_2.csv",
 use "$projectdir/output/data/main.dta", clear
 
 ** Hazard of events using stsplit								 
-foreach fail in $ae_combined {
+foreach fail in ae_all ae_spc_all ae_drug_all ae_imae_all {
 	preserve
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 	stsplit time_`fail', at(1(1)5)
 	tab _t time_`fail'
-	foreach model in adj  {
+	foreach model in crude agesex adj  {
 	bys time_`fail': stcox $`model', vce(robust) 	
 	//stcox i.drug $`model' if time_`fail==1, vce(robust) 
 	restore
@@ -466,12 +466,12 @@ foreach fail in $ae_combined {
 
 use "$projectdir/output/data/main.dta", clear
 ** Hazard of events using tvc										 
-foreach fail in $ae_combined {
+foreach fail in ae_all ae_spc_all ae_drug_all ae_imae_all {
 	preserve
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 	stsplit time_`fail', at(1(1)5)
 	replace _t=1 if _t==0.75	
-	foreach model in adj  {
+	foreach model in crude agesex adj  {
 	stcox $`model', tvc(i.time_`fail') vce(robust) 
 	restore
 }
@@ -831,7 +831,7 @@ export delimited using "$projectdir/output/tables/cox_model_rates_round_sens_6.c
 }		
 */
 	
-	
+log close
 
 
 

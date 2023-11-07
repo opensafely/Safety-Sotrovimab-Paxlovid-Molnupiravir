@@ -44,7 +44,7 @@ foreach var of varlist downs_syndrome_comb solid_cancer_comb haem_disease_comb l
 	label values `var'  `var' 
 }
 
-foreach var of varlist downs_syndrome_comb solid_cancer_comb haem_disease_comb liver_disease_comb renal_disease_comb imid_on_drug_comb immunosuppression_comb hiv_aids_comb organ_transplant_comb rare_neuro_comb eligible dementia serious_mental_illness care_home diabetes chronic_cardiac_disease hypertension chronic_respiratory_disease prior_covid paxlovid_contraindicated pre_drug_test prior_covid vaccination_status region_nhs imdq5 bmi_group  ethnicity sex age_group{ 
+foreach var of varlist pre_drug_test downs_syndrome_comb solid_cancer_comb haem_disease_comb liver_disease_comb renal_disease_comb imid_on_drug_comb immunosuppression_comb hiv_aids_comb organ_transplant_comb rare_neuro_comb eligible dementia serious_mental_illness care_home diabetes chronic_cardiac_disease hypertension chronic_respiratory_disease prior_covid paxlovid_contraindicated prior_covid vaccination_status region_nhs imdq5 bmi_group  ethnicity sex age_group{ 
 	preserve
 	contract `var'	
 	gen variable = `"`var'"'
@@ -106,7 +106,7 @@ foreach var of varlist downs_syndrome_comb solid_cancer_comb haem_disease_comb l
 	label define `var'  1 "yes" 0 "no", replace
 	label values `var'  `var' 
 }
-foreach var of varlist downs_syndrome_comb solid_cancer_comb haem_disease_comb liver_disease_comb renal_disease_comb imid_on_drug_comb immunosuppression_comb hiv_aids_comb organ_transplant_comb rare_neuro_comb eligible dementia serious_mental_illness care_home diabetes chronic_cardiac_disease hypertension chronic_respiratory_disease prior_covid paxlovid_contraindicated pre_drug_test prior_covid vaccination_status region_nhs imdq5 bmi_group  ethnicity sex age_group{ 
+foreach var of varlist pre_drug_test downs_syndrome_comb solid_cancer_comb haem_disease_comb liver_disease_comb renal_disease_comb imid_on_drug_comb immunosuppression_comb hiv_aids_comb organ_transplant_comb rare_neuro_comb eligible dementia serious_mental_illness care_home diabetes chronic_cardiac_disease hypertension chronic_respiratory_disease prior_covid paxlovid_contraindicated  prior_covid vaccination_status region_nhs imdq5 bmi_group  ethnicity sex age_group{ 
 	preserve
 	keep if drug_str=="`i'"
 	contract `var'	
@@ -186,7 +186,7 @@ foreach var of varlist downs_syndrome_comb solid_cancer_comb haem_disease_comb l
 	label values `var'  `var' 
 }
 
-foreach var of varlist downs_syndrome_comb solid_cancer_comb haem_disease_comb liver_disease_comb renal_disease_comb imid_on_drug_comb immunosuppression_comb hiv_aids_comb organ_transplant_comb rare_neuro_comb eligible dementia serious_mental_illness care_home diabetes chronic_cardiac_disease hypertension chronic_respiratory_disease prior_covid paxlovid_contraindicated pre_drug_test prior_covid vaccination_status region_nhs imdq5 bmi_group  ethnicity sex age_group{ 
+foreach var of varlist pre_drug_test downs_syndrome_comb solid_cancer_comb haem_disease_comb liver_disease_comb renal_disease_comb imid_on_drug_comb immunosuppression_comb hiv_aids_comb organ_transplant_comb rare_neuro_comb eligible dementia serious_mental_illness care_home diabetes chronic_cardiac_disease hypertension chronic_respiratory_disease prior_covid paxlovid_contraindicated prior_covid vaccination_status region_nhs imdq5 bmi_group  ethnicity sex age_group{ 
 	preserve
 	contract `var'	
 	gen variable = `"`var'"'
@@ -248,7 +248,7 @@ foreach var of varlist downs_syndrome_comb solid_cancer_comb haem_disease_comb l
 	label define `var'  1 "yes" 0 "no", replace
 	label values `var'  `var' 
 }
-foreach var of varlist downs_syndrome_comb solid_cancer_comb haem_disease_comb liver_disease_comb renal_disease_comb imid_on_drug_comb immunosuppression_comb hiv_aids_comb organ_transplant_comb rare_neuro_comb eligible dementia serious_mental_illness care_home diabetes chronic_cardiac_disease hypertension chronic_respiratory_disease prior_covid paxlovid_contraindicated pre_drug_test prior_covid vaccination_status region_nhs imdq5 bmi_group  ethnicity sex age_group{ 
+foreach var of varlist pre_drug_test downs_syndrome_comb solid_cancer_comb haem_disease_comb liver_disease_comb renal_disease_comb imid_on_drug_comb immunosuppression_comb hiv_aids_comb organ_transplant_comb rare_neuro_comb eligible dementia serious_mental_illness care_home diabetes chronic_cardiac_disease hypertension chronic_respiratory_disease prior_covid paxlovid_contraindicated prior_covid vaccination_status region_nhs imdq5 bmi_group  ethnicity sex age_group{ 
 	preserve
 	keep if drug_str=="`i'"
 	contract `var'	

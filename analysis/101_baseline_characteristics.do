@@ -65,11 +65,11 @@ table1_mc, by(drug) total(before) mis onecol iqrmiddle(",")  ///
 			serious_mental_illness bin %5.1f \ ///
 			care_home bin %5.1f \ ///
 			vaccination_status cat %5.1f \ ///
-			pre_drug_test cat %5.1f \ ///
 			month_vacc_covid contn %5.1f \ ///
 			month_vacc_covid conts %5.1f \ ///
 			prior_covid  bin %5.1f \ ///
-			paxlovid_contraindicated bin %5.1f)  saving("$projectdir/output/tables/baseline_allpts.xls", replace)
+			paxlovid_contraindicated bin %5.1f \  ///
+			pre_drug_test cat %5.1f)  saving("$projectdir/output/tables/baseline_allpts.xls", replace)
 		 
 import excel "$projectdir/output/tables/baseline_allpts.xls", clear
 outsheet * using "$projectdir/output/tables/baseline_allpts.csv" , comma nonames replace
@@ -108,12 +108,12 @@ table1_mc, by(drug) total(before) mis onecol iqrmiddle(",")  ///
 			dementia bin %5.1f \ ///
 			serious_mental_illness bin %5.1f \ ///
 			care_home bin %5.1f \ ///
-			pre_drug_test cat %5.1f \ ///
 			vaccination_status cat %5.1f \ ///
 			month_vacc_covid contn %5.1f \ ///
 			month_vacc_covid conts %5.1f \ ///
 			prior_covid  bin %5.1f \ ///
-			paxlovid_contraindicated bin %5.1f)  saving("$projectdir/output/tables/baseline_allpts_sensitivity.xls", replace)
+			paxlovid_contraindicated bin %5.1f \  ///
+			pre_drug_test cat %5.1f) saving("$projectdir/output/tables/baseline_allpts_sensitivity.xls", replace)
 		 
 import excel "$projectdir/output/tables/baseline_allpts_sensitivity.xls", clear
 outsheet * using "$projectdir/output/tables/baseline_allpts_sensitivity.csv" , comma nonames replace
