@@ -153,8 +153,8 @@
     "nhsd-oral-steroid-drugs-pra-dmd.csv": {
       "id": "nhsd/oral-steroid-drugs-pra-dmd/44292c02",
       "url": "https://codelists.opensafely.org/codelist/nhsd/oral-steroid-drugs-pra-dmd/44292c02/",
-      "downloaded_at": "2023-10-31 15:21:43.425389Z",
-      "sha": "b7cf7bb49ba4841b629d6fc41e77d5537eea4a0c"
+      "downloaded_at": "2023-11-07 12:45:17.490829Z",
+      "sha": "c6460d99b85104a351d329a0fe1a4cf3e5af7275"
     },
     "nhsd-oral-steroid-drugs-snomed.csv": {
       "id": "nhsd/oral-steroid-drugs-snomed/1ae93909",
@@ -459,26 +459,26 @@
     "opensafely-methotrexate-injectable.csv": {
       "id": "opensafely/methotrexate-injectable/3328044b",
       "url": "https://codelists.opensafely.org/codelist/opensafely/methotrexate-injectable/3328044b/",
-      "downloaded_at": "2023-10-31 15:21:54.714993Z",
-      "sha": "8850a188cc05752a06359383c0ed736b43b1eb0e"
+      "downloaded_at": "2023-11-07 12:45:28.414336Z",
+      "sha": "8354e573581eccf59c63a44470aeab1d36fe6547"
     },
     "opensafely-methotrexate-oral.csv": {
       "id": "opensafely/methotrexate-oral/041a8320",
       "url": "https://codelists.opensafely.org/codelist/opensafely/methotrexate-oral/041a8320/",
-      "downloaded_at": "2023-10-31 15:21:54.885971Z",
-      "sha": "83f9e01458553cda591d8cbfb65318f5b61d15b8"
+      "downloaded_at": "2023-11-07 12:45:28.664308Z",
+      "sha": "4961981af4e3cf56aa409ff9586539da15067898"
     },
     "opensafely-mycophenolate.csv": {
       "id": "opensafely/mycophenolate/30754455",
       "url": "https://codelists.opensafely.org/codelist/opensafely/mycophenolate/30754455/",
-      "downloaded_at": "2023-10-31 15:21:56.085974Z",
-      "sha": "00c8ef20665ec26ad21272d30d595ac21cb529e3"
+      "downloaded_at": "2023-11-07 12:45:28.864309Z",
+      "sha": "1a5cef3345f475af67ffc95cbececf55f0493a75"
     },
     "opensafely-ciclosporin-oral-dmd.csv": {
       "id": "opensafely/ciclosporin-oral-dmd/4c961cc9",
       "url": "https://codelists.opensafely.org/codelist/opensafely/ciclosporin-oral-dmd/4c961cc9/",
-      "downloaded_at": "2023-10-31 15:21:56.315798Z",
-      "sha": "0f6bcda3b7e44d7b7f24b41d8840cfad90e0bc1d"
+      "downloaded_at": "2023-11-07 12:45:29.064385Z",
+      "sha": "806432255b14b133df00c55a279e2516c8737524"
     },
     "opensafely-dialysis.csv": {
       "id": "opensafely/dialysis/3ce108ac",
@@ -543,20 +543,20 @@
     "opensafely-sps-paxlovid-interactions-do-not-use-dmd.csv": {
       "id": "opensafely/sps-paxlovid-interactions-do-not-use-dmd/1a657b33",
       "url": "https://codelists.opensafely.org/codelist/opensafely/sps-paxlovid-interactions-do-not-use-dmd/1a657b33/",
-      "downloaded_at": "2023-10-31 15:21:58.655882Z",
-      "sha": "112c2e395512fc04e0167f7668a07ae8cd3daeb8"
+      "downloaded_at": "2023-11-07 12:45:31.798627Z",
+      "sha": "626cb171b1ca4701e815a0456ec163afe7e2ebfa"
     },
     "opensafely-nirmatrelvir-drug-interactions-dmd.csv": {
       "id": "opensafely/nirmatrelvir-drug-interactions-dmd/015607fe",
       "url": "https://codelists.opensafely.org/codelist/opensafely/nirmatrelvir-drug-interactions-dmd/015607fe/",
-      "downloaded_at": "2023-10-31 15:21:58.921915Z",
-      "sha": "bd2782dffa5cbce0c51efd68812be27ee1faabeb"
+      "downloaded_at": "2023-11-07 12:45:32.047387Z",
+      "sha": "72fc4a7c1f088092c7eff810af542941d30cfa57"
     },
     "opensafely-paxlovid-nirmatrelvirritonavir-absolute-contraindications-dmd.csv": {
       "id": "opensafely/paxlovid-nirmatrelvirritonavir-absolute-contraindications-dmd/774852b7",
       "url": "https://codelists.opensafely.org/codelist/opensafely/paxlovid-nirmatrelvirritonavir-absolute-contraindications-dmd/774852b7/",
-      "downloaded_at": "2023-10-31 15:21:59.123906Z",
-      "sha": "0e1113bbc2429d0bb9593284a9892d7d455f525b"
+      "downloaded_at": "2023-11-07 12:45:32.264038Z",
+      "sha": "22303c4b37c518dcb9933c950ba46a21ded6f892"
     },
     "opensafely-symptoms-rashes.csv": {
       "id": "opensafely/symptoms-rashes/6bd2da47",
