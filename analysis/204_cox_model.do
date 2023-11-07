@@ -459,9 +459,8 @@ foreach fail in ae_all ae_spc_all ae_drug_all ae_imae_all {
 	tab _t time_`fail'
 	foreach model in crude agesex adj  {
 	bys time_`fail': stcox $`model', vce(robust) 	
-	//stcox i.drug $`model' if time_`fail==1, vce(robust) 
-	restore
 }
+restore
 }
 
 use "$projectdir/output/data/main.dta", clear
