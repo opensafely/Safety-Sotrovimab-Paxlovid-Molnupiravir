@@ -49,7 +49,7 @@ actions:
         data1: output/tables/baseline_allpts_sensitivity.csv  
 
   cox_model:
-    run: stata-mp:latest analysis/204_cox_model.do
+    run: stata-mp:latest analysis/205_cox_model.do
     needs: [define_covariates_combine]
     outputs:
       moderately_sensitive:
@@ -90,7 +90,7 @@ actions:
         loglog_plot_ae_imae_serious: output/figures/loglog_plot_ae_imae_serious.svg
 
   PS_model:
-    run: stata-mp:latest analysis/304_ps_model.do
+    run: stata-mp:latest analysis/305_ps_model.do
     needs: [define_covariates_combine]
     outputs:
       moderately_sensitive:
@@ -109,7 +109,7 @@ actions:
         balance_adj4: output/figures/balance_adj4.svg
         
   preceed_rate:
-    run: stata-mp:latest analysis/405_preceeding_rate.do
+    run: stata-mp:latest analysis/406_preceeding_rate.do
     needs: [define_covariates_combine]
     outputs:
       moderately_sensitive:
