@@ -129,7 +129,7 @@ postfile `cox_model_summary' str20(model) str20(failure) ///
 	using "$projectdir/output/tables/cox_model_summary", replace							 
 foreach fail in $ae_combined {
 	stset stop_`fail', id(patient_id) origin(time start_date_delay) enter(time start_date_delay) failure(fail_`fail'==1) 
-	foreach model in crude agesex adj adj4{
+	foreach model in crude agesex adj {
 		stcox $`model', vce(robust)
 					matrix b = r(table)
 					local hr_sot = b[1,2]
@@ -273,7 +273,7 @@ postfile `cox_model_summary_sens_1' str20(model) str20(failure) ///
 	using "$projectdir/output/tables/cox_model_summary_sens_1", replace							 
 foreach fail in $ae_combined {
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
-	foreach model in crude agesex adj adj2 adj3 adj4{
+	foreach model in crude agesex adj adj2 adj3 {
 		stcox $`model', vce(robust)
 					matrix b = r(table)
 					local hr_sot = b[1,2]
@@ -418,7 +418,7 @@ postfile `cox_model_summary_sens_2' str20(model) str20(failure) ///
 	using "$projectdir/output/tables/cox_model_summary_sens_2", replace							 
 foreach fail in $ae_combined {
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
-	foreach model in crude agesex adj adj2 adj3 adj4{
+	foreach model in crude agesex adj adj2 adj3 {
 		stcox $`model', vce(robust)
 					matrix b = r(table)
 					local hr_sot = b[1,2]
@@ -561,7 +561,7 @@ postfile `cox_model_summary_sens_3a' str20(model) str20(failure) ///
 	using "$projectdir/output/tables/cox_model_summary_sens_3a", replace						 
 foreach fail in $ae_combined {
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
-	foreach model in crude agesex adj adj4{
+	foreach model in crude agesex adj {
 		stcox $`model' if _t>=2, vce(robust)
 					matrix b = r(table)
 					local hr_sot = b[1,2]
@@ -586,7 +586,7 @@ postfile `cox_model_summary_sens_3b' str20(model) str20(failure) ///
 	using "$projectdir/output/tables/cox_model_summary_sens_3b", replace						 
 foreach fail in $ae_combined {
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
-	foreach model in crude agesex adj adj4{
+	foreach model in crude agesex adj {
 		stcox $`model' if _t>=3, vce(robust)
 					matrix b = r(table)
 					local hr_sot = b[1,2]
@@ -664,7 +664,7 @@ postfile `cox_model_summary_sens_4' str20(model) str20(failure) ///
 	using "$projectdir/output/tables/cox_model_summary_sens_4", replace							 
 foreach fail in $ae_combined {
 	stset stop_`fail' if paxlovid_contraindicated==0, id(patient_id) origin(time start_date_delay) enter(time start_date_delay) failure(fail_`fail'==1) 
-	foreach model in crude agesex adj adj4{
+	foreach model in crude agesex adj {
 		stcox $`model', vce(robust)
 					matrix b = r(table)
 					local hr_sot = b[1,2]
@@ -784,7 +784,7 @@ postfile `cox_model_summary_sens_5' str20(model) str20(failure) ///
 	using "$projectdir/output/tables/cox_model_summary_sens_5", replace							 
 foreach fail in $ae_combined {
 	stset stop_`fail' if paxlovid_contraindicated==0, id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
-	foreach model in crude agesex adj adj4{
+	foreach model in crude agesex adj {
 		stcox $`model', vce(robust)
 					matrix b = r(table)
 					local hr_sot = b[1,2]
@@ -903,7 +903,7 @@ postfile `cox_model_summary_sens_6' str20(model) str20(failure) ///
 	using "$projectdir/output/tables/cox_model_summary_sens_6", replace							 
 foreach fail in $ae_combined {
 	stset stop_`fail', id(patient_id) origin(time start_date_delay) enter(time start_date_delay) failure(fail_`fail'==1) 
-	foreach model in crude agesex adj adj4{
+	foreach model in crude agesex adj {
 		stcox $`model', vce(robust)
 					matrix b = r(table)
 					local hr_sot = b[1,2]
