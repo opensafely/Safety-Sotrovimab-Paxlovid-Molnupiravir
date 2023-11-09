@@ -153,7 +153,7 @@ postfile `cox_model_disease' str20(model) str20(failure) ///
 	using "$projectdir/output/tables/cox_model_disease", replace							 
 foreach fail in $ae_diseaseae_ $ae_disease_serious {
 	stset stop_`fail', id(patient_id) origin(time start_date_delay) enter(time start_date_delay) failure(fail_`fail'==1) 
-	foreach model in crude agesex adj adj4 {
+	foreach model in crude agesex adj {
 		stcox $`model', vce(robust)
 					matrix b = r(table)
 					local hr_sot = b[1,2]
@@ -297,7 +297,7 @@ postfile `cox_model_disease_sens_1' str20(model) str20(failure) ///
 	using "$projectdir/output/tables/cox_model_disease_sens_1", replace							 
 foreach fail in $ae_diseaseae_ $ae_disease_serious {
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
-	foreach model in crude agesex adj adj4{
+	foreach model in crude agesex adj {
 		stcox $`model', vce(robust)
 					matrix b = r(table)
 					local hr_sot = b[1,2]
@@ -442,7 +442,7 @@ postfile `cox_model_disease_sens_2' str20(model) str20(failure) ///
 	using "$projectdir/output/tables/cox_model_disease_sens_2", replace							 
 foreach fail in $ae_diseaseae_ $ae_disease_serious {
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
-	foreach model in crude agesex adj adj4{
+	foreach model in crude agesex adj {
 		stcox $`model', vce(robust)
 					matrix b = r(table)
 					local hr_sot = b[1,2]
@@ -543,14 +543,22 @@ save "$projectdir/output/tables/cox_model_rates_round_sens_2", replace
 export delimited using "$projectdir/output/tables/cox_model_rates_round_sens_2.csv", replace
 
 **************************************************************************************************************************************************************************************************************************************
-** SENSITIVITY ANALYSIS 3 = start date is covid test + time lag for everyone  ****
+** SENSITIVITY ANALYSIS 3 = start date is covid test + time lag or tvc for everyone  **
 use "$projectdir/output/data/main.dta", clear
+tab drug covid_test
+tab eligible
+tab drug pre_drug_test
+tab drug paxlovid_contraindicated
 
+** Start day 
+count if start_date!=covid_test_positive_date & drug==0
+count if start_date!=covid_test_positive_date & drug>0
+						
 ** Hazard of events	with 1 day lag					
 tempname cox_model_summary_sens_3a
 postfile `cox_model_summary_sens_3a' str20(model) str20(failure) ///
 	hr_sot lc_sot uc_sot hr_pax lc_pax uc_pax hr_mol lc_mol uc_mol ///
-	using "$projectdir/output/tables/cox_model_summary_sens_3a", replace							 
+	using "$projectdir/output/tables/cox_model_summary_sens_3a", replace						 
 foreach fail in $ae_combined {
 	stset stop_`fail', id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
 	foreach model in crude agesex adj adj4{
@@ -631,14 +639,14 @@ save "$projectdir/output/tables/cox_model_summary_sens_3", replace
 export delimited using "$projectdir/output/tables/cox_model_summary_sens_3.csv", replace
 
 
-**************************************************************************************************************************************************************************************************************************************
-** SENSITIVITY ANALYSIS  4 == Treatment group start date = treat date. 
+*********************************************************************************************************************************************************************************************
+** SENSITIVITY ANALYSIS  4 == Treatment group start date = treat date
 *					 		  Control group start date = delayed by median time between test and treat in treat group   	  			*
 *							  Restrict to pax contraindicated 	
 
 use "$projectdir/output/data/sensitivity_analysis.dta", clear
 tab pre_drug_test drug
-drop if  covid_test_5d!=1 & drug >0
+drop if covid_test_5d!=1 & drug >0
 tab pre_drug_test drug
 tab drug paxlovid_contraindicated
 
@@ -767,7 +775,7 @@ tab drug paxlovid_contraindicated
 
 ** Start day 
 count if start_date!=covid_test_positive_date & drug==0
-count if start_date!=date_treated & drug>0
+count if start_date!=covid_test_positive_date & drug>0
 
 *** Hazard of events						
 tempname cox_model_summary_sens_5
