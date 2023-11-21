@@ -178,6 +178,9 @@ clear *
 save "$projectdir/output/tables/baseline_table_redact_all_sens.dta", replace emptyok
 use "$projectdir/output/data/sensitivity_analysis", clear
 set type double
+tab pre_drug_test drug
+drop if  covid_test_5d!=1 & drug >0
+tab pre_drug_test drug
 
 ** labeling 
 foreach var of varlist downs_syndrome_comb solid_cancer_comb haem_disease_comb liver_disease_comb renal_disease_comb imid_on_drug_comb immunosuppression_comb hiv_aids_comb organ_transplant_comb rare_neuro_comb eligible dementia serious_mental_illness care_home diabetes chronic_cardiac_disease hypertension chronic_respiratory_disease prior_covid paxlovid_contraindicated {
@@ -211,6 +214,9 @@ export excel "$projectdir/output/tables/baseline_table_redact_bydrug_sens.xls", 
 
 **Catergorical table by drug subdiagnoses - tagged to above excel
 use "$projectdir/output/data/sensitivity_analysis", clear
+tab pre_drug_test drug
+drop if  covid_test_5d!=1 & drug >0
+tab pre_drug_test drug
 decode drug, gen(drug_str)
 local index=0
 levelsof drug_str, local(levels)
@@ -242,6 +248,9 @@ foreach i of local levels {
 	di `index'
 
 use "$projectdir/output/data/sensitivity_analysis", clear
+tab pre_drug_test drug
+drop if  covid_test_5d!=1 & drug >0
+tab pre_drug_test drug
 decode drug, gen(drug_str)
 foreach var of varlist downs_syndrome_comb solid_cancer_comb haem_disease_comb liver_disease_comb renal_disease_comb imid_on_drug_comb immunosuppression_comb hiv_aids_comb organ_transplant_comb rare_neuro_comb eligible dementia serious_mental_illness care_home diabetes chronic_cardiac_disease hypertension chronic_respiratory_disease prior_covid paxlovid_contraindicated {
 	recode `var' . = 0
