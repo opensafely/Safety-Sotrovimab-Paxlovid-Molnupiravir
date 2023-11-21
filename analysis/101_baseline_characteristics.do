@@ -15,6 +15,7 @@
 // global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
 global projectdir `c(pwd)'
 di "$projectdir"
+
 capture mkdir "$projectdir/output/data"
 capture mkdir "$projectdir/output/figures"
 capture mkdir "$projectdir/output/tables"
@@ -78,6 +79,9 @@ outsheet * using "$projectdir/output/tables/baseline_allpts.csv" , comma nonames
 *******************************************************************************************************************
 ** Sensitivity analysis table 
 use "$projectdir/output/data/sensitivity_analysis", clear
+tab pre_drug_test drug
+drop if  covid_test_5d!=1 & drug >0
+tab pre_drug_test drug
 
 table1_mc, by(drug) total(before) mis onecol iqrmiddle(",")  ///
 		vars(age contn %5.1f \ ///
