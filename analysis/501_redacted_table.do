@@ -12,7 +12,7 @@
 
 ****************************************************************************************************************
 **Set filepaths
-// global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
+//global projectdir "C:\Users\k1635179\OneDrive - King's College London\Katie\OpenSafely\Safety mAB and antivirals\Safety-Sotrovimab-Paxlovid-Molnupiravir"
 global projectdir `c(pwd)'
 
 di "$projectdir"
@@ -290,7 +290,11 @@ export delimited using "$projectdir/output/tables/baseline_table_redact_bydrug_s
 **2. Continous variables
 clear *
 save "$projectdir/output/tables/baseline_table_redact_mean_sens.dta", replace emptyok
-use "$projectdir/output/data/main", clear
+use "$projectdir/output/data/sensitivity_analysis", clear
+tab pre_drug_test drug
+drop if  covid_test_5d!=1 & drug >0
+tab pre_drug_test drug
+
 decode drug, gen(drug_str)
 foreach var of varlist age bmi {
 	preserve
