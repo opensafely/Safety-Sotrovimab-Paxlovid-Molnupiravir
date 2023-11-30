@@ -257,7 +257,6 @@ export delimited using "$projectdir/output/tables/cox_model_rates_round.csv", re
 *					 		Control group start date = covid test   	 *
 use "$projectdir/output/data/main.dta", clear
 tab drug covid_test
-tab eligible
 tab drug pre_drug_test
 tab drug paxlovid_contraindicated
 
@@ -517,7 +516,6 @@ export delimited using "$projectdir/output/tables/cox_model_rates_round_sens_2.c
 ** SENSITIVITY ANALYSIS 3 = start date is covid test + time lag or tvc for everyone  **
 use "$projectdir/output/data/main.dta", clear
 tab drug covid_test
-tab eligible
 tab drug pre_drug_test
 tab drug paxlovid_contraindicated
 
@@ -774,15 +772,63 @@ foreach fail in $ae_combined {
 }
 postclose `cox_model_summary_sens_5'
 
+*** Redact and save 
+use "$projectdir/output/tables/cox_model_summary_sens_5", clear
+save "$projectdir/output/tables/cox_model_summary_sens_5", replace
+export delimited using "$projectdir/output/tables/cox_model_summary_sens_5.csv", replace
+
+**************************************************************************************************************************************************************************************************************************************
+** SENSITIVITY ANALYSIS 6 =  Start date is covid test for both control and treatment  **
+*							 Restrict to eligible on EHR - i.e high_risk_cohort_codelist==1 					  *
+
+use "$projectdir/output/data/sensitivity_analysis.dta", clear
+tab pre_drug_test drug
+drop if  covid_test_5d!=1 & drug >0
+tab pre_drug_test drug
+tab drug paxlovid_contraindicated
+tab drug high_risk_cohort_codelist
+
+** Start day for treatment group is date treated & start date for control group is date test + 2 days
+count if start_date!=covid_test_positive_date & drug==0
+count if start_date!=date_treated & drug>0
+tab median_delay_all
+gen start_date_delay = start_date + median_delay_all if drug==0
+replace start_date_delay = start_date if drug>0
+
+*** Hazard of events						
+tempname cox_model_summary_sens_6
+postfile `cox_model_summary_sens_6' str20(model) str20(failure) ///
+	hr_sot lc_sot uc_sot hr_pax lc_pax uc_pax hr_mol lc_mol uc_mol ///
+	using "$projectdir/output/tables/cox_model_summary_sens_6", replace							 
+foreach fail in $ae_combined {
+	stset stop_`fail' if high_risk_cohort_codelist==1, id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
+	foreach model in crude agesex adj {
+		stcox $`model', vce(robust)
+					matrix b = r(table)
+					local hr_sot = b[1,2]
+					local lc_sot = b[5,2]
+					local uc_sot = b[6,2]
+					local hr_pax = b[1,3]
+					local lc_pax = b[5,3]
+					local uc_pax = b[6,3]
+					local hr_mol = b[1,4]
+					local lc_mol = b[5,4]
+					local uc_mol = b[6,4]	
+		
+		post `cox_model_summary_sens_6' ("`model'") ("`fail'") (`hr_sot') (`lc_sot') (`uc_sot') (`hr_pax') (`lc_pax') (`uc_pax') (`hr_mol') (`lc_mol') (`uc_mol')				
+}
+}
+postclose `cox_model_summary_sens_6'
+
 **** Rates of events 
-tempname coxoutput_rates_sens_5
-postfile `coxoutput_rates_sens_5' str20(failure) ///
+tempname coxoutput_rates_sens_6
+postfile `coxoutput_rates_sens_6' str20(failure) ///
 		all_ptime all_events all_rate all_lci all_uci ///
 		control_ptime control_events control_rate control_lci_ control_uci ///
 		sot_ptime sot_events sot_rate sot_lci sot_uci ///
 		pax_ptime pax_events pax_rate pax_lci pax_uci ///
 		mol_ptime mol_events mol_rate mol_lci mol_uci ///
-		using "$projectdir/output/tables/cox_model_rates_sens_5", replace	
+		using "$projectdir/output/tables/cox_model_rates_sens_6", replace	
 foreach fail in $ae_disease $ae_disease_serious $ae_combined  {
 	stset stop_`fail', id(patient_id) origin(time start_date_delay) enter(time start_date_delay) failure(fail_`fail'==1) 		
 	stptime 
@@ -819,26 +865,26 @@ foreach fail in $ae_disease $ae_disease_serious $ae_combined  {
 					local mol_uci = `r(ub)'
 					local mol_events = `r(failures)'		
 		display "molnupavir"			
-		post `coxoutput_rates_sens_5' ("`fail'")	(`all_ptime') (`all_events') (`all_rate') (`all_lci') (`all_uci') ///
+		post `coxoutput_rates_sens_6' ("`fail'")	(`all_ptime') (`all_events') (`all_rate') (`all_lci') (`all_uci') ///
 					(`control_ptime') (`control_events') (`control_rate') (`control_lci') (`control_uci') ///
 					(`sot_ptime') (`sot_events') (`sot_rate') (`sot_lci') (`sot_uci') ///
 					(`pax_ptime') (`pax_events') (`pax_rate') (`pax_lci') (`pax_uci') ///
 					(`mol_ptime') (`mol_events') (`mol_rate') (`mol_lci') (`mol_uci') 	
 					
 }
-postclose `coxoutput_rates_sens_5'
+postclose `coxoutput_rates_sens_6'
 
 *** Redact and save 
-use "$projectdir/output/tables/cox_model_summary_sens_5", clear
-save "$projectdir/output/tables/cox_model_summary_sens_5", replace
-export delimited using "$projectdir/output/tables/cox_model_summary_sens_5.csv", replace
+use "$projectdir/output/tables/cox_model_summary_sens_6", clear
+save "$projectdir/output/tables/cox_model_summary_sens_6", replace
+export delimited using "$projectdir/output/tables/cox_model_summary_sens_6.csv", replace
 
-use "$projectdir/output/tables/cox_model_rates_sens_5", clear
+use "$projectdir/output/tables/cox_model_rates_sens_6", clear
 order failure all* control* sot* pax* mol* 
-save "$projectdir/output/tables/cox_model_rates_sens_5", replace
-export delimited using "$projectdir/output/tables/cox_model_rates_sens_5.csv", replace
+save "$projectdir/output/tables/cox_model_rates_sens_6", replace
+export delimited using "$projectdir/output/tables/cox_model_rates_sens_6.csv", replace
 
-use "$projectdir/output/tables/cox_model_rates_sens_5", clear
+use "$projectdir/output/tables/cox_model_rates_sens_6", clear
 foreach var of varlist *events *ptime  {
 gen `var'_midpoint = (ceil(`var'/6)*6) - (floor(6/2) * (`var'!=0))
 }
@@ -849,55 +895,12 @@ gen `var'_uci_midpoint = (invpoisson(`var'_events_midpoint,.025)/`var'_ptime_mid
 }  
 keep failure *midpoint
 order  	failure all* control* sot* pax* mol* 
-save "$projectdir/output/tables/cox_model_rates_round_sens_5", replace
-export delimited using "$projectdir/output/tables/cox_model_rates_round_sens_5.csv", replace  
-
-
-**************************************************************************************************************************************************************************************************************************************
-** SENSITIVITY ANALYSIS 6 =  Start date is covid test for both control and treatment  **
-*							 Restrict to pax contraindicated 					      *
-
-use "$projectdir/output/data/main.dta", clear
-tab drug covid_test
-tab eligible
-tab drug pre_drug_test
-tab drug paxlovid_contraindicated
-
-** Start day 
-count if start_date!=covid_test_positive_date & drug==0
-count if start_date!=covid_test_positive_date & drug>0
-
-*** Hazard of events						
-tempname cox_model_summary_sens_6
-postfile `cox_model_summary_sens_6' str20(model) str20(failure) ///
-	hr_sot lc_sot uc_sot hr_pax lc_pax uc_pax hr_mol lc_mol uc_mol ///
-	using "$projectdir/output/tables/cox_model_summary_sens_6", replace							 
-foreach fail in $ae_combined {
-	stset stop_`fail' if paxlovid_contraindicated==0, id(patient_id) origin(time start_date) enter(time start_date) failure(fail_`fail'==1) 
-	foreach model in crude agesex adj {
-		stcox $`model', vce(robust)
-					matrix b = r(table)
-					local hr_sot = b[1,2]
-					local lc_sot = b[5,2]
-					local uc_sot = b[6,2]
-					local hr_pax = b[1,3]
-					local lc_pax = b[5,3]
-					local uc_pax = b[6,3]
-					local hr_mol = b[1,4]
-					local lc_mol = b[5,4]
-					local uc_mol = b[6,4]	
-		
-		post `cox_model_summary_sens_6' ("`model'") ("`fail'") (`hr_sot') (`lc_sot') (`uc_sot') (`hr_pax') (`lc_pax') (`uc_pax') (`hr_mol') (`lc_mol') (`uc_mol')				
-}
-}
-postclose `cox_model_summary_sens_6'
-
-
-*** Redact and save 
-use "$projectdir/output/tables/cox_model_summary_sens_6", clear
-save "$projectdir/output/tables/cox_model_summary_sens_6", replace
-export delimited using "$projectdir/output/tables/cox_model_summary_sens_6.csv", replace
-
+save "$projectdir/output/tables/cox_model_rates_round_sens_6", replace
+export delimited using "$projectdir/output/tables/cox_model_rates_round_sens_6.csv", replace  
+	
+	
+	
+	
 	
 log close
 
