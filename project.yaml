@@ -70,9 +70,9 @@ actions:
         data13: output/tables/cox_model_rates_sens_4.csv 
         data14: output/tables/cox_model_rates_round_sens_4.csv 
         data15: output/tables/cox_model_summary_sens_5.csv 
-        data16: output/tables/cox_model_rates_sens_5.csv 
-        data17: output/tables/cox_model_rates_round_sens_5.csv
-        data18: output/tables/cox_model_summary_sens_6.csv 
+        data16: output/tables/cox_model_summary_sens_6.csv 
+        data17: output/tables/cox_model_rates_sens_6.csv 
+        data18: output/tables/cox_model_rates_round_sens_6.csv
         schoenfeld_ae_all: output/figures/schoenfeld_ae_all.svg
         schoenfeld_ae_all_serious: output/figures/schoenfeld_ae_all_serious.svg
         schoenfeld_ae_spc_all: output/figures/schoenfeld_ae_spc_all.svg
