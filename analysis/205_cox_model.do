@@ -830,7 +830,7 @@ postfile `coxoutput_rates_sens_6' str20(failure) ///
 		mol_ptime mol_events mol_rate mol_lci mol_uci ///
 		using "$projectdir/output/tables/cox_model_rates_sens_6", replace	
 foreach fail in $ae_disease $ae_disease_serious $ae_combined  {
-	stset stop_`fail', id(patient_id) origin(time start_date_delay) enter(time start_date_delay) failure(fail_`fail'==1) 		
+	stset stop_`fail' if high_risk_cohort_codelist==1, id(patient_id) origin(time start_date_delay) enter(time start_date_delay) failure(fail_`fail'==1) 		
 	stptime 
 					local all_rate = `r(rate)'
 					local all_ptime = `r(ptime)'
