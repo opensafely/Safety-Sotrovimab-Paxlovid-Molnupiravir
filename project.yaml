@@ -49,7 +49,7 @@ actions:
         data1: output/tables/baseline_allpts_sensitivity.csv  
 
   cox_model:
-    run: stata-mp:latest analysis/205_cox_model.do
+    run: stata-mp:latest analysis/206_cox_model.do
     needs: [define_covariates_combine]
     outputs:
       moderately_sensitive:
